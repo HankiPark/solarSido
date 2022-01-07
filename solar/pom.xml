@@ -527,7 +527,7 @@
             <scope>system</scope>
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc6-11.2.0.3.jar</systemPath>
         </dependency>
-	
+	<!-- 
 	<dependency>
             <groupId>altibase</groupId>
             <artifactId>altibase-jdbc-driver</artifactId>
@@ -550,7 +550,7 @@
             <version>10.2</version>
             <scope>system</scope>
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/JDBC-10.2-latest-cubrid.jar</systemPath>
-        </dependency>
+        </dependency> -->
 	
 	<dependency>
             <groupId>kr.go.mgov</groupId>
