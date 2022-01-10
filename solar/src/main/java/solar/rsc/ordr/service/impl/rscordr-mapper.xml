@@ -2,8 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.rsc.ordr.service.impl.RscOrdrMapper">
 
-	<select id="selectAll" resultType="solar.rsc.ordr.service.RscOrdr">
-		select * from rsc_or
+	<select id="selectAll" resultType="solar.rsc.ordr.service.RscOrdr" parameterType="solar.rsc.ordr.service.RscOrdr">
+		SELECT
+		    to_char(o.ordr_dt,'yyyy/MM/dd') "ordr_dt",
+		    r.rsc_nm,
+		    r.rsc_cd,
+		    o.ordr_qty,
+		    o.ordr_cd,
+		    c.co_nm,
+		    o.rsc_ist_qty
+		FROM
+		    	rsc_or o
+		    JOIN rsc r ON o.rsc_cd = r.rsc_cd
+		    JOIN co c ON r.co_cd = c.co_cd
+		WHERE
+		    1 = 1
+<!-- 	<if test="">
+			AND o.ordr_dt BETWEEN {} and {}
+		</if>
+		<if test="">
+			AND c.co_cd like {}
+		</if>
+		<if test="">
+			AND o.rsc_cd like {}
+		</if>-->
+		ORDER BY
+		    ordr_dt
 	</select>
 
 </mapper>
