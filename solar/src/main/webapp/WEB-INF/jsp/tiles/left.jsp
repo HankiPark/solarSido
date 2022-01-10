@@ -12,7 +12,7 @@
 					class="hide-menu">기준정보관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="tiles/test"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/tiles/test"
 						class="sidebar-link"><span class="hide-menu"> 공통코드 관리 </span></a>
 					</li>
 					<li class="sidebar-item"><a href="form-input-grid.html"
@@ -41,7 +41,7 @@
 					class="hide-menu">영업관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="sales/main"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/sales/main"
 						class="sidebar-link"><span class="hide-menu"> 주문서 참조 </span></a></li>
 					<li class="sidebar-item"><a href="table-dark-basic.html"
 						class="sidebar-link"><span class="hide-menu"> 출고 관리 </span></a></li>
