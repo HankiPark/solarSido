@@ -1,7 +1,6 @@
 package solar.sales.order.web;
 
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import solar.sales.order.service.OrderService;
 import twitter4j.Paging;
 
 @Controller
-
 public class OrderController {
 
 	@Autowired OrderService oservice;
@@ -33,7 +31,7 @@ public class OrderController {
 	{	
 		model.addAttribute("result",true);
 		Map<String,Object> map = new HashMap();
-		map.put("contents", oservice.find());
+		map.put("contents", oservice.find(order));
 		model.addAttribute("data", map);
 
     return "jsonView";
@@ -56,5 +54,4 @@ public class OrderController {
 		
 		return "jsonView";
 	}
-
 }

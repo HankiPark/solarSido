@@ -22,14 +22,30 @@ public class Order {
 	String indicaQty;
 	String oustQty;
 	String prdtStc;
-
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	Date paprdDt;
 	String deNum;
 	String prdtNm;
 	
+	
+	
+	//검색조건
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	Date startT;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	Date endT;
+	
+	String dateTy;
+	String nowSt;
+	
+	
+	
+	
+	
+	
 	int rowKey;
-
 	
 }
