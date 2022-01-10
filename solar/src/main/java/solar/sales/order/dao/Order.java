@@ -22,6 +22,12 @@ public class Order {
 	String indicaQty;
 	String oustQty;
 	String prdtStc;
-	String paprdDt;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	Date paprdDt;
+	String deNum;
+	String prdtNm;
+	
+	int rowKey;
 	
 }
