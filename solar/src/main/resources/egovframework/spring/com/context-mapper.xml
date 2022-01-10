@@ -13,6 +13,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:/egovframework/mapper/com/**/*_${Globals.DbType}.xml</value>
+				<value>classpath:/solar/rsc/**/*.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -20,6 +21,9 @@
 	<!-- Mybatis Session Template -->
 	<bean id="egov.sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="egov.sqlSession"/>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="solar.**.impl" />
 	</bean>
 	
 </beans>
