@@ -64,6 +64,7 @@
     </repositories>
 
 	<dependencies>
+	
 		<!-- ?���??��?��?��?��?�� ?��?��?���? -->
         <dependency>
 		    <groupId>egovframework.rte</groupId>
@@ -156,6 +157,15 @@
             <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc-14.jar</systemPath>
         </dependency>
         -->
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.22</version>
+    <scope>provided</scope>
+</dependency>
+        
+        
   	<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-core</artifactId>

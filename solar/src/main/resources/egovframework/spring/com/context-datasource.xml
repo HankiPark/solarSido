@@ -35,7 +35,7 @@
 		<property name="driverClassName" value="${Globals.oracle.DriverClassName}"/>
 		<property name="url" value="${Globals.oracle.Url}" />
 		<property name="username" value="${Globals.oracle.UserName}"/>
-		<property name="password" value="#{egovEnvCryptoService.getPassword()}"/>
+		<property name="password" value="qkrgksrl123"/>
 	</bean>
 	</beans>
 

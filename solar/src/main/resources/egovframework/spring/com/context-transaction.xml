@@ -18,6 +18,7 @@
     
 	<aop:config>
 		<aop:pointcut id="requiredTx" expression="execution(* egovframework.com..*Impl.*(..)) or
+												  execution(* solar..*Impl.*(..))
 												  execution(* egovframework.rte.fdl.excel.impl.*Impl.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
 	</aop:config>
