@@ -10,7 +10,6 @@
 </head>
 <body>
 
-asdasgfdf
 <div id="grid"></div>
 
 <script type="text/javascript">
