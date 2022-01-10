@@ -8,4 +8,5 @@ import solar.sales.order.dao.Order;
 public interface OrderService {
 	List<Order> find();
 	List<Order> findDetail(Order order);
+
 }
