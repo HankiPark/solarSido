@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.sales.order.service.impl.OrderMapper">
-<select id="find" resultType="Order">
-		select 
-			a.*,b.co_nm as "coNm"
-			 from (select o.order_no as "orderNo"
-			,o.recv_dt as "recvDt"
-			,o.prog_info as "progInfo"
-            ,o.paprd_dt as "paprdDt" 
-            ,o.co_cd
-			,d.prdt_cd as "prdtCd"
-			,d.order_qty as "orderQty"
-			,d.indica_qty as "indicaQty"
-			,d.oust_qty as "oustQty"
-			,d.prdt_stc as "prdtStc"            
-			from order_tb o 
-		join order_d d on o.order_no=d.order_no) a join co b on a.co_cd=b.co_cd
+
+	<select id="findDetail" resultType="Order">
+		select a.*,b.prdt_nm from (select o.order_no
+		,o.recv_dt
+		,o.prog_info 
+		,o.paprd_dt 
+		,d.prdt_cd 
+		,d.order_qty 
+		,d.indica_qty 
+		,d.oust_qty
+		,d.prdt_stc
+		from order_tb o
+		join order_d d on o.order_no=d.order_no) a join prdt b on a.prdt_cd=b.prdt_cd
+		where a.order_no = #{orderNo}
 
 
-</select>
+	</select>
 
-
+	<select id="find" resultType="Order">
+		select o.order_no 
+				,o.recv_dt 
+				,o.prog_info 
+				,o.paprd_dt 
+				,c.co_nm 
+				,dcnt('order_tb',o.order_no) as deNum
+				from order_tb o join co c on o.co_cd=c.co_cd
+	</select>
 
 
 
