@@ -14,7 +14,9 @@
 			<list>
 				<value>classpath:/egovframework/mapper/com/**/*_${Globals.DbType}.xml</value>
 				<value>classpath:/egovframework/mapper/solar/**/*.xml</value>
+
 				<value>classpath:/solar/rsc/**/*.xml</value>
+
 			</list>
 		</property>
 	</bean>
