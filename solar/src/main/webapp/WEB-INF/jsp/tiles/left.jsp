@@ -119,7 +119,7 @@
 						설비관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="ui-notification.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/eqm/eqmMng"
 						class="sidebar-link"><span class="hide-menu"> 설비 관리</span></a></li>
 					<li class="sidebar-item"><a href="ui-progressbar.html"
 						class="sidebar-link"><span class="hide-menu"> 설비 비가동
