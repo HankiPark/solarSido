@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="solar.eqm.mng.service.impl.EqmMapper">
+	
+<!-- 설비 조회 -->
+<select id="eqmList" resultType="EqmVO" parameterType="EqmVO">
+    SELECT 
+    	 EQM_CD
+		  , EQM_FG
+		  , EQM_NM
+		  , EQM_MDL
+		  , LI_NO
+		  , EMP_ID
+		  , ENERGY
+		  , LF
+		  , TEMP
+		  , UPH
+		  , PRCS_CD
+    FROM EQM
+    ORDER BY 1
+</select>
+
+<!-- 	
+	
+	<insert id="insertEqm">
+		<![CDATA[
+			INSERT INTO EQM 
+				( EQM_CD
+				  , EQM_FG
+				  , EQM_NM
+				  , EQM_MDL
+				  , EQM_SPEC
+				  , EQM_CO
+				  , PURC_DT
+				  , PURC_AMT
+				  , LI_NO
+				  , EMP_ID
+				  , ENERGY
+				  , LF
+				  , TEMP
+				  , UPH
+				  , EQM_IMG
+				  , PRCS_CD )
+			VALUES ( #{eqmCd}
+				  , #{eqmFg}
+				  , #{eqmNm}
+				  , #{eqmMdl}
+				  , #{eqmSpec}
+				  , #{eqmCo}
+				  , #{purcDt}
+				  , #{purcAmt}
+				  , #{liNo}
+				  , #{empId}
+				  , #{energy}
+				  , #{lf}
+				  , #{temp}
+				  , #{uph}
+				  , #{eqmImg}
+				  , #{prcsCd} )
+		]]>
+	</insert>
+	
+	<update id="updateEqm">
+		<![CDATA[
+			UPDATE EQM
+			SET EQM_CD=#{eqmCd}
+				, EQM_FG=#{eqmFg}
+				, EQM_NM=#{eqmNm}
+				, EQM_MDL=#{eqmMdl}
+				, EQM_SPEC=#{eqmSpec}
+				, EQM_CO=#{eqmCo}
+				, PURC_DT=#{purcDt}
+				, PURC_AMT=#{purcAmt}
+				, LI_NO=#{liNo}
+				, EMP_ID=#{empId}
+				, ENERGY=#{energy}
+				, LF=#{lf}
+				, TEMP=#{temp}
+				, UPH=#{uph}
+				, EQM_IMG=#{eqmImg}
+				, PRCS_CD=#{prcsCd}
+						WHERE EQM_CD=#{eqmCd}
+				]]>
+	</update>
+	
+	<delete id="deleteEqm">
+		<![CDATA[
+			DELETE FROM EQM 
+						WHERE EQM_CD=#{eqmCd}
+				]]>
+	</delete>
+	
+	<select id="find" resultMap="eqm">
+		<![CDATA[
+			SELECT
+				EQM_CD
+				, EQM_FG
+				, EQM_NM
+				, EQM_MDL
+				, EQM_SPEC
+				, EQM_CO
+				, PURC_DT
+				, PURC_AMT
+				, LI_NO
+				, EMP_ID
+				, ENERGY
+				, LF
+				, TEMP
+				, UPH
+				, EQM_IMG
+				, PRCS_CD
+			FROM EQM
+						WHERE EQM_CD=#{eqmCd}
+				]]>
+	</select>
+	
+	<select id="selectEqmList" parameterType="solar.eqm.mng.service.EqmVO">
+SELECT * FROM (
+	SELECT A.*, ROWNUM RNUM FROM (
+				SELECT
+								EQM_CD
+								, EQM_FG
+								, EQM_NM
+								, EQM_MDL
+								, EQM_SPEC
+								, EQM_CO
+								, PURC_DT
+								, PURC_AMT
+								, LI_NO
+								, EMP_ID
+								, ENERGY
+								, LF
+								, TEMP
+								, UPH
+								, EQM_IMG
+								, PRCS_CD
+						FROM EQM
+				WHERE 1=1
+				<if test="searchKeyword != null and searchKeyword != ''">
+					<if test="searchCondition == 0">AND
+						EQM_CD = #{searchKeyword}
+					</if>
+					<if test="searchCondition == 1">AND
+						EQM_FG LIKE '%' || #{searchKeyword} || '%'
+					</if>
+				</if>
+					ORDER BY 
+						EQM_CD DESC
+		
+		<![CDATA[					
+	) A WHERE ROWNUM <= #{lastIndex}
+)WHERE RNUM > #{firstIndex}
+]]>
+	</select>	
+	<select id="selectEqmListTotCnt" parameterType="solar.eqm.mng.service.EqmVO" resultType="int">
+			SELECT COUNT(*) totcnt
+			FROM EQM
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+				<if test="searchCondition == 0">AND
+					EQM_CD = #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1">AND
+					EQM_FG LIKE '%' || #{searchKeyword} || '%'
+				</if>
+			</if>
+	</select>
+ -->
+</mapper>
