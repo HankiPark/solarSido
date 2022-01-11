@@ -12,7 +12,7 @@
 					class="hide-menu">기준정보관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="tiles/test"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/tiles/test"
 						class="sidebar-link"><span class="hide-menu"> 공통코드 관리 </span></a>
 					</li>
 					<li class="sidebar-item"><a href="form-input-grid.html"
@@ -41,14 +41,14 @@
 					class="hide-menu">영업관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="sales/main"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/sales/order"
 						class="sidebar-link"><span class="hide-menu"> 주문서 참조 </span></a></li>
-					<li class="sidebar-item"><a href="table-dark-basic.html"
-						class="sidebar-link"><span class="hide-menu"> 출고 관리 </span></a></li>
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/sales/prdt_inout_mng"
+						class="sidebar-link"><span class="hide-menu"> 입출고 관리 </span></a></li>
 					<li class="sidebar-item"><a href="table-sizing.html"
-						class="sidebar-link"><span class="hide-menu"> 출고 조회 </span></a></li>
+						class="sidebar-link"><span class="hide-menu"> 입출고 조회 </span></a></li>
 					<li class="sidebar-item"><a href="table-layout-coloured.html"
-						class="sidebar-link"><span class="hide-menu"> 재고 조회 </span></a></li>
+						class="sidebar-link"><span class="hide-menu"> 반품?관리 </span></a></li>
 				</ul></li>
 			<li class="sidebar-item"><a class="sidebar-link has-arrow"
 				href="javascript:void(0)" aria-expanded="false"><i

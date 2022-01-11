@@ -1,34 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.sales.order.service.impl.OrderMapper">
-
 	<select id="findDetail" resultType="Order">
-		select a.*,b.prdt_nm from (select o.order_no
+		select a.*,b.prdt_nm from
+		(select o.order_no
 		,o.recv_dt
-		,o.prog_info 
-		,o.paprd_dt 
-		,d.prdt_cd 
-		,d.order_qty 
-		,d.indica_qty 
+		,o.prog_info
+		,o.paprd_dt
+		,d.prdt_cd
+		,d.order_qty
+		,d.indica_qty
 		,d.oust_qty
 		,d.prdt_stc
 		from order_tb o
-		join order_d d on o.order_no=d.order_no) a join prdt b on a.prdt_cd=b.prdt_cd
+		join order_d d on o.order_no=d.order_no) a
+		join prdt b on a.prdt_cd=b.prdt_cd
 		where a.order_no = #{orderNo}
-
+		order by a.prdt_cd desc
 
 	</select>
 
 	<select id="find" resultType="Order">
-		select o.order_no 
-				,o.recv_dt 
-				,o.prog_info 
-				,o.paprd_dt 
-				,c.co_nm 
-				,dcnt('order_tb',o.order_no) as deNum
-				from order_tb o join co c on o.co_cd=c.co_cd
-	</select>
+		select o.order_no
+		,o.recv_dt
+		,o.prog_info
+		,o.paprd_dt
+		,c.co_nm
+		,dcnt('order_tb',o.order_no) as deNum
+		from order_tb o join co c on o.co_cd=c.co_cd
+		where 
+		<if test="startT!=null or endT!=null">
+			
+			<if test='dateTy == "접수"'>
 
+					<![CDATA[	
+						TO_CHAR(o.recv_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(o.recv_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
+					]]>
+					
+			</if>
+			<if test='dateTy == "납기"'>
+				
+					<![CDATA[	
+					TO_CHAR(o.paprd_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(o.paprd_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
+					]]>
+					
+			</if>
+		</if>
+		<choose>
+			<when test="nowSt !=null and nowSt != ''">
+				<choose>
+					<when test='nowSt == "진행"'>
+						and o.prog_info='진행'
+					</when>
+					<when test='nowSt == "종료"'>
+						and o.prog_info='종료'
+					</when>
+					<when test='nowSt == "모두"'>
+
+					</when>
+				</choose>
+			</when>
+			<otherwise>
+				o.prog_info='진행'
+			</otherwise>
+		</choose>
+	</select>
 
 
 

@@ -1,8 +1,8 @@
 package solar.sales.order.web;
 
 
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +16,29 @@ import solar.sales.order.service.OrderService;
 import twitter4j.Paging;
 
 @Controller
-
 public class OrderController {
 
 	@Autowired OrderService oservice;
 	
-	@RequestMapping("/sales/main")
+	@RequestMapping("/sales/order")
 	public String orderList(Model model,Paging paging)
 	{
 		
-		return "sales/main";
+		return "sales/order";
 	}
 	@GetMapping("/grid/orderList.do")
 
 	public String orderListGrid(Model model,Order order) throws Exception
-	{	
+	{	List<?> list=oservice.find(order);
 		model.addAttribute("result",true);
 		Map<String,Object> map = new HashMap();
-		map.put("contents", oservice.find());
+		Map<String,Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page",1);
+		map2.put("totalCount", list.size());
+		
 		model.addAttribute("data", map);
-
+		model.addAttribute("pagination", map2);
     return "jsonView";
 	}	
 	@GetMapping("/modal/orderDetailList")
@@ -48,13 +51,15 @@ public class OrderController {
 
 	@GetMapping("/grid/orderDetailList.do")
 	public String orderDetailListGrid(Model model,Order order) throws Exception
-	{
+	{	List<?> list=oservice.findDetail(order);
 		model.addAttribute("result",true);
 		Map<String,Object> map = new HashMap();
+		Map<String,Object> map2 = new HashMap();
 		map.put("contents", oservice.findDetail(order));
+		map2.put("page",1);
+		map2.put("totalCount", list.size());
 		model.addAttribute("data", map);
-		
+		model.addAttribute("pagination", map2);
 		return "jsonView";
 	}
-
 }
