@@ -116,6 +116,19 @@
 		id="jsonView">
 		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
+	
+		<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="egovframework.com.cmm.web.EgovBindingInitializer" />
+		</property>
+		<property name="messageConverters">
+	        <list>
+	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	            <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+	        </list>
+    	</property>
+	</bean>
 
 	<!-- Facebook 설정 -->
 	<mvc:default-servlet-handler />

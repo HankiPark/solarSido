@@ -112,9 +112,10 @@
 				.on(
 						'click',
 						function(ev) {
+							console.log(ev);
 							console.log(ev["rowKey"]);
 							console.log(grid.getValue(ev["rowKey"], "orderNo"));
-							if (ev["columnName"] == "deNum"
+							 if (ev["columnName"] == "deNum"
 									&& grid.getValue(ev["rowKey"], "deNum") != 0) {
 								dialog.dialog("open");
 								$("#dialog-form")
@@ -123,9 +124,10 @@
 												function() {
 													newgrid(grid.getValue(
 															ev["rowKey"],
-															"orderNo"))
+															"orderNo"));
+													grid.refreshLayout();
 												})
-							}
+							} 
 						});
 		
 		
@@ -133,7 +135,7 @@
 			
 			var startT = $("#startT").val();
 			var endT = $("#endT").val();
-			var dateTy = $("input[name=dateTy]").val();
+			var dateTy = $("input[name=dateTy]:checked").val();
 			var nowSt = $("[name=nowSt] option:selected").val();
 			console.log(dateTy);
 			
@@ -145,6 +147,7 @@
 			}
 			
 			grid.readData(1,readParams,true);
+			grid.refreshLayout();
 		})
 		
 		

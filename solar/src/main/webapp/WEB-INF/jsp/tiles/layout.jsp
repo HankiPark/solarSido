@@ -16,6 +16,9 @@
     <link href="${pageContext.request.contextPath}/resources/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="${pageContext.request.contextPath}/resources/dist/css/style.min.css" rel="stylesheet">
+      <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
 <style>
 
 
@@ -39,9 +42,7 @@
 
 
 
-    <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->
     <script src="${pageContext.request.contextPath}/resources/dist/js/app-style-switcher.js"></script>
