@@ -1,7 +1,7 @@
 package solar.eqm.mng.service;
 
 import lombok.Data;
-
+ 
 @Data
 public class EqmVO {
 	String eqmCd;

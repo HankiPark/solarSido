@@ -4,7 +4,7 @@ import java.util.List;
 
 import solar.eqm.mng.service.EqmVO;
 
-public interface EqmMapper {
+public interface EqmMapper { 
 	List<EqmVO> eqmList(EqmVO vo); 		//조회
 	int eqmInsert(EqmVO vo);			//등록
 	int eqmDelete(EqmVO vo);			//삭제
