@@ -20,11 +20,11 @@ public class OrderController {
 
 	@Autowired OrderService oservice;
 	
-	@RequestMapping("/sales/main")
+	@RequestMapping("/sales/order")
 	public String orderList(Model model,Paging paging)
 	{
 		
-		return "sales/main";
+		return "sales/order";
 	}
 	@GetMapping("/grid/orderList.do")
 
