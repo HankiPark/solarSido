@@ -21,7 +21,9 @@
     <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
     <link rel="stylesheet"
 	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
-
+<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
+	<script
+		src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -31,6 +33,7 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
 <style>
 
 
@@ -67,8 +70,7 @@
     <script src="${pageContext.request.contextPath}/resources/assets/libs/moment/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/dist/js/pages/calendar/cal-init.js"></script>
-	<script
-		src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 
+<script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
 </body>
 </html>

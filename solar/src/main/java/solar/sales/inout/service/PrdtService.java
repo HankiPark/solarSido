@@ -1,5 +1,10 @@
 package solar.sales.inout.service;
 
-public interface PrdtService {
+import java.util.List;
 
+import solar.sales.inout.dao.Prdt;
+
+public interface PrdtService {
+	List<Prdt> findList(Prdt vo);
+	List<Prdt> findPrdt(Prdt vo);
 }

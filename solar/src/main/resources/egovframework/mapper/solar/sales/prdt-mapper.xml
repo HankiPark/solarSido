@@ -1,8 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.sales.inout.service.impl.PrdtMapper">
+	<select id="findList" resultType="Prdt">
+	select p.prdt_lot,
+		   p.prdt_dt,
+		   p.prdt_cd,
+		   o.prdt_nm,
+		   o.prdt_spec
+		   from prdt_stc p join prdt o 
+		   on p.prdt_cd = o.prdt_cd
+		   where
+			   	<![CDATA[	
+					TO_CHAR(p.prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(p.prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
+				]]>
+				<if test="prdNm !=null and prdNm !=''">
+					and o.prdt_nm=#{prdNm}
+				</if>
+				<if test="prdSt !=null and prdSt !=''">
+					and p.prdt_fg = #{prdSt}
+				</if>
+				
+				
+				
+				
+			order by p.prdt_dt asc
+					
+	</select>
 
-
+	<select id="findPrdt" resultType="Prdt">
+	select * from prdt
+		<where>
+		<choose>
+			<when test="prdCd !=null and prdCd!='' and prdNm!=null and prdNm!=''">
+				prdt_cd=#{prdCd} and prdt_nm=#{prdNm}
+			</when>
+			<when test="prdCd !=null and prdCd!=''">
+				prdt_cd=#{prdCd}
+			</when>
+			<when test=" prdNm!=null and prdNm!=''">
+				prdt_nm=#{prdNm}
+			</when>
+			</choose>
+		</where>
+		order by prdt_cd asc
+	
+	</select>
 
 
 
