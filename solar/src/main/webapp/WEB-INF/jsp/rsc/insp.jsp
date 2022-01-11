@@ -21,14 +21,18 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 
 <body>
-  <h1>자재발주정보</h1>
+  <h1>자재검수</h1>
   <div id="coModal" title="업체 목록">Loading..</div>
   <div id="rscModal" title="자재 목록">Loading..</div>
+  <div id="inspModal" title="검수">Loading..</div>
   <form id="ordrQueryFrm" name="ordrQueryFrm">
-    발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd"><br>
+    발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
+    미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
+    <br>
     발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
     자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
     <button type="button" id="ordrQueryBtn">조회</button>
+    <button type="button" id="inspSaveBtn">저장</button>
   </form>
   <div id="grid"></div>
 </body>
@@ -61,25 +65,48 @@
         name: 'rscIstQty'
       },
       {
+        header: '불량량',
+        name: 'rscInferQty'
+      },
+      {
         header: '발주번호',
         name: 'ordrCd'
       },
       {
         header: '업체',
         name: 'coNm'
+      },
+      {
+        header: '검수여부',
+        name: 'inspCls'
       }
     ]
   });
 
-  $.ajax({
-    url: "ordrData",
-    method: "GET",
-    dataType: "JSON"
-  }).done(function (result) {
-    console.log(result);
-    grid.resetData(result.rscOrdr);
-    grid.refreshLayout();
-  });
+	$.ajax({
+		url: "ordrData",
+		method: "GET",
+		dataType: "JSON"
+	}).done(function (result) {
+		console.log(result);
+		grid.resetData(result.rscOrdr);
+		grid.refreshLayout();
+	});
+
+	let inspDialog = $("#inspModal").dialog({
+		modal: true,
+		autoOpen: false,
+		buttons: {"저장":function(){alert("저장")},
+		"닫기":function(){inspDialog.dialog("close");}
+		}
+	});
+
+	grid.on('dblclick',function(ev){
+	if(ev.columnName == "inspCls"){
+		inspDialog.dialog("open");
+		$("#inspModal").load("inspModal");
+	}
+	});
 
 //
 
@@ -90,12 +117,12 @@
     let ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
     let co = document.ordrQueryFrm.co.value;
     let rsc = document.ordrQueryFrm.rsc.value;
+    let isNotInspected = document.ordrQueryFrm.isNotInspected.checked;
 
     $.ajax({
-      url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc,
+      url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc + "&isNotInspected=" + isNotInspected,
       method: "GET",
-      dataType: "JSON",
-      //data: JSON.stringify(obj)
+      dataType: "JSON"
     }).done(function (result) {
       console.log(result);
       grid.resetData(result.rscOrdr);
@@ -124,7 +151,7 @@
 
   $("#rscSearchBtn").on("click", function () {
     rscDialog.dialog("open");
-    $("#rscModal").load("../rsc");
+    $("#rscModal").load("inspData");
   });
 </script>
 

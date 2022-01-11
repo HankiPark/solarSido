@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.rsc.infer.service.impl.RscInferMapper">
+
+	<select id="selectAll" resultType="solar.rsc.infer.service.RscInfer">
+		select * from cmmn_data_d where cmmn_cd_id = 'rscinfer'
+	</select>
+
+</mapper>
