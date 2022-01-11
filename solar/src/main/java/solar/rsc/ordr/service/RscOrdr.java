@@ -11,6 +11,8 @@ public class RscOrdr {
 	String ordrCd;
 	String coNm;
 	String rscIstQty;
+	String rscInferQty;
+	String inspCls;
 	public String getOrdrDt() {
 		return ordrDt;
 	}
@@ -53,10 +55,17 @@ public class RscOrdr {
 	public void setRscIstQty(String rscIstQty) {
 		this.rscIstQty = rscIstQty;
 	}
-	@Override
-	public String toString() {
-		return "RscOrdr [ordrDt=" + ordrDt + ", rscNm=" + rscNm + ", rscCd=" + rscCd + ", ordrQty=" + ordrQty
-				+ ", ordrCd=" + ordrCd + ", coNm=" + coNm + ", rscIstQty=" + rscIstQty + "]";
+	public String getRscInferQty() {
+		return rscInferQty;
+	}
+	public void setRscInferQty(String rscInferQty) {
+		this.rscInferQty = rscInferQty;
+	}
+	public String getInspCls() {
+		return inspCls;
+	}
+	public void setInspCls(String inspCls) {
+		this.inspCls = inspCls;
 	}
 	
 }

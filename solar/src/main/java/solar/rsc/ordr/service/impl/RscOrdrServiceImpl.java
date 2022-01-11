@@ -1,6 +1,7 @@
 package solar.rsc.ordr.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 	RscOrdrMapper rscOrdrMapper;
 	
 	@Override
-	public List<RscOrdr> selectAll() {
-		return rscOrdrMapper.selectAll();
+	public List<RscOrdr> search(Map map) {
+		return rscOrdrMapper.search(map);
 	}
 }
