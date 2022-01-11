@@ -13,6 +13,12 @@
 </head>
 <body>
 <h3>공정정보관리</h3>
+<div>
+	<button type="button" id="btnFind">조회</button>
+	<button type="button" id="btnAdd">추가</button>
+	<button type="button" id="btnDel">삭제</button>
+	<button type="button" id="btnSave">저장</button>
+</div>
 	<div id="grid">
 	</div>
 <script>
@@ -48,7 +54,7 @@ const columns = [
 
 const dataSource = {
 	  api: {
-	    	readData: { url: '${pageContext.request.contextPath}/grid/fairSelect', 
+	    	readData: { url: '${pageContext.request.contextPath}/grid/fairList.do', 
 				    	method: 'GET', 
 				    	initParams: { param: 'param' } },
 			modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
@@ -69,7 +75,7 @@ const grid = new Grid({
 	  });
 grid.on('click', (ev) => {
 		console.log(ev);
-	  	console.log('clicked!!');	
+	  	console.log('clicked!!'); 
 	})
 grid.on('response', function(ev) {
 		  // 성공/실패와 관계 없이 응답을 받았을 경우

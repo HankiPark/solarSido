@@ -21,7 +21,7 @@
 					<li class="sidebar-item"><a href="form-checkbox-radio.html"
 						class="sidebar-link"><span class="hide-menu"> 제품 BOM 관리
 						</span></a></li>
-					<li class="sidebar-item"><a href="form-checkbox-radio.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/fair"
 						class="sidebar-link"><span class="hide-menu"> 공정 관리 </span></a></li>
 					<li class="sidebar-item"><a href="form-checkbox-radio.html"
 						class="sidebar-link"><span class="hide-menu"> 사원 관리 </span></a></li>
