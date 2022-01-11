@@ -9,26 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import solar.prcs.prcs.service.PrcsService;
 
 @Controller
-@RequestMapping("/prcs")
 public class PrcsController {
 
 	@Autowired PrcsService prcsservice;
 	
 	
-	@RequestMapping("/prog")
+	@RequestMapping("/prcs/prog")
 	public String go() {
 		return "prcs/prcsprog";
 	}
 	
-	
-	@GetMapping
-	public String find(Model model) {
-		
-		model.addAttribute("prcs", prcsservice.SelectAll());
-		
-		return "JsonView";
-		
+	@RequestMapping("/modal/searchIndica")
+	public String callModal() {
+		return "modal/searchIndica";
 	}
+
 	
 	
 	
