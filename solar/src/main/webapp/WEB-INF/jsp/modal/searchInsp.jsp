@@ -28,7 +28,19 @@ var inferGrid = new tui.Grid({
         name: 'rscInferQty',
         editor: 'text'
       }
-    ]
+    ],
+    summary: {
+    	position: 'bottom',
+    	height: 50,
+    	columnContent: {
+    		rscInferQty:{
+    			template(summary){
+    				document.ordrQueryFrm.sum.value = summary.sum;
+    				return '합계: ' + summary.sum;
+    			}
+    		}
+    	}
+    }
   });
   
 $.ajax({

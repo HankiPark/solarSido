@@ -16,7 +16,7 @@
 		join order_d d on o.order_no=d.order_no) a
 		join prdt b on a.prdt_cd=b.prdt_cd
 		where a.order_no = #{orderNo}
-		order by a.prdt_cd desc
+		order by a.prdt_cd asc
 
 	</select>
 
@@ -64,6 +64,8 @@
 				o.prog_info='진행'
 			</otherwise>
 		</choose>
+		
+		order by o.order_no asc
 	</select>
 
 

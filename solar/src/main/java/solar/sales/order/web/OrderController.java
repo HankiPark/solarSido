@@ -55,11 +55,11 @@ public class OrderController {
 		model.addAttribute("result",true);
 		Map<String,Object> map = new HashMap();
 		Map<String,Object> map2 = new HashMap();
-		map.put("contents", oservice.findDetail(order));
+		map.put("contents", list);
 		map2.put("page",1);
 		map2.put("totalCount", list.size());
 		model.addAttribute("data", map);
-		model.addAttribute("pagination", map2);
+		
 		return "jsonView";
 	}
 }
