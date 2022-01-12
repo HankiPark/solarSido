@@ -15,45 +15,46 @@
 </head>
 <body>
 
-	<div id="dialog-form" title="모달테스트"></div>
+	<div id="dialog-form" title="작업지시번호"></div>
 
 
 	<div>
 		<div class="row">
-			<div class="col-6">
-				지시번호 : <input type="text" id="indicaDetaNo"><button type="button" id="searchIndic">돋</button><br><br>
+			<div class="col-5">
+				지시번호 : <input type="text" id="indicaDetaNo"><button type="button" id="searchIndica">돋</button><br><br>
 				제품코드 : <input type="text" id="prdtCd"><br><br>
-				공정명  : <input type="text" id="prcsNm"><br><br>
+				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchPrcs">돋</button><br><br>
 				설비코드 : <input type="text" id="eqmCd"><br><br>
 				라인번호 : <input type="text" id="liNo"><br><br>
 				<br>
-				작업자 : <input type="text" id="empId"> 작업량 : <input type="text" id="wkQty"><br><br> 
+				작업자 : <input type="text" id="empId"><button type="button" id="searchIndic">돋</button> 작업량 : <input type="text" id="wkQty"><br><br> 
 				<input type="text" id="frTm"><button id="btnStart">시작</button><input type="text" id="toTm"><button id="btnStart">종료</button><br>
 				<button id="btnAddPerf">실적등록</button>
 			</div>
 			
 			
 				
+			<div class="col-6" id="grid"></div>
 			
 		</div>	
 	</div>
-<div  id="grid"></div>
 </body>
 
 <script>
 	let dialog = $( "#dialog-form" ).dialog({
 		autoOpen: false,
-		modal:true,		
+		modal:true,
+		width:1000
 		/* buttons : {
 			"save":function(){alert("save")},
 			"upd": function(){alert("upd")}
 		} */	
 	});
 	
-/* 	$("#searchIndic").on("click", function(){
+ 	$("#searchIndica").on("click", function(){
 		dialog.dialog("open");
-		$("#dialog-form").load("../modal/searchIndica", function(){console.log("생산지시상세 Modal로드완료")})
-	});  */
+		$("#dialog-form").load("${pageContext.request.contextPath}/modal/searchIndicaDetail", function(){callIndica()})
+	});  
 
 
 		var Grid = tui.Grid;
@@ -89,7 +90,7 @@
 			];
 		
 		
-		const inDataSource = {
+ 		const inDataSource = {
 				   api : {
 				      readData : {
 				         url : '${pageContext.request.contextPath}/grid/orderList.do',
@@ -99,18 +100,19 @@
 
 				   contentType : 'application/json'
 				};
-		/* const data = 
-			[
-				{prdtLot:"001",prdtNm:"HIS001",prcsNm:"와이퍼생산",lowSt:"완료" },
-			];
- */
+
+ 
 	
 		const grid = new Grid({
 			  el: document.getElementById('grid'),
 			  data : inDataSource ,
 			  columns
 			});	
-	
+ 
+ 		grid.on("response", function(){
+			grid.refreshLayout();
+ 			
+ 		})
 	</script>
 	
 
