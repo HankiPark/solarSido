@@ -26,21 +26,60 @@ public class FairServiceImpl implements FairService {
 	}
 
 	@Override
-	public int insert(FairVO fairVO) {
+	public int fairInsert(FairVO fairVO) {
 		// TODO Auto-generated method stub
-		return fairMapper.insert(fairVO);
+		return fairMapper.fairInsert(fairVO);
 	}
 
 	@Override
-	public int update(FairVO fairVO) {
+	public int fairUpdate(FairVO fairVO) {
 		// TODO Auto-generated method stub
-		return fairMapper.update(fairVO);
+		return fairMapper.fairUpdate(fairVO);
 	}
 
 	@Override
-	public int remove(FairVO fairVO) {
+	public int fairDelete(FairVO fairVO) {
 		// TODO Auto-generated method stub
-		return fairMapper.remove(fairVO);
+		return fairMapper.fairDelete(fairVO);
+	}
+
+	@Override
+	public void createCode(List<FairVO> createdRows) throws Exception {
+		if(createdRows != null) {
+			for(FairVO row : createdRows) {
+				
+			}
+		}
+	}
+
+	@Override
+	public void updateCode(FairVO fairVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCode(FairVO fairVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createCode(FairVO fairVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateCode(List<FairVO> updatedRows) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteCode(List<FairVO> deletedRows) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

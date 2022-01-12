@@ -8,20 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.Data;
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
 import solar.cmm.prcs.service.impl.FairMapper;
 
+@Data
+class fairGridData {
+	private List<FairVO> createRows;
+	private List<FairVO> updateRows;
+	private List<FairVO> deleteRows;	
+}
+
 @Controller
 public class FairController {
-
+	
 	@Autowired FairService fairService;
 	@Autowired FairMapper fairMapper;
 
+	
 	@RequestMapping("common/fair")
 	public String fairList() {
 		return "common/fair";
@@ -38,21 +48,9 @@ public class FairController {
 		return "jsonView";
 	}
 	
-	@RequestMapping(value="/fairInsert", method=RequestMethod.POST)
-	public String insert(FairVO fairVO) {
-		fairService.insert(fairVO);
-		return "fair/insert";
-	} 
-	
-	@RequestMapping(value="/fairUpdate", method=RequestMethod.POST)
-	public String update(FairVO fairVO) {
-		fairService.update(fairVO);
-		return "fair/update";
-	}
-	@RequestMapping(value="/fairRemove", method=RequestMethod.POST)
-	public String remove(FairVO fairVO) {
-		fairService.remove(fairVO);
-		return "redirect:/fair/list";
+	@RequestMapping("/grid/modifyData.do")
+	@ResponseBody
+	public void fairModify(@RequestBody fairGridData fairGridData) throws Exception {
 		
 	}
 	
