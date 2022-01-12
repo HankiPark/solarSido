@@ -6,73 +6,75 @@
 <meta charset="UTF-8">
 <title>gongjung_info</title>
 <link rel="stylesheet"	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 <link rel="stylesheet"	href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
 <script	src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
 </head>
 <body>
 <h3>공정정보관리</h3>
 <div>
-	<button type="button" id="btnFind">조회</button>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
 	<button type="button" id="btnSave">저장</button>
 </div>
 	<div id="grid">
+		
 	</div>
 <script>
-var Grid = tui.Grid;
 
-const columns = [
-	
-	{
-		header : '공정코드',
-		name : 'prcs_cd'
-	},
-	{
-		header : '공정구분',
-		name : 'prcs_fg'
-	},
-	{
-		header : '공정명',
-		name : 'prcs_nm'
-	},
-	{
-		header : '작업설명',
-		name : 'prcs_desct'
-	},
-	{
-		header : '관리단위',
-		name : 'prcs_unit'
-	},
-	{
-		header : '생산일수',
-		name : 'prod_pd'
-	}
-]
+var dataSource = {
+		  api: {
+		    	readData: { url: '${pageContext.request.contextPath}/grid/fairList.do', 
+					    	method: 'GET' 
+					   }
+/*					    	,
+				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
+							method: 'PUT' }
+*/
+				},
+/*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
+				contentType: 'application/json'
+		};
 
-const dataSource = {
-	  api: {
-	    	readData: { url: '${pageContext.request.contextPath}/grid/fairList.do', 
-				    	method: 'GET', 
-				    	initParams: { param: 'param' } },
-			modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
-						method: 'PUT' }
-			},
-			initialRequest : false, // 조회버튼 누르면 값을 불러오겠다
-			contentType: 'application/json'
-	};
 
-const grid = new Grid({
+var grid = new tui.Grid({
 	  el: document.getElementById('grid'),
 	  data:dataSource, 
 	  scrollY : true,
 	  rowHeaders : [ 'rowNum','checkbox' ],
-	  columns, //필드명:값, 같은 경우 생략가능
-	  columnOptions: {
-	  	}  
+	  bodyHeight : 700,
+	  columns : [
+			{
+				header : '공정코드',
+				name : 'prcsCd'
+			},
+			{
+				header : '공정구분',
+				name : 'prcsFg'
+			},
+			{
+				header : '공정명',
+				name : 'prcsNm'
+			},
+			{
+				header : '작업설명',
+				name : 'prcsDesct'
+			},
+			{
+				header : '관리단위',
+				name : 'prcsUnit'
+			},
+			{
+				header : '생산일수',
+				name : 'prodPd'
+			}
+		]  
 	  });
+	  
+	  
 grid.on('click', (ev) => {
 		console.log(ev);
 	  	console.log('clicked!!'); 
@@ -92,10 +94,6 @@ btnDel.addEventListener("click", function(){
 btnSave.addEventListener("click", function(){
 	grid.request('modifyData');
 })
-btnFind.addEventListener("click", function(){
-	//grid.request('modifyData');
-})
-
 </script>
 </body>
 </html>

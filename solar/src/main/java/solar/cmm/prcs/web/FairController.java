@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
@@ -22,20 +23,22 @@ public class FairController {
 	@Autowired FairMapper fairMapper;
 
 	@RequestMapping("common/fair")
-	public String list(Model model, FairVO fairVO) {
+	public String fairList() {
 		return "common/fair";
 	}
 	
 	@GetMapping("/grid/fairList.do")
-	public String fairListGrid(Model model, FairVO fairVO) throws Exception {
+	public String fairList(Model model, FairVO fairVO) throws Exception {
 		
-		List<?> list = fairService.fairList(fairVO);
-		model.addAttribute("result", true);
-		Map<String,Object> map = new HashMap();
-			map.put("contents", list);
-		Map<String,Object> map2 = new HashMap();
-			map2.put("result", true);
-			map2.put("data", map);
+		List<?> fairList = fairService.fairList(fairVO);		
+		Map<String,Object> data = new HashMap<>();
+		Map<String,Object> map = new HashMap<>();
+		data.put("contents", fairList);
+		map.put("page", 1);
+		map.put("totalCount", data.size());
+		
+		model.addAttribute("data", data);
+		model.addAttribute("pagination", map);
 		return "jsonView";
 	}
 	
