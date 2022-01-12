@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import solar.cmm.prdt.dao.PrdtInferVO;
-import solar.cmm.prdt.service.PrdtService;
+import solar.cmm.prdt.service.CmmPrdtService;
 
 @Service
-public class PrdtServiceImpl implements PrdtService {
+public class CmmPrdtServiceImpl implements CmmPrdtService {
 
-	@Autowired PrdtMapper prdtMapper;
+	@Autowired CmmPrdtMapper prdtMapper;
 	
 	@Override
 	public List<PrdtInferVO> prdtList(PrdtInferVO prdtInferVo) {

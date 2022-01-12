@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.prdt.dao.PrdtInferVO;
-import solar.cmm.prdt.service.PrdtService;
-import solar.cmm.prdt.service.impl.PrdtMapper;
+import solar.cmm.prdt.service.CmmPrdtService;
+import solar.cmm.prdt.service.impl.CmmPrdtMapper;
 
 @Controller
-public class PrdtController {
+public class CmmPrdtController {
 
-	@Autowired PrdtService prdtService;
-	@Autowired PrdtMapper prdtMapper;
+	@Autowired CmmPrdtService prdtService;
+	@Autowired CmmPrdtMapper prdtMapper;
 	
 	@RequestMapping("common/prdtinfer")
 	public String prdtList() {

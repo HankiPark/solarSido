@@ -1,10 +1,10 @@
-package solar.cmm.prdt.service;
+package solar.cmm.prdt.service.impl;
 
 import java.util.List;
 
 import solar.cmm.prdt.dao.PrdtInferVO;
 
-public interface PrdtService {
+public interface CmmPrdtMapper {
 	List<PrdtInferVO> prdtList(PrdtInferVO prdtInferVo);
 	public PrdtInferVO findById(String no);
 	public int prdtInsert(PrdtInferVO prdtInferVo);
