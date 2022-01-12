@@ -18,6 +18,7 @@ public class Prdt {
 	String prdtCd;
 	String prdtNm;
 	String prdtSpec;
+	String indicaNo;
 
 
 	//검색조건

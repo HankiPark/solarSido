@@ -25,7 +25,7 @@ document.getElementById('endT2').value = d.toISOString().slice(0, 10);
 	
 	
 	//modal
-	function prdtInWait(lotno){
+	function prdtInWait(key){
 		const inWaitGrid = new tui.Grid({
 			el : document.getElementById('inWaitGrid'), // 컨테이너 엘리먼트
 			data : null,
@@ -38,13 +38,17 @@ document.getElementById('endT2').value = d.toISOString().slice(0, 10);
 			}, {
 				header : '제품LOT',
 				name : 'prdtLot',
-				editor : 'text'
+				
 			}, {
 				header : '제품코드',
 				name : 'prdtCd'
 			}, {
 				header : '제품명',
 				name : 'prdtNm',
+			}, {
+				header : '규격',
+				name : 'prdtSpec',
+				hidden: true
 			}, {
 				header : '생산지시번호',
 				name : 'indicaNo'
@@ -81,6 +85,27 @@ document.getElementById('endT2').value = d.toISOString().slice(0, 10);
 				inWaitGrid.resetData(sres["data"]["contents"]);
 			})
 	});
+		
+		inWaitGrid
+		.on(
+				'dblclick',
+				function(ev) {
+					if(ev["rowKey"]!=null){
+					console.log(inWaitGrid.getValue(ev["rowKey"],"prdtLot"));
+					inGrid.setValue(key,'prdtLot',inWaitGrid.getValue(ev["rowKey"],"prdtLot"));
+					inGrid.setValue(key,'prdtCd',inWaitGrid.getValue(ev["rowKey"],"prdtCd"));
+					inGrid.setValue(key,'prdtNm',inWaitGrid.getValue(ev["rowKey"],"prdtNm"));
+					inGrid.setValue(key,'prdtSpec',inWaitGrid.getValue(ev["rowKey"],"prdtSpec"));
+					inGrid.setValue(key,'indicaNo',inWaitGrid.getValue(ev["rowKey"],"indicaNo"));
+					dialog2.dialog("close");
+					}
+				});
+		
+		
+		
+		
+		
+		
 	}
 </script>
 </body>
