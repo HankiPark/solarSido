@@ -59,7 +59,7 @@
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordr"
 						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조
 						</span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/insp"
 						class="sidebar-link"><span class="hide-menu"> 자재 입출고 관리
 						</span></a></li>
 					<li class="sidebar-item"><a href="chart-knob.html"

@@ -10,11 +10,17 @@
 	<div id="inferGrid"></div>
 </body>
 <script>
+/* let dataSource = {
+		  api: {
+		    readData: { url: '../rsc/inspData', method: 'GET'}
+		  }
+		}; */
+		
 var inferGrid = new tui.Grid({
     el: document.getElementById('inferGrid'),
     scrollX: true,
     scrollY: true,
-    data: [],
+    data: inferDataSource,
     columns: [{
         header: '불량코드',
         name: 'cmmnCdDetaId'
@@ -43,7 +49,7 @@ var inferGrid = new tui.Grid({
     }
   });
   
-$.ajax({
+/* $.ajax({
     url: "../rsc/inspData",
     method: "GET",
     dataType: "JSON"
@@ -51,6 +57,6 @@ $.ajax({
 	  console.log(result.insp);
     inferGrid.resetData(result.insp);
     inferGrid.refreshLayout();
-  });
+  }); */
 </script>
 </html>
