@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.prcs.prcs.service.impl.PrcsMapper">
+
+<select id="selectAll" resultType="solar.prcs.prcs.service.PrcsVO">
+
+		select wk_no,
+				wk_dt,
+				prod_fg,
+				prdt_cd,
+				ist_qty,
+				wk_qty,
+				infer_qty,
+				prdt_lot,
+				expc_tm,
+				real_tm,
+				prcs_cd,
+				indica_deta_no,
+				indica_no,
+				indica_dt
+				
+		 from prcs_pr_m
+		 
+</select>
+
+<select id="selectPDay" resultType="solar.prcs.prcs.service.IndicaVO">
+
+	SELECT id.INDICA_DETA_NO,
+			id.INDICA_NO,
+			TO_CHAR(id.INDICA_DT,'yyyy-MM-dd'),
+			id.PLAN_DETA_NO,
+			id.PRDT_CD,
+			id.PROD_FG,
+			id.INDICA_QTY,
+			id.WK_ORD,
+			TO_CHAR(id.WK_DT,'yyyy-MM-dd'),
+			TO_CHAR(id.RECV_DT,'yyyy-MM-dd'),
+			TO_CHAR(id.PLAN_DT,'yyyy-MM-dd'),
+			id.ORDER_NO,
+			i.INDICA_NM
+	FROM INDICA i,
+		INDICA_D id
+	WHERE i.INDICA_NO = id.INDICA_NO
+	AND i.INDICA_DT = id.INDICA_DT
+	
+	
+	
+	
+</select>
+
+</mapper>

@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface PrcsService {
 
-	List<PrcsVO> SelectAll();
-	
+	List<PrcsVO> selectAll();
+	List<IndicaVO> selectPDay(IndicaVO vo);
 }
