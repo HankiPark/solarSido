@@ -21,20 +21,23 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 
 <body>
-  <h1>자재검수</h1>
-  <div id="coModal" title="업체 목록">Loading..</div>
-  <div id="rscModal" title="자재 목록">Loading..</div>
-  <div id="inspModal" title="검수">Loading..</div>
-  <form id="ordrQueryFrm" name="ordrQueryFrm">
-    발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
-    미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
-    <br>
-    발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
-    자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
-    <button type="button" id="ordrQueryBtn">조회</button>
-    <button type="button" id="inspSaveBtn">저장</button>
-  </form>
-  <div id="grid"></div>
+	<h1>자재검수</h1>
+	<div id="coModal" title="업체 목록">Loading..</div>
+	<div id="rscModal" title="자재 목록">Loading..</div>
+	<div id="inspModal" title="검수">Loading..</div>
+		<form id="ordrQueryFrm" name="ordrQueryFrm">
+			발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
+			미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
+			<br>
+			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
+			자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
+			<input type="hidden" id="sum" name="sum">
+			<input type="hidden" id="curRowKey" name="curRowKey">
+			<input type="hidden" id="curColumnName" name="curColumnName">
+			<button type="button" id="ordrQueryBtn">조회</button>
+			<button type="button" id="inspSaveBtn">저장</button>
+		</form>
+	<div id="grid"></div>
 </body>
 
 <script>
@@ -96,13 +99,21 @@
 	let inspDialog = $("#inspModal").dialog({
 		modal: true,
 		autoOpen: false,
-		buttons: {"저장":function(){alert("저장")},
+		buttons: {"저장":function(){
+			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'inspCls', 1);
+			console.log(document.ordrQueryFrm.curRowKey.value);
+			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'rscInferQty', document.ordrQueryFrm.sum.value);
+			
+			inspDialog.dialog("close");
+		},
 		"닫기":function(){inspDialog.dialog("close");}
 		}
 	});
 
 	grid.on('dblclick',function(ev){
 	if(ev.columnName == "inspCls"){
+		document.ordrQueryFrm.curRowKey.value = ev.rowKey;
+		document.ordrQueryFrm.curColumnName.value = ev.columnName;
 		inspDialog.dialog("open");
 		$("#inspModal").load("inspModal");
 	}
