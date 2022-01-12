@@ -2,51 +2,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.sales.inout.service.impl.PrdtMapper">
 	<select id="findList" resultType="Prdt">
-	select p.prdt_lot,
-		   p.prdt_dt,
-		   p.prdt_cd,
-		   o.prdt_nm,
-		   o.prdt_spec
-		   from prdt_stc p join prdt o 
-		   on p.prdt_cd = o.prdt_cd
-		   where
+		select p.prdt_lot,
+		p.prdt_dt,
+		p.prdt_cd,
+		o.prdt_nm,
+		o.prdt_spec,
+		k.indica_no
+		from prdt_stc p join prdt o
+		on p.prdt_cd = o.prdt_cd
+		join indica_d k
+		on p.indica_deta_no=k.indica_deta_no
+		where
 			   	<![CDATA[	
 					TO_CHAR(p.prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(p.prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
 				]]>
-				<if test="prdNm !=null and prdNm !=''">
-					and o.prdt_nm=#{prdNm}
-				</if>
-				<if test="prdSt !=null and prdSt !=''">
-					and p.prdt_fg = #{prdSt}
-				</if>
-				
-				
-				
-				
-			order by p.prdt_dt asc
-					
+		<if test="prdNm !=null and prdNm !=''">
+			and o.prdt_nm=#{prdNm}
+		</if>
+		<if test="prdSt !=null and prdSt !=''">
+			and p.prdt_fg = #{prdSt} and p.prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg ='I')
+		</if>
+		order by p.prdt_dt asc
+
 	</select>
 
 	<select id="findPrdt" resultType="Prdt">
-	select * from prdt
+		select * from prdt
 		<where>
-		<choose>
-			<when test="prdCd !=null and prdCd!='' and prdNm!=null and prdNm!=''">
-				prdt_cd=#{prdCd} and prdt_nm=#{prdNm}
-			</when>
-			<when test="prdCd !=null and prdCd!=''">
-				prdt_cd=#{prdCd}
-			</when>
-			<when test=" prdNm!=null and prdNm!=''">
-				prdt_nm=#{prdNm}
-			</when>
+			<choose>
+				<when
+					test="prdCd !=null and prdCd!='' and prdNm!=null and prdNm!=''">
+					prdt_cd=#{prdCd} and prdt_nm=#{prdNm}
+				</when>
+				<when test="prdCd !=null and prdCd!=''">
+					prdt_cd=#{prdCd}
+				</when>
+				<when test=" prdNm!=null and prdNm!=''">
+					prdt_nm=#{prdNm}
+				</when>
 			</choose>
 		</where>
 		order by prdt_cd asc
-	
+
 	</select>
 
 
 
 
+
+
+	<insert id="insertInPrdt">
+		insert into prdt_stc select
+		#{prdtLot},#{prdtDt},'I',prdt_cd,indica_deta_no from prdt_stc where
+		prdt_lot =#{prdtLot} 
+	</insert>
+
+	<delete id="deleteInPrdt">
+
+	
+	</delete>
+
+	<update id="updateInPrdt">
+	
+	
+	</update>
 </mapper>
