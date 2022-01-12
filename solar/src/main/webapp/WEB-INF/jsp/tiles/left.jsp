@@ -56,7 +56,7 @@
 					class="hide-menu">자재관리</span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="rsc/ordr"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordr"
 						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조
 						</span></a></li>
 					<li class="sidebar-item"><a href="chart-knob.html"
