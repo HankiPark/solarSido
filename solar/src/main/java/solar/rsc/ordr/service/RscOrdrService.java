@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface RscOrdrService {
 	List<RscOrdr> search(Map map);
+	int update();
 }

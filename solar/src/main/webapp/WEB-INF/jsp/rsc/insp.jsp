@@ -33,12 +33,23 @@
 </body>
 
 <script>
-  //그리드
+  let inferDataSource = {
+		  api: {
+			    readData: { url: '../rsc/inspData', method: 'GET'}
+			  }
+			};
+  let ordrDataSource = {
+		  api: {
+			    readData: { url: 'ordrData', method: 'GET'},
+  				modifyData: {url: '',method: 'PUT'}
+			  }
+			};
+  
   var grid = new tui.Grid({
     el: document.getElementById('grid'),
     scrollX: false,
     scrollY: false,
-    data: [],
+    data: ordrDataSource,
     columns: [{
         header: '발주일',
         name: 'ordrDt'
@@ -78,7 +89,7 @@
     ]
   });
 
-	$.ajax({
+/* 	$.ajax({
 		url: "ordrData",
 		method: "GET",
 		dataType: "JSON"
@@ -86,7 +97,7 @@
 		console.log(result);
 		grid.resetData(result.rscOrdr);
 		grid.refreshLayout();
-	});
+	}); */
 
 	let inspDialog = $("#inspModal").dialog({
 		modal: true,
@@ -154,7 +165,7 @@
 
   $("#rscSearchBtn").on("click", function () {
     rscDialog.dialog("open");
-    $("#rscModal").load("inspData");
+    $("#rscModal").load("../rsc");
   });
 </script>
 

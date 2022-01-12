@@ -19,4 +19,9 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 	public List<RscOrdr> search(Map map) {
 		return rscOrdrMapper.search(map);
 	}
+
+	@Override
+	public int update() {
+		return rscOrdrMapper.update();
+	}
 }

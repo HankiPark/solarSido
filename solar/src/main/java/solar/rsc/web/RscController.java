@@ -1,5 +1,7 @@
 package solar.rsc.web;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +58,20 @@ public class RscController {
 	}
 	
 	@GetMapping("rsc/inspData")
-	public String rscInspData(@RequestParam Map<String,String> map, Model model) {
-		model.addAttribute("insp",rscInferService.selectAll());
+	public String rscInspData(/*@RequestParam Map<String,String> map, */Model model) {
+		Map<String,Object> data = new HashMap<String, Object>();
+		Map<String,Object> page = new HashMap<String, Object>();
+		List<?> list = rscInferService.selectAll();
+		
+		model.addAttribute("result",true);
+		
+		page.put("page", 1);
+		page.put("totalCount", list.size());
+		
+		data.put("contents", list);
+		data.put("pagination", page);
+		
+		model.addAttribute("data", data);
 		return "jsonView";
 	}
 	
@@ -65,5 +79,11 @@ public class RscController {
 	public String rscInspModal() {
 		return "modal/searchInsp";
 	}
+	
+//	@PutMapping("rsc/ordrData")
+//	public String rscOrdrData(ModifyVo<Rsc> mvo) {
+//		rscOrdrService.update();
+//		return "";
+//	}
 
 }
