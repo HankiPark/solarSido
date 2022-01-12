@@ -29,11 +29,9 @@ var dataSource = {
 		  api: {
 		    	readData: { url: '${pageContext.request.contextPath}/grid/fairList.do', 
 					    	method: 'GET' 
-					   }
-/*					    	,
+					   },
 				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
 							method: 'PUT' }
-*/
 				},
 /*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
 				contentType: 'application/json'
@@ -82,7 +80,7 @@ grid.on('click', (ev) => {
 grid.on('response', function(ev) {
 		  // 성공/실패와 관계 없이 응답을 받았을 경우
 		console.log(ev);
-		grid.resetOriginData(); //변경된 데이터로 확정
+		grid.refreshLayout(); //변경된 데이터로 확정
 	})
 
 btnAdd.addEventListener("click", function(){

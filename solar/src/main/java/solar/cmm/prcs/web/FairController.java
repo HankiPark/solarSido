@@ -29,16 +29,12 @@ public class FairController {
 	
 	@GetMapping("/grid/fairList.do")
 	public String fairList(Model model, FairVO fairVO) throws Exception {
-		
 		List<?> fairList = fairService.fairList(fairVO);		
 		Map<String,Object> data = new HashMap<>();
 		Map<String,Object> map = new HashMap<>();
-		data.put("contents", fairList);
-		map.put("page", 1);
-		map.put("totalCount", data.size());
-		
+		data.put("contents", fairList);		
+		model.addAttribute("result", true);
 		model.addAttribute("data", data);
-		model.addAttribute("pagination", map);
 		return "jsonView";
 	}
 	
