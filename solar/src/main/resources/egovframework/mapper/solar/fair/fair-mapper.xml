@@ -2,28 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.cmm.prcs.service.impl.FairMapper">
 
-	<select id="selectAll" resultType="solar.cmm.prcs.dao.FairVO">
+	<select id="fairList" resultType="solar.cmm.prcs.dao.FairVO">
 	SELECT * FROM PRCS
 	</select>
 
 	<update id="update">
 		UPDATE	PRCS
-		SET PRCS_FG = #{prcs_fg}
-			, PRCS_NM = #{prcs_nm}
-            , PRCS_DESCT = #{prcs_desct}
-            , PRCS_UNIT = #{prcs_unit}
-			, PROD_PD = #{prod_pd}
-		WHERE PRCS_CD = #{prcs_cd}
+		SET PRCS_FG = #{prcsFg}
+			, PRCS_NM = #{prcsNm}
+            , PRCS_DESCT = #{prcsDesct}
+            , PRCS_UNIT = #{prcsUnit}
+			, PROD_PD = #{prodPd}
+		WHERE PRCS_CD = #{prcsCd}
 	</update>
 
 	<insert id="insert">
 		INSERT INTO PRCS(PRCS_CD, PRCS_FG, PRCS_NM, PRCS_DESCT, PRCS_UNIT, PROD_PD) 
-		VALUES (#{prcs_cd}, #{prcs_fg}, #{prcs_nm}, #{prcs_desct}, #{prcs_unit}, #{prod_pd})
+		VALUES (#{prcsCd}, #{prcsFg}, #{prcsNm}, #{prcsDesct}, #{prcsUnit}, #{prodPd})
 	</insert>
 
 	<delete id="remove">
 		DELETE FROM PRCS
-		WHERE PRCS_CD = #{prcs_cd}
+		WHERE PRCS_CD = #{prcsCd}
 	</delete>
 
 </mapper>

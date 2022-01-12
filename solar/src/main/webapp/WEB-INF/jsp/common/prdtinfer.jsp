@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>gongjung_info</title>
+<title>제품 불량내역 관리</title>
 <link rel="stylesheet"	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
 <link rel="stylesheet"	href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
@@ -14,7 +14,7 @@
 <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
 </head>
 <body>
-<h3>공정정보관리</h3>
+<h3>제품 불량내역 관리</h3>
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
@@ -24,10 +24,9 @@
 		
 	</div>
 <script>
-
 var dataSource = {
 		  api: {
-		    	readData: { url: '${pageContext.request.contextPath}/grid/fairList.do', 
+		    	readData: { url: '${pageContext.request.contextPath}/grid/prdtList.do', 
 					    	method: 'GET' 
 					   },
 				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
@@ -44,32 +43,25 @@ var grid = new tui.Grid({
 	  scrollY : true,
 	  rowHeaders : [ 'rowNum','checkbox' ],
 	  bodyHeight : 700,
-	  columns : [
+	  columns : 
+		  [
+			{
+				header : '불량코드',
+				name : 'prdtInferCd'
+			},
 			{
 				header : '공정코드',
-				name : 'prcsCd'
+				name : 'prcsInferCd'
 			},
 			{
-				header : '공정구분',
-				name : 'prcsFg'
+				header : '불량명',
+				name : 'prdtInferNm'
 			},
 			{
-				header : '공정명',
-				name : 'prcsNm'
-			},
-			{
-				header : '작업설명',
-				name : 'prcsDesct'
-			},
-			{
-				header : '관리단위',
-				name : 'prcsUnit'
-			},
-			{
-				header : '생산일수',
-				name : 'prodPd'
+				header : '불량내역',
+				name : 'prdtInferDesct'
 			}
-		]  
+		]
 	  });
 	  
 	  

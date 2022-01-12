@@ -6,8 +6,15 @@ import solar.cmm.prcs.dao.FairVO;
 
 public interface FairService {
 	List<FairVO> fairList(FairVO fairVO);
-	FairVO findById(String no);
-	int insert(FairVO fairVO);
-	int update(FairVO fairVO);
-	int remove(FairVO fairVO);
+	public FairVO findById(String no);
+	public int fairInsert(FairVO fairVO);
+	public int fairUpdate(FairVO fairVO);
+	public int fairDelete(FairVO fairVO);
+	
+	public void createCode(FairVO fairVO);
+	public void updateCode(FairVO fairVO);
+	public void deleteCode(FairVO fairVO);
+	void createCode(List<FairVO> createdRows) throws Exception;
+	void updateCode(List<FairVO> updatedRows) throws Exception;
+	void deleteCode(List<FairVO> deletedRows) throws Exception;
 }
