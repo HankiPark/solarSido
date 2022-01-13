@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import solar.rsc.ordr.service.RscOrdr;
 import solar.rsc.ordr.service.RscOrdrService;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class RscOrdrServiceImpl implements RscOrdrService {
@@ -21,7 +22,14 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 	}
 
 	@Override
-	public int update() {
-		return rscOrdrMapper.update();
+	public void modify(ModifyVO<RscOrdr> mvo) {
+		System.out.println("modifyyyyyyy");
+		System.out.println(mvo.getUpdatedRows());
+		if(mvo.getUpdatedRows() != null) {
+			for(RscOrdr rscOrdr : mvo.getUpdatedRows()) {
+				System.out.println(rscOrdr);
+				rscOrdrMapper.update(rscOrdr);
+			}
+		}
 	}
 }

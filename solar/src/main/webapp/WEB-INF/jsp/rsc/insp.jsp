@@ -13,7 +13,7 @@
 
 
 <body>
-	<h1>자재검수</h1>
+	<h1>자재검수1222</h1>
 	<div id="coModal" title="업체 목록">Loading..</div>
 	<div id="rscModal" title="자재 목록">Loading..</div>
 	<div id="inspModal" title="검수">Loading..</div>
@@ -41,8 +41,9 @@
   let ordrDataSource = {
 		  api: {
 			    readData: { url: 'ordrData', method: 'GET'},
-  				modifyData: {url: '',method: 'PUT'}
-			  }
+  				modifyData: {url: 'ordrData',method: 'PUT'}
+			  },
+			  contentType : 'application/json'
 			};
   
   var grid = new tui.Grid({
@@ -88,6 +89,11 @@
       }
     ]
   });
+  
+    grid.on('response',function(){
+      grid.refreshLayout();
+    });
+  
 
 /* 	$.ajax({
 		url: "ordrData",
@@ -103,10 +109,8 @@
 		modal: true,
 		autoOpen: false,
 		buttons: {"저장":function(){
-			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'inspCls', 1);
-			console.log(document.ordrQueryFrm.curRowKey.value);
 			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'rscInferQty', document.ordrQueryFrm.sum.value);
-			
+			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'inspCls', 1);
 			inspDialog.dialog("close");
 		},
 		"닫기":function(){inspDialog.dialog("close");}
@@ -167,6 +171,12 @@
     rscDialog.dialog("open");
     $("#rscModal").load("../rsc");
   });
+  
+  let saveBtn = document.getElementById('inspSaveBtn');
+  saveBtn.addEventListener('click',function(){
+	  grid.blur();
+	  grid.request('modifyData');
+  })
 </script>
 
 </html>
