@@ -21,8 +21,13 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public List<Order> findDetail(Order order) {
-		omapper.inStcUpdate(order);
 		return omapper.findDetail(order);
+	}
+
+	@Override
+	public int inStcUpdate(Order order) {
+		
+		return omapper.inStcUpdate(order);
 	}
 
 } 

@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import solar.sales.inout.dao.Prdt;
 import solar.sales.inout.service.PrdtService;
 import solar.sales.order.dao.ModifyVO;
+import solar.sales.order.service.impl.OrderMapper;
 
 @Controller
 public class PrdtController {
 
 	@Autowired PrdtService pservice;
+	
 	
 	@RequestMapping("/sales/prdt_inout_mng")
 	public String prdtPage() {

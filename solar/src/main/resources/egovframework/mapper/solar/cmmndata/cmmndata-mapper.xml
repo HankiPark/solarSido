@@ -37,17 +37,16 @@
 	
 	
 <!--상세코드-->
-<select id="cmmndataDetailList" resultType = "solar.cmm.cmmndata.dao.CmmndataVO" > <!--resultType=egov-->
- 	SELECT * FROM CMMN_DATA_D  
-<!-- 
+<select id="cmmndataDetailList" resultType = "solar.cmm.cmmndata.dao.CmmndataVO" > 
+
 	SELECT CMMN_CD_DETA_ID 
 	,	CMMN_CD_ID 	
 	,	CMMN_CD_NM
 	,	CMMN_CD_DESCT
 	FROM CMMN_DATA_D
-	WHERE CMMN_CD_DETA_ID = #{cmmnCdId}
+	WHERE CMMN_CD_ID = #{cmmnCdId}
 	ORDER BY CMMN_CD_DETA_ID
--->
+
 </select>
 
 <insert id="createDetail">
