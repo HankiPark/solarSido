@@ -8,6 +8,8 @@ public class ProdPlanVO {
 	//order
 	String orderNo;		//주문번호
 	String recvDt;		//접수일자
+	String paprdDt;		//납기일자
+	String orderQty; 	//주문량
 	
 	//Plan
 	String planNo;		//생산계획번호
