@@ -19,6 +19,7 @@
 		<typeAlias alias="Order"		type="solar.sales.order.dao.Order" />
 		<typeAlias alias="Prdt"		type="solar.sales.inout.dao.Prdt" />
 		<typeAlias alias="EqmVO"		type="solar.eqm.mng.service.EqmVO" />
+		<typeAlias alias="ProdPlanVO"		type="solar.prod.plan.service.ProdPlanVO" />
 	</typeAliases>
     
 </configuration>
