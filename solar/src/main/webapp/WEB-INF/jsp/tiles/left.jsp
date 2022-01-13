@@ -91,15 +91,15 @@
 						생산관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="ui-buttons.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/prod/prodPlanMng"
 						class="sidebar-link"><span class="hide-menu"> 생산계획 관리 </span></a>
 					</li>
-					<li class="sidebar-item"><a href="ui-modals.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/prod/prodPlanList"
 						class="sidebar-link"><span class="hide-menu"> 생산계획 조회 </span></a>
 					</li>
-					<li class="sidebar-item"><a href="ui-tab.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/prod/indicaMng"
 						class="sidebar-link"><span class="hide-menu"> 생산지시 관리 </span></a></li>
-					<li class="sidebar-item"><a href="ui-tooltip-popover.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/prod/indicaList"
 						class="sidebar-link"><span class="hide-menu"> 생산지시 조회</span></a></li>
 					<li class="sidebar-item"><a href="ui-bootstrap.html"
 						class="sidebar-link"><span class="hide-menu"> 공정 진행 관리
@@ -121,10 +121,10 @@
 					class="collapse  first-level base-level-line">
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/eqm/eqmMng"
 						class="sidebar-link"><span class="hide-menu"> 설비 관리</span></a></li>
-					<li class="sidebar-item"><a href="ui-progressbar.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/eqm/nonMovingMng"
 						class="sidebar-link"><span class="hide-menu"> 설비 비가동
 								관리(NY)</span></a></li>
-					<li class="sidebar-item"><a href="ui-typography.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/eqm/nonMovingList"
 						class="sidebar-link"><span class="hide-menu">설비 비가동
 								조회(NY)</span></a></li>
 				</ul></li>

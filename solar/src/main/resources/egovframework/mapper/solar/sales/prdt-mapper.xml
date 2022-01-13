@@ -19,9 +19,15 @@
 		<if test="prdNm !=null and prdNm !=''">
 			and o.prdt_nm=#{prdNm}
 		</if>
-		<if test="prdSt !=null and prdSt !=''">
+		<choose>
+		<when test="prdSt !=null and prdSt !=''">
 			and p.prdt_fg = #{prdSt} and p.prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg ='I')
-		</if>
+		</when>
+		<otherwise>
+			and p.prdt_fg = 'I'
+		</otherwise>
+		</choose>
+		
 		order by p.prdt_dt asc
 
 	</select>
@@ -51,19 +57,34 @@
 
 
 
+
+
+
 	<insert id="insertInPrdt">
 		insert into prdt_stc select
-		#{prdtLot},#{prdtDt},'I',prdt_cd,indica_deta_no from prdt_stc where
+		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc where
 		prdt_lot =#{prdtLot} 
 	</insert>
 
 	<delete id="deleteInPrdt">
-
+	delete from prdt_stc where prdt_lot=#{prdtLot} and prdt_fg ='I'
 	
 	</delete>
 
 	<update id="updateInPrdt">
-	
+	merge into prdt_stc a
+		using (select prdt_inx,indica_deta_no 
+				from prdt_stc 
+				where prdt_lot = #{prdtLot} and prdt_fg ='C') b
+    	on   (b.prdt_inx = #{prdtInx})
+	    when matched then
+	        update set a.prdt_lot = #{prdtLot},prdt_dt=#{prdtDt} 
+	        			where a.prdt_inx = #{prdtInx}
+	    when not matched then
+	        insert 
+	        	values(
+	        		b.prdt_inx, #{prdtLot}, 'I', #{prdtCd}, b.indica_deta_no, #{prdtDt} 
+	        			)
 	
 	</update>
 </mapper>
