@@ -12,8 +12,8 @@ import lombok.Data;
 public class PrcsVO {
 
 	String wk_no;
-	@JsonFormat
-	@DateTimeFormat
+	@JsonFormat(pattern="yyyy/MM/dd", timezone="Asia/Seoul")		// 보낼때  받을때
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	Date wkDt;
 	String prodFg;
 	String prdtCd;
@@ -26,8 +26,8 @@ public class PrcsVO {
 	String prcsCd;
 	String indicaDetaNo;
 	String indicaNo;
-	@JsonFormat
-	@DateTimeFormat
+	@JsonFormat(pattern="yyyy/MM/dd", timezone="Asia/Seoul")		// 보낼때  받을때
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	Date indicaDt;
 		
 }

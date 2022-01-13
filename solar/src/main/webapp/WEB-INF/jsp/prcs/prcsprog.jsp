@@ -41,6 +41,11 @@
 </body>
 
 <script>
+
+	let indicaGrid
+	let prcsGrid 	
+	
+	
 	let dialog = $( "#dialog-form" ).dialog({
 		autoOpen: false,
 		modal:true,
@@ -53,23 +58,8 @@
 	
  	$("#searchIndica").on("click", function(){
 		dialog.dialog("open");
-		$("#dialog-form").load("${pageContext.request.contextPath}/modal/searchIndicaDetail", function(){callIndica()})
+		$("#dialog-form").load("${pageContext.request.contextPath}/modal/searchIndicaDetail", function(){})
 	});  
-
-
-		var Grid = tui.Grid;
-		
-		Grid.applyTheme('striped', {
-			  cell: {
-			    header: {
-			      background: '#eef'
-			    },
-			    evenRow: {
-			      background: '#fee'
-			    }
-			  }
-			});
-
 
 		const columns = 
 			[ 
@@ -103,14 +93,14 @@
 
  
 	
-		const grid = new Grid({
+		prcsGrid = new tui.Grid({
 			  el: document.getElementById('grid'),
 			  data : inDataSource ,
 			  columns
 			});	
  
- 		grid.on("response", function(){
-			grid.refreshLayout();
+ 		prcsGrid.on("response", function(){
+			prcsGrid.refreshLayout();
  			
  		})
 	</script>

@@ -11,14 +11,12 @@
 	<div id="indicaGrid" style="width: 900px"></div>
 </body>
 <script>
-function callIndica(){
 
-var indicaGrid = new tui.Grid({
+	indicaGrid = new tui.Grid({
     el: document.getElementById('indicaGrid'),
     
     scrollX: false,
     scrollY: true,
-    data: [],
     columns: [{
         header: '생산지시번호',
         name: 'indicaNo'
@@ -69,7 +67,24 @@ var indicaGrid = new tui.Grid({
 		
 		indicaGrid.refreshLayout();
 	}) */
-}
+
+	function getSelectedRows(){
+		 
+        var a = $(".tui-grid-table").find('.tui-grid-cell-selected');
+        var c = []; 
+        $.each(a, function(index, item){
+            var b = Number($(item).data('row-key')); 
+             
+            var z = grid.getValue(b,'idx'); 
+
+            var d = {'idx': z}; 
+            c.push(d);  
+        }); 
+         
+        if(c) return c;
+        else return null;
+     }
+	
  
 $.ajax({
     url: "${pageContext.request.contextPath}/modal/searchIndicaDetail/indica",
@@ -77,7 +92,20 @@ $.ajax({
     dataType: "JSON"
   }).done(function (result) {
 	console.log(result);
-	indicaGrid.resetData(result.contents);
-    indicaGrid.refreshLayout();
-  }); 
+	indicaGrid.resetData(result.data.contents);
+	indicaGrid.refreshLayout();
+  });
+ 
+indicaGrid.on('dblclick', (ev)=>{
+	
+	var rk = ev.rowKey; 
+	console.log(rk);
+	console.log(indicaGrid.getValue(rk,"indicaDetaNo"));
+	
+	
+	
+})
+	
+
+	
 </script>
