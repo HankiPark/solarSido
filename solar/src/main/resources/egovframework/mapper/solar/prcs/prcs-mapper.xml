@@ -27,24 +27,21 @@
 
 	SELECT id.INDICA_DETA_NO,
 			id.INDICA_NO,
-			TO_CHAR(id.INDICA_DT,'yyyy-MM-dd'),
+			id.INDICA_DT,
 			id.PLAN_DETA_NO,
 			id.PRDT_CD,
 			id.PROD_FG,
 			id.INDICA_QTY,
 			id.WK_ORD,
-			TO_CHAR(id.WK_DT,'yyyy-MM-dd'),
-			TO_CHAR(id.RECV_DT,'yyyy-MM-dd'),
-			TO_CHAR(id.PLAN_DT,'yyyy-MM-dd'),
+			id.WK_DT,
+			id.RECV_DT,
+			id.PLAN_DT,
 			id.ORDER_NO,
 			i.INDICA_NM
 	FROM INDICA i,
 		INDICA_D id
 	WHERE i.INDICA_NO = id.INDICA_NO
 	AND i.INDICA_DT = id.INDICA_DT
-	
-	
-	
 	
 </select>
 
