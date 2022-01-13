@@ -23,8 +23,6 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 
 	@Override
 	public void modify(ModifyVO<RscOrdr> mvo) {
-		System.out.println("modifyyyyyyy");
-		System.out.println(mvo.getUpdatedRows());
 		if(mvo.getUpdatedRows() != null) {
 			for(RscOrdr rscOrdr : mvo.getUpdatedRows()) {
 				System.out.println(rscOrdr);

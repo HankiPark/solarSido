@@ -13,7 +13,7 @@
 
 
 <body>
-  <h1>자재발주정보</h1>
+  <h1>자재 발주 참조</h1>
   <div id="coModal" title="업체 목록">Loading..</div>
   <div id="rscModal" title="자재 목록">Loading..</div>
   <form id="ordrQueryFrm" name="ordrQueryFrm">
@@ -26,13 +26,9 @@
 </body>
 
 <script>
-let ordrDtStt=null;
-let ordrDtEnd=null;
-let co=null;
-let rsc=null;
 let ordrDataSource = {
 		  api: {
-			    readData: { url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc, method: 'GET'},
+			    readData: { url: 'ordrData', method: 'GET'},
 				modifyData: {url: 'ordrData',method: 'PUT'}
 			  },
 			  contentType : 'application/json'
@@ -60,8 +56,12 @@ let ordrDataSource = {
         name: 'ordrQty'
       },
       {
-        header: '입고량',
+        header: '받은 수량',
         name: 'rscIstQty'
+      },
+      {
+        header: '불량량',
+        name: 'rscInferQty'
       },
       {
         header: '발주번호',
@@ -70,6 +70,10 @@ let ordrDataSource = {
       {
         header: '업체',
         name: 'coNm'
+      },
+      {
+        header: '검수여부',
+        name: 'inspCls'
       }
     ]
   });
@@ -78,37 +82,30 @@ let ordrDataSource = {
       grid.refreshLayout();
     });
 
-/*   $.ajax({
+   $.ajax({
     url: "ordrData",
     method: "GET",
     dataType: "JSON"
   }).done(function (result) {
     console.log(result);
-    grid.resetData(result.rscOrdr);
+    grid.resetData(result.data.contents);
     grid.refreshLayout();
-  }); */
+  });
 
 //
 
   let ordrQueryBtn = document.getElementById("ordrQueryBtn");
   ordrQueryBtn.addEventListener("click", function () {
-
     ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
     ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
     co = document.ordrQueryFrm.co.value;
     rsc = document.ordrQueryFrm.rsc.value;
-    grid.request('readData');
-/*     $.ajax({
-      url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc,
-      method: "GET",
-      dataType: "JSON",
-      //data: JSON.stringify(obj)
-    }).done(function (result) {
-      console.log(result);
-      grid.resetData(result.rscOrdr);
-      grid.refreshLayout();
-    }); */
-    
+	grid.readData(1,{
+		'ordrDtStt':ordrDtStt,
+		'ordrDtEnd':ordrDtEnd,
+		'co':co,
+		'rsc':rsc
+	});
   });
 
 //

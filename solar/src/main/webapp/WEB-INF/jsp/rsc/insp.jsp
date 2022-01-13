@@ -13,7 +13,7 @@
 
 
 <body>
-	<h1>자재검수1222</h1>
+	<h1>자재 검수 관리</h1>
 	<div id="coModal" title="업체 목록">Loading..</div>
 	<div id="rscModal" title="자재 목록">Loading..</div>
 	<div id="inspModal" title="검수">Loading..</div>
@@ -23,9 +23,6 @@
 			<br>
 			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
 			자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
-			<input type="hidden" id="sum" name="sum">
-			<input type="hidden" id="curRowKey" name="curRowKey">
-			<input type="hidden" id="curColumnName" name="curColumnName">
 			<button type="button" id="ordrQueryBtn">조회</button>
 			<button type="button" id="inspSaveBtn">저장</button>
 		</form>
@@ -33,6 +30,13 @@
 </body>
 
 <script>
+	let curRowKey;
+	let sum;
+  let ordrDtStt;
+  let ordrDtEnd;
+  let co;
+  let rsc;
+  let isNotInspected;
   let inferDataSource = {
 		  api: {
 			    readData: { url: '../rsc/inspData', method: 'GET'}
@@ -68,7 +72,7 @@
         name: 'ordrQty'
       },
       {
-        header: '입고량',
+        header: '받은 수량',
         name: 'rscIstQty'
       },
       {
@@ -90,37 +94,33 @@
     ]
   });
   
-    grid.on('response',function(){
+    grid.on('response',function(ev){
+      if(ev.xhr.responseText =="201"){
+    	  console.log("201");
+    	  grid.readData();
+      }
       grid.refreshLayout();
     });
-  
-
-/* 	$.ajax({
-		url: "ordrData",
-		method: "GET",
-		dataType: "JSON"
-	}).done(function (result) {
-		console.log(result);
-		grid.resetData(result.rscOrdr);
-		grid.refreshLayout();
-	}); */
 
 	let inspDialog = $("#inspModal").dialog({
 		modal: true,
 		autoOpen: false,
-		buttons: {"저장":function(){
-			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'rscInferQty', document.ordrQueryFrm.sum.value);
-			grid.setValue(document.ordrQueryFrm.curRowKey.value, 'inspCls', 1);
+		buttons: {"입력":function(){
+      if(sum > grid.getValue(curRowKey,'rscIstQty')){
+        alert('총량보다 많은 불량량을 입력할 수 없습니다.');
+        return false;
+      }
+			grid.setValue(curRowKey, 'inspCls', '입력됨');
+			grid.setValue(curRowKey, 'rscInferQty', sum);
 			inspDialog.dialog("close");
 		},
 		"닫기":function(){inspDialog.dialog("close");}
 		}
 	});
-
+	
 	grid.on('dblclick',function(ev){
 	if(ev.columnName == "inspCls"){
-		document.ordrQueryFrm.curRowKey.value = ev.rowKey;
-		document.ordrQueryFrm.curColumnName.value = ev.columnName;
+		curRowKey = ev.rowKey;
 		inspDialog.dialog("open");
 		$("#inspModal").load("inspModal");
 	}
@@ -130,23 +130,19 @@
 
   let ordrQueryBtn = document.getElementById("ordrQueryBtn");
   ordrQueryBtn.addEventListener("click", function () {
-
-    let ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
-    let ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
-    let co = document.ordrQueryFrm.co.value;
-    let rsc = document.ordrQueryFrm.rsc.value;
-    let isNotInspected = document.ordrQueryFrm.isNotInspected.checked;
-
-    $.ajax({
-      url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc + "&isNotInspected=" + isNotInspected,
-      method: "GET",
-      dataType: "JSON"
-    }).done(function (result) {
-      console.log(result);
-      grid.resetData(result.rscOrdr);
-      grid.refreshLayout();
-    });
-  })
+    ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
+    ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
+    co = document.ordrQueryFrm.co.value;
+    rsc = document.ordrQueryFrm.rsc.value;
+    isNotInspected = document.ordrQueryFrm.isNotInspected.checked;
+	grid.readData(1,{
+		'ordrDtStt':ordrDtStt,
+		'ordrDtEnd':ordrDtEnd,
+		'co':co,
+		'rsc':rsc,
+		'isNotInspected':isNotInspected
+	});
+  });
 
 //
 
@@ -174,7 +170,6 @@
   
   let saveBtn = document.getElementById('inspSaveBtn');
   saveBtn.addEventListener('click',function(){
-	  grid.blur();
 	  grid.request('modifyData');
   })
 </script>

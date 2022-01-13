@@ -97,11 +97,11 @@ public class RscController {
 		return "modal/searchInsp";
 	}
 	
-//	@ResponseBody
+	@ResponseBody
 	@PutMapping("rsc/ordrData")
-	public void rscOrdrData(/*@RequestBody */ModifyVO<RscOrdr> mvo) {
-		System.out.println(mvo);
+	public int rscOrdrData(@RequestBody ModifyVO<RscOrdr> mvo) {
 		rscOrdrService.modify(mvo);
+		return 201;
 	}
 
 }

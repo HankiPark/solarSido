@@ -59,29 +59,29 @@
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordr"
 						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조
 						</span></a></li>
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/insp"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 입출고 관리
 						</span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 입출고 조회
 						</span></a></li>
 
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 반품 관리
 						</span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 반품 조회
 						</span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 재고 관리
 						</span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 재고 조회
 						</span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 LOT별
 								재고 관리 </span></a></li>
-					<li class="sidebar-item"><a href="chart-knob.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 LOT별
 								재고 조회 </span></a></li>
 				</ul></li>
@@ -134,17 +134,15 @@
 						품질관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="chart-chart-js.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/insp"
 						class="sidebar-link"><span class="hide-menu"> 자재 검수 관리 </span></a></li>
-					<li class="sidebar-item"><a href="chart-chart-js.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 검수 조회 </span></a></li>
 					<li class="sidebar-item"><a href="ui-breadcrumb.html"
 						class="sidebar-link"><span class="hide-menu"> 제품 생산 조회(추적?)</span></a></li>
 					<li class="sidebar-item"><a href="ui-breadcrumb.html"
 						class="sidebar-link"><span class="hide-menu"> LOT별 생산이력 조회</span></a></li>
 				</ul></li>
-
 		</ul>
 	</nav>
-	<!-- End Sidebar navigation -->
 </div>

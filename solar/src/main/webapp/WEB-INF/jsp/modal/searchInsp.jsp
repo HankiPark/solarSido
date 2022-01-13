@@ -41,7 +41,7 @@ var inferGrid = new tui.Grid({
     	columnContent: {
     		rscInferQty:{
     			template(summary){
-    				document.ordrQueryFrm.sum.value = summary.sum;
+    				sum = summary.sum;
     				return '합계: ' + summary.sum;
     			}
     		}
