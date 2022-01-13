@@ -26,12 +26,23 @@
 </body>
 
 <script>
-  //그리드
+let ordrDtStt=null;
+let ordrDtEnd=null;
+let co=null;
+let rsc=null;
+let ordrDataSource = {
+		  api: {
+			    readData: { url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc, method: 'GET'},
+				modifyData: {url: 'ordrData',method: 'PUT'}
+			  },
+			  contentType : 'application/json'
+			};
+			
   var grid = new tui.Grid({
     el: document.getElementById('grid'),
     scrollX: false,
     scrollY: false,
-    data: [],
+    data: ordrDataSource,
     columns: [{
         header: '발주일',
         name: 'ordrDt'
@@ -62,8 +73,12 @@
       }
     ]
   });
+  
+  grid.on('response',function(){
+      grid.refreshLayout();
+    });
 
-  $.ajax({
+/*   $.ajax({
     url: "ordrData",
     method: "GET",
     dataType: "JSON"
@@ -71,19 +86,19 @@
     console.log(result);
     grid.resetData(result.rscOrdr);
     grid.refreshLayout();
-  });
+  }); */
 
 //
 
   let ordrQueryBtn = document.getElementById("ordrQueryBtn");
   ordrQueryBtn.addEventListener("click", function () {
 
-    let ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
-    let ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
-    let co = document.ordrQueryFrm.co.value;
-    let rsc = document.ordrQueryFrm.rsc.value;
-
-    $.ajax({
+    ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
+    ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
+    co = document.ordrQueryFrm.co.value;
+    rsc = document.ordrQueryFrm.rsc.value;
+    grid.request('readData');
+/*     $.ajax({
       url: "ordrData?ordrDtStt=" + ordrDtStt + "&ordrDtEnd=" + ordrDtEnd + "&co=" + co + "&rsc=" + rsc,
       method: "GET",
       dataType: "JSON",
@@ -92,8 +107,9 @@
       console.log(result);
       grid.resetData(result.rscOrdr);
       grid.refreshLayout();
-    });
-  })
+    }); */
+    
+  });
 
 //
 
