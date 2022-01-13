@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="solar.cmm.cmmndata.service.impl.CmmndataMapper">
+	<!-- 공통코드 -->
+<!--
+	<select id="cmmndataList" resultType = "solar.cmm.cmmndata.dao.CmmndataVO">
+ 		SELECT 	* FROM CMMN_DATA
+	</select>
+ -->	
+	<select id="cmmndataList" resultType = "solar.cmm.cmmndata.dao.CmmndataVO">
+		SELECT 	* FROM CMMN_DATA
+		<where>
+			<if test="cmmnCdNm != null and cmmnCdNm != ''">
+			AND CMMN_CD_NM LIKE '%' || #{cmmnCdNm} || '%'
+			</if>
+		</where>
+		ORDER BY CMMN_CD_ID
+	</select>
+	
+<insert id="createCode">
+		INSERT INTO CMMN_DATA(CMMN_CD_ID, CMMN_CD_NM) 
+				VALUES (#{cmmnCdId}, #{cmmnCdNm})
+</insert>
+
+<update id="updateCode">
+		UPDATE CMMN_DATA 
+		SET CMMN_CD_ID = #{cmmnCdId},
+			CMMN_CD_NM = #{cmmnCdNm}
+		WHERE CMMN_CD_ID = #{cmmnCdId}
+</update>
+
+ <delete id="deleteCode">
+      DELETE FROM CMMN_DATA
+      WHERE CMMN_CD_ID = #{CMMN_CD_ID}
+</delete>
+	
+	
+<!--상세코드-->
+<select id="cmmndataDetailList" resultType = "solar.cmm.cmmndata.dao.CmmndataVO" > <!--resultType=egov-->
+ 	SELECT * FROM CMMN_DATA_D  
+<!-- 
+	SELECT CMMN_CD_DETA_ID 
+	,	CMMN_CD_ID 	
+	,	CMMN_CD_NM
+	,	CMMN_CD_DESCT
+	FROM CMMN_DATA_D
+	WHERE CMMN_CD_DETA_ID = #{cmmnCdId}
+	ORDER BY CMMN_CD_DETA_ID
+-->
+</select>
+
+<insert id="createDetail">
+	INSERT INTO CMMN_DATA_D(CMMN_CD_ID, CMMN_CD_DETA_ID, CMMN_CD_NM, CMMN_CD_DESCT) 
+	VALUES (#{cmmnCdId}, #{cmmnCdDetaId}, #{cmmnDtCdNm}, #{cmmnCdDesct})
+</insert>
+
+<update id="updateDetail">
+</update>
+
+<delete id="deleteDetail">
+	DELETE FROM CMMN_DATA_DETA
+	WHERE CMMN_CD_DETA_ID = #{CMMN_CD_DETA_ID}
+</delete>	
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.cmm.uoprcd.service.impl.UoprcdMapper">
+
+	<select id="uoprcdList" resultType="solar.cmm.uoprcd.dao.UoprcdVO">
+		SELECT * FROM UOPR_CD
+		</select>
+
+    <insert id="insert">
+		INSERT INTO UOPR_CD(UOPR_CD, PRCS_CD, PRCS_NM, UOPR_NM, UOPR_DESCT) 
+				VALUES (#{UOPR_CD }, #{PRCS_CD}, #{PRCS_NM }, #{UOPR_NM }, #{UOPR_DESCT })
+	</insert>
+
+    <update id="update">
+		UPDATE	UOPR_CD
+		SET PRCS_CD = #{PRCS_CD }
+			, PRCS_NM = #{PRCS_NM}
+            , UOPR_NM = #{UOPR_NM}
+            , UOPR_DESCT = #{UOPR_DESCT}
+		WHERE UOPR_CD = #{UOPR_CD }
+	</update>
+
+     <delete id="delete">
+      DELETE FROM UOPR_CD
+      WHERE UOPR_CD = #{UOPR_CD}
+   </delete>
+
+</mapper>

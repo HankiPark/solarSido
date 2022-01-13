@@ -12,28 +12,32 @@
 					class="hide-menu">기준정보관리 </span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/tiles/test"
-						class="sidebar-link"><span class="hide-menu"> 공통코드 관리 </span></a>
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/cmmndata"
+						class="sidebar-link"><span class="hide-menu"> 공통코드 관리 
+						</span></a>
 					</li>
-					<li class="sidebar-item"><a href="form-input-grid.html"
-						class="sidebar-link"><span class="hide-menu"> 자재정보 관리 </span></a>
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/rscinfo"
+						class="sidebar-link"><span class="hide-menu"> 자재정보 관리 
+						</span></a>
 					</li>
-					<li class="sidebar-item"><a href="form-checkbox-radio.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/prdtbom"
 						class="sidebar-link"><span class="hide-menu"> 제품 BOM 관리
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/fair"
-						class="sidebar-link"><span class="hide-menu"> 공정 관리 </span></a></li>
-					<li class="sidebar-item"><a href="form-checkbox-radio.html"
-						class="sidebar-link"><span class="hide-menu"> 사원 관리 </span></a></li>
-					<li class="sidebar-item"><a href="form-checkbox-radio.html"
+						class="sidebar-link"><span class="hide-menu"> 공정 관리 
+						</span></a></li>
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/emp"
+						class="sidebar-link"><span class="hide-menu"> 사원 관리 
+						</span></a></li>
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/uoprcd"
 						class="sidebar-link"><span class="hide-menu"> 비가동코드 관리
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/prdtinfer"
-						class="sidebar-link"><span class="hide-menu"> 제품 불량코드
-								관리 </span></a></li>
+						class="sidebar-link"><span class="hide-menu"> 제품 불량코드 관리 
+						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/common/rscinfer"
-						class="sidebar-link"><span class="hide-menu"> 자재 불량코드
-								관리 </span></a></li>
+						class="sidebar-link"><span class="hide-menu"> 자재 불량코드 관리 
+						</span></a></li>
 				</ul></li>
 			<li class="sidebar-item"><a class="sidebar-link has-arrow"
 				href="javascript:void(0)" aria-expanded="false"><i
