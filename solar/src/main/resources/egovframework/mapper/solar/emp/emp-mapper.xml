@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.cmm.emp.service.impl.EmpMapper">
+	<select id="empList" resultType="solar.cmm.emp.dao.EmpVO">
+		SELECT * FROM EMP
+    </select>
+	
+	<insert id="insert">
+		INSERT INTO EMP(EMP_ID, EMP_PW, EMP_NM, EMP_NO, DEPT, WKDTY, PHONE, EMAIL, HIRE_DATE) 
+		VALUES (#{EMP_ID}, 
+		#{EMP_PW},
+		#{EMP_NM},
+		#{EMP_NO}, 
+		#{DEPT}, 
+		#{WKDTY}, 
+		#{PHONE},  
+		#{EMAIL}, 
+		#{HIRE_DATE})
+	</insert>
+
+	<update id="update">
+		UPDATE	EMP
+		SET EMP_PW = #{EMP_PW}
+			, EMP_NM = #{EMP_NM}
+            , EMP_NO = #{EMP_NO}
+            , DEPT = #{DEPT}
+			, WKDTY = #{WKDTY}
+			, PHONE = #{PHONE}
+			, EMAIL = #{EMAIL}
+			, HIRE_DATE = #{HIRE_DATE}
+		WHERE EMP_ID = #{EMP_ID}
+	</update>
+
+	<delete id="delete">
+      DELETE FROM EMP
+      WHERE EMP_ID = #{EMP_ID}
+    </delete>
+
+</mapper>
