@@ -6,22 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>생산계획관리</title>
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-<script
-	src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<link rel="stylesheet"	href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
+<link rel="stylesheet"	href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<script	src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 </head>
 
 <body>
-	<h3>생산계획 관리</h3>
+	<h2>생산계획 관리</h2>
 	<hr />
 	<!-- 생산계획 테이블 -->
 	<div>
@@ -64,10 +59,116 @@
 	<div id="orderPlan" title="생산할 제품 검색"></div>
 
 	<!-- 스크립트 -->
-	<script>
-	//날짜 Default: sysdate
-	document.getElementById('planDt').value = new Date().toISOString().substring(0, 10);
-	 	
+	<script type="text/javascript">
+	//계획일자 Default: sysdate
+	let pEndDt = new Date();
+	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
+	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
+	document.getElementById('planEndDt').value = pEndDt.toISOString().substring(0, 10);
+	
+	let pDt = new Date();
+	document.getElementById('planDt').value = pDt.toISOString().substring(0, 10);
+
+	//생산계획 상세 그리드
+	const planDdataSource = {
+		api: {
+			readData: { 
+				url: '${pageContext.request.contextPath}/grid/planDList.do', 
+				method: 'GET'
+				},
+			modifyData: { 
+				url: '${pageContext.request.contextPath}/planModify.do', 
+				method: 'PUT'}
+				}, 
+			},
+		contentType: 'application/json'
+		//initialRequest: false //초기에 안보이게 함
+	}
+	
+	const planDgrid = new tui.Grid({
+		el: document.getElementById('planDgrid'),
+		data: planDdataSource, 
+		scrollX: false,
+		scrollY: true,
+		bodyHeight: 500,
+		rowHeaders: ['checkbox'],
+		//selectUnit : 'row',
+		columns: [
+			 {
+			    header: '계획상세번호',
+			    name: 'planDetaNo',
+			    hidden: true
+			  },
+			  {
+			    header: '계획번호',
+			    name: 'planNo',
+			    hidden: true
+			  },
+			  {
+			    header: '제품코드',
+			    name: 'prdtCd',
+			    validation: {
+	    	        required: true
+	    	      }
+			  },		  
+			  {
+			    header: '제품명',
+			    name: 'prdtNm'
+			  },
+			  { //주문없는 계획 불가
+			    header: '주문번호',
+			    name: 'orderNo',
+			    validation: {
+	    	        required: true
+	    	      }
+			  },
+			  {
+			    header: '납기일자',
+			    name: 'paprdDt',
+			    filter: {
+		            type: 'date',
+		            format: 'YYYY/MM/DD'
+		          }
+			  },
+			  {
+			    header: '주문량',
+			    name: 'orderQty'
+			  },
+			  {
+			    header: '작업량',
+			    name: 'planQty',
+			    editor : 'text',
+			    onAfterChange(e) {
+	    			console.log(e.rowKey)
+	    	    	grid.setValue(e.rowKey, 'prodDay',
+	    	    					e.value / grid.getValue(e.rowKey, 'dayOutput'));
+	    	    }    	
+			  },
+			  {
+			    header: '일생산량',
+			    name: 'dayOutput',
+			  },
+			  {
+			    header: '생산일수',
+			    name: 'prodDay',
+			  },
+			  {
+			    header: '작업일자',
+			    name: 'wkDt',
+			    editor :'datePicker',
+				filter: {
+		            type: 'date',
+		            format: 'YYYY/MM/DD'
+		          }
+			  },
+			  {
+			    header: '작업순서',
+			    name: 'wkOrd',
+			    editor : 'text'
+			  },
+	 		 ]
+	});	
+	
 	//조회 버튼: 기간별 생산계획 조회
 	$('#btnSearch').click(function() {
 		planStartDt = document.getElementById('planStartDt').value
@@ -83,146 +184,28 @@
 	
 	//저장 버튼: 계획 + 계획상세그리드 저장
 	btnSave.addEventListener("click", function(){
-		planDgrid.request('modifyData'); //planDdataSource - modifyData의 url 호출
+		planDgrid.request('modifyData'); 
+		//planDdataSource - modifyData의 url 호출
 	})
 	
-	//삭제 버튼
+	//삭제 버튼: 계획 + 계획상세그리드 삭제
 	
-	//그리드 저장 버튼
+	
+	//그리드 추가 버튼
 	rowAdd.addEventListener("click", function(){
-		planDgrid.request('modifyData');
-	})
+		planDgrid.appendRow({})
+	});
 	
 	//그리드 삭제 버튼
 	//false면 확인 안하고 삭제함
 	rowDel.addEventListener("click", function(){
 		planDgrid.removeCheckedRows(true); 
-	})
+	});
 	
-	//생산계획 ajax요청
-	/* $.ajax({
-		url: '${pageContext.request.contextPath}/resources/json/city.json',
-		data : {}
-		dataType: 'json',
-		async : false
-	}).don(function(datas){
-		data = datas;
-	}); */
-	
-	//생산계획 상세 그리드
-	let data;
-	
-	const planDdataSource = {
-		api: {
-			readData: { 
-				url: '${pageContext.request.contextPath}/grid/planDList.do', 
-				method: 'GET'
-				},
-			modifyData: { 
-				url: '${pageContext.request.contextPath}/modifyData', 
-				method: 'PUT'}
-				}, 
-			},
-		contentType: 'application/json'
-		initialRequest: false //초기에 안보이게 함
-	}
-	
-	const planDgrid = new tui.Grid({
-		el: document.getElementById('planDgrid'),
-		scrollX: false,
-		scrollY: false,
-		data: planDdataSource, 
-		rowHeaders: ['checkbox'],
-		//selectUnit : 'row',
-		columns: [{
-			header: '제품코드',
-			name: 'productCode',
-			editor: 'text',
-			align: 'center',
-			validation: {
-				required: true
-			},
-			onAfterChange(ev) {
-				findProductName(ev);
-				valueInput(ev);
-			}
-		}, {
-			header: '제품명',
-			name: 'productName',
-			align: 'center',
-			onAfterChange(ev) {
-				valueInput(ev);
-			}
-		}, {
-			header: '주문번호',
-			name: 'orderNo',
-			align: 'center',
-		}, {
-			header: '납기일자',
-			name: 'outDate',
-			align: 'center',
-		}, {
-			header: '주문량',
-			name: 'orderCount',
-			align: 'right',
-		}, {
-			header: '기계획량',
-			name: 'planCount',
-			align: 'right',
-		}, {
-			header: '미계획량',
-			name: 'unplanCount',
-			align: 'right',
-		}, {
-			header: '작업량',
-			name: 'workCount',
-			align: 'right',
-			editor: 'text',
-			validation: {
-				dataType: 'number',
-				required: true
-			},
-			onAfterChange(ev) {
-				valueInput(ev);
-			}
-		}, {
-			header: '작업일자',
-			name: 'workDate',
-			align: 'center',
-			editor: {
-				type: 'datePicker',
-				options: {
-					language: 'ko',
-					format: 'yyyy-MM-dd'
-				}
-			},
-			validation: {
-				required: true
-			}
-		}, {
-			header: '순번',
-			name: 'deplanIdx',
-			hidden: true
-		}, {
-			header: '비고',
-			name: 'comments',
-			align: 'center',
-			editor: 'text'
-		}, {
-			header: '생산계획번호',
-			name: 'planCode',
-			hidden: true
-		}
-		]
-});
-	
-	let checkRow;
-	
+	//그리드 이벤트
 	planDgrid.on('check', function(ev){
-		checkRow = grid.getData()[0];
-		console.log(grid.getValue(ev.rowkey, ''));
-		
-	})
+		//생산일수 계산
+	});
 	
 	//제품코드 클릭: 주문서 조회 모달
 	let orderDialog = $( "#orderPlan" ).dialog({
@@ -244,10 +227,9 @@
 	$("선택한셀").on("click", function(){
 		console.log("제품코드 클릭")
 		orderDialog.dialog( "open" );
-		$("#orderPlan").load("모달페이지.jsp", 
+		$("#orderPlan").load("${pageContext.request.contextPath}/orderDetailList.do", 
 				function(){console.log("로드됨")})
 	});
-	
 </script>
 </body>
 

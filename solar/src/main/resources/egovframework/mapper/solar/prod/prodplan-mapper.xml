@@ -1,7 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.prod.paln.service.impl.ProdPlanMapper">
-	<select id="selectPlan">
-	
-	</select>
+
+
+<!-- <select id="">
+    SELECT * FROM (
+        SELECT ROWNUM, RNUM FROM (
+            SELECT B.prdt_cd, 
+                    (SELECT prdt_cd FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_cd, 
+                    (SELECT order_no FROM order_tb WHERE order_deta_no = B.order_deta_no) order_no,
+                    (SELECT paprd_dt FROM order_tb WHERE order_deta_no = B.order_deta_no) paprd_dt, 
+                    (SELECT order_qty FROM order_tb WHERE order_deta_no = B.order_deta_no) order_qty, 
+                    B.plan_qty, 
+                    일생산량, ????
+                    (plan_qty/일생산량) 생산일수, 
+                    B.wk_dt, 
+                    B.wk_ord 
+            FORM plan_d A, 
+                 plan_deta_no B,
+            WHERE A.plan_no = B.plan_no
+            <![CDATA[
+            AND plan_dt BETWEEN TO_DATE(#{기간시작}, 'YYYY-MM-DD') AND TO_DATE(#{기간끝}, 'YYYY-MM-DD')
+            ]]>
+        )
+    )
+    ORDER BY paprd_dt, order_qty
+</select>
+
+<insert id="">
+    INSERT INTO plan_d VALUES(
+        #{planNo},
+        TO_DATE(#{planDt}, 'YYYY-MM-DD'),
+        #{planNo}
+    )
+</insert>
+
+<update id="">
+    <if test = "plan_no != null and plan_no != '' and plan_dt != null and plan_dt != ''">
+        UPDATE plan_d 
+        SET
+            plan_dt = TO_DATE(#{planDt}, 'YYYY-MM-DD'),
+            plan_nm = #{planNm}
+        WHERE plan_no = #{planNo}
+    </if>
+    <if test = "plan_no != null and plan_no != '' and prdt_cd != null and prdt_cd != ''">
+        UPDATE plan_d 
+        SET
+           prdt_cd = #{prdtCd},
+           plan_qty = #{planQty},
+           wk_ord = #{wkOrd},
+           wk_dt = TO_DATE(#{wkDt}, 'YYYY-MM-DD'),
+           order_deta_no = #{orderDetaNo}
+        WHERE plan_deta_no = #{planDetaNo}
+    </if>
+</update>
+
+<delete id="">
+    DELETE FROM plan_d
+    WHERE plan_no = #{plan_no}
+</delete>
+
+
+<select id="">
+    SELECT A.order_no,
+            B.prdt_cd,
+            (SELECT prdt_cd FROM ORDER WHERE prdt_cd = B.prdt_cd) prdt_cd,
+            B.order_qty,
+            B.paprd_dt
+    FROM order A, 
+         order_d B 
+    WHERE A.order_no = B.order_no
+    <![CDATA[
+    AND B.order_qty > B.indica_qty
+     ]]>
+    ORDER BY order_no
+</select>
+
+<insert id="">
+    INSERT INTO plan_d
+    VALUES(
+        #{planDetaNo},
+        #{planNo},
+        #{prdtCd},
+        #{planQty},
+        #{wkOrd},
+        #{wkDt}
+        #{orderDetaNo}
+    )
+</insert>
+
+<delete id="">
+    DELETE FROM plan_d
+    WHERE plan_deta_no = #{planDetaNo}
+</delete>
+ -->
 </mapper>
