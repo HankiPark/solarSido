@@ -95,6 +95,9 @@ a {
 		<div id="inGrid"></div>
 	</div>
 	<div id="oG">
+	
+	
+	
 		<div id="outGrid"></div>
 	</div>
 
@@ -122,10 +125,13 @@ a {
 							$("#oG").css("display", "none");
 							$("#iG").css("display", "block");
 							inGrid.refreshLayout();
+							inGrid.clear();
+							
 						} else {
 							$("#iG").css("display", "none");
 							$("#oG").css("display", "block");
-
+						/* 	outGrid.refreshLayout();
+							outGrid.resetData(); */
 						}
 					});
 		}
@@ -169,7 +175,7 @@ a {
 					data : {
 						api : {
 							readData : {
-								url : '',
+								url : '${pageContext.request.contextPath}/grid/prdtInput.do',
 								method : 'GET'
 							},
 							modifyData : {
@@ -178,8 +184,10 @@ a {
 								cache:false
 							}
 						},
+						initialRequest: false,
 						contentType : 'application/json'
 					},
+					
 					bodyHeight : 700,
 					rowHeaders : [ {
 						type : 'rowNum',
@@ -190,6 +198,10 @@ a {
 						type : 'checkbox'
 					} ],
 					columns : [ {
+						header : 'index',
+						name : 'prdtInx',
+						hidden : true
+					},{
 						header : '입고일자',
 						name : 'prdtDt',
 						editor : 'datePicker'
@@ -215,24 +227,30 @@ a {
 						name : 'indicaNo'
 					}
 
-					],
+					],columnOptions: {
+					    minWidth: 230
+					  },
 
 				});
 		//그리드 값변하면 다시 뿌려주게끔
 		inGrid.on('onGridUpdated', function() {
 			inGrid.refreshLayout();
 		});
+	 	inGrid.on('response', function(ev) {
+	 		console.log(ev);
+	 		let res =JSON.parse(ev.xhr.response);
+	 		if(res.mode=='upd'){
+		 		inGrid.resetOriginData();
+	 		}
+		}); 
+	 	
 		inGrid
 				.on(
 						'click',
 						function(ev) {
 							console.log(ev["columnName"]);
-							console.log(inGrid
-									.getValue(ev["rowKey"], "prdtLot"));
-							if (ev["columnName"] == "prdtLot"
-									&& (inGrid
-											.getValue(ev["rowKey"], "prdtLot") == '' || inGrid
-											.getValue(ev["rowKey"], "prdtLot") == null)) {
+							console.log(inGrid.getValue(ev["rowKey"], "prdtLot"));
+							if (ev["columnName"] == "prdtLot" ) {
 								dialog2.dialog("open");
 								$("#dialog-lot")
 										.load(
@@ -259,15 +277,15 @@ a {
 			$.ajax({
 				url : '${pageContext.request.contextPath}/grid/prdtInput.do',
 				data : params,
+				dataType:"json",
 				contentType : 'application/json; charset=utf-8',
 
 			}).done(function(res) {
-				inGrid.enable();
-				var sres = JSON.parse(res);
-				inGrid.resetData(sres["data"]["contents"]);
-				for (var i = 0; i < sres["data"]["contents"].length; i++) {
+				/* inGrid.enable(); */
+				inGrid.resetData(res["data"]["contents"]);
+		/* 		for (var i = 0; i < sres["data"]["contents"].length; i++) {
 					inGrid.disableRow(i);
-				}
+				} */
 			})
 
 		})
@@ -283,14 +301,14 @@ a {
 
 		});
 		$('#updateBtn').on('click', function appendRow(index) {
-
+			inGrid.blur();
 			inGrid.request('modifyData');
+
 
 		});
 		$('#deleteBtn').on('click', function appendRow(index) {
-
-			inGrid.removeCheckedRows(true);
 			inGrid.blur();
+			inGrid.removeCheckedRows(true);
 
 		});
 

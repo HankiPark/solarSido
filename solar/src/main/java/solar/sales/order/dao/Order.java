@@ -12,7 +12,7 @@ import lombok.Data;
 public class Order {
 	String orderNo;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date recvDt;
 	String coCd;
 	String coNm;
@@ -23,7 +23,7 @@ public class Order {
 	String oustQty;
 	String prdtStc;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date paprdDt;
 	String deNum;
 	String prdtNm;
@@ -32,10 +32,10 @@ public class Order {
 	
 	//검색조건
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date startT;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date endT;
 	
 	String dateTy;

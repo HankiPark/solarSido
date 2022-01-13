@@ -13,20 +13,21 @@ public class Prdt {
 
 	String prdtLot;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date prdtDt;
 	String prdtCd;
 	String prdtNm;
 	String prdtSpec;
 	String indicaNo;
+	String prdtInx;
 
 
 	//검색조건
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date startT;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date endT;
 	String prdNm;
 	String prdCd;

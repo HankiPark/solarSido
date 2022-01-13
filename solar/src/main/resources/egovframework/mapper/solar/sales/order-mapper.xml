@@ -69,5 +69,11 @@
 	</select>
 
 
+	<update id="inStcUpdate">
+		update order_d set prdt_stc=(select count(prdt_lot) from prdt_stc where prdt_cd=#{prdtCd} and prdt_fg='I') where prdt_cd=#{prdtCd}
+	
+	</update>
+
+
 
 </mapper>

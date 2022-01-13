@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.sales.inout.dao.Prdt;
 import solar.sales.inout.service.PrdtService;
@@ -64,16 +63,12 @@ public class PrdtController {
 	}
 	
 	@PostMapping("/grid/prdtInputUpdate.do")
-	@ResponseBody
 	public String insertInput(Model model,Prdt prdt,@RequestBody ModifyVO<Prdt> mvo) throws Exception
 	{	
 		System.out.println(mvo);
 		pservice.modifyData(mvo);
-		List<?> list= pservice.findList(prdt);
-		Map<String,Object> map = new HashMap();
-		map.put("contents", list);
-		model.addAttribute("result", true);
-		model.addAttribute("data", map);
+		model.addAttribute("mode","upd");
+		
 		return "jsonView";
 		
 	}

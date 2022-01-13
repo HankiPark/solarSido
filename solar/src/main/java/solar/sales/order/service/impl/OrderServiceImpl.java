@@ -21,7 +21,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	public List<Order> findDetail(Order order) {
-		// TODO Auto-generated method stub
+		omapper.inStcUpdate(order);
 		return omapper.findDetail(order);
 	}
 
