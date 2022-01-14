@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
+import solar.sales.inout.dao.Prdt;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class FairServiceImpl implements FairService {
@@ -44,42 +46,26 @@ public class FairServiceImpl implements FairService {
 	}
 
 	@Override
-	public void createCode(List<FairVO> createdRows) throws Exception {
-		if(createdRows != null) {
-			for(FairVO row : createdRows) {
-				
+	public int modifyData(ModifyVO<FairVO> mvo) {
+		
+		if(mvo.getCreatedRows()!=null) {
+			for(FairVO fairVO : mvo.getCreatedRows()) {
+				fairMapper.fairInsert(fairVO);
 			}
 		}
+		if(mvo.getDeletedRows()!=null) {
+			for(FairVO fairVO : mvo.getDeletedRows()) {
+				fairMapper.fairDelete(fairVO);
+			}
+			if(mvo.getUpdatedRows()!=null) {
+				for(FairVO fairVO : mvo.getUpdatedRows()) {
+					fairMapper.fairUpdate(fairVO);
+				}
+			}	
 	}
-
-	@Override
-	public void updateCode(FairVO fairVO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteCode(FairVO fairVO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void createCode(FairVO fairVO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateCode(List<FairVO> updatedRows) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteCode(List<FairVO> deletedRows) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
+		return 1;
 }
+}
+
+
+
