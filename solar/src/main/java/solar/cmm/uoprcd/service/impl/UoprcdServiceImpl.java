@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import solar.cmm.uoprcd.dao.UoprcdVO;
 import solar.cmm.uoprcd.service.UoprcdService;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class UoprcdServiceImpl implements UoprcdService{
@@ -41,6 +42,26 @@ public class UoprcdServiceImpl implements UoprcdService{
 	public int uoprcdDelete(UoprcdVO uoprcdVO) {
 		// TODO Auto-generated method stub
 		return uoprcdMapper.uoprcdDelete(uoprcdVO);
+	}
+
+	@Override
+	public int modifyData(ModifyVO<UoprcdVO> mvo) {
+		if(mvo.getCreatedRows()!=null) {
+		for(UoprcdVO uoprcdVO : mvo.getCreatedRows()) {
+			uoprcdMapper.uoprcdInsert(uoprcdVO);
+			}
+		if(mvo.getDeletedRows()!=null) {
+			for(UoprcdVO uoprcdVO : mvo.getDeletedRows()) {
+					uoprcdMapper.uoprcdDelete(uoprcdVO);
+				}
+			}
+		if(mvo.getUpdatedRows()!=null) {
+			for(UoprcdVO uoprcdVO : mvo.getUpdatedRows()) {
+					uoprcdMapper.uoprcdUpdate(uoprcdVO);
+				}
+			}
+		}
+		return 1;
 	}
 
 }

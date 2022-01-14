@@ -6,23 +6,23 @@
 		SELECT * FROM UOPR_CD
 		</select>
 
-    <insert id="insert">
+    <insert id="uoprcdInsert">
 		INSERT INTO UOPR_CD(UOPR_CD, PRCS_CD, PRCS_NM, UOPR_NM, UOPR_DESCT) 
-				VALUES (#{UOPR_CD }, #{PRCS_CD}, #{PRCS_NM }, #{UOPR_NM }, #{UOPR_DESCT })
+				VALUES (#{uoprCd}, #{prcsCd}, #{prcsNm}, #{uoprNm}, #{uoprDesct})
 	</insert>
 
-    <update id="update">
+    <update id="uoprcdUpdate">
 		UPDATE	UOPR_CD
-		SET PRCS_CD = #{PRCS_CD }
-			, PRCS_NM = #{PRCS_NM}
-            , UOPR_NM = #{UOPR_NM}
-            , UOPR_DESCT = #{UOPR_DESCT}
-		WHERE UOPR_CD = #{UOPR_CD }
+		SET PRCS_CD = #{prcsCd}
+			, PRCS_NM = #{prcsNm}
+            , UOPR_NM = #{uoprNm}
+            , UOPR_DESCT = #{uoprDesct}
+		WHERE UOPR_CD = #{uoprCd}
 	</update>
 
-     <delete id="delete">
+     <delete id="uoprcdDelete">
       DELETE FROM UOPR_CD
-      WHERE UOPR_CD = #{UOPR_CD}
+      WHERE UOPR_CD = #{uoprCd}
    </delete>
 
 </mapper>

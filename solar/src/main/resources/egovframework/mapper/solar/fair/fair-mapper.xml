@@ -6,7 +6,7 @@
 	SELECT * FROM PRCS
 	</select>
 
-	<update id="update">
+	<update id="fairUpdate">
 		UPDATE	PRCS
 		SET PRCS_FG = #{prcsFg}
 			, PRCS_NM = #{prcsNm}
@@ -16,12 +16,12 @@
 		WHERE PRCS_CD = #{prcsCd}
 	</update>
 
-	<insert id="insert">
+	<insert id="fairInsert">
 		INSERT INTO PRCS(PRCS_CD, PRCS_FG, PRCS_NM, PRCS_DESCT, PRCS_UNIT, PROD_PD) 
 		VALUES (#{prcsCd}, #{prcsFg}, #{prcsNm}, #{prcsDesct}, #{prcsUnit}, #{prodPd})
 	</insert>
 
-	<delete id="remove">
+	<delete id="fairDelete">
 		DELETE FROM PRCS
 		WHERE PRCS_CD = #{prcsCd}
 	</delete>

@@ -3,6 +3,7 @@ package solar.cmm.prcs.service.impl;
 import java.util.List;
 
 import solar.cmm.prcs.dao.FairVO;
+import solar.sales.order.dao.ModifyVO;
 
 public interface FairMapper {
 	List<FairVO> fairList(FairVO fairVO);
@@ -10,8 +11,6 @@ public interface FairMapper {
 	public int fairInsert(FairVO fairVO);
 	public int fairUpdate(FairVO fairVO);
 	public int fairDelete(FairVO fairVO);
-	
-	public void createCode(FairVO fairVO);
-	public void updateCode(FairVO fairVO);
-	public void deleteCode(FairVO fairVO);
+	public int modifyData(ModifyVO<FairVO> mvo);
+
 }
