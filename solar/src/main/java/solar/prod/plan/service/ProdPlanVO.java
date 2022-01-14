@@ -19,17 +19,19 @@ public class ProdPlanVO {
 	//PlanD
 	String planDetaNo;  //생산계획상세번호
 //	String planNo;		//생산계획번호
-//	String planDt;		//계획일자
+//	Date planDt;		//계획일자
 //	String orderNo;		//주문번호
-//	String recvDt;		//접수일자
+//	Date recvDt;		//접수일자
 	String prdtCd; 		//제품코드
 	int planQty;		//작업량
 	int wkOrd;			//작업순서
 	String wkDt;		//작업일자
+	String dayOutput;	//일생산량
+	String prodDay;		//생산일수
 	
 	//search
-	String startDt; 	//기간시작
-	String endDt;		//기간끝
+	String planStartDt; //기간시작
+	String planEndDt;	//기간끝
 //	String prdtCd; 		//제품코드
 	String prdtNm; 		//제품명
 	String coCd;		//업체코드
