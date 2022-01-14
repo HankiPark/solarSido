@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import solar.prcs.clot.service.ClotService;
-import solar.prcs.clot.service.ClotVO;
+import solar.prcs.prcs.service.ClotVO;
 
 @Service
 public class ClotServiceImpl implements ClotService {

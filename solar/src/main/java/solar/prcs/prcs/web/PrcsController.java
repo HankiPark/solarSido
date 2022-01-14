@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsService;
 
@@ -17,7 +18,7 @@ public class PrcsController {
 
 	@Autowired PrcsService prcsservice;
 	
-	@RequestMapping("/prcs")									// 공정관리 페이지 이동
+	@RequestMapping("/prcs/prcsprog")									// 공정관리 페이지 이동
 	public String go() {
 		return "prcs/prcsprog";
 	}
@@ -34,6 +35,7 @@ public class PrcsController {
 	public String insIndicaModal(IndicaVO vo, Model model) {
 			
 		Map<String, Object> map = new HashMap();
+		System.out.println(vo.getSDate());
 		map.put("contents", prcsservice.selectPDay(vo));
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
@@ -42,7 +44,15 @@ public class PrcsController {
 	}
 	/*------------------------------------------------------------------------------------------------ */
 	// 공정명검색
-	
+	/*
+	 * @GetMapping("/prcs/prcsItem") public String getItem(ClotVO vo, Model model) {
+	 * 
+	 * Map<String, Object> map = new HashMap(); map.put("contents",
+	 * prcsservice.selectPrcsItem(vo)); model.addAttribute("result", true);
+	 * model.addAttribute("data", map);
+	 * 
+	 * return "jsonView"; }
+	 */
 	
 	
 	
