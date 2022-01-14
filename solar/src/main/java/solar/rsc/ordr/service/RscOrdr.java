@@ -13,4 +13,5 @@ public class RscOrdr {
 	String rscIstQty;
 	String rscInferQty;
 	String inspCls;
+	String rscPassedQty;
 }

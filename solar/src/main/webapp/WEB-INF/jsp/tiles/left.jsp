@@ -52,7 +52,7 @@
 					<li class="sidebar-item"><a href="table-sizing.html"
 						class="sidebar-link"><span class="hide-menu"> 입출고 조회 </span></a></li>
 					<li class="sidebar-item"><a href="table-layout-coloured.html"
-						class="sidebar-link"><span class="hide-menu"> 반품?관리 </span></a></li>
+						class="sidebar-link"><span class="hide-menu"> 반품 관리 </span></a></li>
 				</ul></li>
 			<li class="sidebar-item"><a class="sidebar-link has-arrow"
 				href="javascript:void(0)" aria-expanded="false"><i
@@ -63,7 +63,7 @@
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordr"
 						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조
 						</span></a></li>
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/inout"
 						class="sidebar-link"><span class="hide-menu"> 자재 입출고 관리
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
