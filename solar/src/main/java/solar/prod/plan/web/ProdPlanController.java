@@ -1,10 +1,17 @@
 package solar.prod.plan.web;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prod.plan.service.ProdPlanService;
+import solar.prod.plan.service.ProdPlanVO;
 
 @Controller
 public class ProdPlanController {
@@ -33,5 +40,17 @@ public class ProdPlanController {
 	 @RequestMapping("/prod/indicaList")
 		public String indList() {
 			return "prod/indicaList";
+		}
+	 
+	//생산계획 조회
+	@GetMapping("/grid/planGrid.do")
+	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> pPlanList = ppService.selectPlan(ppVo);
+		Map<String,Object> data = new HashMap<>();
+		data.put("contents", pPlanList);
+		model.addAttribute("result", true);
+		model.addAttribute("data", data);
+		System.out.println(data);
+		return "jsonView";
 		}
 }

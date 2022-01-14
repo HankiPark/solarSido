@@ -13,6 +13,7 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 
 	@Autowired ProdPlanMapper ppMapper;
 
+	//생산계획조회
 	@Override
 	public List<ProdPlanVO> selectPlan(ProdPlanVO ppVo) {
 		return ppMapper.selectPlan(ppVo);

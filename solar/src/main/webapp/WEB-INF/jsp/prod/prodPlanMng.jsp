@@ -44,8 +44,8 @@
 	<!-- 생산계획 상세 그리드-->
 	<div id="planDgrid">
 		<div align="right">
-			<button type="button" id="rowAdd">추가</button>
-			<button type="button" id="rowDel">삭제</button>
+			<button type="button" id="rowAdd">행추가</button>
+			<button type="button" id="rowDel">행삭제</button>
 		</div>
 	</div>
 
@@ -67,16 +67,17 @@
 	const planDdataSource = {
 		api: {
 			readData: { 
-				url: '${pageContext.request.contextPath}/grid/planDList.do', 
+				url: '${pageContext.request.contextPath}/grid/planGrid.do', 
 				method: 'GET'
-				},
+				}/* ,
 			modifyData: { 
 				url: '${pageContext.request.contextPath}/planModify.do', 
 				method: 'PUT'}
-				}, 
+				},  */
 			},
 		contentType: 'application/json'
-		//initialRequest: false //초기에 안보이게 함
+		, initialRequest: false //초기에 안보이게 함
+	
 	}
 	
 	const planDgrid = new tui.Grid({
@@ -96,7 +97,6 @@
 			  {
 			    header: '계획번호',
 			    name: 'planNo',
-			    hidden: true
 			  },
 			  {
 			    header: '제품코드',
@@ -128,7 +128,7 @@
 			    header: '주문량',
 			    name: 'orderQty'
 			  },
-			  {
+			 {
 			    header: '작업량',
 			    name: 'planQty',
 			    editor : 'text',
@@ -163,31 +163,28 @@
 	 		 ]
 	});	
 	
-	//조회 버튼: 기간별 생산계획 조회
-	$('#btnSearch').click(function() {
-		planStartDt = document.getElementById('planStartDt').value
-		planEndDt = document.getElementById('planEndDt').value
-		console.log(planStartDt + "~" +planEndDt);
-	})  
-	
-	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
-	$('#btnReset').click(function() {
-		planMngFrm.reset();
-		planDgrid.resetData([]);
-	})  
-	
-	//저장 버튼: 계획 + 계획상세그리드 저장
-	btnSave.addEventListener("click", function(){
-		planDgrid.request('modifyData'); 
-		//planDdataSource - modifyData의 url 호출
+	planDgrid.on('onGridUpdated', function() {
+		planDgrid.refreshLayout();
+	});
+
+	planDgrid.on('click', (ev) => {
+		console.log(ev);
+	  	console.log('clicked!!');
 	})
-	
-	//삭제 버튼: 계획 + 계획상세그리드 삭제
-	
+
+	// 성공 실패와 관계 없이 응답을 받았을 경우
+	planDgrid.on('response', function(ev) { 
+		console.log(ev);
+	})
 	
 	//그리드 추가 버튼
 	rowAdd.addEventListener("click", function(){
-		planDgrid.appendRow({})
+		planDgrid.appendRow({
+			extendPrevRowSpan : true,
+			focus : true,
+			at : 0
+		})
+		
 	});
 	
 	//그리드 삭제 버튼
@@ -195,6 +192,46 @@
 	rowDel.addEventListener("click", function(){
 		planDgrid.removeCheckedRows(true); 
 	});
+	
+	//조회 버튼: 기간별 생산계획 조회 -> 계획서 모달로 바꾸기
+	$('#btnSearch').click(function() {
+		var planStartDt = document.getElementById('planStartDt').value
+		var planEndDt = document.getElementById('planEndDt').value
+		console.log(planStartDt + "~" +planEndDt);
+		var params = {
+				'planStartDt': planStartDt,
+				'planEndDt': planEndDt,
+		}
+		
+		$.ajax({
+			url : '${pageContext.request.contextPath}/grid/planGrid.do',
+			data : params,
+			dataType:"json",
+			contentType : 'application/json; charset=utf-8',
+
+		}).done(function(pln) {
+			planDgrid.resetData(pln["data"]["contents"]);
+		})
+		
+	})
+			
+	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
+	$('#btnReset').click(function() {
+		planMngFrm.reset();
+		planDgrid.resetData([]);
+	})
+	
+	//주문번호 클릭: 주문서 조회 모달
+
+	/*	
+	//저장 버튼: 계획 + 계획상세그리드 저장
+	btnSave.addEventListener("click", function(){
+		planDgrid.request('modifyData'); 
+		//planDdataSource - modifyData의 url 호출
+	})
+	
+	//삭제 버튼: 계획 + 계획상세그리드 삭제
+
 	
 	//그리드 이벤트
 	planDgrid.on('check', function(ev){
@@ -224,6 +261,8 @@
 		$("#orderPlan").load("${pageContext.request.contextPath}/orderDetailList.do", 
 				function(){console.log("로드됨")})
 	});
+	
+	*/
 </script>
 </body>
 
