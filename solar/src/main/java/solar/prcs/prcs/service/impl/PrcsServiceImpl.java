@@ -27,6 +27,12 @@ public class PrcsServiceImpl implements PrcsService {
 		return prcsmapper.selectPDay(vo);
 	}
 
+
+//	@Override
+//	public List<ClotVO> selectPrcsItem(ClotVO vo) {
+//		return prcsmapper.selectPrcsItem(vo);
+//	}
+
 	
 	
 }

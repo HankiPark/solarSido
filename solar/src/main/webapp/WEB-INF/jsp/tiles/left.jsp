@@ -105,7 +105,7 @@
 						class="sidebar-link"><span class="hide-menu"> 생산지시 관리 </span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/prod/indicaList"
 						class="sidebar-link"><span class="hide-menu"> 생산지시 조회</span></a></li>
-					<li class="sidebar-item"><a href="ui-bootstrap.html"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/prcs/prcsprog"
 						class="sidebar-link"><span class="hide-menu"> 공정 진행 관리
 						</span></a></li>
 

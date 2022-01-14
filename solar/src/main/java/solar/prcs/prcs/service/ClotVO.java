@@ -1,4 +1,4 @@
-package solar.prcs.clot.service;
+package solar.prcs.prcs.service;
 
 import java.util.Date;
 
@@ -12,12 +12,12 @@ import lombok.Data;
 public class ClotVO {
 
 	String rscConNo;
-	String rscLot;
-	String nowLoc;
+	String prdtLot;
+	String prcsCd;
 	String lowSt;
 	String wkNo;
-	@JsonFormat
-	@DateTimeFormat
+	@JsonFormat(pattern="yyyy/MM/dd", timezone="Asia/Seoul")
+	@DateTimeFormat(pattern="yyyy/MM/dd")
 	Date wkDt;
-	
+
 }

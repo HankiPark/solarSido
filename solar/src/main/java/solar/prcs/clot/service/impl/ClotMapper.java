@@ -2,7 +2,7 @@ package solar.prcs.clot.service.impl;
 
 import java.util.List;
 
-import solar.prcs.clot.service.ClotVO;
+import solar.prcs.prcs.service.ClotVO;
 
 public interface ClotMapper {
 

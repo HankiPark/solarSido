@@ -28,19 +28,25 @@
 			
 			
 				
-			<div class="col-6" id="grid"></div>
+			<div class="col-6" id="prcsGrid"></div>
 			
 		</div>	
 	</div>
 </body>
 
 <script>
-
+	
+	// 그리드 선언
 	let indicaGrid
-	let prcsGrid 	
+	let prcsGrid
 	
+	// 지시상세에서 사용하는 변수
+	let indicaDataSource
+	let sDate
+	let sDateSearchBtn
 	
-	let dialog = $( "#dialog-form" ).dialog({
+	// 지시상세 모달 선언
+	let indicaDialog = $( "#dialog-form" ).dialog({
 		autoOpen: false,
 		modal:true,
 		width:1000
@@ -51,11 +57,11 @@
 	});
 	
  	$("#searchIndica").on("click", function(){
-		dialog.dialog("open");
+ 		indicaDialog.dialog("open");
 		$("#dialog-form").load("${pageContext.request.contextPath}/modal/searchIndicaDetail", function(){})
 	});  
 
-		const columns = 
+		const prcsColumns = 
 			[ 
 				{
 				header : '제품LOT',
@@ -87,16 +93,35 @@
 
  
 	
-		prcsGrid = new tui.Grid({
-			  el: document.getElementById('grid'),
+ 		prcsGrid = new tui.Grid({
+			  el: document.getElementById('prcsGrid'),
 			  data : inDataSource ,
-			  columns
+			  columns : prcsColumns
 			});	
  
  		prcsGrid.on("response", function(){
 			prcsGrid.refreshLayout();
  			
- 		})
+ 		});
+ 		
+ 		// 지시상세 페이지에서 정보를 넘겨받아 지시에 엮인 장비 리스트를 불러오는함수
+ 		function innIndica(inddd, prd, indicaDetaNo){
+ 			
+ 			$("#indicaDetaNo").val(inddd);
+ 			$("#prdtCd").val(prd);
+ 			
+ 			indicaDialog.dialog("close");
+ 	/* 		
+ 			var readParams = {
+ 					'indicaDetaNo':indicaDetaNo
+ 			}
+ 			
+ 			prcsGrid.readData(1,readParams,true);
+ 			prcsGrid.refreshLayout();
+ 			*/	
+ 		} 
+ 		
+ 		
 	</script>
 	
 

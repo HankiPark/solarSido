@@ -34,14 +34,16 @@
 			id.INDICA_QTY,
 			id.WK_ORD,
 			id.WK_DT,
-			id.RECV_DT,
 			id.PLAN_DT,
-			id.ORDER_NO,
 			i.INDICA_NM
 	FROM INDICA i,
 		INDICA_D id
 	WHERE i.INDICA_NO = id.INDICA_NO
 	AND i.INDICA_DT = id.INDICA_DT
+	
+	<if test="sDate != null">
+		AND TO_CHAR(i.INDICA_DT,'yyyy-MM-dd') = #{sDate}	
+	</if>
 	
 </select>
 
