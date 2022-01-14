@@ -8,6 +8,9 @@ import solar.sales.order.dao.ModifyVO;
 public interface PrdtService {
 	List<Prdt> findList(Prdt vo);
 	List<Prdt> findPrdt(Prdt vo);
+	List<Prdt> findCo();
 	int inPrdt(Prdt vo);
 	int modifyData(ModifyVO<Prdt> mvo);
+	int modifyOutData(ModifyVO<Prdt> mvo);
+	String makeNum();
 }

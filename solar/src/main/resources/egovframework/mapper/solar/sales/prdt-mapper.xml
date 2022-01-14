@@ -10,7 +10,8 @@
 		k.indica_no
 		from prdt_stc p join prdt o
 		on p.prdt_cd = o.prdt_cd
-		join indica_d k
+		join
+		indica_d k
 		on p.indica_deta_no=k.indica_deta_no
 		where
 			   	<![CDATA[	
@@ -20,14 +21,16 @@
 			and o.prdt_nm=#{prdNm}
 		</if>
 		<choose>
-		<when test="prdSt !=null and prdSt !=''">
-			and p.prdt_fg = #{prdSt} and p.prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg ='I')
-		</when>
-		<otherwise>
-			and p.prdt_fg = 'I'
-		</otherwise>
+			<when test="prdSt !=null and prdSt !=''">
+				and p.prdt_fg = #{prdSt} and p.prdt_lot not in
+				(select prdt_lot from
+				prdt_stc where prdt_fg ='I')
+			</when>
+			<otherwise>
+				and p.prdt_fg = 'I'
+			</otherwise>
 		</choose>
-		
+
 		order by p.prdt_dt asc
 
 	</select>
@@ -51,40 +54,107 @@
 		order by prdt_cd asc
 
 	</select>
+<!-- 회사 조회 -->
+	<select id="findCo" resultType="Prdt">
+		select * from co
+		<where>
+			<if test="coFg ='P'">
+				co_fg='P'
+			</if>
+		</where>
+	</select>
+	<!-- 전표번호 조회 -->
+	<select id="findSlip" resultType="Prdt">
+		select a.*,b.co_nm from (select * from oust o join order_tb d on
+		o.order_no=d.order_no) a join co b on a.co_cd = b.co_cd
+		where
+		   	<![CDATA[	
+				TO_CHAR(a.prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(a.prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
+			]]>
+		<if test="coNm !=null and coNm !=''">
+			and b.co_nm=#{coNm}
+		</if>
+
+	</select>
+	<!-- 화면표기 숫자를 위함 -->
+	<select id="makeNum" resultType="String">
+		SELECT LPAD(nvl((select
+		max(TO_NUMBER(substr(slip_no,12))) from oust),0)+1,3,'0') from dual
+	</select>
+<!-- 출고전표 -->
+	<insert id="insertSlip">
+		insert into oust
+		values(CREATENO('SLI',SLIPSEQ.nextval),sysdate)
+	</insert>
+<!-- 출고전표디테일  그리드화 되어야함-->
+	<insert id="insertSlipDetail">
+		<selectKey keyProperty="detail" resultType="int"
+			order="BEFORE"> select nvl(max(SLIP_DETA_NO),0)+1 from oust_d
+		</selectKey>
 
 
-
-
-
-
+		insert into oust_d
+		values(detail,#{prdtLot},#{slipNo},#{orderNo},#{orderCnt},#{prdtAmt},#{prdtStc}
+		)
+	</insert>
 
 
 
 	<insert id="insertInPrdt">
 		insert into prdt_stc select
-		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc where
-		prdt_lot =#{prdtLot} 
+		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
+		where
+		prdt_lot =#{prdtLot}
 	</insert>
 
 	<delete id="deleteInPrdt">
-	delete from prdt_stc where prdt_lot=#{prdtLot} and prdt_fg ='I'
-	
+		delete from prdt_stc where prdt_lot=#{prdtLot} and
+		prdt_fg ='I'
+
 	</delete>
 
 	<update id="updateInPrdt">
-	merge into prdt_stc a
-		using (select prdt_inx,indica_deta_no 
-				from prdt_stc 
-				where prdt_lot = #{prdtLot} and prdt_fg ='C') b
-    	on   (b.prdt_inx = #{prdtInx})
-	    when matched then
-	        update set a.prdt_lot = #{prdtLot},prdt_dt=#{prdtDt} 
-	        			where a.prdt_inx = #{prdtInx}
-	    when not matched then
-	        insert 
-	        	values(
-	        		b.prdt_inx, #{prdtLot}, 'I', #{prdtCd}, b.indica_deta_no, #{prdtDt} 
-	        			)
+		merge into prdt_stc a
+		using (select
+		prdt_inx,indica_deta_no
+		from prdt_stc
+		where prdt_lot = #{prdtLot} and
+		prdt_fg ='C') b
+		on (b.prdt_inx = #{prdtInx})
+		when matched then
+		update set
+		a.prdt_lot = #{prdtLot},prdt_dt=#{prdtDt}
+		where a.prdt_inx = #{prdtInx}
+		when not matched then
+		insert
+		values(
+		b.prdt_inx, #{prdtLot}, 'I',
+		#{prdtCd}, b.indica_deta_no, #{prdtDt}
+		)
+
+	</update>
 	
+	<insert id="insertOutPrdt">
+		insert into prdt_stc select
+		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
+		where
+		prdt_lot =#{prdtLot}
+	</insert>
+	<insert id="updateStatePrdt">
+		insert into prdt_stc select
+		prdt_inx,#{prdtLot},'O',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
+		where
+		prdt_lot =#{prdtLot}
+	</insert>
+
+	<delete id="deleteOutPrdt">
+		delete from prdt_stc where prdt_lot=#{prdtLot} and
+		prdt_fg ='O'
+
+	</delete>
+
+	<update id="updateOutPrdt">
+		update oust_d set 1=1
+
 	</update>
 </mapper>

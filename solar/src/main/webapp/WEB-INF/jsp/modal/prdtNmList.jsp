@@ -15,10 +15,18 @@
 
 
 		function NmList(){
-			//미니 그리드(제품명단)
+			//미니 그리드(제품명단) 기본적으로 전체명단이 나옴
 			const gridD = new tui.Grid({
 				el : document.getElementById('gridD'), // 컨테이너 엘리먼트
-				data : null,
+				data : {api : {
+					readData : {
+						url : '${pageContext.request.contextPath}/grid/prdtNmList.do',
+						method : 'GET'
+					}
+					
+				},
+				contentType : 'application/json'
+			},
 				bodyHeight : 500,
 				columns : [ 
 					{

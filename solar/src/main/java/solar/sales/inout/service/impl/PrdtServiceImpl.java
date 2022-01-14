@@ -51,4 +51,38 @@ public class PrdtServiceImpl implements PrdtService {
 		}
 		return 1;
 	}
+
+	@Override
+	public List<Prdt> findCo() {
+		
+		return pmapper.findCo();
+	}
+
+	@Override
+	public String makeNum() {
+		
+		return pmapper.makeNum();
+	}
+
+	@Override
+	public int modifyOutData(ModifyVO<Prdt> mvo) {
+		
+		if(mvo.getCreatedRows()!=null) {
+			for(Prdt vo : mvo.getCreatedRows()) {
+				pmapper.updateStatePrdt(vo);
+				pmapper.insertOutPrdt(vo);
+				}
+			}
+			if(mvo.getDeletedRows()!=null) {
+				for(Prdt vo : mvo.getDeletedRows()) {
+					pmapper.deleteOutPrdt(vo);
+				}
+			}
+			if(mvo.getUpdatedRows()!=null) {
+				for(Prdt vo : mvo.getUpdatedRows()) {
+					pmapper.updateOutPrdt(vo);
+				}
+			}
+		return 1;
+	}
 }

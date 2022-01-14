@@ -20,7 +20,20 @@ public class Prdt {
 	String prdtSpec;
 	String indicaNo;
 	String prdtInx;
-
+	String coCd;
+	String coNm;
+	String bizno;
+	String coNumber;
+	String coFg;
+	String slipDetaNo;
+	String slipNo;
+	String prdtUntprc;
+	String prdtStc;
+	String oustCnt;
+	String orderCnt;
+	String orderNo;
+	
+	
 
 	//검색조건
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -31,6 +44,8 @@ public class Prdt {
 	Date endT;
 	String prdNm;
 	String prdCd;
+	String copNm;
+	String copCd;
 	String prdSt;
 	
 	//modal추가정보
