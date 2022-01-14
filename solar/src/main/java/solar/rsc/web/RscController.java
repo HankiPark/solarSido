@@ -1,5 +1,6 @@
 package solar.rsc.web;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import solar.cmm.code.service.CmmnCdService;
 import solar.rsc.cmmn.service.RscService;
 import solar.rsc.infer.service.RscInferService;
 import solar.rsc.ordr.service.RscOrdr;
@@ -28,7 +30,9 @@ public class RscController {
 	RscService rscService;
 	@Autowired
 	RscInferService rscInferService;
-
+	@Autowired
+	CmmnCdService cmmnCdService;
+	
 	@GetMapping("rsc/ordr")
 	public String rscOrdr() {
 		return "rsc/ordr";
@@ -69,11 +73,19 @@ public class RscController {
 		return "jsonView";
 	}
 	
+	@GetMapping("cmmn/codes")
+	public String cmmnCodes(Model model) {
+		model.addAttribute("codes", cmmnCdService.select(Arrays.asList("rscst","rscinfer","rsc")));
+		return "jsonView";
+	}
+	
+	//검수관리페이지 이동
 	@GetMapping("rsc/insp")
-	public String rscInsp() {
+	public String rscInsp(Model model) {
 		return "rsc/insp";
 	}
 	
+	//
 	@GetMapping("rsc/inspData")
 	public String rscInspData(/*@RequestParam Map<String,String> map, */Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
@@ -102,6 +114,16 @@ public class RscController {
 	public int rscOrdrData(@RequestBody ModifyVO<RscOrdr> mvo) {
 		rscOrdrService.modify(mvo);
 		return 201;
+	}
+	
+	@GetMapping("rsc/inout")
+	public String rscInOut() {
+		return "rsc/inout";
+	}
+	
+	@GetMapping("rsc/inoutData")
+	public String rscInoutData(Model model) {
+		return "";
 	}
 
 }
