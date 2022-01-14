@@ -14,8 +14,8 @@
 
 <body>
   <h1>자재 발주 참조</h1>
-  <div id="coModal" title="업체 목록">Loading..</div>
-  <div id="rscModal" title="자재 목록">Loading..</div>
+  <div id="coModal" title="업체 목록"></div>
+  <div id="rscModal" title="자재 목록"></div>
   <form id="ordrQueryFrm" name="ordrQueryFrm">
     발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd"><br>
     발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
@@ -26,13 +26,19 @@
 </body>
 
 <script>
-let ordrDataSource = {
-		  api: {
-			    readData: { url: 'ordrData', method: 'GET'},
-				modifyData: {url: 'ordrData',method: 'PUT'}
-			  },
-			  contentType : 'application/json'
-			};
+	let d = new Date();
+	let nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
+	document.getElementById('ordrDtStt').value = nd.toISOString().slice(0, 10);
+	document.getElementById('ordrDtEnd').value = d.toISOString().slice(0, 10);
+
+	let ordrDataSource = {
+			  api: {
+				    readData: { url: 'ordrData', method: 'GET'},
+					modifyData: {url: 'ordrData',method: 'PUT'}
+				  },
+				  contentType : 'application/json',
+				  initialRequest: false
+				};
 			
   var grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -81,16 +87,6 @@ let ordrDataSource = {
   grid.on('response',function(){
       grid.refreshLayout();
     });
-
-   $.ajax({
-    url: "ordrData",
-    method: "GET",
-    dataType: "JSON"
-  }).done(function (result) {
-    console.log(result);
-    grid.resetData(result.data.contents);
-    grid.refreshLayout();
-  });
 
 //
 

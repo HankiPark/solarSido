@@ -12,7 +12,8 @@
 		    c.co_nm,
 		    o.rsc_ist_qty,
 		    o.rsc_infer_qty,
-		    case when o.insp_cls = 0 then '검수정보입력' else '검수완료' end "insp_cls"
+		    o.insp_cls,
+		    o.rsc_ist_qty - o.rsc_infer_qty "rsc_passed_qty"
 		FROM
 		    	rsc_or o
 		    JOIN rsc r ON o.rsc_cd = r.rsc_cd
@@ -20,10 +21,13 @@
 		WHERE
 		    1 = 1
 		<if test='isNotInspected == "true"'>
-			AND insp_cls != 1
+			AND insp_cls = 0
 		</if>
-		<if test='ordrDtStt != null and ordrDtStt != "" and ordrDtEnd != null and ordrDtEnd != ""'>
-			AND o.ordr_dt BETWEEN #{ordrDtStt} and #{ordrDtEnd}
+		<if test='ordrDtStt != null and ordrDtStt != ""'>
+			AND to_char(o.ordr_dt,'yyyy/MM/dd') <![CDATA[>= #{ordrDtStt}]]>
+		</if>
+		<if test='ordrDtEnd != null and ordrDtEnd != ""'>
+			AND to_char(o.ordr_dt,'yyyy/MM/dd') <![CDATA[<= #{ordrDtEnd}]]>
 		</if>
 		<if test='co != null and co != ""'>
 			AND c.co_cd = #{co}
@@ -40,27 +44,8 @@
 		update rsc_or
 		set
 		    rsc_infer_qty = #{rscInferQty},
-		    insp_cls = FN_REPLACE_INSP_CLS(#{inspCls})
+		    insp_cls = #{inspCls}
 		where ordr_cd = #{ordrCd}
 	</update>
-	
-<!-- 	<select id="selectAll" resultType="solar.rsc.ordr.service.RscOrdr">
-		SELECT
-		    to_char(o.ordr_dt,'yyyy/MM/dd') "ordr_dt",
-		    r.rsc_nm,
-		    r.rsc_cd,
-		    o.ordr_qty,
-		    o.ordr_cd,
-		    c.co_nm,
-		    o.rsc_ist_qty
-		FROM
-		    	rsc_or o
-		    JOIN rsc r ON o.rsc_cd = r.rsc_cd
-		    JOIN co c ON r.co_cd = c.co_cd
-		WHERE
-		    1 = 1
-		ORDER BY
-		    ordr_dt
-	</select> -->
 	
 </mapper>

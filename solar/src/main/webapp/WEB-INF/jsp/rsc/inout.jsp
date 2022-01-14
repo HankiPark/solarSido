@@ -13,13 +13,12 @@
 
 
 <body>
-	<h1>자재 검수 관리</h1>
+	<h1>자재 입출고 관리</h1>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="검수"></div>
 		<form id="ordrQueryFrm" name="ordrQueryFrm">
 			발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
-			미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
 			<br>
 			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
 			자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
@@ -37,7 +36,6 @@
 	let ordrDtEnd;
 	let co;
 	let rsc;
-	let isNotInspected;
 	let inferDataSource = {
 		api: {
 			readData: { url: '../rsc/inspData', method: 'GET'}
@@ -83,12 +81,8 @@
         name: 'ordrQty'
       },
       {
-        header: '받은 수량',
-        name: 'rscIstQty'
-      },
-      {
-        header: '불량량',
-        name: 'rscInferQty'
+        header: '합격량',
+        name: 'rscPassedQty',
       },
       {
         header: '발주번호',
@@ -112,13 +106,6 @@
     ]
   });
   
-/*     grid.on('beforeChange',function(ev){
-    	console.log('befgg')
-    	if(ev.columnName == 'inspCls'){
-    	return false;
-    	}
-    }); */
-    
 	grid.on('response',function(ev){
 		console.log(ev.xhr.response);
       if(ev.xhr.responseText =="201"){
@@ -160,13 +147,12 @@
     ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
     co = document.ordrQueryFrm.co.value;
     rsc = document.ordrQueryFrm.rsc.value;
-    isNotInspected = document.ordrQueryFrm.isNotInspected.checked;
+    //isNotInspected = 
 	grid.readData(1,{
 		'ordrDtStt':ordrDtStt,
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
 		'rsc':rsc,
-		'isNotInspected':isNotInspected
 	});
   });
 
