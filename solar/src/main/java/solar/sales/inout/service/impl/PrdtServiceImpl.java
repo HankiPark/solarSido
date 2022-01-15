@@ -52,11 +52,11 @@ public class PrdtServiceImpl implements PrdtService {
 		return 1;
 	}
 
-	@Override
-	public List<Prdt> findCo() {
-		
-		return pmapper.findCo();
-	}
+	/*
+	 * @Override public List<Prdt> findCo() {
+	 * 
+	 * return pmapper.findCo(); }
+	 */
 
 	@Override
 	public String makeNum() {
@@ -85,4 +85,11 @@ public class PrdtServiceImpl implements PrdtService {
 			}
 		return 1;
 	}
+
+	@Override
+	public List<Prdt> findSlip(Prdt vo) {
+		
+		return pmapper.findSlip(vo);
+	}
 }
+

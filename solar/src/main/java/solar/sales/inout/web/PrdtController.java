@@ -26,6 +26,7 @@ public class PrdtController {
 	@RequestMapping("/sales/prdt_inout_mng")
 	public String prdtPage(Model model) {
 		model.addAttribute("num", pservice.makeNum());
+		/* model.addAttribute("coList", (pservice.findCo())); */
 		return "sales/prdt_inout_mng";
 	}
 
@@ -71,7 +72,7 @@ public class PrdtController {
 	// 입고 그리드 업데이트(저장)
 	@PostMapping("/grid/prdtInputUpdate.do")
 	public String insertInput(Model model, Prdt prdt, @RequestBody ModifyVO<Prdt> mvo) throws Exception {
-		System.out.println(mvo);
+		
 		pservice.modifyData(mvo);
 		model.addAttribute("mode", "upd");
 
@@ -103,27 +104,33 @@ public class PrdtController {
 		pservice.modifyOutData(mvo);
 		model.addAttribute("mode", "upd");
 		model.addAttribute("num", pservice.makeNum());
-		model.addAttribute("coList", pservice.findCo());
+		
 
 		return "jsonView";
 	}
 
-	// 전표번호 조회
+	// 전표번호 조회 modal
 	@GetMapping("/modal/slipOutput")
-	public String SlipOutputListGrid(Model model, Prdt prdt) throws Exception {
-
-		return "modal/SlipNameList";
-	}
-
-	@GetMapping("/ajax/showSlipNum.do")
-	public String showSlipNum(Model model, Prdt prdt) {
-
+	public String SlipOutputListGrid(Model model, Prdt prdt) throws Exception {	
 		/*
-		 * List<?> list = pservice.findSlip(prdt); model.addAttribute("result", true);
-		 * Map<String, Object> map = new HashMap(); Map<String, Object> map2 = new
-		 * HashMap(); map.put("contents", list); map2.put("page", 1);
-		 * map2.put("totalCount", list.size()); model.addAttribute("data", map);
+		 * model.addAttribute("coList", pservice.findCo());
+		 * System.out.println(pservice.findCo());
 		 */
+		return "modal/slipNameList";
+	}
+	//전표번호 검색
+	@GetMapping("/grid/slipList.do")
+	public String showSlipNum(Model model, Prdt prdt) {
+		
+		List<?> list = pservice.findSlip(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+
 		return "jsonView";
 	}
 

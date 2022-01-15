@@ -95,7 +95,9 @@ a {
 		<div id="inGrid"></div>
 	</div>
 	<div id="oG">
-
+		<input type="hidden" id="showDt">
+		<input type="hidden" id="showCoNm">
+		
 		<div>
 			<button type="button" id="findgrid2">조회</button>
 		</div>
@@ -115,14 +117,15 @@ a {
 			</div>
 		</div>
 		<div id="outGrid"></div>
+		<div id="hideGrid" style="display:none"></div>
 	</div>
-
+	
 
 
 
 
 	<div id="dialog-form" title="제품명단"></div>
-	<div id="dialog-co" title="업체명단"></div>
+	<div id="dialog-sl" title="전표명단"></div>
 	<div id="dialog-lot" title="입고대기명단"></div>
 
 
@@ -158,8 +161,8 @@ a {
 					
 								} 
 							}) */
-						/* 	outGrid.refreshLayout();
-							outGrid.resetData(); */
+							outGrid.refreshLayout();
+							outGrid.clear();
 						}
 					});
 		}
@@ -183,7 +186,7 @@ a {
 			width : 900,
 			height : 700
 		});
-		let dialog3 = $("#dialog-co").dialog({
+		let dialog3 = $("#dialog-sl").dialog({
 			autoOpen : false,
 			modal : true,
 			width : 900,
@@ -369,7 +372,7 @@ a {
 		
 		//전표 조회버튼		
 		$('#findgrid2').on('click', function() {
-			dialog4.dialog("open");
+			dialog3.dialog("open");
 			$("#dialog-sl")
 					.load(
 							"${pageContext.request.contextPath}/modal/slipOutput",
@@ -417,22 +420,18 @@ a {
 						header : '전표상세번호',
 						name : 'slipDetaNo',
 						hidden : true
-					},{
-						header : '회사명',
-						name : 'coNm'
-					}, {
-						header : '제품LOT',
-						name : 'prdtLot',
-						editor : 'text'
-					}, {
-						header : '제품코드',
-						name : 'prdtCd'
 					}, {
 						header : '출고일자',
 						name : 'prdtDt'
-					}, {
+					},{
 						header : '주문번호',
-						name : 'orderNo',
+						name : 'orderNo',				
+					}, {
+						header : '회사명',
+						name : 'coNm'
+					}, {
+						header : '제품명',
+						name : 'prdtNm'
 					}, {
 						header : '주문량',
 						name : 'orderCnt',
@@ -479,9 +478,7 @@ a {
 		$('#updateBtn2').on('click', function appendRow(index) {
 			//버튼누르면 전표번호값 업데이트
 			outGrid.blur();
-			for(){
-				
-			}
+
 			outGrid.request('modifyData');
 			$("label[for='slipNm']").text("부여될 전표번호");
 			$("#slipNm").val("SLI"+(d.toISOString().slice(0, 10)).replaceAll("-","")+"${num}");
@@ -496,6 +493,61 @@ a {
 		
 		//전표번호 부여
 		$("#slipNm").val("SLI"+(d.toISOString().slice(0, 10)).replaceAll("-","")+"${num}");
+		
+		
+		
+		//제품 lot관리 그리드(숨겨짐)
+		const hideGrid = new tui.Grid(
+				{
+					el : document.getElementById('hideGrid'), // 컨테이너 엘리먼트
+					data : {
+						api : {
+							readData : {
+								url : '${pageContext.request.contextPath}/grid/prdtListAll.do',
+								method : 'GET'
+							},
+							modifyData : {
+								url : '${pageContext.request.contextPath}/grid/prdtListAllUpdate.do',
+								method : 'POST',
+								cache:false
+							}
+						},
+						initialRequest: false,
+						contentType : 'application/json'
+					},
+					
+					bodyHeight : 700,
+					rowHeaders : [ {
+						type : 'rowNum',
+						width : 100,
+						align : 'left',
+						valign : 'bottom'
+					}, {
+						type : 'checkbox'
+					} ],
+					columns : [ {
+						header : '제품LOT',
+						name : 'prdtLot'
+					}, {
+						header : '전표상세번호',
+						name : 'slipDetaNo'
+					}, {
+						header : '전표번호',
+						name : 'slipNo'
+					},{
+						header : '입출고여부',
+						name : 'prdtFg',				
+					}
+
+					]
+
+				});
+		
+		
+		
+		
+		
+		
 		
 		outGrid.refreshLayout();
 		inGrid.refreshLayout();

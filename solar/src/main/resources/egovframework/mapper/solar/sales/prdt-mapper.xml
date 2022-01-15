@@ -65,15 +65,14 @@
 	</select>
 	<!-- 전표번호 조회 -->
 	<select id="findSlip" resultType="Prdt">
-		select a.*,b.co_nm from (select * from oust o join order_tb d on
-		o.order_no=d.order_no) a join co b on a.co_cd = b.co_cd
-		where
-		   	<![CDATA[	
-				TO_CHAR(a.prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(a.prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
-			]]>
-		<if test="coNm !=null and coNm !=''">
-			and b.co_nm=#{coNm}
-		</if>
+		select *,DCNT('oust',#{slipNo}) as "slNm" from oust 
+			where
+			   	<![CDATA[	
+					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
+				]]>
+				<if test="coNm!=null and coNm!=''">
+					and co_nm =#{coNm}
+				</if>
 
 	</select>
 	<!-- 화면표기 숫자를 위함 -->
@@ -81,10 +80,15 @@
 		SELECT LPAD(nvl((select
 		max(TO_NUMBER(substr(slip_no,12))) from oust),0)+1,3,'0') from dual
 	</select>
+	
+
+	
+	
+	
 <!-- 출고전표 -->
 	<insert id="insertSlip">
 		insert into oust
-		values(CREATENO('SLI',SLIPSEQ.nextval),sysdate)
+		values(CREATENO('SLI',SLIPSEQ.nextval),sysdate,#{coNm})
 	</insert>
 <!-- 출고전표디테일  그리드화 되어야함-->
 	<insert id="insertSlipDetail">
@@ -97,7 +101,8 @@
 		values(detail,#{prdtLot},#{slipNo},#{orderNo},#{orderCnt},#{prdtAmt},#{prdtStc}
 		)
 	</insert>
-
+	
+	
 
 
 	<insert id="insertInPrdt">

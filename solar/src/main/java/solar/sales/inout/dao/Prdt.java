@@ -32,6 +32,7 @@ public class Prdt {
 	String oustCnt;
 	String orderCnt;
 	String orderNo;
+	String slNm;
 	
 	
 
