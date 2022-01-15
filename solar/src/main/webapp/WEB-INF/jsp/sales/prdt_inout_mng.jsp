@@ -94,32 +94,56 @@ a {
 
 		<div id="inGrid"></div>
 	</div>
+	
 	<div id="oG">
-		<input type="hidden" id="showDt">
-		<input type="hidden" id="showCoNm">
-		
+
+
 		<div>
 			<button type="button" id="findgrid2">조회</button>
 		</div>
-		<br>
-		<label for="slipNm">부여될 전표번호</label><br><input id="slipNm" type="text" readonly>
-	
-	<div class="card card-pricing card-primary card-white">
-			<div class="card-body" id="grid">
-				<div align="right">
-					<button type="button" id="insertBtn2"
-						class="btn btn-default btn-simple btn-sm">추가</button>
-					<button type="button" id="updateBtn2"
-						class="btn btn-default btn-simple btn-sm">저장</button>
-					<button type="button" id="deleteBtn2"
-						class="btn btn-default btn-simple btn-sm">삭제</button>
+		<div id="C">
+			<label for="slipNm">부여될 전표번호</label><br>
+			<input id="slipNm" type="text" readonly>
+
+			<div class="card card-pricing card-primary card-white">
+				<div class="card-body">
+					<div align="right">
+						<button type="button" id="insertBtn2"
+							class="btn btn-default btn-simple btn-sm">추가</button>
+						<button type="button" id="updateBtn2"
+							class="btn btn-default btn-simple btn-sm">저장</button>
+						<button type="button" id="deleteBtn2"
+							class="btn btn-default btn-simple btn-sm">삭제</button>
+					</div>
 				</div>
 			</div>
+			<div id="outGrid"></div>
+
 		</div>
-		<div id="outGrid"></div>
-		<div id="hideGrid" style="display:none"></div>
+
+		<div id="noC" style="display: none">
+			<label for="slipNm">조회중인 전표번호</label><br>
+			<input id="slipNm2" type="text" readonly>
+
+			<div class="card card-pricing card-primary card-white">
+				<div class="card-body">
+					<div align="right">
+						<button type="button" id="excelBtn"
+							class="btn btn-default btn-simple btn-sm">excel</button>
+
+					</div>
+				</div>
+			</div>
+			<div id="outGrid2"></div>
+
+		</div>
+
+
+
+
+
 	</div>
-	
+
 
 
 
@@ -131,7 +155,6 @@ a {
 
 
 	<script>
-		
 		//탭 설정
 		const tabList = document.querySelectorAll('.tab_menu .list li');
 		for (var i = 0; i < tabList.length; i++) {
@@ -147,20 +170,20 @@ a {
 							$("#iG").css("display", "block");
 							inGrid.refreshLayout();
 							inGrid.clear();
-							
+
 						} else {
 							$("#iG").css("display", "none");
 							$("#oG").css("display", "block");
-						/* 	$.ajax({
-								url : '${pageContext.request.contextPath}/ajax/showSlipNum.do',
-								contentType : 'application/json; charset=utf-8',
+							/* 	$.ajax({
+									url : '${pageContext.request.contextPath}/ajax/showSlipNum.do',
+									contentType : 'application/json; charset=utf-8',
 
-							}).done(function(ev) {
-								console.log(JSON.parse(ev).num);
-								
-					
-								} 
-							}) */
+								}).done(function(ev) {
+									console.log(JSON.parse(ev).num);
+									
+							
+									} 
+								}) */
 							outGrid.refreshLayout();
 							outGrid.clear();
 						}
@@ -171,7 +194,6 @@ a {
 		var nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
 		document.getElementById('startT').value = nd.toISOString().slice(0, 10);
 		document.getElementById('endT').value = d.toISOString().slice(0, 10);
-
 
 		//modal 설정
 		let dialog = $("#dialog-form").dialog({
@@ -219,13 +241,13 @@ a {
 							modifyData : {
 								url : '${pageContext.request.contextPath}/grid/prdtInputUpdate.do',
 								method : 'POST',
-								cache:false
+								cache : false
 							}
 						},
-						initialRequest: false,
+						initialRequest : false,
 						contentType : 'application/json'
 					},
-					
+
 					bodyHeight : 700,
 					rowHeaders : [ {
 						type : 'rowNum',
@@ -239,7 +261,7 @@ a {
 						header : 'index',
 						name : 'prdtInx',
 						hidden : true
-					},{
+					}, {
 						header : '입고일자',
 						name : 'prdtDt',
 						editor : 'datePicker'
@@ -265,30 +287,30 @@ a {
 						name : 'indicaNo'
 					}
 
-					],columnOptions: {
-					    minWidth: 230
-					  },
+					],
+					
 
 				});
 		//그리드 값변하면 다시 뿌려주게끔
 		inGrid.on('onGridUpdated', function() {
 			inGrid.refreshLayout();
 		});
-	 	inGrid.on('response', function(ev) {
-	 		console.log(ev);
-	 		let res =JSON.parse(ev.xhr.response);
-	 		if(res.mode=='upd'){
-		 		inGrid.resetOriginData();
-	 		}
-		}); 
-	 	
+		inGrid.on('response', function(ev) {
+			console.log(ev);
+			let res = JSON.parse(ev.xhr.response);
+			if (res.mode == 'upd') {
+				inGrid.resetOriginData();
+			}
+		});
+
 		inGrid
 				.on(
 						'click',
 						function(ev) {
 							console.log(ev["columnName"]);
-							console.log(inGrid.getValue(ev["rowKey"], "prdtLot"));
-							if (ev["columnName"] == "prdtLot" ) {
+							console.log(inGrid
+									.getValue(ev["rowKey"], "prdtLot"));
+							if (ev["columnName"] == "prdtLot") {
 								dialog2.dialog("open");
 								$("#dialog-lot")
 										.load(
@@ -315,15 +337,15 @@ a {
 			$.ajax({
 				url : '${pageContext.request.contextPath}/grid/prdtInput.do',
 				data : params,
-				dataType:"json",
+				dataType : "json",
 				contentType : 'application/json; charset=utf-8',
 
 			}).done(function(res) {
 				/* inGrid.enable(); */
 				inGrid.resetData(res["data"]["contents"]);
-		/* 		for (var i = 0; i < sres["data"]["contents"].length; i++) {
-					inGrid.disableRow(i);
-				} */
+				/* 		for (var i = 0; i < sres["data"]["contents"].length; i++) {
+							inGrid.disableRow(i);
+						} */
 			})
 
 		})
@@ -339,10 +361,9 @@ a {
 
 		});
 		$('#updateBtn').on('click', function appendRow(index) {
-			
-			inGrid.blur();
-			inGrid.request('modifyData');
 
+			inGrid.blur(); 
+			inGrid.request('modifyData');
 
 		});
 		$('#deleteBtn').on('click', function appendRow(index) {
@@ -364,26 +385,22 @@ a {
 										CoList()
 									})
 				}); */
-		
-		
-		
-		
-		
-		
-		//전표 조회버튼		
-		$('#findgrid2').on('click', function() {
-			dialog3.dialog("open");
-			$("#dialog-sl")
-					.load(
-							"${pageContext.request.contextPath}/modal/slipOutput",
-							function() {
-								slList()
-							})
-			
 
-		})
-		
-		
+		//전표 조회버튼		
+		$('#findgrid2')
+				.on(
+						'click',
+						function() {
+							dialog3.dialog("open");
+							$("#dialog-sl")
+									.load(
+											"${pageContext.request.contextPath}/modal/slipOutput",
+											function() {
+												slList()
+											})
+
+						})
+
 		const outGrid = new tui.Grid(
 				{
 					el : document.getElementById('outGrid'), // 컨테이너 엘리먼트
@@ -396,13 +413,13 @@ a {
 							modifyData : {
 								url : '${pageContext.request.contextPath}/grid/slipOutputUpdate.do',
 								method : 'POST',
-								cache:false
+								cache : false
 							}
 						},
-						initialRequest: false,
+						initialRequest : false,
 						contentType : 'application/json'
 					},
-					
+
 					bodyHeight : 700,
 					rowHeaders : [ {
 						type : 'rowNum',
@@ -423,9 +440,9 @@ a {
 					}, {
 						header : '출고일자',
 						name : 'prdtDt'
-					},{
+					}, {
 						header : '주문번호',
-						name : 'orderNo',				
+						name : 'orderNo',
 					}, {
 						header : '회사명',
 						name : 'coNm'
@@ -446,9 +463,8 @@ a {
 						name : 'prdtUntprc'
 					}
 
-					],columnOptions: {
-					    minWidth: 230
-					  },
+					],
+					
 
 				});
 		//그리드 값변하면 다시 뿌려주게끔
@@ -456,16 +472,14 @@ a {
 			outGrid.refreshLayout();
 		});
 		outGrid.on('response', function(ev) {
-	 		console.log(ev);
-	 		let res =JSON.parse(ev.xhr.response);
-	 		if(res.mode=='upd'){
-	 			outGrid.resetOriginData();
-	 		}
-		}); 
-		
-		
+			console.log(ev);
+			let res = JSON.parse(ev.xhr.response);
+			if (res.mode == 'upd') {
+				outGrid.resetOriginData();
+			}
+		});
 
-		 //행추가버튼
+		//행추가버튼
 		$('#insertBtn2').on('click', function appendRow(index) {
 
 			outGrid.appendRow(null, {
@@ -475,55 +489,52 @@ a {
 			});
 
 		});
-		$('#updateBtn2').on('click', function appendRow(index) {
-			//버튼누르면 전표번호값 업데이트
-			outGrid.blur();
+		$('#updateBtn2').on(
+				'click',
+				function appendRow(index) {
+					//버튼누르면 전표번호값 업데이트
+					outGrid.blur();
 
-			outGrid.request('modifyData');
-			$("label[for='slipNm']").text("부여될 전표번호");
-			$("#slipNm").val("SLI"+(d.toISOString().slice(0, 10)).replaceAll("-","")+"${num}");
+					outGrid.request('modifyData');
+					$("label[for='slipNm']").text("부여될 전표번호");
+					$("#slipNm").val(
+							"SLI"
+									+ (d.toISOString().slice(0, 10))
+											.replaceAll("-", "") + "${num}");
 
-
-		});
+				});
 		$('#deleteBtn2').on('click', function appendRow(index) {
 			outGrid.blur();
 			outGrid.removeCheckedRows(true);
 
-		}); 
-		
+		});
+
 		//전표번호 부여
-		$("#slipNm").val("SLI"+(d.toISOString().slice(0, 10)).replaceAll("-","")+"${num}");
-		
-		
-		
+		$("#slipNm").val(
+				"SLI" + (d.toISOString().slice(0, 10)).replaceAll("-", "")
+						+ "${num}");
+
 		//제품 lot관리 그리드(숨겨짐)
-		const hideGrid = new tui.Grid(
+		const outGrid2 = new tui.Grid(
 				{
-					el : document.getElementById('hideGrid'), // 컨테이너 엘리먼트
+					el : document.getElementById('outGrid2'), // 컨테이너 엘리먼트
 					data : {
 						api : {
 							readData : {
 								url : '${pageContext.request.contextPath}/grid/prdtListAll.do',
 								method : 'GET'
-							},
-							modifyData : {
-								url : '${pageContext.request.contextPath}/grid/prdtListAllUpdate.do',
-								method : 'POST',
-								cache:false
 							}
 						},
-						initialRequest: false,
+						initialRequest : false,
 						contentType : 'application/json'
 					},
-					
+
 					bodyHeight : 700,
 					rowHeaders : [ {
 						type : 'rowNum',
 						width : 100,
 						align : 'left',
 						valign : 'bottom'
-					}, {
-						type : 'checkbox'
 					} ],
 					columns : [ {
 						header : '제품LOT',
@@ -534,21 +545,15 @@ a {
 					}, {
 						header : '전표번호',
 						name : 'slipNo'
-					},{
+					}, {
 						header : '입출고여부',
-						name : 'prdtFg',				
+						name : 'prdtFg',
 					}
 
 					]
 
 				});
-		
-		
-		
-		
-		
-		
-		
+		outGrid2.refreshLayout();
 		outGrid.refreshLayout();
 		inGrid.refreshLayout();
 	</script>

@@ -54,10 +54,6 @@ public class OrderController {
 
 	@GetMapping("/modal/orderDetailList")
 	public String orderDetailList(Model model, Order order) throws Exception {
-		
-
-		 
-
 		return "modal/orderDetailList";
 	}
 

@@ -65,7 +65,7 @@
 	</select>
 	<!-- 전표번호 조회 -->
 	<select id="findSlip" resultType="Prdt">
-		select *,DCNT('oust',#{slipNo}) as "slNm" from oust 
+		select slip_no,prdt_dt,co_nm,DCNT('oust',slip_no) as slNm from oust 
 			where
 			   	<![CDATA[	
 					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
