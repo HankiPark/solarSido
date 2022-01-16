@@ -68,10 +68,17 @@ public class PrdtServiceImpl implements PrdtService {
 	public int modifyOutData(ModifyVO<Prdt> mvo) {
 		
 		if(mvo.getCreatedRows()!=null) {
+			pmapper.insertOutPrdt(mvo.getCreatedRows().get(0));
 			for(Prdt vo : mvo.getCreatedRows()) {
-				pmapper.updateStatePrdt(vo);
-				pmapper.insertOutPrdt(vo);
+				System.out.println(vo);
+				pmapper.insertOutD(vo);
+				
+				System.out.println(pmapper.updateStatePrdt(vo)+"설정완료");
+				pmapper.resetOw(vo);
+				pmapper.updOrd(vo);
+				
 				}
+			
 			}
 			if(mvo.getDeletedRows()!=null) {
 				for(Prdt vo : mvo.getDeletedRows()) {
@@ -91,5 +98,45 @@ public class PrdtServiceImpl implements PrdtService {
 		
 		return pmapper.findSlip(vo);
 	}
+
+	@Override
+	public List<Prdt> OutOrderList(Prdt vo) {
+		
+		return pmapper.OutOrderList(vo);
+	}
+
+	@Override
+	public List<Prdt> OutOrderCdList(Prdt vo) {
+		
+		return pmapper.OutOrderCdList(vo);
+	}
+
+	@Override
+	public int tempUpdStc(Prdt vo) {
+		
+		return pmapper.tempUpdStc(vo);
+	}
+
+	@Override
+	public List<Prdt> OutWaitList(Prdt vo) {
+		// TODO Auto-generated method stub
+		return pmapper.OutWaitList(vo);
+	}
+
+	@Override
+	public int resetOw(Prdt vo) {
+		pmapper.resetOw(vo);
+		return 1;
+	}	
+	@Override
+	public int insertOw(Prdt vo) {
+		
+		pmapper.insertOw(vo);
+		return 1;
+	}
+
+	
+	
+	
 }
 

@@ -54,7 +54,7 @@
 		order by prdt_cd asc
 
 	</select>
-<!-- 회사 조회 -->
+	<!-- 회사 조회 -->
 	<select id="findCo" resultType="Prdt">
 		select * from co
 		<where>
@@ -65,14 +65,14 @@
 	</select>
 	<!-- 전표번호 조회 -->
 	<select id="findSlip" resultType="Prdt">
-		select slip_no,prdt_dt,co_nm,DCNT('oust',slip_no) as slNm from oust 
-			where
+		select slip_no,prdt_dt,co_nm,DCNT('oust',slip_no) as slNm from oust
+		where
 			   	<![CDATA[	
 					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
 				]]>
-				<if test="coNm!=null and coNm!=''">
-					and co_nm =#{coNm}
-				</if>
+		<if test="coNm!=null and coNm!=''">
+			and co_nm =#{coNm}
+		</if>
 
 	</select>
 	<!-- 화면표기 숫자를 위함 -->
@@ -80,17 +80,60 @@
 		SELECT LPAD(nvl((select
 		max(TO_NUMBER(substr(slip_no,12))) from oust),0)+1,3,'0') from dual
 	</select>
-	
 
+	<!-- 재고가 있는 주문서 조회 -->
+	<select id="OutOrderList" resultType="Prdt">
+		select distinct o.order_no,
+		o.recv_dt,
+		o.co_cd,
+		(select co_nm from co where	co_cd=o.co_cd) as co_nm,
+		o.paprd_dt 
+		from order_tb o 
+		join order_d d 
+		on o.order_no =d.order_no
+		where d.prdt_cd in 
+					(select prdt_cd from prdt_stc where prdt_fg='I' and prdt_fg!='O') 
+			 and o.prog_info !='종료'
+				
+		order by o.paprd_dt asc
+
+
+	</select>
+	<!-- 주문번호에서 입고중인 제품이 있을때 제품 list -->
+	<select id="OutOrderCdList" resultType="Prdt">
+	select o.prdt_cd,
+			o.order_qty,
+			o.prdt_stc,
+			(select prdt_nm from prdt where prdt_cd = o.prdt_cd) as prdt_nm,
+			(select prdt_amt from prdt where prdt_cd = o.prdt_cd) as prdt_amt,
+			(o.order_qty-nvl(o.oust_qty,0)) as rest_qty  
+	from order_d o 
+	where order_no = #{orderNo}
+		and prdt_cd in
+				(select prdt_cd from prdt_stc where prdt_fg='I' and prdt_fg!='O') 
+	order by prdt_cd asc   
+	</select>
 	
-	
-	
-<!-- 출고전표 -->
+<!--  출고량을 눌렀을때 뜨는 리스트-->
+	<select id="OutWaitList" resultType="Prdt">
+	select distinct prdt_lot,prdt_cd,prdt_fg from prdt_stc where prdt_cd=#{prdtCd} and 
+	                        prdt_lot in	
+	                            (select prdt_lot from prdt_stc where prdt_fg='I') 
+	                        and prdt_lot not in
+	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW')
+	                        and prdt_fg='I'
+	        or (prdt_fg ='OW' and indica_deta_no=#{indicaDetaNo} and prdt_cd=#{prdtCd})
+	            
+	</select>
+
+
+
+	<!-- 출고전표 -->
 	<insert id="insertSlip">
 		insert into oust
 		values(CREATENO('SLI',SLIPSEQ.nextval),sysdate,#{coNm})
 	</insert>
-<!-- 출고전표디테일  그리드화 되어야함-->
+	<!-- 출고전표디테일 그리드화 되어야함 -->
 	<insert id="insertSlipDetail">
 		<selectKey keyProperty="detail" resultType="int"
 			order="BEFORE"> select nvl(max(SLIP_DETA_NO),0)+1 from oust_d
@@ -101,8 +144,8 @@
 		values(detail,#{prdtLot},#{slipNo},#{orderNo},#{orderCnt},#{prdtAmt},#{prdtStc}
 		)
 	</insert>
-	
-	
+
+
 
 
 	<insert id="insertInPrdt">
@@ -117,6 +160,19 @@
 		prdt_fg ='I'
 
 	</delete>
+
+
+	<delete id="resetOw">
+		delete from prdt_stc where prdt_fg='OW'
+		<if test="indicaDetaNo!=null and indicaDetaNo!='' ">
+		 and indica_deta_no=#{indicaDetaNo} 
+		 </if>
+	</delete>
+
+	<insert id="insertOw">
+		insert into prdt_stc select prdt_inx,prdt_lot,'OW',prdt_cd,#{indicaDetaNo},sysdate from prdt_stc where prdt_lot = #{prdtLot} and prdt_fg='I'
+	</insert>
+
 
 	<update id="updateInPrdt">
 		merge into prdt_stc a
@@ -138,19 +194,25 @@
 		)
 
 	</update>
-	
+
 	<insert id="insertOutPrdt">
-		insert into prdt_stc select
-		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
-		where
-		prdt_lot =#{prdtLot}
+		insert into oust values(#{slipNo},#{prdtDt},#{coNm})
+	</insert>
+	<insert id="insertOutD">
+
+		insert into oust_d values(
+		SLIPSEQ.nextval,#{slipNo},#{orderNo},#{orderQty},#{prdtStc},nvl(#{oustQty},0),#{prdtCd},#{prdtUntprc})
+
 	</insert>
 	<insert id="updateStatePrdt">
 		insert into prdt_stc select
-		prdt_inx,#{prdtLot},'O',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
+		prdt_inx,prdt_lot,'O',prdt_cd,(select o.slip_deta_no from oust_d o where o.order_no = #{orderNo} and o.prdt_cd=#{prdtCd} and o.slip_no=#{slipNo}),#{prdtDt} from prdt_stc
 		where
-		prdt_lot =#{prdtLot}
+		prdt_lot in (select prdt_lot from prdt_stc where prdt_fg ='OW') and prdt_fg='OW'
 	</insert>
+	<update id="updOrd">
+		update order_d set oust_qty =oust_qty+nvl(#{oustQty},0) where order_no=#{orderNo} and prdt_cd=#{prdtCd}
+	</update>
 
 	<delete id="deleteOutPrdt">
 		delete from prdt_stc where prdt_lot=#{prdtLot} and

@@ -9,11 +9,17 @@ public interface PrdtService {
 	List<Prdt> findList(Prdt vo);
 	List<Prdt> findPrdt(Prdt vo);
 	List<Prdt> findSlip(Prdt vo);
-
+	List<Prdt> OutOrderList(Prdt vo);
+	List<Prdt> OutOrderCdList(Prdt vo);
+	List<Prdt> OutWaitList(Prdt vo);
 	//List<Prdt> findCo();
 	int inPrdt(Prdt vo);
 	int modifyData(ModifyVO<Prdt> mvo);
 	int modifyOutData(ModifyVO<Prdt> mvo);
+	int resetOw(Prdt vo);
+	int insertOw(Prdt vo);
+
+	int tempUpdStc(Prdt vo);
 	String makeNum();
 }
 	

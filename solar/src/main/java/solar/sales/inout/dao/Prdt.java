@@ -17,8 +17,10 @@ public class Prdt {
 	Date prdtDt;
 	String prdtCd;
 	String prdtNm;
+	String prdtFg;
 	String prdtSpec;
 	String indicaNo;
+	String indicaDetaNo;
 	String prdtInx;
 	String coCd;
 	String coNm;
@@ -29,13 +31,20 @@ public class Prdt {
 	String slipNo;
 	String prdtUntprc;
 	String prdtStc;
-	String oustCnt;
-	String orderCnt;
+	String oustQty;
+	String orderQty;
 	String orderNo;
 	String slNm;
-	
-	
+	String progInfo;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
+	Date recvDt;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
+	Date paprdDt;
 
+	String restQty;
+	
 	//검색조건
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
@@ -52,4 +61,5 @@ public class Prdt {
 	//modal추가정보
 	String prdtAmt;
 	String prdtUnit;
+	
 }

@@ -102,8 +102,8 @@ public class PrdtController {
 	@PostMapping("/grid/slipOutputUpdate.do")
 	public String slipOutputUpdate(Model model, Prdt prdt, @RequestBody ModifyVO<Prdt> mvo) {
 		pservice.modifyOutData(mvo);
+		
 		model.addAttribute("mode", "upd");
-		model.addAttribute("num", pservice.makeNum());
 		
 
 		return "jsonView";
@@ -134,4 +134,82 @@ public class PrdtController {
 		return "jsonView";
 	}
 
+	@GetMapping("/modal/orderList.do")
+	public String orderList(Model model, Prdt prdt) {
+		
+		
+		return "modal/orderList";
+	}
+	//모달창 그리드 뿌리기
+	@GetMapping("/grid/outOrderList.do")
+	public String orderListGird(Model model, Prdt prdt) {
+		List<?> list = pservice.OutOrderList(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+
+		return "jsonView";
+	}
+	
+	//선택된 주문번호의 제품리스트불러오기
+	@GetMapping("/ajax/prdList.do")
+	public String ajaxPrdList(Model model, Prdt prdt) {
+		List<?> list = pservice.OutOrderCdList(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+		
+		return "jsonView";
+	}
+	
+	
+	//출고 대기중인 물건리스트 modal
+	@GetMapping("/modal/outWaitList.do")
+	public String outWaitList(Model model, Prdt prdt) {
+		
+		
+		return "modal/outWaitList";
+	}
+	
+	//출고 대기중인 물건리스트 
+	@GetMapping("/grid/outWaitList.do")
+	public String outWaitListGrid(Model model, Prdt prdt) {
+		System.out.println(pservice.OutWaitList(prdt));
+		List<?> list = pservice.OutWaitList(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+
+		return "jsonView";
+	}
+	//Ow초기화
+	@GetMapping("/ajax/resetOw.do")
+	public String updateOw(Model model, Prdt prdt) {
+		 pservice.resetOw(prdt);
+		 model.addAttribute("num2", pservice.makeNum());
+		
+		return "jsonView";
+	}
+	@GetMapping("/ajax/insertOw.do")
+	public String updateOw2(Model model, Prdt prdt) {
+		 pservice.insertOw(prdt);
+		
+		
+		return "jsonView";
+	}
+
+	
+	
 }
