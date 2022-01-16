@@ -27,7 +27,10 @@
 				prdt_stc where prdt_fg ='I')
 			</when>
 			<otherwise>
-				and p.prdt_fg = 'I'
+				and p.prdt_fg = 'I' and prdt_lot in	
+	                            (select prdt_lot from prdt_stc where prdt_fg='I') 
+	                        and prdt_lot not in
+	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW')
 			</otherwise>
 		</choose>
 
