@@ -27,7 +27,7 @@ var dataSource = {
 function prscIndata(key {
 	const gridPrcs = new tui.Grid({
 		el : document.getElementById('prscIndata'),
-		data : null, // 수정할것
+		data : dataSource,
 		bodyHeight : 450,		
 		 columns : [
 				{

@@ -5,20 +5,20 @@
 		SELECT * FROM RSC_INFER_CD
     </select>
 
-    <insert id="insert">
+    <insert id="rscinferInsert">
 		INSERT INTO RSC_INFER_CD(RTNGD_RESN_CD, RSC_INFER_NM, RSC_INFER_DESCT) 
-		VALUES (#{RTNGD_RESN_CD }, #{RSC_INFER_NM}, #{RSC_INFER_DESCT })
+		VALUES (#{rtngdResnCd}, #{rscInferNm}, #{rscInferDesct})
 	</insert>
 
-    <update id="update">
+    <update id="rscinferUpdate">
 		UPDATE	RTNGD_RESN_CD
-		SET RSC_INFER_NM = #{RSC_INFER_NM }
-			, RSC_INFER_DESCT = #{RSC_INFER_DESCT}
-		WHERE RTNGD_RESN_CD = #{RTNGD_RESN_CD }	
+		SET RSC_INFER_NM = #{rscInferNm }
+			, RSC_INFER_DESCT = #{rscInferDesct}
+		WHERE RTNGD_RESN_CD = #{rtngdResnCd}	
 	</update>
 
-    <delete id="delete">
+    <delete id="rscinferDelete">
       DELETE FROM RSC_INFER_CD
-      WHERE RTNGD_RESN_CD = #{RTNGD_RESN_CD}
+      WHERE RTNGD_RESN_CD = #{rtngdResnCd}
    </delete>
 </mapper>

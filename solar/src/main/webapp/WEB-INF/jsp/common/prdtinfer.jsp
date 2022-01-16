@@ -23,8 +23,8 @@ var dataSource = {
 		    	readData: { url: '${pageContext.request.contextPath}/grid/prdtList.do', 
 					    	method: 'GET' 
 					   },
-				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
-							method: 'PUT' }
+				modifyData: { url: '${pageContext.request.contextPath}/grid/prdtinferModify.do', 
+							method: 'POST' }
 				},
 /*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
 				contentType: 'application/json'
@@ -41,34 +41,42 @@ var grid = new tui.Grid({
 		  [
 			{
 				header : '불량코드',
-				name : 'prdtInferCd'
+				name : 'prdtInferCd',
+				editor : 'text'
 			},
 			{
 				header : '공정코드',
-				name : 'prcsInferCd'
+				name : 'prcsInferCd',
+				editor : 'text'
 			},
 			{
 				header : '불량명',
-				name : 'prdtInferNm'
+				name : 'prdtInferNm',
+				editor : 'text'
 			},
 			{
 				header : '불량내역',
-				name : 'prdtInferDesct'
+				name : 'prdtInferDesct',
+				editor : 'text'
 			}
 		]
 	  });
 	  
-	  
-grid.on('click', (ev) => {
+grid.on('onGridUpdated', function() {
+	grid.refreshLayout(); 
+	});
+	
+grid.on('response', function(ev) { 
 		console.log(ev);
-	  	console.log('clicked!!'); 
-	})
-grid.on('response', function(ev) {
-		  // 성공/실패와 관계 없이 응답을 받았을 경우
-		console.log(ev);
-		grid.refreshLayout(); //변경된 데이터로 확정
-	})
-
+		let res = JSON.parse(ev.xhr.response);
+		if(res.mode=='upd'){
+			grid.resetOriginData();
+		}
+		else {
+			grid.refreshLayout()
+			}
+	});
+	
 btnAdd.addEventListener("click", function(){
 	grid.appendRow({})
 })
@@ -78,6 +86,22 @@ btnDel.addEventListener("click", function(){
 btnSave.addEventListener("click", function(){
 	grid.request('modifyData');
 })
+
+$('#btnAdd').on('click', function appendRow(index){
+	grid.appendRow(null, {
+		extendPrevRowSpan : true,
+		focus : true,
+		at : 0
+	});
+});
+$('#btnSave').on('click', function appendRow(index){
+	grid.blur();
+	grid.request('modifyData');
+});
+$('#btnDel').on('click', function appendRow(index){
+	grid.blur();
+	grid.removeCheckedRows(true);
+});
 </script>
 </body>
 </html>

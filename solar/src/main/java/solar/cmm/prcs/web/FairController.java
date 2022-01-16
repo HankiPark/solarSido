@@ -10,13 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.Data;
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
 import solar.cmm.prcs.service.impl.FairMapper;
+import solar.sales.order.dao.ModifyVO;
 
 @Data
 class fairGridData {
@@ -48,10 +47,13 @@ public class FairController {
 		return "jsonView";
 	}
 	
-	@RequestMapping("/grid/modifyData.do")
-	@ResponseBody
-	public void fairModify(@RequestBody fairGridData fairGridData) throws Exception {
-		
+	@RequestMapping("/grid/fairUpdateIn.do")
+	public String fairUpdateIn(Model model, FairVO fairVO, @RequestBody ModifyVO<FairVO> mvo) throws Exception
+	{
+		fairService.modifyData(mvo);
+		model.addAttribute("mode","upd");
+		return "jsonView";
 	}
+	
 	
 }

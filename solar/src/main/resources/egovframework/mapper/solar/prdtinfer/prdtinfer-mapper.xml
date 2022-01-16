@@ -5,21 +5,21 @@
 		SELECT * FROM PRDT_INFER_CD 
     </select>
 
-    <insert id="insert">
+    <insert id="prdtInsert">
 		INSERT INTO PRDT_INFER_CD(PRDT_INFER_CD, PRCS_INFER_CD, PRDT_INFER_NM, PRDT_INFER_DESCT) 
-				VALUES (#{PRDT_INFER_CD }, #{PRCS_INFER_CD}, #{PRDT_INFER_NM }, #{PRDT_INFER_DESCT })
+				VALUES (#{prdtInferCd }, #{prcsInferCd}, #{prdtInferNm}, #{prdtInferDesct})
 	</insert>
 
-    <update id="update">
+    <update id="prdtUpdate">
 		UPDATE	PRDT_INFER_CD
-		SET PRCS_INFER_CD = #{PRCS_INFER_CD }
-			, PRDT_INFER_NM = #{PRDT_INFER_NM}
-            , PRDT_INFER_DESCT = #{PRDT_INFER_DESCT}
-		WHERE PRDT_INFER_CD = #{PRDT_INFER_CD }
+		SET PRCS_INFER_CD = #{prcsInferCd}
+			, PRDT_INFER_NM = #{prdtInferNm}
+            , PRDT_INFER_DESCT = #{prdtInferDesct}
+		WHERE PRDT_INFER_CD = #{prdtInferCd}
 	</update>
 
-     <delete id="delete">
+     <delete id="prdtDelete">
       DELETE FROM PRDT_INFER_CD
-      WHERE PRDT_INFER_CD = #{PRDT_INFER_CD}
+      WHERE PRDT_INFER_CD = #{prdtInferCd}
    </delete>
 </mapper>

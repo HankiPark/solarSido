@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.emp.service.EmpService;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class EmpServiceImpl implements EmpService{
@@ -41,6 +42,26 @@ public class EmpServiceImpl implements EmpService{
 	public int empDelete(EmpVO empVO) {
 		// TODO Auto-generated method stub
 		return empMapper.empDelete(empVO);
+	}
+
+	@Override
+	public int modifyData(ModifyVO<EmpVO> modifyVO) {
+		if(modifyVO.getCreatedRows()!=null) {
+		for(EmpVO empVO : modifyVO.getCreatedRows()) {
+			empMapper.empInsert(empVO);
+			}
+		if(modifyVO.getDeletedRows()!=null) {
+			for(EmpVO empVO : modifyVO.getDeletedRows()) {
+				empMapper.empDelete(empVO);
+				}
+			}
+		if(modifyVO.getUpdatedRows()!=null) {
+			for(EmpVO empVO : modifyVO.getUpdatedRows()) {
+				empMapper.empUpdate(empVO);
+				}
+			}
+		}
+		return 1;
 	}
 
 }

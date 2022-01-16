@@ -91,11 +91,13 @@ grid.on('response', function(ev) {  // 성공/실패와 관계 없이 응답을 
 			}
 	});
 	
-/* 언엑셉티드 토큰이라뜸 잘못된 오타 혹은 괄호가있음 수정필요 
+
 grid.on('click', function(ev){
+	/*
 	console.log(ev["columnName"]);
 	console.log(grid.getValue(ev["rowKey"], "prcsNm"));
-	if(ev["columnName"] == "prcsNm") {
+	*/
+	if(ev["columnName"] == "prcsCd") {
 		dialog.dialog("open");
 		$("#dialog-form").load(
 				"${pageContext.request.contextPath}/modal/prcsinfoList",
@@ -105,7 +107,6 @@ grid.on('click', function(ev){
 		})
 	}
 });	
-*/
 $('#btnAdd').on('click', function appendRow(index){
 	grid.appendRow(null, {
 		extendPrevRowSpan : true,
