@@ -23,8 +23,8 @@ var dataSource = {
 		    	readData: { url: '${pageContext.request.contextPath}/grid/empList.do', 
 					    	method: 'GET' 
 					   },
-				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
-							method: 'PUT' }
+				modifyData: { url: '${pageContext.request.contextPath}/grid/empModify.do', 
+							method: 'POST' }
 				},
 /*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
 				contentType: 'application/json'
@@ -41,7 +41,8 @@ var grid = new tui.Grid({
 		  [
 			{
 				header : '아이디',
-				name : 'empId'
+				name : 'empId',
+				editor : 'text'
 			},
 			{
 				header : '비밀번호',
@@ -50,27 +51,33 @@ var grid = new tui.Grid({
 			},
 			{
 				header : '사원명',
-				name : 'empNm'
+				name : 'empNm',
+				editor : 'text'
 			},
 			{
 				header : '사원번호',
-				name : 'empNo'
+				name : 'empNo',
+				editor : 'text'
 			},
 			{
 				header : '부서',
-				name : 'dept'
+				name : 'dept',
+				editor : 'text'
 			},
 			{
 				header : '직책',
-				name : 'wkdty'
+				name : 'wkdty',
+				editor : 'text'
 			},
 			{
 				header : '전화',
-				name : 'phone'
+				name : 'phone',
+				editor : 'text'
 			},
 			{
 				header : '이메일',
-				name : 'email'
+				name : 'email',
+				editor : 'text'
 			},
 			{
 				header : '입사일',
@@ -80,26 +87,38 @@ var grid = new tui.Grid({
 		]
 	  });
 	  
-	  
-grid.on('click', (ev) => {
+grid.on('onGridUpdated', function() {
+	grid.refreshLayout(); 
+	});
+	
+grid.on('response', function(ev) { 
 		console.log(ev);
-	  	console.log('clicked!!'); 
-	})
-grid.on('response', function(ev) {
-		  // 성공/실패와 관계 없이 응답을 받았을 경우
-		console.log(ev);
-		grid.refreshLayout(); //변경된 데이터로 확정
-	})
+		let res = JSON.parse(ev.xhr.response);
+		if(res.mode=='upd'){
+			grid.resetOriginData();
+		}
+		else {
+			grid.refreshLayout()
+			}
+	});
+	
 
-btnAdd.addEventListener("click", function(){
-	grid.appendRow({})
-})
-btnDel.addEventListener("click", function(){
-	grid.removeCheckedRows(true);
-})
-btnSave.addEventListener("click", function(){
+$('#btnAdd').on('click', function appendRow(index){
+	grid.appendRow(null, {
+		extendPrevRowSpan : true,
+		focus : true,
+		at : 0
+	});
+});
+$('#btnSave').on('click', function appendRow(index){
+	grid.blur();
 	grid.request('modifyData');
-})
+});
+$('#btnDel').on('click', function appendRow(index){
+	grid.blur();
+	grid.removeCheckedRows(true);
+});
+
 </script>
 </body>
 </html>

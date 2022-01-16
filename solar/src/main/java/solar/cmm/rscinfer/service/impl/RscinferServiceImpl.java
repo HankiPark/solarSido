@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.cmm.rscinfer.service.RscinferService;
+import solar.cmm.uoprcd.dao.UoprcdVO;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class RscinferServiceImpl implements RscinferService{
@@ -41,5 +44,25 @@ public class RscinferServiceImpl implements RscinferService{
 	public int rscinferDelete(RscinferVO rscinferVO) {
 		// TODO Auto-generated method stub
 		return rscinferMapper.rscinferDelete(rscinferVO);
+	}
+
+	@Override
+	public int modifyData(ModifyVO<RscinferVO> modifyVO) {
+		if(modifyVO.getCreatedRows()!=null) {
+		for(RscinferVO rscinferVO : modifyVO.getCreatedRows()) {
+			rscinferMapper.rscinferInsert(rscinferVO);
+			}
+		if(modifyVO.getDeletedRows()!=null) {
+			for(RscinferVO rscinferVO : modifyVO.getDeletedRows()) {
+				rscinferMapper.rscinferDelete(rscinferVO);
+				}
+			}
+		if(modifyVO.getUpdatedRows()!=null) {
+			for(RscinferVO rscinferVO : modifyVO.getUpdatedRows()) {
+				rscinferMapper.rscinferUpdate(rscinferVO);
+				}
+			}
+		}
+		return 1;
 	}
 }

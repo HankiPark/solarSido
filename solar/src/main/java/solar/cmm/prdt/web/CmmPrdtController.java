@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.prdt.dao.PrdtInferVO;
 import solar.cmm.prdt.service.CmmPrdtService;
 import solar.cmm.prdt.service.impl.CmmPrdtMapper;
+import solar.sales.order.dao.ModifyVO;
 
 @Controller
 public class CmmPrdtController {
@@ -33,6 +36,14 @@ public class CmmPrdtController {
 		data.put("contents", prdtList);		
 		model.addAttribute("result", true);
 		model.addAttribute("data", data);
+		return "jsonView";
+	}
+	
+	@PostMapping("/grid/prdtinferModify.do")
+	public String insertUpdate(Model model, PrdtInferVO prdtInferVo, @RequestBody ModifyVO<PrdtInferVO> modifyVO) throws Exception{
+		prdtService.modifyData(modifyVO);
+		model.addAttribute("mode", "upd");
+		
 		return "jsonView";
 	}
 }

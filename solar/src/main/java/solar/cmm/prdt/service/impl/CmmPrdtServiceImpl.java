@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import solar.cmm.prdt.dao.PrdtInferVO;
 import solar.cmm.prdt.service.CmmPrdtService;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class CmmPrdtServiceImpl implements CmmPrdtService {
@@ -41,6 +42,26 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 	public int prdtDelete(PrdtInferVO prdtInferVo) {
 		// TODO Auto-generated method stub
 		return prdtMapper.prdtDelete(prdtInferVo);
+	}
+
+	@Override
+	public int modifyData(ModifyVO<PrdtInferVO> modifyVO) {
+		if(modifyVO.getCreatedRows()!=null) {
+		for(PrdtInferVO prdtInferVo : modifyVO.getCreatedRows()) {
+			prdtMapper.prdtInsert(prdtInferVo);
+			}
+		if(modifyVO.getDeletedRows()!=null) {
+			for(PrdtInferVO prdtInferVo : modifyVO.getDeletedRows()) {
+				prdtMapper.prdtDelete(prdtInferVo);
+				}
+			}
+		if(modifyVO.getUpdatedRows()!=null) {
+			for(PrdtInferVO prdtInferVo : modifyVO.getUpdatedRows()) {
+				prdtMapper.prdtUpdate(prdtInferVo);
+				}
+			}
+		}
+		return 1;
 	}
 
 }

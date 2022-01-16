@@ -5,35 +5,35 @@
 		SELECT * FROM EMP
     </select>
 	
-	<insert id="insert">
+	<insert id="empInsert">
 		INSERT INTO EMP(EMP_ID, EMP_PW, EMP_NM, EMP_NO, DEPT, WKDTY, PHONE, EMAIL, HIRE_DATE) 
-		VALUES (#{EMP_ID}, 
-		#{EMP_PW},
-		#{EMP_NM},
-		#{EMP_NO}, 
-		#{DEPT}, 
-		#{WKDTY}, 
-		#{PHONE},  
-		#{EMAIL}, 
-		#{HIRE_DATE})
+		VALUES (#{empId}, 
+		#{empPw},
+		#{empNm},
+		#{empNo}, 
+		#{dept}, 
+		#{wkdty}, 
+		#{phone},  
+		#{email}, 
+		#{hireDate})
 	</insert>
 
-	<update id="update">
+	<update id="empUpdate">
 		UPDATE	EMP
-		SET EMP_PW = #{EMP_PW}
-			, EMP_NM = #{EMP_NM}
-            , EMP_NO = #{EMP_NO}
-            , DEPT = #{DEPT}
-			, WKDTY = #{WKDTY}
-			, PHONE = #{PHONE}
-			, EMAIL = #{EMAIL}
-			, HIRE_DATE = #{HIRE_DATE}
-		WHERE EMP_ID = #{EMP_ID}
+		SET EMP_PW = #{empPw}
+			, EMP_NM = #{empNm}
+            , EMP_NO = #{empNo}
+            , DEPT = #{dept}
+			, WKDTY = #{wkdty}
+			, PHONE = #{phone}
+			, EMAIL = #{email}
+			, HIRE_DATE = #{hireDate}
+		WHERE EMP_ID = #{empPw}
 	</update>
 
-	<delete id="delete">
+	<delete id="empDelete">
       DELETE FROM EMP
-      WHERE EMP_ID = #{EMP_ID}
+      WHERE EMP_ID = #{empId}
     </delete>
 
 </mapper>

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
-import solar.sales.inout.dao.Prdt;
 import solar.sales.order.dao.ModifyVO;
 
 @Service

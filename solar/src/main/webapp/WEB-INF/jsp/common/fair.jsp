@@ -24,8 +24,8 @@ var dataSource = {
 		    	readData: { url: '${pageContext.request.contextPath}/grid/fairList.do', 
 					    	method: 'GET' 
 					   },
-				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
-							method: 'PUT' }
+				modifyData: { url: '${pageContext.request.contextPath}/grid/fairUpdateIn.do', 
+							method: 'POST' }
 				},
 /*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
 				contentType: 'application/json'
@@ -41,51 +41,69 @@ var grid = new tui.Grid({
 	  columns : [
 			{
 				header : '공정코드',
-				name : 'prcsCd'
+				name : 'prcsCd',
+				editor : 'text'
 			},
 			{
 				header : '공정구분',
-				name : 'prcsFg'
+				name : 'prcsFg',
+				editor : 'text'
 			},
 			{
 				header : '공정명',
-				name : 'prcsNm'
+				name : 'prcsNm',
+				editor : 'text'
 			},
 			{
 				header : '작업설명',
-				name : 'prcsDesct'
+				name : 'prcsDesct',
+				editor : 'text'
 			},
 			{
 				header : '관리단위',
-				name : 'prcsUnit'
+				name : 'prcsUnit',
+				editor : 'text'
 			},
 			{
 				header : '생산일수',
-				name : 'prodPd'
+				name : 'prodPd',
+				editor : 'text'
 			}
 		]  
 	  });
 	  
-	  
-grid.on('click', (ev) => {
+grid.on('onGridUpdated', function() {
+	grid.refreshLayout(); 
+	});
+	
+grid.on('response', function(ev) { 
 		console.log(ev);
-	  	console.log('clicked!!'); 
-	})
-grid.on('response', function(ev) {
-		  // 성공/실패와 관계 없이 응답을 받았을 경우
-		console.log(ev);
-		grid.refreshLayout(); //변경된 데이터로 확정
-	})
+		let res = JSON.parse(ev.xhr.response);
+		if(res.mode=='upd'){
+			grid.resetOriginData();
+		}
+		else {
+			grid.refreshLayout()
+			}
+	});
+	
 
-btnAdd.addEventListener("click", function(){
-	grid.appendRow({})
-})
-btnDel.addEventListener("click", function(){
-	grid.removeCheckedRows(true);
-})
-btnSave.addEventListener("click", function(){
+$('#btnAdd').on('click', function appendRow(index){
+	grid.appendRow(null, {
+		extendPrevRowSpan : true,
+		focus : true,
+		at : 0
+	});
+});
+$('#btnSave').on('click', function appendRow(index){
+	grid.blur();
 	grid.request('modifyData');
-})
+});
+$('#btnDel').on('click', function appendRow(index){
+	grid.blur();
+	grid.removeCheckedRows(true);
+});
+
 </script>
 </body>
 </html>
