@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.rsc.rt.service.impl.RscRtMapper">
+
+	<insert id="insert" parameterType="map">
+		insert into rsc_rt
+		values (
+		#{ordrCd},
+		#{rscCd},
+		#{ordrDt},
+		#{rtngdResnCd},
+		sysdate
+		)
+	</insert>
+
+	<select id="search" parameterType="map" resultType="solar.rsc.rt.service.RscRt">
+		select rr.*, o.co_cd, o.rsc_ist_qty, o.rsc_infer_qty, r.rsc_nm, r.co_cd
+		from rsc_rt rr
+		join rsc_or o
+		on rr.ordr_cd = o.ordr_cd
+        join rsc r
+        on o.rsc_cd = r.rsc_cd
+		WHERE
+		    1 = 1
+		<if test='ordrDtStt != null and ordrDtStt != ""'>
+			AND trunc(o.ordr_dt) <![CDATA[>= #{ordrDtStt}]]>
+		</if>
+		<if test='ordrDtEnd != null and ordrDtEnd != ""'>
+			AND trunc(o.ordr_dt) <![CDATA[<= #{ordrDtEnd}]]>
+		</if>
+		<if test='co != null and co != ""'>
+			AND o.co_cd = #{co}
+		</if>
+		<if test='rsc != null and rsc != ""'>
+			AND r.rsc_cd = #{rsc}
+		</if>
+	</select>
+
+</mapper>

@@ -1,19 +1,17 @@
-package solar.rsc.ordr.service;
+package solar.rsc.rt.service;
 
 import lombok.Data;
-  
+
 @Data
-public class RscOrdr {
-	String ordrDt;
+public class RscRt {
+	String ordrCd;
 	String rscNm;
 	String rscCd;
 	String ordrQty;
-	String ordrCd;
-	String coNm;
 	String rscIstQty;
 	String rscInferQty;
-	String inspCls;
-	String rscPassedQty;
 	String rtngdResnCd;
 	String rtngdDt;
+	String ordrDt;
+	String coCd;
 }
