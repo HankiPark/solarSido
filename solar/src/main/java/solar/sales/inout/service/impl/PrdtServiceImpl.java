@@ -36,7 +36,9 @@ public class PrdtServiceImpl implements PrdtService {
 	public int modifyData(ModifyVO<Prdt> mvo) {
 		if(mvo.getCreatedRows()!=null) {
 		for(Prdt vo : mvo.getCreatedRows()) {
+			System.out.println("vo는"+vo);
 			pmapper.insertInPrdt(vo);
+			System.out.println(pmapper.inStcUpdate(vo));
 			}
 		}
 		if(mvo.getDeletedRows()!=null) {
@@ -87,7 +89,7 @@ public class PrdtServiceImpl implements PrdtService {
 			}
 			if(mvo.getUpdatedRows()!=null) {
 				for(Prdt vo : mvo.getUpdatedRows()) {
-					pmapper.updateOutPrdt(vo);
+				
 				}
 			}
 		return 1;
@@ -143,6 +145,17 @@ public class PrdtServiceImpl implements PrdtService {
 		return 1;
 		
 		
+	}
+
+	@Override
+	public List<Prdt> findSlipList(Prdt vo) {
+		
+		return pmapper.findSlipList(vo);
+	}
+
+	@Override
+	public List<Prdt> findSlipLot(Prdt vo) {
+		return pmapper.findSlipLot(vo);
 	}
 
 	

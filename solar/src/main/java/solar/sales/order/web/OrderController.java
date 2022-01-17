@@ -25,13 +25,14 @@ public class OrderController {
 	@RequestMapping("/sales/order")
 	public String orderList(Model model, Order order) {
 
-		  CmmndataVO cmVo = new CmmndataVO(); cmVo.setCmmnCdId("prod");
-		  System.out.println(cmVo); List<CmmndataVO> list
-		  =(List<CmmndataVO>)cmmndataService.cmmndataDetailList(cmVo);
-		  System.out.println(list); Order n =new Order(); for(int
-		  i=0;i<list.size();i++) { n.setPrdtCd((list.get(i).getCmmnCdDetaId())) ;
-		  oservice.inStcUpdate(n) ;
-		  }	
+		/*
+		 * CmmndataVO cmVo = new CmmndataVO(); cmVo.setCmmnCdId("prod");
+		 * System.out.println(cmVo); List<CmmndataVO> list
+		 * =(List<CmmndataVO>)cmmndataService.cmmndataDetailList(cmVo);
+		 * System.out.println(list); Order n =new Order(); for(int
+		 * i=0;i<list.size();i++) { n.setPrdtCd((list.get(i).getCmmnCdDetaId())) ;
+		 * oservice.inStcUpdate(n) ; }
+		 */
 		  
 		return "sales/order";
 	}

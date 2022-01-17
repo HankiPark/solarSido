@@ -81,7 +81,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #7c8798;
+  color: #5f5d4f;
   text-align: left;
   background-color: #f4f2f3; }
 
@@ -225,6 +225,9 @@ button,
 select,
 optgroup,
 textarea {
+	Border:0;
+	background-color:#E1DBF0;
+	Border-radius:5px;
   margin: 0;
   font-family: inherit;
   font-size: inherit;
@@ -252,7 +255,12 @@ button:not(:disabled),
 [type="button"]:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled) {
-  cursor: pointer; }
+  cursor: pointer; 
+  background :linear-gradient(to right, #da8cff, #9a55ff);
+  color : #ffffff;
+  border-radius: 8px;
+  border:0;
+  PADDING-TOP : 3px}
 
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
@@ -8135,7 +8143,9 @@ User Profile
     #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active > .sidebar-link.active,
     #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active > .sidebar-link.active > i, #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active > .sidebar-link.active,
     #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item .first-level .sidebar-item.active > .sidebar-link.active > i {
-      color: #1c2d41; }
+      color: #ffffff;
+      background : linear-gradient(to LEFT,#C4BFE3,#9A86B3,#6D5B74,#976F94);
+      border-radius : 30px 160px 160px 30px; }
     #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item.selected > .sidebar-link .feather-icon,
     #main-wrapper[data-layout="vertical"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item.selected > .sidebar-link i, #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item.selected > .sidebar-link .feather-icon,
     #main-wrapper[data-layout="horizontal"] .left-sidebar[data-sidebarbg="skin6"] .sidebar-nav ul .sidebar-item.selected > .sidebar-link i {

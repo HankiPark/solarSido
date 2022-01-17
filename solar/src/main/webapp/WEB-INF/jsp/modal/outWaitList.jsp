@@ -58,7 +58,8 @@
 					hidden : true
 				},{
 					header : '전표임시상세',
-					name : 'indicaDetaNo'
+					name : 'indicaDetaNo',
+					hidden : true
 				},
 				
 				],

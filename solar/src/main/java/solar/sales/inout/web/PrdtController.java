@@ -178,6 +178,7 @@ public class PrdtController {
 		
 		return "modal/outWaitList";
 	}
+
 	
 	//출고 대기중인 물건리스트 
 	@GetMapping("/grid/outWaitList.do")
@@ -193,6 +194,7 @@ public class PrdtController {
 
 		return "jsonView";
 	}
+	
 	//Ow초기화
 	@GetMapping("/ajax/resetOw.do")
 	public String updateOw(Model model, Prdt prdt) {
@@ -211,6 +213,41 @@ public class PrdtController {
 		return "jsonView";
 	}
 
+	//전표 조회하기!
+	@GetMapping("/grid/getSlipList.do")
+	public String outSlipListGrid(Model model, Prdt prdt) {
+		List<?> list = pservice.findSlipList(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+		
+		return "jsonView";
+	}
 	
+	//전표조회된 결과에서 출고량 클릭시
+	@GetMapping("/modal/outEndList.do")
+	public String outEndList(Model model, Prdt prdt) {
+		
+		
+		return "modal/outEndList";
+	}
+	
+	@GetMapping("/grid/outEndList.do")
+	public String outEndListGrid(Model model, Prdt prdt) {
+		List<?> list = pservice.findSlipLot(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+		
+		return "jsonView";
+	}
 	
 }

@@ -12,6 +12,8 @@ public interface PrdtMapper {
 	List<Prdt> OutOrderList(Prdt vo);
 	List<Prdt> OutOrderCdList(Prdt vo);
 	List<Prdt> OutWaitList(Prdt vo);
+	List<Prdt> findSlipList(Prdt vo);
+	List<Prdt> findSlipLot(Prdt vo);
 	//List<Prdt> findCo();
 	int inPrdt(Prdt vo);
 	int modifyData(ModifyVO<Prdt> mvo);
@@ -19,7 +21,7 @@ public interface PrdtMapper {
 	int updateInPrdt(Prdt vo);
 	int deleteInPrdt(Prdt vo);
 	int insertOutPrdt(Prdt vo);
-	int updateOutPrdt(Prdt vo);
+
 	int deleteOutPrdt(Prdt vo);
 	int updateStatePrdt(Prdt vo);
 	int modifyOutData(ModifyVO<Prdt> mvo);
@@ -27,6 +29,8 @@ public interface PrdtMapper {
 	int insertOw(Prdt vo);
 	int insertOutD(Prdt vo);
 	int updOrd(Prdt vo);
+	int inStcUpdate(Prdt vo);
+	
 	
 	int tempUpdStc(Prdt vo);
 	String makeNum();

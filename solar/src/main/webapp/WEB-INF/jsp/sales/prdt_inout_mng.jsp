@@ -94,7 +94,7 @@ a {
 
 		<div id="inGrid"></div>
 	</div>
-	
+
 	<div id="oG">
 
 
@@ -102,8 +102,8 @@ a {
 			<button type="button" id="findgrid2">조회</button>
 		</div>
 		<div id="C">
-			<label for="slipNm">부여될 전표번호</label><br>
-			<input id="slipNm" type="text" readonly>
+			<label for="slipNm">부여될 전표번호</label><br> <input id="slipNm"
+				type="text" readonly>
 
 			<div class="card card-pricing card-primary card-white">
 				<div class="card-body">
@@ -122,8 +122,8 @@ a {
 		</div>
 
 		<div id="noC" style="display: none">
-			<label for="slipNm">조회중인 전표번호</label><br>
-			<input id="slipNm2" type="text" readonly>
+			<label for="slipNm2">조회중인 전표번호</label><br> <input id="slipNm2"
+				type="text" readonly>
 
 			<div class="card card-pricing card-primary card-white">
 				<div class="card-body">
@@ -153,6 +153,7 @@ a {
 	<div id="dialog-lot" title="입고대기명단"></div>
 	<div id="dialog-outLot" title="출고대기명단"></div>
 	<div id="dialog-ord" title="주문서명단"></div>
+	<div id="dialog-outEndList" title="출고완료명단"></div>
 
 
 
@@ -172,34 +173,37 @@ a {
 						if ($(this)[0].id == "in") {
 							$("#oG").css("display", "none");
 							$("#iG").css("display", "block");
+
 							inGrid.refreshLayout();
 							inGrid.clear();
 
 						} else {
 							$("#iG").css("display", "none");
 							$("#oG").css("display", "block");
-							/* 	$.ajax({
-									url : '${pageContext.request.contextPath}/ajax/showSlipNum.do',
-									contentType : 'application/json; charset=utf-8',
-
-								}).done(function(ev) {
-									console.log(JSON.parse(ev).num);
-									
-							
-									} 
-								}) */
+							$("#noC").css("display", "none");
+							$("#C").css("display", "block");
+						
 								$.ajax({
 									url:'${pageContext.request.contextPath}/ajax/resetOw.do',
-									
+									dataType: 'json',
 									contentType: 'application/json; charset=utf-8',
 									async: false,
 									
 									
-								}).done(()=>{
-									console.log("초기화완료")
+								}).done((res)=>{
+												console.log("초기화완료")
+												a=res["num2"];
+												
+												//전표번호 부여(기본)
+												$("#slipNm").val(
+																"SLI" + (d.toISOString().slice(0, 10)).replaceAll("-", "")+ a);
+									
+									
 								})
 							outGrid.refreshLayout();
 							outGrid.clear();
+							outGrid2.refreshLayout();
+							outGrid2.clear();
 						}
 					});
 		}
@@ -235,6 +239,12 @@ a {
 			height : 700
 		});
 		let dialog5 = $("#dialog-outLot").dialog({
+			autoOpen : false,
+			modal : true,
+			width : 900,
+			height : 700
+		});
+		let dialog6 = $("#dialog-outEndList").dialog({
 			autoOpen : false,
 			modal : true,
 			width : 900,
@@ -585,10 +595,7 @@ a {
 			
 		});
 
-		//전표번호 부여(기본)
-		$("#slipNm").val(
-				"SLI" + (d.toISOString().slice(0, 10)).replaceAll("-", "")
-						+ "${num}");
+	
 
 		
 
@@ -642,7 +649,7 @@ a {
 					data : {
 						api : {
 							readData : {
-								url : '${pageContext.request.contextPath}/grid/prdtListAll.do',
+								url : '${pageContext.request.contextPath}/grid/getSlipList.do',
 								method : 'GET'
 							}
 						},
@@ -657,23 +664,69 @@ a {
 						align : 'left',
 						valign : 'bottom'
 					} ],
-					columns : [ {
-						header : '제품LOT',
-						name : 'prdtLot'
+					columns : [  {
+						header : '전표번호',
+						name : 'slipNo',
+						hidden : true
 					}, {
 						header : '전표상세번호',
 						name : 'slipDetaNo'
 					}, {
-						header : '전표번호',
-						name : 'slipNo'
+						header : '출고일자',
+						name : 'prdtDt'
 					}, {
-						header : '입출고여부',
-						name : 'prdtFg',
+						header : '주문번호',
+						name : 'orderNo'
+					}, {
+						header : '회사명',
+						name : 'coNm'
+					}, {
+						header : '제품코드',
+						name : 'prdtCd',
+						hidden : true
+					}, {
+						header : '제품명',
+						name : 'prdtNm'
+					},{
+						header : '주문량',
+						name : 'orderQty',
+					}, {
+						header : '출고량',
+						name : 'oustQty'
+					}, {
+						header : '제품 재고',
+						name : 'prdtStc'
+					}, {
+						header : '금액',
+						name : 'prdtUntprc'
 					}
 
 					]
 
 				});
+		
+		//주문번호 modal
+		outGrid2.on("click",(ev)=>{
+			if(ev["columnName"]=="oustQty"){
+				dialog6.dialog("open");
+				$("#dialog-outEndList")
+						.load(
+								"${pageContext.request.contextPath}/modal/outEndList.do",
+								function() {
+									rowKeyNm=ev["rowKey"];
+									outEndList()
+								})
+			}
+			
+			
+			
+		})
+		
+		
+		outGrid2.on('onGridUpdated', function() {
+			console.log("리프레쉬")
+			outGrid2.refreshLayout();
+		});
 		outGrid2.refreshLayout();
 		outGrid.refreshLayout();
 		inGrid.refreshLayout();

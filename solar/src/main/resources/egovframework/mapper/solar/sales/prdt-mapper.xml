@@ -147,7 +147,12 @@
 		values(detail,#{prdtLot},#{slipNo},#{orderNo},#{orderCnt},#{prdtAmt},#{prdtStc}
 		)
 	</insert>
-
+	<!-- 입고저장시 자동 수량 + -->
+	<update id="inStcUpdate">
+		update order_d set prdt_stc=
+		((select count(prdt_lot) from prdt_stc where prdt_cd=#{prdtCd} and prdt_fg='I')-(select count(prdt_lot) from prdt_stc where prdt_cd=#{prdtCd} and prdt_fg='O')) where prdt_cd=#{prdtCd}
+	
+	</update>
 
 
 
@@ -232,8 +237,29 @@
 
 	</delete>
 
-	<update id="updateOutPrdt">
-		update oust_d set 1=1
-
-	</update>
+	<select id="findSlipList" resultType="Prdt">
+		select o.*,
+				d.slip_deta_no,
+				d.order_no,
+				d.order_qty,
+				d.prdt_stc,
+				d.oust_qty,
+				d.prdt_cd,
+				(select prdt_nm from prdt where prdt_cd=d.prdt_cd) as prdt_nm,
+				nvl(d.prdt_untprc,0) as prdt_untprc
+				from oust o join oust_d d 
+				on o.slip_no = d.slip_no
+				where o.slip_no = #{slipNo}
+	</select>
+	
+	<select id="findSlipLot" resultType="Prdt">
+	
+		select prdt_lot,
+				prdt_cd,
+				#{prdtNm} 
+				from prdt_stc 
+				where indica_deta_no = #{indicaDetaNo} 
+					and prdt_fg='O' and prdt_cd=#{prdtCd}
+	</select>
+	
 </mapper>

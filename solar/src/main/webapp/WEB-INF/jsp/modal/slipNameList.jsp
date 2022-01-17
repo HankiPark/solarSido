@@ -108,23 +108,17 @@ document.getElementById('endT2').value = d.toISOString().slice(0, 10);
 			.on(
 					'dblclick',
 					function(ev) {
-						$('#slipNm').val(gridSl.getValue(ev["rowKey"], "slipNo"));
-						/* $("label[for='slipNm']").text("조회중인 전표번호"); */
+						$('#slipNm2').val(gridSl.getValue(ev["rowKey"], "slipNo"));
+						
 						$('#showDt').val(gridSl.getValue(ev["rowKey"], "prdtDt"));
 						$('#showCoNm').val(gridSl.getValue(ev["rowKey"], "coNm"));
 						var sendParams={
-								
+								'slipNo' : gridSl.getValue(ev["rowKey"], "slipNo")
 						}
 						
 						$('#C').css('display','none');
 						$('#noC').css('display','block');
-						
-						$.ajax({
-							url:'${pageContext.request.contextPath}/grid/slipList.do',
-							data: sendParams,
-							contentType: 'application/json; charset=utf-8',
-						})
-						
+						outGrid2.readData(1,sendParams,true);
 						
 						dialog3.dialog("close");
 						 
