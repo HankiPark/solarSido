@@ -21,12 +21,6 @@ public class FairServiceImpl implements FairService {
 	}
 
 	@Override
-	public FairVO findById(String no) {
-		// TODO Auto-generated method stub
-		return fairMapper.findById(no);
-	}
-
-	@Override
 	public int fairInsert(FairVO fairVO) {
 		// TODO Auto-generated method stub
 		return fairMapper.fairInsert(fairVO);
@@ -64,6 +58,10 @@ public class FairServiceImpl implements FairService {
 	}
 		return 1;
 }
+	@Override
+	public List<FairVO> findPrcs(FairVO fairVO) {
+		return fairMapper.findPrcs(fairVO);
+	}
 }
 
 

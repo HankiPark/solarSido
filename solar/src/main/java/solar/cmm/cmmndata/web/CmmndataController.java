@@ -42,8 +42,7 @@ public class CmmndataController {
 	public String cmmndataDetailList(Model model, CmmndataVO cmmndataVO) {
 		List<CmmndataVO> cmmndataDetailList = cmmndataService.cmmndataDetailList(cmmndataVO);		
 		Map<String,Object> data = new HashMap<>();
-		Map<String,Object> map =
-				new HashMap<>();
+		Map<String,Object> map = new HashMap<>();
 		data.put("contents", cmmndataDetailList);		
 		model.addAttribute("result", true);
 		model.addAttribute("data", data);	
