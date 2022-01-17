@@ -18,8 +18,8 @@
   <div id="rscModal" title="자재 목록"></div>
   <form id="ordrQueryFrm" name="ordrQueryFrm">
     발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd"><br>
-    발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
-    자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
+    발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+    자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
     <button type="button" id="ordrQueryBtn">조회</button>
   </form>
   <div id="grid"></div>
@@ -45,6 +45,8 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
+    rowHeaders: ['checkbox'],
+    sortable: true,
     columns: [{
         header: '발주일',
         name: 'ordrDt'

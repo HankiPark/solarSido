@@ -21,8 +21,8 @@
 			발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
 			미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
 			<br>
-			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">ㅇ-</button>
-			자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">ㅇ-</button>
+			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+			자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
 			<button type="button" id="ordrQueryBtn">조회</button>
 			<button type="button" id="inspSaveBtn">저장</button>
 		</form>
@@ -37,7 +37,7 @@
 	let ordrDtEnd;
 	let co;
 	let rsc;
-	let isNotInspected;
+	let inspCls;
 	let inferDataSource = {
 		api: {
 			readData: { url: '../rsc/inspData', method: 'GET'}
@@ -66,6 +66,8 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
+    rowHeaders: ['checkbox'],
+    sortable: true,
     columns: [{
         header: '발주일',
         name: 'ordrDt'
@@ -160,13 +162,14 @@
     ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
     co = document.ordrQueryFrm.co.value;
     rsc = document.ordrQueryFrm.rsc.value;
-    isNotInspected = document.ordrQueryFrm.isNotInspected.checked;
+    console.log(document.ordrQueryFrm.isNotInspected.checked);
+    inspCls = document.ordrQueryFrm.isNotInspected.checked ? 'rs001' : null;
 	grid.readData(1,{
 		'ordrDtStt':ordrDtStt,
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
 		'rsc':rsc,
-		'isNotInspected':isNotInspected
+		'inspCls':inspCls
 	});
   });
 
@@ -197,7 +200,7 @@
   let saveBtn = document.getElementById('inspSaveBtn');
   saveBtn.addEventListener('click',function(){
 	  grid.request('modifyData');
-  })
+  });
 </script>
 
 </html>
