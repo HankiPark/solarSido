@@ -22,6 +22,12 @@
 									prdtCd : outGrid.getValue(rowKeyNm,"prdtCd")
 							
 					}
+				},
+				modifyData : {
+					url : '${pageContext.request.contextPath}/ajax/insertOw.do',
+					method : 'POST',
+					initParams: { 'indicaDetaNo' : outGrid.getValue(rowKeyNm,"slipDetaNo"),
+		}
 				}
 			},
 
@@ -50,7 +56,11 @@
 					header : '제품상태',
 					name : 'prdtFg',
 					hidden : true
-				}
+				},{
+					header : '전표임시상세',
+					name : 'indicaDetaNo'
+				},
+				
 				],
 
 			});
@@ -66,29 +76,29 @@
 			
 			
 			$("#btnListOut").on("click",function(){
-				for(let i of gridOu.getCheckedRowKeys()){
-					console.log(i);
-					//해당 OW상태(현 전표상세번호)를 모두 제거하고 새로운 OW상태를 만들기
-					var slParams = {
-							'indicaDetaNo' : outGrid.getValue(rowKeyNm,"slipDetaNo"),
-							'prdtLot' : gridOu.getValue(i,"prdtLot")
+				var slParams = {
+						'indicaDetaNo' : outGrid.getValue(rowKeyNm,"slipDetaNo")
+					}
+					//제거 ajax + 생성 ajax
+					$.ajax({
+						url:'${pageContext.request.contextPath}/ajax/resetOw.do',
+						data: slParams,
+						contentType: 'application/json; charset=utf-8',
+						async: false,
+
+					})
+					if(gridOu.getCheckedRows().length<=outGrid.getValue(rowKeyNm,"orderQty")){
+						gridOu.request("modifyData",{'checkedOnly': true,'modifiedOnly':false ,'showConfirm':false });
+						outGrid.setValue(rowKeyNm,"oustQty",gridOu.getCheckedRows().length);
+						outGrid.setValue(rowKeyNm,"prdtUntprc",outGrid.getValue(rowKeyNm,"prdtAmt")*outGrid.getValue(rowKeyNm,"oustQty"))
+						dialog5.dialog("close");
+						}else{
+							alert("주문량보다 출고량이 "+(outGrid.getValue(rowKeyNm,"orderQty")-gridOu.getCheckedRows().length)+"개 많습니다.")
 						}
-						//제거 ajax + 생성 ajax
-						$.ajax({
-							url:'${pageContext.request.contextPath}/ajax/resetOw.do',
-							data: slParams,
-							contentType: 'application/json; charset=utf-8',
-							async: false,
-							
-							
-						}).done(function(res){
-							/* var sres = JSON.parse(res);
-							gridSl.resetData(sres["data"]["contents"]); */
-						})	
-				}
-				for(let i of gridOu.getCheckedRowKeys()){
+					
+/* 				for(let i of gridOu.getCheckedRowKeys()){
 					var slParams = {
-							'indicaDetaNo' : outGrid.getValue(rowKeyNm,"slipDetaNo"),
+							,
 							'prdtLot' : gridOu.getValue(i,"prdtLot")
 						}
 						$.ajax({
@@ -99,17 +109,11 @@
 							
 							
 						}).done(function(res){
-							/* var sres = JSON.parse(res);
-							gridSl.resetData(sres["data"]["contents"]); */
+							 var sres = JSON.parse(res);
+							gridSl.resetData(sres["data"]["contents"]); 
 						})	
-				}
-				if(gridOu.getCheckedRows().length<=outGrid.getValue(rowKeyNm,"orderQty")){
-				outGrid.setValue(rowKeyNm,"oustQty",gridOu.getCheckedRows().length);
-				outGrid.setValue(rowKeyNm,"prdtUntprc",outGrid.getValue(rowKeyNm,"prdtAmt")*outGrid.getValue(rowKeyNm,"oustQty"))
-				dialog5.dialog("close");
-				}else{
-					alert("주문량보다 출고량이 "+(outGrid.getValue(rowKeyNm,"orderQty")-gridOu.getCheckedRows().length)+"개 많습니다.")
-				}
+				} */
+				
 			})
 		}
 	</script>

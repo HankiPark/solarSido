@@ -129,10 +129,20 @@ public class PrdtServiceImpl implements PrdtService {
 		return 1;
 	}	
 	@Override
-	public int insertOw(Prdt vo) {
+	public int insertOw(ModifyVO<Prdt> mvo) {
 		
-		pmapper.insertOw(vo);
+	
+		if(mvo.getRows()!=null) {
+			for(Prdt vo : mvo.getRows()) {
+				
+				pmapper.insertOw(vo);
+				}
+			
+			}
+
 		return 1;
+		
+		
 	}
 
 	

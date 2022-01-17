@@ -182,7 +182,6 @@ public class PrdtController {
 	//출고 대기중인 물건리스트 
 	@GetMapping("/grid/outWaitList.do")
 	public String outWaitListGrid(Model model, Prdt prdt) {
-		System.out.println(pservice.OutWaitList(prdt));
 		List<?> list = pservice.OutWaitList(prdt);
 		model.addAttribute("result", true);
 		Map<String, Object> map = new HashMap();
@@ -202,9 +201,11 @@ public class PrdtController {
 		
 		return "jsonView";
 	}
-	@GetMapping("/ajax/insertOw.do")
-	public String updateOw2(Model model, Prdt prdt) {
-		 pservice.insertOw(prdt);
+	
+	@PostMapping("/ajax/insertOw.do")
+	public String updateOw2(Model model, Prdt prdt,@RequestBody ModifyVO<Prdt> mvo) {
+	
+		 pservice.insertOw(mvo);
 		
 		
 		return "jsonView";

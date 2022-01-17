@@ -4,6 +4,7 @@
 @import url(icons/themify-icons/themify-icons.css);
 .topbar .dropdown-menu .with-arrow > span {
   transform: rotate(45deg);
+ 
   -ms-transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   -o-transform: rotate(45deg);
@@ -82,7 +83,7 @@ body {
   line-height: 1.5;
   color: #7c8798;
   text-align: left;
-  background-color: #f9fbfd; }
+  background-color: #f4f2f3; }
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
@@ -244,7 +245,8 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button; }
+  -webkit-appearance: button;
+  background-color : C0A9BD }
 
 button:not(:disabled),
 [type="button"]:not(:disabled),

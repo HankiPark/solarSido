@@ -119,7 +119,7 @@
 	
 <!--  출고량을 눌렀을때 뜨는 리스트-->
 	<select id="OutWaitList" resultType="Prdt">
-	select distinct prdt_lot,prdt_cd,prdt_fg from prdt_stc where prdt_cd=#{prdtCd} and 
+	select distinct prdt_lot,prdt_cd,prdt_fg,#{indicaDetaNo} as indica_deta_no  from prdt_stc where prdt_cd=#{prdtCd} and 
 	                        prdt_lot in	
 	                            (select prdt_lot from prdt_stc where prdt_fg='I') 
 	                        and prdt_lot not in
@@ -173,7 +173,16 @@
 	</delete>
 
 	<insert id="insertOw">
-		insert into prdt_stc select prdt_inx,prdt_lot,'OW',prdt_cd,#{indicaDetaNo},sysdate from prdt_stc where prdt_lot = #{prdtLot} and prdt_fg='I'
+		insert into prdt_stc 
+				select prdt_inx,
+						prdt_lot,
+						'OW',
+						prdt_cd,
+						#{indicaDetaNo},
+						sysdate 
+					from prdt_stc 
+					where prdt_lot = #{prdtLot} 
+							and prdt_fg='I'
 	</insert>
 
 

@@ -17,7 +17,7 @@ public interface PrdtService {
 	int modifyData(ModifyVO<Prdt> mvo);
 	int modifyOutData(ModifyVO<Prdt> mvo);
 	int resetOw(Prdt vo);
-	int insertOw(Prdt vo);
+	int insertOw(ModifyVO<Prdt> mvo);
 
 	int tempUpdStc(Prdt vo);
 	String makeNum();
