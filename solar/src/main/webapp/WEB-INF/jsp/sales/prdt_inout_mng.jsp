@@ -465,7 +465,8 @@ a {
 						hidden : true
 					}, {
 						header : '전표상세번호',
-						name : 'slipDetaNo'
+						name : 'slipDetaNo',
+						hidden : true
 					}, {
 						header : '출고일자',
 						name : 'prdtDt'
@@ -555,7 +556,6 @@ a {
 				function appendRow(index) {
 					//버튼누르면 전표번호값 업데이트
 					outGrid.blur();
-					console.log("전"+"${num}")
 					outGrid.request('modifyData');
 				
 					
