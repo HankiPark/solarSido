@@ -3,19 +3,27 @@
 <mapper namespace="solar.rsc.inout.service.impl.RscInOutMapper">
 
 	<select id="selectAll" resultType="solar.rsc.inout.service.RscInOut">
-		select * from rsc_inout
+		select *
+		from rsc_inout i
+		join rsc r
+		on i.rsc_cd = r.rsc_cd
 	</select>
 	
 	<insert id="insert" parameterType="solar.rsc.inout.service.RscInOut">
+		<selectKey keyProperty="rscAmt" order="BEFORE" resultType="string">
+			select rsc_untprc
+			from rsc
+			where rsc_cd = #{rscCd} 
+		</selectKey>
 		insert into rsc_inout
 		values(
-		#{rscSlipNo},
+		#{rscSlipNo} || to_char(sysdate,'yyMMdd') || trim(to_char(RSCJEONPYOSEQ.nextval, '000')),
 		#{rscCd},
-		#{rscLot},
+		#{rscCd} || to_char(sysdate,'yyMMdd') || trim(to_char(RSCLOTSEQ.nextval, '000')),
 		sysdate,
 		#{rscQty},
 		#{rscFg},
-		#{rscAmt}
+		#{rscAmt}*#{rscQty}
 		)
 	</insert>
 
@@ -41,11 +49,11 @@
 		    JOIN co c ON r.co_cd = c.co_cd
 		WHERE
 		    1 = 1
-		<if test='ordrDtStt != null and ordrDtStt != ""'>
-			AND trunc(i.rsc_dt) <![CDATA[>= #{ordrDtStt}]]>
+		<if test='dtStt != null and dtStt != ""'>
+			AND trunc(i.rsc_dt) <![CDATA[>= #{dtStt}]]>
 		</if>
-		<if test='ordrDtEnd != null and ordrDtEnd != ""'>
-			AND trunc(i.rsc_dt) <![CDATA[<= #{ordrDtEnd}]]>
+		<if test='dtEnd != null and dtEnd != ""'>
+			AND trunc(i.rsc_dt) <![CDATA[<= #{dtEnd}]]>
 		</if>
 		<if test='co != null and co != ""'>
 			AND c.co_cd = #{co}
@@ -54,7 +62,7 @@
 			AND i.rsc_cd = #{rsc}
 		</if>
 		ORDER BY
-		    ordr_dt
+		    rsc_dt
 	</select>
 
 </mapper>

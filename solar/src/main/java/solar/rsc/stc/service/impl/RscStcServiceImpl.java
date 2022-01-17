@@ -1,6 +1,7 @@
 package solar.rsc.stc.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,11 @@ public class RscStcServiceImpl implements RscStcService {
 	@Override
 	public List<RscStc> selectAll() {
 		return rscStcMapper.selectAll();
+	}
+
+	@Override
+	public List<RscStc> search(Map map) {
+		return rscStcMapper.search(map);
 	}
 
 }

@@ -61,26 +61,22 @@
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordr"
-						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조
+						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조(기능완)
+						</span></a></li>
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/inadmin"
+						class="sidebar-link"><span class="hide-menu"> 자재 입고 관리(반품, 로트 ing)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/in"
-						class="sidebar-link"><span class="hide-menu"> 자재 입고 관리
+						class="sidebar-link"><span class="hide-menu"> 자재 입고 조회(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/out"
-						class="sidebar-link"><span class="hide-menu"> 자재 출고 조회
-						</span></a></li>
-
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
-						class="sidebar-link"><span class="hide-menu"> 자재 반품 관리
+						class="sidebar-link"><span class="hide-menu"> 자재 출고 조회(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 반품 조회
 						</span></a></li>
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/stc"
-						class="sidebar-link"><span class="hide-menu"> 자재 재고 관리
-						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
-						class="sidebar-link"><span class="hide-menu"> 자재 재고 조회
+						class="sidebar-link"><span class="hide-menu"> 자재 재고 조회(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 LOT별
@@ -139,7 +135,7 @@
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/insp"
-						class="sidebar-link"><span class="hide-menu"> 자재 검수 관리 </span></a></li>
+						class="sidebar-link"><span class="hide-menu"> 자재 검수 관리(기능완) </span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
 						class="sidebar-link"><span class="hide-menu"> 자재 검수 조회 </span></a></li>
 					<li class="sidebar-item"><a href="ui-breadcrumb.html"
