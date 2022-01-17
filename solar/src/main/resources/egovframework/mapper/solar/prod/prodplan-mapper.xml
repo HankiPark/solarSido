@@ -6,23 +6,104 @@
 	SELECT 
 		B.plan_deta_no,
 		A.plan_no,
+		TO_CHAR(B.plan_dt, 'YYYY/MM/DD') plan_dt,
+		(SELECT co_nm FROM co WHERE co_cd = O.co_cd) co_nm,
+		O.co_cd,
 		B.prdt_cd, 
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_no,
-		(SELECT paprd_dt FROM order_tb WHERE order_no = B.order_no) paprd_dt, 
+		TO_CHAR(O.paprd_dt, 'YYYY/MM/DD') paprd_dt,
 		(SELECT order_qty FROM order_d WHERE order_no = B.order_no AND prdt_cd =B.prdt_cd) order_qty,
 		B.plan_qty,
-		B.wk_dt,
+		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord
-	FROM plan A,  plan_d B
+	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
-	<if test="planStartDt != null and planStartDt != ''">
-	AND B.plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'yyyy-MM-dd')
-	</if>
-	<if test="planEndDt != null and planEndDt != ''">
-	AND B.plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'yyyy-MM-dd')
-	</if>
+    AND B.order_no = O.order_no
+		<if test="planStartDt != null and planStartDt != ''">
+		AND B.plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY/MM/DD')
+		</if>
+		<if test="planEndDt != null and planEndDt != ''">
+		AND B.plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY/MM/DD')
+		</if>
+		<if test="coCd != null and coCd != ''">
+		AND O.co_cd = #{coCd}
+		</if>
+		<if test="prdtCd != null and prdtCd != ''">
+		AND B.prdt_cd = #{prdtCd}
+		</if>
+		<if test="planNo != null and planNo != ''">
+		AND plan_no = #{planNo}
+		</if>
 	ORDER BY paprd_dt, order_qty
 </select>
+
+<select id="findProdPlan" resultType="ProdPlanVO">
+	SELECT
+		plan_no,
+		TO_CHAR(plan_dt, 'YYYY-MM-DD') plan_dt,
+		plan_nm	
+	FROM PLAN
+		<if test="planStartDt != null and planStartDt != ''">
+		AND B.plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY-MM-DD')
+		</if>
+		<if test="planEndDt != null and planEndDt != ''">
+		AND B.plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
+		</if>
+	ORDER BY plan_no
+</select>
+
+<select id="searchPlan" resultType="ProdPlanVO">
+	SELECT *
+	FROM plan_d
+		<if test="planNo != null and planNo != ''">
+		WHERE plan_no = #{planNo}
+		</if>
+</select>
+
+<select id="findOrder" resultType="ProdPlanVO">
+	SELECT *
+	FROM order_tb
+	WHERE progInfo != '종료'
+</select>
+
+<select id="searchOrder" resultType="ProdPlanVO">
+	SELECT *
+	FROM plan_d
+		<if test="orderNo != null and orderNo != ''">
+		WHERE order_no = #{orderNo}
+		</if>
+</select>
+
+<select id="findCoCd" resultType="ProdPlanVO">
+	SELECT * 
+	FROM co
+	<where>
+		<if test="coFg ='P'">
+			co_fg='P'
+		</if>
+	</where>
+</select>
+	
+<select id="findPrdtCd" resultType="ProdPlanVO">
+	SELECT *
+	FROM prdt
+		<where>
+			<choose>
+				<when
+					test="prdtCd !=null and prdtCd !='' and prdtNm !=null and prdtNm !=''">
+					prdt_cd = #{prdtCd} and prdt_nm = #{prdtNm}
+				</when>
+				<when test="prdtCd !=null and prdtCd !=''">
+					prdt_cd = #{prdtCd}
+				</when>
+				<when test=" prdtNm !=null and prdtNm !=''">
+					prdt_nm = #{prdtNm}
+				</when>
+			</choose>
+		</where>
+		ORDER BY prdt_cd asc
+</select>
+
 
 </mapper>
