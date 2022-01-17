@@ -97,7 +97,7 @@ public class ProdPlanController {
 	//주문서검색 모달그리드
 	@GetMapping("/grid/findOrder.do")
 	public String findOrderGrid(Model model, ProdPlanVO ppVo) throws Exception {
-		List<?> list = ppService.findProdPlan(ppVo);
+		List<?> list = ppService.findOrder(ppVo);
 		Map<String, Object> map = new HashMap<>();
 		map.put("contents", list);
 		model.addAttribute("result", true);

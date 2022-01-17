@@ -47,6 +47,11 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	}
 	
 	@Override
+	public List<ProdPlanVO> findOrder(ProdPlanVO ppVo) {
+		return ppMapper.findOrder(ppVo);
+	}
+	
+	@Override
 	public List<ProdPlanVO> searchOrder(ProdPlanVO ppVo) {
 		return ppMapper.searchOrder(ppVo);
 	}
@@ -60,5 +65,5 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	public List<ProdPlanVO> findPrdtCd(ProdPlanVO ppVo) {
 		return ppMapper.findPrdtCd(ppVo);
 	}
-	
+
 }

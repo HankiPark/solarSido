@@ -61,17 +61,18 @@
 		</if>
 </select>
 
+<select id="findOrder" resultType="ProdPlanVO">
+	SELECT *
+	FROM order_tb
+	WHERE progInfo != '종료'
+</select>
+
 <select id="searchOrder" resultType="ProdPlanVO">
 	SELECT *
 	FROM plan_d
 		<if test="orderNo != null and orderNo != ''">
 		WHERE order_no = #{orderNo}
 		</if>
-</select>
-
-<select id="findOrder" resultType="ProdPlanVO">
-	SELECT *
-	FROM order_tb
 </select>
 
 <select id="findCoCd" resultType="ProdPlanVO">

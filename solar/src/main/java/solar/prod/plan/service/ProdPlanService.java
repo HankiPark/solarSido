@@ -18,6 +18,7 @@ public interface ProdPlanService {
 	//검색모달
 	List<ProdPlanVO> findProdPlan(ProdPlanVO ppVo);
 	List<ProdPlanVO> searchPlan(ProdPlanVO ppVo);
+	List<ProdPlanVO> findOrder(ProdPlanVO ppVo);
 	List<ProdPlanVO> searchOrder(ProdPlanVO ppVo);
 	List<ProdPlanVO> findCoCd(ProdPlanVO ppVo);
 	List<ProdPlanVO> findPrdtCd(ProdPlanVO ppVo);
