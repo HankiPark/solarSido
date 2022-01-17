@@ -88,7 +88,7 @@
  	$('#prdtCdFind').on('click', function(){
  		console.log("제품검색")
 		prdtCdDialog.dialog("open");
-		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function() { prdtList() })
+		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd")
 	});
    
   //계획 조회 그리드

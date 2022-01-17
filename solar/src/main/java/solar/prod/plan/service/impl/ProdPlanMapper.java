@@ -11,10 +11,19 @@ public interface ProdPlanMapper {
 	List<ProdPlanVO> selectPlan(ProdPlanVO ppVo);
 	
 	//생산계획 등록
-	int insertPlan(ModifyVO<ProdPlanVO> pplist);
+	int insertPlan(ProdPlanVO ppVo);
+	int insertPlanD(ProdPlanVO ppVo);
+	
+	//생산계획 수정
+	int updatePlan(ProdPlanVO ppVo);
+	int updatePlanD(ProdPlanVO ppVo);
 	
 	//생산계획 삭제
-	int deletePlan(ModifyVO<ProdPlanVO> pplist);
+	int deletePlan(ProdPlanVO ppVo);
+	int deletePlanD(ProdPlanVO ppVo);
+		
+	//modify
+	int modifyData(ModifyVO<ProdPlanVO> mvo);
 		
 	//검색모달
 	List<ProdPlanVO> findProdPlan(ProdPlanVO ppVo);
@@ -23,4 +32,6 @@ public interface ProdPlanMapper {
 	List<ProdPlanVO> searchOrder(ProdPlanVO ppVo);
 	List<ProdPlanVO> findCoCd(ProdPlanVO ppVo);
 	List<ProdPlanVO> findPrdtCd(ProdPlanVO ppVo);
+
+	
 }

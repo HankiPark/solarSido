@@ -57,7 +57,7 @@ function coCdList(){
 		var Params = {
 			'coCd' : coCd,
 			'coNm' : coNm,
-			//'coFg' : 'P'
+			'coFg' : 'P'
 		}
 		$.ajax({
 			url : '${pageContext.request.contextPath}/grid/findCoCd.do',

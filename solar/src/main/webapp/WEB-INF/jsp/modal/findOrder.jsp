@@ -71,7 +71,7 @@ function orderList(){
 		}).fail(function(reject){
 			console.log(reject);
 		})
-		prodPlanDialog.dialog("close");
+		orderDialog.dialog("close");
 	});
 	
 	orderGrid.on('onGridUpdated', function() {
