@@ -7,7 +7,7 @@ public class RscStc {
 	String rscCd;
 	String rscNm;
 	String rscStc;
-	String safeStc;
+	String safStc;
 	String rscSpec;
 	String rscUnit;
 	String rscUntprc;

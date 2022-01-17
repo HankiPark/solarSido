@@ -12,19 +12,25 @@
 </head>
 
 <body>
-	<h1>자재 출고 조회</h1>
+	<h1>자재 입고 관리</h1>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		입고일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
+		발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
 		<br>
-		업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+		발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
 		자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
 		<button type="button" id="ordrQueryBtn">조회</button>
 		<button type="button" id="inspSaveBtn">저장</button>
 	</form>
 	<div id="grid"></div>
+	<ul>
+		<li>발주량: <span id="ordrQty"></span></li>
+		<li>검수합격량: <span id="rscPassedQty"></span></li>
+		<li>수량확인<input id="confirmedQty"></li>
+		<li><button type="button" id="btnIn">입고</button></li>
+	</ul>
 </body>
 
 <script>
@@ -38,8 +44,12 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: 'ordrData?inspCls=rs003',
+				url: 'ordrData?inspCls=rs002',
 				method: 'GET'
+			},
+			modifyData: {
+				url: 'ordrData',
+				method: 'PUT'
 			}
 		},
 		contentType: 'application/json'
@@ -82,8 +92,8 @@
 		rowHeaders: ['checkbox'],
 		sortable: true,
 		columns: [{
-				header: '입고일',
-				name: 'rscDt'
+				header: '발주일',
+				name: 'ordrDt'
 			},
 			{
 				header: '자재명',
@@ -100,7 +110,6 @@
 			{
 				header: '합격량',
 				name: 'rscPassedQty',
-				editor: 'text'
 			},
 			{
 				header: '발주번호',
@@ -133,15 +142,17 @@
 		grid.refreshLayout();
 	});
 
-/* 	grid.on('click', function (ev) {
-		console.log(ev);
-		if (ev.columnName == "rscPassedQty") {
-			if(grid.getValue(ev.rowKey, ev.columnName)==9){
-				grid.blur();
-				return false;
-			}
+	grid.on('click', function (ev) {
+		if (ev.columnName == "inspCls") {
+			curRowKey = ev.rowKey;
+			//inspDialog.dialog("open");
+			//$("#inspModal").load("./inout/setInOut");
+			let ordrQty = document.getElementById("ordrQty");
+			let rscPassedQty = document.getElementById("rscPassedQty");
+			ordrQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
+			rscPassedQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
 		}
-	}); */
+	});
 
 	//
 
@@ -151,6 +162,8 @@
 		ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
 		co = document.ordrQueryFrm.co.value;
 		rsc = document.ordrQueryFrm.rsc.value;
+		rtngdResnCd = '';
+		rtngdDt = '';
 		grid.readData(1, {
 			'ordrDtStt': ordrDtStt,
 			'ordrDtEnd': ordrDtEnd,
@@ -188,6 +201,34 @@
 		grid.request('modifyData');
 	});
 
+	let btnIn = document.getElementById('btnIn');
+	btnIn.addEventListener('click', function () {
+		let date = new Date();
+ 		let confirmedQty = document.getElementById('confirmedQty');
+		if (grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty') != confirmedQty.value) {
+			alert("수량확인하세요 ㅋㅋ");
+			return false;
+		}
+		grid.setValue(grid.getFocusedCell().rowKey, grid.getFocusedCell().columnName, "rs003");
+		grid.request('modifyData');
+		
+ 		fetch("../rsc/in/rscin", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				rscSlipNo: "rin",
+				rscCd: grid.getValue(grid.getFocusedCell().rowKey, 'rscCd'),
+				//rscLot: "|| to_char(sysdate,'yyMMdd') || trim(to_char(RSCLOTSEQ.nextval, '000'))",
+				rscQty: grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty'),
+				rscFg: 1,
+				rscAmt: 12300
+			})
+		});
+ 		
+ 		
+	});
 </script>
 
 </html>

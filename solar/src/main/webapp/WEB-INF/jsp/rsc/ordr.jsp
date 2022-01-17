@@ -37,7 +37,7 @@
 					modifyData: {url: 'ordrData',method: 'PUT'}
 				  },
 				  contentType : 'application/json',
-				  initialRequest: false
+				  //initialRequest: false
 				};
 			
   var grid = new tui.Grid({

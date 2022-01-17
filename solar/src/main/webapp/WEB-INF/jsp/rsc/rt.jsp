@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<h1>자재 출고 조회</h1>
+	<h1>자재 반품 조회</h1>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
@@ -38,7 +38,7 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: 'ordrData?inspCls=rs003',
+				url: 'ordrData?inspCls=rs004',
 				method: 'GET'
 			}
 		},
@@ -132,16 +132,6 @@
 		}
 		grid.refreshLayout();
 	});
-
-/* 	grid.on('click', function (ev) {
-		console.log(ev);
-		if (ev.columnName == "rscPassedQty") {
-			if(grid.getValue(ev.rowKey, ev.columnName)==9){
-				grid.blur();
-				return false;
-			}
-		}
-	}); */
 
 	//
 

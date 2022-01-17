@@ -38,6 +38,7 @@
 	let co;
 	let rsc;
 	let inspCls;
+    let rtngdResnCd;
 	let inferDataSource = {
 		api: {
 			readData: { url: '../rsc/inspData', method: 'GET'}
@@ -110,9 +111,19 @@
               listItems:cmmnCodes.codes.rscst
             }
         }
-      }
+      },
+		{
+			name: 'rtngdResnCd'
+		},
+		{
+			name: 'rtngdDt'
+		},
     ]
   });
+  
+	grid.hideColumn('rtngdResnCd');
+	grid.hideColumn('rtngdDt');
+	
   
 /*     grid.on('beforeChange',function(ev){
     	console.log('befgg')
@@ -134,11 +145,26 @@
 		modal: true,
 		autoOpen: false,
 		buttons: {"입력":function(){
-      if(sum > grid.getValue(curRowKey,'rscIstQty')){
-        alert('총량보다 많은 불량량을 입력할 수 없습니다.');
-        return false;
-      }
+			if(sum > grid.getValue(curRowKey,'rscIstQty')){
+			  alert('총량보다 많은 불량량을 입력할 수 없습니다.');
+			  return false;
+			}
+
+            //불량명 문자타입으로 나열
+            rtngdResnCd = '';
+			for(let i = 0; i < inferGrid.getRowCount(); i++){
+				if(inferGrid.getValue(i,"rscInferQty")!=null){/////////////////////////////////////
+                rtngdResnCd += ","+inferGrid.getValue(i,"cmmnCdNm");
+				}
+            }
+			rtngdResnCd = rtngdResnCd.substr(1);
+            //
+            
 			grid.setValue(curRowKey, 'inspCls', 'rs002');
+			grid.setValue(curRowKey, 'rtngdResnCd', rtngdResnCd);
+			console.log(""+grid.getValue(curRowKey, 'rtngdResnCd'));
+			let d = new Date();
+			grid.setValue(curRowKey, 'rtngdDt', d.toISOString().slice(0, 10));
 			grid.setValue(curRowKey, 'rscInferQty', sum);
 			inspDialog.dialog("close");
 		},
@@ -196,7 +222,7 @@
     rscDialog.dialog("open");
     $("#rscModal").load("../rsc");
   });
-  
+
   let saveBtn = document.getElementById('inspSaveBtn');
   saveBtn.addEventListener('click',function(){
 	  grid.request('modifyData');

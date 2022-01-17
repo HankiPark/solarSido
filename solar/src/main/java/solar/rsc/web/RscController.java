@@ -64,8 +64,8 @@ public class RscController {
 		data.put("pagination", page);
 		
 		model.addAttribute("data", data);
-		System.out.println("model  "+model);
-		System.out.println("map  "+map);
+		System.out.println("param: "+map);
+		System.out.println("result: "+model);
 		return "jsonView";
 	}
 
@@ -134,10 +134,38 @@ public class RscController {
 		return 201;
 	}
 	
-	//입고페이지
+	//입고관리페이지
+	@GetMapping("rsc/inadmin")
+	public String rscInAdmin() {
+		return "rsc/inadmin";
+	}
+	
+	//입고조회페이지
 	@GetMapping("rsc/in")
 	public String rscIn() {
 		return "rsc/in";
+	}
+	
+	//입고조회페이지 데이터
+	@GetMapping("rsc/inData")
+	public String rscInData(@RequestParam Map map, Model model) {
+		System.out.println("param: "+map);
+		Map<String,Object> data = new HashMap<String, Object>();
+		Map<String,Object> page = new HashMap<String, Object>();
+		List<?> list = rscInOutService.search(map);
+		
+		model.addAttribute("result",true);
+		
+		page.put("page", 1);
+		page.put("totalCount", list.size());
+		
+		data.put("contents", list);
+		data.put("pagination", page);
+		
+		model.addAttribute("data", data);
+		
+		System.out.println("result: "+model);
+		return "jsonView";
 	}
 	
 	//입고 처리 요청
@@ -162,11 +190,26 @@ public class RscController {
 		return "rsc/stc";
 	}
 	
-	//재고 데이터 요청
+	//재고데이터 요청
 	@GetMapping("rsc/stcData")
-	public String rscStcData(@RequestBody RscStc rscStc, Model model) {
-		model.addAttribute("stc", rscStcService.selectAll());
-		return "jsonView"; 
+	public String rscStcData(@RequestParam Map map, Model model) {
+		System.out.println("param: "+map);
+		Map<String,Object> data = new HashMap<String, Object>();
+		Map<String,Object> page = new HashMap<String, Object>();
+		List<?> list = rscStcService.search(map);
+		
+		model.addAttribute("result",true);
+		
+		page.put("page", 1);
+		page.put("totalCount", list.size());
+		
+		data.put("contents", list);
+		data.put("pagination", page);
+		
+		model.addAttribute("data", data);
+		
+		System.out.println("result: "+model);
+		return "jsonView";
 	}
 	
 }

@@ -3,7 +3,21 @@
 <mapper namespace="solar.rsc.stc.service.impl.RscStcMapper">
 
 	<select id="selectAll">
-		select 
+		select * from rsc
+	</select>
+	
+	<select id="search" parameterType="map" resultType="solar.rsc.stc.service.RscStc">
+		select s.*, r.rsc_nm, r.saf_stc, r.rsc_spec, r.rsc_spec, r.rsc_unit, r.rsc_untprc
+		from rsc_stc s
+		join rsc r
+		on s.rsc_cd = r.rsc_cd
+		WHERE
+		    1 = 1
+		<if test='rsc != null and rsc != ""'>
+			AND r.rsc_cd = #{rsc}
+		</if>
+		ORDER BY
+		    r.rsc_cd
 	</select>
 
 </mapper>

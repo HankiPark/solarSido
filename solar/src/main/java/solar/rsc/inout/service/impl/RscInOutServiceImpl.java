@@ -1,6 +1,7 @@
 package solar.rsc.inout.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,11 @@ public class RscInOutServiceImpl implements RscInOutService {
 	@Override
 	public int stcInc(RscInOut rscInOut) {
 		return rscInOutMapper.stcInc(rscInOut);
+	}
+
+	@Override
+	public List<RscInOut> search(Map map) {
+		return rscInOutMapper.search(map);
 	}
 
 }
