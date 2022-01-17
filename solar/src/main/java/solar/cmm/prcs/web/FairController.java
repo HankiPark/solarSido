@@ -47,6 +47,7 @@ public class FairController {
 		return "jsonView";
 	}
 	
+	
 	@RequestMapping("/grid/fairUpdateIn.do")
 	public String fairUpdateIn(Model model, FairVO fairVO, @RequestBody ModifyVO<FairVO> mvo) throws Exception
 	{

@@ -6,6 +6,24 @@
 	SELECT * FROM PRCS
 	</select>
 
+	<select id="findPrcs" resultType="solar.cmm.prcs.dao.FairVO">
+	SELECT * FROM PRCS
+	<where>
+		<choose>
+			<when test="prcsCd !=null and prcsCd!='' and prcsNm!=null and prcsNm!=''">
+			PRCS_CD=#{prcsCd} and PRCS_NM=#{prcsNm}
+			</when>
+			<when test="prcsCd !=null and prcsCd!=''">
+			PRCS_CD=#{prcsCd}
+			</when>
+			<when test="prcsNm!=null and prcsNm!=''">
+			PRCS_NM=#{prcsNm}
+			</when>
+		</choose>
+	</where>
+	order by PRCS_CD asc
+	</select>
+
 	<update id="fairUpdate">
 		UPDATE	PRCS
 		SET PRCS_FG = #{prcsFg}

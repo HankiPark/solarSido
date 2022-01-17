@@ -7,7 +7,7 @@ import solar.sales.order.dao.ModifyVO;
 
 public interface FairService {
 	List<FairVO> fairList(FairVO fairVO);
-	public FairVO findById(String no);
+	List<FairVO> findPrcs(FairVO fairVO);
 	public int fairInsert(FairVO fairVO);
 	public int fairUpdate(FairVO fairVO);
 	public int fairDelete(FairVO fairVO);
