@@ -9,7 +9,8 @@
 </head>
 <body>
 
-	<div id="dialog-form" title="작업지시번호"></div>
+	<div id="indicaDialog-form" title="작업지시번호"></div>
+	<div id="prcsEqmDialog-form" title="설비검색"></div>
 
 
 	<div>
@@ -17,7 +18,7 @@
 			<div class="col-5">
 				지시번호 : <input type="text" id="indicaDetaNo"><button type="button" id="searchIndica">돋</button><br><br>
 				제품코드 : <input type="text" id="prdtCd"><br><br>
-				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchPrcs">돋</button><br><br>
+				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchEqm">돋</button><br><br>
 				설비코드 : <input type="text" id="eqmCd"><br><br>
 				라인번호 : <input type="text" id="liNo"><br><br>
 				<br>
@@ -39,14 +40,19 @@
 	// 그리드 선언
 	let indicaGrid
 	let prcsGrid
+	let prcsEqmGrid
 	
 	// 지시상세에서 사용하는 변수
 	let indicaDataSource
 	let sDate
 	let sDateSearchBtn
 	
+	// 장비검색에서 사용하는 변수
+	let prcsEqmDataSource
+	
+	
 	// 지시상세 모달 선언
-	let indicaDialog = $( "#dialog-form" ).dialog({
+	let indicaDialog = $( "#indicaDialog-form" ).dialog({
 		autoOpen: false,
 		modal:true,
 		width:1000
@@ -56,11 +62,27 @@
 		} */	
 	});
 	
+	// 공정 모달 선언
+	let prcsEqmDialog = $("#prcsEqmDialog-form").dialog({
+		autoOpen: false,
+		modal:true,
+		width:1000	
+	});
+
+	// 지시상세 모달 호출 이벤트	
  	$("#searchIndica").on("click", function(){
  		indicaDialog.dialog("open");
-		$("#dialog-form").load("${pageContext.request.contextPath}/modal/searchIndicaDetail", function(){})
+		$("#indicaDialog-form").load("${pageContext.request.contextPath}/modal/searchIndicaDetail", function(){})
 	});  
 
+	// 공정 모달 호출 이벤트
+ 	$("#searchEqm").on("click", function(){
+ 		prcsEqmDialog.dialog("open");
+		$("#prcsEqmDialog-form").load("${pageContext.request.contextPath}/modal/searchPrcsEqm", function(){})
+	});  
+
+	
+	
 		const prcsColumns = 
 			[ 
 				{
@@ -71,7 +93,7 @@
 				name : 'prdtNm'
 			}, {
 				header : '공정명',
-				name : 'prcsNm',
+				name : 'prcsCd',
 				
 			}, {
 				header : '진행상태',
@@ -83,8 +105,9 @@
  		const inDataSource = {
 				   api : {
 				      readData : {
-				         url : '${pageContext.request.contextPath}/grid/orderList.do',
+				         url : '${pageContext.request.contextPath}/prcs/prcsItem',
 				         method : 'GET'
+
 				      }
 				   },
 
@@ -96,7 +119,8 @@
  		prcsGrid = new tui.Grid({
 			  el: document.getElementById('prcsGrid'),
 			  data : inDataSource ,
-			  columns : prcsColumns
+			  columns : prcsColumns,
+			  initialRequest : false						// 그리드 생성시 readdata 사용 x
 			});	
  
  		prcsGrid.on("response", function(){
@@ -111,16 +135,23 @@
  			$("#prdtCd").val(prd);
  			
  			indicaDialog.dialog("close");
- 	/* 		
+ 	 		
  			var readParams = {
  					'indicaDetaNo':indicaDetaNo
  			}
- 			
  			prcsGrid.readData(1,readParams,true);
  			prcsGrid.refreshLayout();
- 			*/	
+ 				
  		} 
  		
+ 		function innPrcsEqm(prcsNm, eqmCd, lineNm){
+ 			$("#prcsNm").val(prcsNm);
+ 			$("#eqmCd").val(eqmCd);
+ 			$("#liNm").val(lineNm);
+ 			
+ 			prcsEqmDialog.dilog("close");
+ 			
+ 		}
  		
 	</script>
 	
