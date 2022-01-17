@@ -8,11 +8,13 @@
 </head>
 
 <body>
+<div>
 	<form id="prscIndicaSearch" name="prscIndicaSearch">
 	지시일 검색<input type="date" id="sDate" name="sDate">
 	<button type="button" id="sDateSearchBtn">돋</button><br />
 	</form>
 	<div id="indicaGrid" style="width: 900px"></div>
+</div>
 </body>
 <script>
 	
@@ -94,16 +96,19 @@
 		
 		var indicaNo = indicaGrid.getValue(rk,"indicaNo");
 		var indicaDetaNo = indicaGrid.getValue(rk,"indicaDetaNo");
+		var prdtNm = indicaGrid.getValue(rk,"prdtNm");
 		
 		
 		var inddd = indicaNo + "-" + indicaDetaNo;
 		var prd = indicaGrid.getValue(rk,"prdtCd");
+		var prdNm = indicaGrid.getValue(rk,"prdtNm");
 		
 		console.log(inddd);
 		console.log(prd);
+		console.log(prdNm);
 		
 		// 더블클릭하여 선택된 row의 지시번호가 null이 아닐때 공정페이지에 정보넘어가면서 이벤트발생
-		if(inddd !=null){
+		if(inddd!=="null-null"){
 			innIndica(inddd, prd, indicaDetaNo);
 		}
 		

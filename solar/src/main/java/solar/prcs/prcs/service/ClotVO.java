@@ -13,6 +13,7 @@ public class ClotVO {
 
 	String rscConNo;
 	String prdtLot;
+	String prdtNm;
 	String prcsCd;
 	String lowSt;
 	String wkNo;
@@ -20,4 +21,7 @@ public class ClotVO {
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	Date wkDt;
 
+	String indicaDetaNo;
+	
+	
 }

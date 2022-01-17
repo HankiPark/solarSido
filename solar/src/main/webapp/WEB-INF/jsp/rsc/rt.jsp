@@ -17,9 +17,9 @@
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		입고일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
+		발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
 		<br>
-		업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+ 		업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
 		자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
 		<button type="button" id="ordrQueryBtn">조회</button>
 		<button type="button" id="inspSaveBtn">저장</button>
@@ -38,7 +38,7 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: 'ordrData?inspCls=rs004',
+				url: 'rtData',
 				method: 'GET'
 			}
 		},
@@ -55,25 +55,6 @@
 		console.log(data);
 	});
 
-	let inspDialog = $("#inspModal").dialog({
-		modal: true,
-		autoOpen: false,
-		buttons: {
-			"입력": function () {
-				if (sum > grid.getValue(curRowKey, 'rscIstQty')) {
-					alert('총량보다 많은 불량량을 입력할 수 없습니다.');
-					return false;
-				}
-				grid.setValue(curRowKey, 'inspCls', 'rs002');
-				grid.setValue(curRowKey, 'rscInferQty', sum);
-				inspDialog.dialog("close");
-			},
-			"닫기": function () {
-				inspDialog.dialog("close");
-			}
-		}
-	});
-
 	var grid = new tui.Grid({
 		el: document.getElementById('grid'),
 		scrollX: false,
@@ -82,8 +63,8 @@
 		rowHeaders: ['checkbox'],
 		sortable: true,
 		columns: [{
-				header: '입고일',
-				name: 'rscDt'
+				header: '발주번호',
+				name: 'ordrCd'
 			},
 			{
 				header: '자재명',
@@ -94,32 +75,16 @@
 				name: 'rscCd'
 			},
 			{
-				header: '발주량',
-				name: 'ordrQty'
+				header: '반품량',
+				name: 'rscInferQty'
 			},
 			{
-				header: '합격량',
-				name: 'rscPassedQty',
-				editor: 'text'
+				header: '반품사유',
+				name: 'rtngdResnCd',
 			},
 			{
-				header: '발주번호',
-				name: 'ordrCd'
-			},
-			{
-				header: '업체',
-				name: 'coNm'
-			},
-			{
-				header: '검수여부',
-				name: 'inspCls',
-				formatter: 'listItemText',
-				editor: {
-					type: 'select',
-					options: {
-						listItems: cmmnCodes.codes.rscst
-					}
-				}
+				header: '반품일',
+				name: 'rtngdDt'
 			}
 		]
 	});

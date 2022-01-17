@@ -35,16 +35,61 @@
 			id.WK_ORD,
 			id.WK_DT,
 			id.PLAN_DT,
-			i.INDICA_NM
+			i.INDICA_NM,
+            (SELECT PRDT_NM FROM PRDT WHERE PRDT_CD = id.PRDT_CD) AS PRDT_NM
 	FROM INDICA i,
 		INDICA_D id
 	WHERE i.INDICA_NO = id.INDICA_NO
-	AND i.INDICA_DT = id.INDICA_DT
+    AND i.INDICA_DT = id.INDICA_DT
 	
 	<if test="sDate != null">
 		AND TO_CHAR(i.INDICA_DT,'yyyy-MM-dd') = #{sDate}	
 	</if>
 	
+</select>
+
+<select id="selectPrcsItem" resultType="solar.prcs.prcs.service.ClotVO">
+	
+	select 
+	    rsc_con_no, 
+	    prdt_lot, 
+	    prcs_cd, 
+	    wk_no, 
+	    wk_dt,
+	    low_st,
+	    (select cmmn_cd_nm
+	    from cmmn_data_d where cmmn_cd_deta_id=(select distinct prdt_cd from prdt_stc where prdt_lot=r.prdt_lot)) AS prdt_nm
+	from rsc_clot r
+	where prdt_lot in (select prdt_lot from prdt_stc where indica_deta_no = #{indicaDetaNo})
+
+</select>
+
+<select id="selectPrcsEqm" resultType="solar.prcs.prcs.service.PrcsEqmVO">
+	select p.prcs_fg,
+	        p.prcs_nm,
+	        p.prcs_desct,
+	        p.prcs_unit,
+	        p.prod_pd,
+	        e.eqm_fg,
+	        e.eqm_nm,
+	        e.eqm_mdl,
+	        e.eqm_spec,
+	        e.eqm_co,
+	        e.purc_dt,
+	        e.purc_amt,
+	        e.li_no,
+	        e.emp_id,
+	        e.energy,
+	        e.lf,
+	        e.temp,
+	        e.uph,
+	        trunc((1/((e.uph/60)/60))*100,2) AS pTime,
+	        e.eqm_img,
+	        e.prcs_cd
+	from prcs p, eqm e
+	where p.prcs_cd = e.prcs_cd
+	
+
 </select>
 
 </mapper>

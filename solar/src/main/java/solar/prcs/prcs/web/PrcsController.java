@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
+import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsService;
 
 @Controller
@@ -44,16 +45,36 @@ public class PrcsController {
 	}
 	/*------------------------------------------------------------------------------------------------ */
 	// 공정명검색
-	/*
-	 * @GetMapping("/prcs/prcsItem") public String getItem(ClotVO vo, Model model) {
-	 * 
-	 * Map<String, Object> map = new HashMap(); map.put("contents",
-	 * prcsservice.selectPrcsItem(vo)); model.addAttribute("result", true);
-	 * model.addAttribute("data", map);
-	 * 
-	 * return "jsonView"; }
-	 */
 	
-	
-	
+	  @GetMapping("/prcs/prcsItem") 
+	  public String getItem(ClotVO vo, Model model) {
+	  
+	  Map<String, Object> map = new HashMap(); map.put("contents",
+	  prcsservice.selectPrcsItem(vo)); model.addAttribute("result", true);
+	  model.addAttribute("data", map);
+	  
+	  return "jsonView"; 
+	  }
+	 
+	/*------------------------------------------------------------------------------------------------ */
+	// 설비검색 Modal 페이지 호출
+		
+	  @RequestMapping("/modal/searchPrcsEqm")
+	  public String callPrcsEqmModal() {
+		  return "modal/searchPrcsEqm";
+	  }
+	  
+	 // 설비검색 데이터 호출
+	  @GetMapping("modal/searchPrcsEqm/prcsEqm")
+	  public String getPrcsEqm(PrcsEqmVO vo, Model model) {
+		  
+		  Map<String, Object> map = new HashMap();
+		  map.put("contents", prcsservice.selectPrcsEqm(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
+		  return "jsonView";
+	  }
+	  
+	  
 }
