@@ -20,14 +20,14 @@
 		    JOIN co c ON r.co_cd = c.co_cd
 		WHERE
 		    1 = 1
-		<if test='isNotInspected == "true"'>
-			AND insp_cls = 0
+		<if test='inspCls != null and inspCls != ""'>
+			AND o.insp_cls = #{inspCls}
 		</if>
 		<if test='ordrDtStt != null and ordrDtStt != ""'>
-			AND to_char(o.ordr_dt,'yyyy/MM/dd') <![CDATA[>= #{ordrDtStt}]]>
+			AND trunc(o.ordr_dt) <![CDATA[>= #{ordrDtStt}]]>
 		</if>
 		<if test='ordrDtEnd != null and ordrDtEnd != ""'>
-			AND to_char(o.ordr_dt,'yyyy/MM/dd') <![CDATA[<= #{ordrDtEnd}]]>
+			AND trunc(o.ordr_dt) <![CDATA[<= #{ordrDtEnd}]]>
 		</if>
 		<if test='co != null and co != ""'>
 			AND c.co_cd = #{co}
