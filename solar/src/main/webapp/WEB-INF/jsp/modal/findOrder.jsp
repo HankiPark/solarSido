@@ -11,6 +11,7 @@
 </body>
 
 <script type="text/javascript">
+function orderList(){
 	const orderGrid = new tui.Grid(
 			{
 				el : document.getElementById('orderGrid'),
@@ -70,12 +71,13 @@
 		}).fail(function(reject){
 			console.log(reject);
 		})
-		prodPlanDialog.dialog("close");
+		orderDialog.dialog("close");
 	});
 	
 	orderGrid.on('onGridUpdated', function() {
 		orderGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

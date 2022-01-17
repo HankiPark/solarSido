@@ -18,6 +18,7 @@
 </body>
 
 <script type="text/javascript">
+function coCdList(){
 	const coCdGrid = new tui.Grid(
 			{
 				el : document.getElementById('coCdGrid'),
@@ -74,9 +75,10 @@
 		coCdDialog.dialog("close");
 	});
 
-	coCdGrid.on('response', function() {
+	coCdGrid.on('onGridUpdated', function() {
 		coCdGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

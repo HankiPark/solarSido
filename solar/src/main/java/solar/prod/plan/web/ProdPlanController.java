@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prod.plan.service.ProdPlanService;
 import solar.prod.plan.service.ProdPlanVO;
+import solar.sales.order.dao.ModifyVO;
 
 @Controller
 public class ProdPlanController {
@@ -50,15 +53,19 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("data:" + map);
+		System.out.println("map:" + map);
 		return "jsonView";
 		}
 	
-	//등록
-	
-	
-	//삭제
-	
+	//modifyData
+	@PostMapping("/grid/planModify.do")
+	public String modifyPlan(Model model, ProdPlanVO ppVo, 
+							@RequestBody ModifyVO<ProdPlanVO> mvo) throws Exception {
+		ppService.modifyData(mvo);
+		System.out.println("mvo:"+mvo);
+		model.addAttribute("mode", "upd");
+		return "jsonView";
+	}
 	
 	//생산계획서검색 모달
 	@RequestMapping("/modal/findProdPlan")
@@ -75,14 +82,14 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("data:" + map);
+		System.out.println("map:" + map);
 		return "jsonView";
 	}
 		
 	//생산계획서검색 - 계획상세조회
 	@GetMapping("/grid/searchPlan.do")
 	public String selectPlanGrid(Model model, ProdPlanVO ppVo) throws Exception {
-		List<?> list = ppService.searchPlan(ppVo);
+		List<?> list = ppService.selectPlan(ppVo);
 		model.addAttribute("data", list);
 		return "jsonView";
 	}
@@ -102,7 +109,7 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("data:" + map);
+		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	

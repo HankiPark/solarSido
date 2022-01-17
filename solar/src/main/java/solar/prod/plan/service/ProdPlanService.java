@@ -8,12 +8,16 @@ public interface ProdPlanService {
 	
 	//생산계획 조회
 	List<ProdPlanVO> selectPlan(ProdPlanVO ppVo);
-	
-	//생산계획 등록
-	int insertPlan(ModifyVO<ProdPlanVO> pplist);
-	
-	//생산계획 삭제
-	int deletePlan(ModifyVO<ProdPlanVO> pplist);
+
+	/*
+	 * //생산계획 등록 int insertPlan(ProdPlanVO ppVo);
+	 * 
+	 * //생산계획 수정 int updatePlan(ProdPlanVO ppVo);
+	 * 
+	 * //생산계획 삭제 int deletePlan(ProdPlanVO ppVo);
+	 */
+	//modify
+	int modifyData(ModifyVO<ProdPlanVO> mvo);
 	
 	//검색모달
 	List<ProdPlanVO> findProdPlan(ProdPlanVO ppVo);

@@ -74,7 +74,7 @@
 	$("#coCdFind").on("click", function(){
 		console.log("업체검색")
 		coCdDialog.dialog("open");
-		$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ })
+		$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
 	});
 
  	//제품검색 모달  
@@ -88,7 +88,7 @@
  	$('#prdtCdFind').on('click', function(){
  		console.log("제품검색")
 		prdtCdDialog.dialog("open");
-		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function() {})
+		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd")
 	});
    
   //계획 조회 그리드

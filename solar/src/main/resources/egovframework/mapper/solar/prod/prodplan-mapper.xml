@@ -16,7 +16,9 @@
 		(SELECT order_qty FROM order_d WHERE order_no = B.order_no AND prdt_cd =B.prdt_cd) order_qty,
 		B.plan_qty,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
-		B.wk_ord
+		B.wk_ord,
+		A.plan_dt,
+		A.plan_nm
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -33,9 +35,23 @@
 		AND B.prdt_cd = #{prdtCd}
 		</if>
 		<if test="planNo != null and planNo != ''">
-		AND plan_no = #{planNo}
+		AND B.plan_no = #{planNo}
 		</if>
 	ORDER BY paprd_dt, order_qty
+</select>
+
+<select id="searchOrder" resultType="ProdPlanVO">
+	SELECT 
+		order_deta_no,
+		order_no,
+		TO_CHAR(paprd_dt, 'YYYY-MM-DD') paprd_dt,
+		prdt_cd,
+		order_qty
+	FROM order_tb A, order_d B
+	<if test="orderNo != null and orderNo != ''">
+		WHERE order_no = #{orderNo}
+	</if>
+
 </select>
 
 <select id="findProdPlan" resultType="ProdPlanVO">
@@ -53,35 +69,28 @@
 	ORDER BY plan_no
 </select>
 
-<select id="searchPlan" resultType="ProdPlanVO">
-	SELECT *
-	FROM plan_d
-		<if test="planNo != null and planNo != ''">
-		WHERE plan_no = #{planNo}
-		</if>
-</select>
-
 <select id="findOrder" resultType="ProdPlanVO">
 	SELECT *
 	FROM order_tb
-	WHERE progInfo != '종료'
-</select>
-
-<select id="searchOrder" resultType="ProdPlanVO">
-	SELECT *
-	FROM plan_d
-		<if test="orderNo != null and orderNo != ''">
-		WHERE order_no = #{orderNo}
-		</if>
+	WHERE prog_info != '종료'
 </select>
 
 <select id="findCoCd" resultType="ProdPlanVO">
 	SELECT * 
 	FROM co
 	<where>
-		<if test="coFg ='P'">
-			co_fg='P'
-		</if>
+		<choose>
+			<when
+				test="coCd !=null and coCd !='' and coNm !=null and coNm !=''">
+				co_cd = #{coCd} and co_nm = #{coNm}
+			</when>
+			<when test="coCd !=null and coCd !=''">
+				co_cd = #{coCd}
+			</when>
+			<when test=" coNm !=null and coNm !=''">
+				co_nm = #{coNm}
+			</when>
+		</choose>
 	</where>
 </select>
 	
@@ -105,5 +114,35 @@
 		ORDER BY prdt_cd asc
 </select>
 
+<insert id="insertPlan">
+	INSERT INTO plan
+	VALUES(CREATENO('PLA', PLANSEQ.nextval), SYSDATE, #{planNm})
+</insert>
 
+<insert id="insertPlanD">
+	<selectKey keyProperty="deta" resultType="int" order="BEFORE"> 
+		select nvl(max(plan_deta_no), 0)+1 from plan_d
+	</selectKey>
+	INSERT INTO plan_d
+	VALUES(deta, #{planNo}, #{planDt}, #{orderNo}, #{recvDt}, #{prdtCd}, #{planQty}, #{wkOrd}, #{wkDt})
+</insert>
+
+<delete id="deletePlan">
+	DELETE FROM plan
+	WHERE plan_nm = #{planNm}
+</delete>
+
+<delete id="deletePlanD">
+	DELETE FROM plan_d
+	WHERE plan_no = #{planNo}
+	AND prdt_cd = #{prdtCd}
+</delete>
+
+<update id="updatePlan">
+
+</update>
+
+<update id="updatePlanD">
+
+</update>
 </mapper>

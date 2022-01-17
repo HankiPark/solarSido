@@ -18,7 +18,7 @@
 </body>
 
 <script type="text/javascript">
-	const prdtCdGrid = new tui.Grid(
+ prdtCdGrid = new tui.Grid(
 			{
 				el : document.getElementById('prdtCdGrid'),
 				data : {

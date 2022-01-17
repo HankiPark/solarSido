@@ -74,8 +74,8 @@
 				method: 'GET'
 				},
 			modifyData: { 
-				url: '${pageContext.request.contextPath}/planModify.do', 
-				method: 'PUT'}
+				url: '${pageContext.request.contextPath}/grid/planModify.do', 
+				method: 'POST'}
 				},
 		contentType: 'application/json',
 		initialRequest: false //초기에 안보이게 함
@@ -93,6 +93,16 @@
 			 {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
+			    hidden: true
+			  },
+			  {
+			    header: '계획일자',
+			    name: 'planNo',
+			    hidden: true
+			  },
+			  {
+			    header: '계획명',
+			    name: 'planNm',
 			    hidden: true
 			  },
 			  {
@@ -135,8 +145,8 @@
 			    editor : 'text',
 			    onAfterChange(e) {
 	    			console.log(e.rowKey)
-	    	    	grid.setValue(e.rowKey, 'prodDay',
-	    	    					e.value / grid.getValue(e.rowKey, 'dayOutput'));
+	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
+	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
 	    	    }    	
 			  },
 			  {
@@ -160,7 +170,7 @@
 			    header: '작업순서',
 			    name: 'wkOrd',
 			    editor : 'text'
-			  },
+			  }
 	 		 ]
 	});	
 	
@@ -175,12 +185,16 @@
 	// 성공 실패와 관계 없이 응답을 받았을 경우
 	planDgrid.on('response', function(ev) { 
 		console.log(ev);
+		let res = JSON.parse(ev.xhr.response);
+		if (res.mod =='upd'){
+			planDgrid.clear();
+		}
 	})
 	
 	//그리드 추가 버튼
 	rowAdd.addEventListener("click", function(){
 		planDgrid.appendRow({
-			extendPrevRowSpan : false,
+			extendPrevRowSpan : true,
 			focus : true,
 			at : 0
 		});
@@ -203,7 +217,7 @@
  	$('#btnSearch').on('click', function(){
  		console.log("생산계획서 검색")
 		prodPlanDialog.dialog("open");
-		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", function() {})
+		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", function() { planList() })
 	});
 			
 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
@@ -214,7 +228,7 @@
 	
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
-		planDgrid.blur();
+		/* planDgrid.blur(); */
 		planDgrid.request('modifyData'); //planDdataSource - modifyData의 url 호출
 	})
 	
@@ -225,7 +239,7 @@
 			if (result) { 
 				planDgrid.resetData([]);
 				planMngFrm.reset();
-				console.log(planNm)
+				console.log("result:" + planNm)
 				$.ajax({
 					async: false,
 					url: '${pageContext.request.contextPath}/deletePlan.do',
@@ -258,7 +272,7 @@
 		if ( ev["columnName"] == "orderNo" ) {
 			orderDialog.dialog("open");
 			$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
-					function() { })
+					function() { orderList() })
 		} 
 	}); 
 

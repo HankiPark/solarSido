@@ -20,19 +20,23 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	}
 
 	@Override
-	public int insertPlan(ModifyVO<ProdPlanVO> pplist) {
-		/*
-		 * for(ProdPlanVO ppVo : pplist.getDeletedRows()){ ppMapper.insertPlanD(ppVo);
-		 * } ppMapper.insertPlan(pplist.getUpdatedRows().get(0));
-		 */
-		return 1;
-	}
-
-	@Override
-	public int deletePlan(ModifyVO<ProdPlanVO> pplist) {
-		/*
-		 * for(ProdPlanVO ppVo : pplist.getDeletedRows()){ ppMapper.deletePlan(ppVo); }
-		 */
+	public int modifyData(ModifyVO<ProdPlanVO> mvo) {
+		if(mvo.getCreatedRows()!=null) {
+			for(ProdPlanVO ppVo : mvo.getCreatedRows()) {
+				ppMapper.insertPlanD(ppVo);
+				}
+			}
+		if(mvo.getDeletedRows()!=null) {
+			for(ProdPlanVO ppVo : mvo.getDeletedRows()) {
+				ppMapper.deletePlanD(ppVo);
+				System.out.println("del" +ppVo);
+				}
+			}
+		if(mvo.getUpdatedRows()!=null) {
+			for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
+				ppMapper.updatePlanD(ppVo);
+				}
+			}
 		return 1;
 	}
 	
