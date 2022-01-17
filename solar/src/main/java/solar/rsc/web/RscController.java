@@ -22,7 +22,8 @@ import solar.rsc.inout.service.RscInOut;
 import solar.rsc.inout.service.RscInOutService;
 import solar.rsc.ordr.service.RscOrdr;
 import solar.rsc.ordr.service.RscOrdrService;
-import solar.rsc.stc.service.RscStc;
+import solar.rsc.rt.service.RscRt;
+import solar.rsc.rt.service.RscRtService;
 import solar.rsc.stc.service.RscStcService;
 import solar.sales.order.dao.ModifyVO;
 
@@ -41,6 +42,8 @@ public class RscController {
 	RscInOutService rscInOutService;
 	@Autowired
 	RscStcService rscStcService;
+	@Autowired
+	RscRtService rscRtService;
 	
 	//발주페이지
 	@GetMapping("rsc/ordr")
@@ -197,6 +200,33 @@ public class RscController {
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
 		List<?> list = rscStcService.search(map);
+		
+		model.addAttribute("result",true);
+		
+		page.put("page", 1);
+		page.put("totalCount", list.size());
+		
+		data.put("contents", list);
+		data.put("pagination", page);
+		
+		model.addAttribute("data", data);
+		
+		System.out.println("result: "+model);
+		return "jsonView";
+	}
+	
+	//자재반품페이지 요청
+	@GetMapping("rsc/rt")
+	public String rscRt() {
+		return "rsc/rt";
+	}
+	
+	@GetMapping("rsc/rtData")
+	public String rscRtData(@RequestParam Map map, Model model) {
+		System.out.println("param: "+map);
+		Map<String,Object> data = new HashMap<String, Object>();
+		Map<String,Object> page = new HashMap<String, Object>();
+		List<?> list = rscRtService.search(map);
 		
 		model.addAttribute("result",true);
 		

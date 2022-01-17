@@ -10,12 +10,6 @@
 	<div id="inferGrid"></div>
 </body>
 <script>
-/* let dataSource = {
-		  api: {
-		    readData: { url: '../rsc/inspData', method: 'GET'}
-		  }
-		}; */
-		
 var inferGrid = new tui.Grid({
     el: document.getElementById('inferGrid'),
     scrollX: true,
@@ -48,15 +42,5 @@ var inferGrid = new tui.Grid({
     	}
     }
   });
-  
-/* $.ajax({
-    url: "../rsc/inspData",
-    method: "GET",
-    dataType: "JSON"
-  }).done(function (result) {
-	  console.log(result.insp);
-    inferGrid.resetData(result.insp);
-    inferGrid.refreshLayout();
-  }); */
 </script>
 </html>

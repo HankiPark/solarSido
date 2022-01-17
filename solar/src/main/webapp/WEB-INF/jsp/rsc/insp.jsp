@@ -153,7 +153,7 @@
             //불량명 문자타입으로 나열
             rtngdResnCd = '';
 			for(let i = 0; i < inferGrid.getRowCount(); i++){
-				if(inferGrid.getValue(i,"rscInferQty")!=null){/////////////////////////////////////
+				if(inferGrid.getValue(i,"rscInferQty")!=null && inferGrid.getValue(i,"rscInferQty")!=''){
                 rtngdResnCd += ","+inferGrid.getValue(i,"cmmnCdNm");
 				}
             }
@@ -162,9 +162,8 @@
             
 			grid.setValue(curRowKey, 'inspCls', 'rs002');
 			grid.setValue(curRowKey, 'rtngdResnCd', rtngdResnCd);
-			console.log(""+grid.getValue(curRowKey, 'rtngdResnCd'));
-			let d = new Date();
-			grid.setValue(curRowKey, 'rtngdDt', d.toISOString().slice(0, 10));
+			//let d = new Date();
+			//grid.setValue(curRowKey, 'rtngdDt', d.toISOString().slice(0, 10));
 			grid.setValue(curRowKey, 'rscInferQty', sum);
 			inspDialog.dialog("close");
 		},

@@ -39,6 +39,16 @@
 				  contentType : 'application/json',
 				  //initialRequest: false
 				};
+	
+	//공통코드 가져옴
+	$.ajax({
+	 url: '../cmmn/codes',
+	 dataType: 'JSON',
+	 async: false,
+	}).done(function(data){
+	 cmmnCodes = data;
+	 console.log(data);
+	});
 			
   var grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -80,9 +90,16 @@
         name: 'coNm'
       },
       {
-        header: '검수여부',
-        name: 'inspCls'
-      }
+          header: '검수여부',
+          name: 'inspCls',
+          formatter: 'listItemText',
+          editor: {
+              type: 'select',
+              options: {
+                listItems:cmmnCodes.codes.rscst
+              }
+          }
+        }
     ]
   });
   

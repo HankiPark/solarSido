@@ -64,7 +64,7 @@
 						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/inadmin"
-						class="sidebar-link"><span class="hide-menu"> 자재 입고 관리(반품, 로트 ing)
+						class="sidebar-link"><span class="hide-menu"> 자재 입고 관리(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/in"
 						class="sidebar-link"><span class="hide-menu"> 자재 입고 조회(기능완)
@@ -72,10 +72,10 @@
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/out"
 						class="sidebar-link"><span class="hide-menu"> 자재 출고 조회(기능완)
 						</span></a></li>
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
-						class="sidebar-link"><span class="hide-menu"> 자재 반품 조회
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/rt"
+						class="sidebar-link"><span class="hide-menu"> 자재 반품 조회(기능완)
 						</span></a></li>
-					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/stc"
 						class="sidebar-link"><span class="hide-menu"> 자재 재고 조회(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}"
