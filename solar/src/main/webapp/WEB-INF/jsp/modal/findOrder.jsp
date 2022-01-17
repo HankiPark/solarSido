@@ -11,6 +11,7 @@
 </body>
 
 <script type="text/javascript">
+function orderList(){
 	const orderGrid = new tui.Grid(
 			{
 				el : document.getElementById('orderGrid'),
@@ -76,6 +77,7 @@
 	orderGrid.on('onGridUpdated', function() {
 		orderGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

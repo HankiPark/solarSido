@@ -18,6 +18,7 @@
 </body>
 
 <script type="text/javascript">
+function prdtList(){
 	const prdtCdGrid = new tui.Grid(
 			{
 				el : document.getElementById('prdtCdGrid'),
@@ -73,6 +74,7 @@
 	prdtCdGrid.on('onGridUpdated', function() {
 		prdtCdGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

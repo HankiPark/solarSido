@@ -18,6 +18,7 @@
 </body>
 
 <script type="text/javascript">
+function coCdList(){
 	const coCdGrid = new tui.Grid(
 			{
 				el : document.getElementById('coCdGrid'),
@@ -56,7 +57,7 @@
 		var Params = {
 			'coCd' : coCd,
 			'coNm' : coNm,
-			'coFg' : 'P'
+			//'coFg' : 'P'
 		}
 		$.ajax({
 			url : '${pageContext.request.contextPath}/grid/findCoCd.do',
@@ -74,9 +75,10 @@
 		coCdDialog.dialog("close");
 	});
 
-	coCdGrid.on('response', function() {
+	coCdGrid.on('onGridUpdated', function() {
 		coCdGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

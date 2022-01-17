@@ -203,7 +203,7 @@
  	$('#btnSearch').on('click', function(){
  		console.log("생산계획서 검색")
 		prodPlanDialog.dialog("open");
-		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", function() {})
+		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", function() { planList() })
 	});
 			
 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
@@ -258,7 +258,7 @@
 		if ( ev["columnName"] == "orderNo" ) {
 			orderDialog.dialog("open");
 			$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
-					function() { })
+					function() { orderList() })
 		} 
 	}); 
 

@@ -11,6 +11,7 @@
 </body>
 
 <script type="text/javascript">
+function planList(){
 	const prodPlanGrid = new tui.Grid(
 			{
 				el : document.getElementById('prodPlanGrid'),
@@ -67,6 +68,7 @@
 	prodPlanGrid.on('onGridUpdated', function() {
 		prodPlanGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

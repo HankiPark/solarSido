@@ -64,7 +64,7 @@
 <select id="findOrder" resultType="ProdPlanVO">
 	SELECT *
 	FROM order_tb
-	WHERE progInfo != '종료'
+	WHERE prog_info != '종료'
 </select>
 
 <select id="searchOrder" resultType="ProdPlanVO">
@@ -79,9 +79,18 @@
 	SELECT * 
 	FROM co
 	<where>
-		<if test="coFg ='P'">
-			co_fg='P'
-		</if>
+		<choose>
+			<when
+				test="coCd !=null and coCd !='' and coNm !=null and coNm !=''">
+				co_cd = #{coCd} and co_nm = #{coNm}
+			</when>
+			<when test="coCd !=null and coCd !=''">
+				co_cd = #{coCd}
+			</when>
+			<when test=" coNm !=null and coNm !=''">
+				co_nm = #{coNm}
+			</when>
+		</choose>
 	</where>
 </select>
 	
