@@ -5,15 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>생산계획조회</title>
-
 </head>
+
 <body>
 <h2>생산계획조회</h2>
 <hr/>
 
 <!-- 검색모달 -->
-<div id="coModal" title="업체 목록"></div>
-<div id="prdtModal" title="제품 목록"></div>
+<div id="coCdModal" title="업체 목록"></div>
+<div id="prdtCdModal" title="제품 목록"></div>
 
 <!-- 검색테이블 -->
 <div>
@@ -28,16 +28,15 @@
 				</td>
 			</tr>
 			<tr>
-				<th>업체명</th>
+				<th>업체코드</th>
 				<td>
-					<input type="text" id="coNm" name="coNm" readonly>
-					<button type="button" id="coNmSearch">찾기</button>
-					
+					<input type="text" id="coCd" name="coCd" readonly>
+					<button type="button" id="coCdFind">찾기</button>
 				</td>
 				<th>제품코드</th>
 				<td>
 					<input type="text" id="prdtCd" name="prdtCd" readonly>
-					<button type="button" id="prdtSearch">찾기</button>
+					<button type="button" id="prdtCdFind">찾기</button>
 				</td>
 			</tr>
 		</table>
@@ -50,79 +49,88 @@
 </div>
 <hr/>
 
-<!-- 조회그리드 -->
-<div id="planListGrid"></div>
+<!-- 생산계획 상세 그리드-->
+<div id="planDgrid"></div>
 
 <!-- 스크립트 -->
 <script type="text/javascript">
+	let coCd;
+	let prdtCd;
+	
 	//계획일자 Default: sysdate
 	let pEndDt = new Date();
 	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
 	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
 	document.getElementById('planEndDt').value = pEndDt.toISOString().substring(0, 10);
-  
-  //업체검색 모달
-  let coDialog = $("#coModal").dialog({
-  	autoOpen: false,
-  	modal: true
-  	height: 600,
-	width: 600
-  });
+	 
+	//업체검색 모달
+	let coCdDialog = $("#coCdModal").dialog({
+		autoOpen: false,
+		modal: true,
+		height: 600,
+		width: 600
+	});
 
-  $("#coNmSearch").on("click", function(){
-  	console.log("업체검색")
-   	coDialog.dialog("open");
-   	$("#coModal").load("${pageContext.request.contextPath}/modal/searchCo");
-  });
-  
-  //제품검색 모달
-  let dialog = $("#prdtModal").dialog({
+	$("#coCdFind").on("click", function(){
+		console.log("업체검색")
+		coCdDialog.dialog("open");
+		$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ })
+	});
+
+ 	//제품검색 모달  
+ 	let prdtCdDialog = $("#prdtCdModal").dialog({
 		autoOpen : false,
 		modal : true,
-		width : 700,
-		height : 700
+		width : 600,
+		height : 600
 	});
   
- 	$('#prdtSearch').on('click', function(){
+ 	$('#prdtCdFind').on('click', function(){
  		console.log("제품검색")
-		prdtdialog.dialog("open");
-		$("#prdtModal").load("${pageContext.request.contextPath}/modal/prdtNmList",
-					function() { NmList() })
+		prdtCdDialog.dialog("open");
+		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function() {})
 	});
-  
-  //조회버튼
-  
+   
   //계획 조회 그리드
-  	var planListGrid = tui.Grid;	  
-
-	const plDataSource = {
+	const planDdataSource = {
 		  api: {
-		    	readData: { url: '${pageContext.request.contextPath}/grid/planList.do', 
+		    	readData: { url: '${pageContext.request.contextPath}/grid/planGrid.do', 
 					    	method: 'GET'
 		    				},
 				}, 
 			contentType: 'application/json'
 		};
 	
-	const planListGrid = new Grid({
-		  el: document.getElementById('planListGrid'),
-		  data: plDataSource,
-		  columns: [
+	const planDgrid = new tui.Grid({
+		el: document.getElementById('planDgrid'),
+		data: planDdataSource,
+		scrollX: false,
+		scrollY: true,
+		bodyHeight: 500,
+		columns: [
 					  {
 					    header: '계획번호',
-					    name: 'planNo'
+					    name: 'planNo',
+					    sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
 					    header: '계획일자',
-					    name: 'planDt'
+					    name: 'planDt',
+				    	sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
-					    header: '업체명',
-					    name: 'coNm'
+					    header: '업체코드',
+					    name: 'coCd',
+				    	sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
 					    header: '제품코드',
-					    name: 'prdtCd'                                                                                                           
+					    name: 'prdtCd',    
+				    	sortingType: 'desc',
+				        sortable: true
 					  },		  
 					  {
 					    header: '제품명',
@@ -130,15 +138,21 @@
 					  },
 					  {
 					    header: '주문번호',
-					    name: 'orderNo'
+					    name: 'orderNo',
+				    	sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
 					    header: '납기일자',
 					    name: 'paprdDt',
+					    sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
 					    header: '주문량',
-					    name: 'orderQty'
+					    name: 'orderQty',
+					    sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
 					    header: '계획량',
@@ -147,17 +161,72 @@
 					  {
 					    header: '작업일자',
 					    name: 'wkDt',
+					    sortingType: 'desc',
+				        sortable: true
 					  },
 					  {
 					    header: '작업순서',
 					    name: 'wkOrd',
 					  },
-			 		 ]
+			 		 ],
+			 		summary: {
+				        position: 'bottom',
+				        height: 50,
+				        columnContent: {
+				        	planDt: {
+				        		template: function(valueMap) {
+				        			return '합계';
+				        			},
+				        		align:'center'
+							},
+							orderQty: {
+								template: function(valueMap) {
+									return valueMap.sum;
+									}
+							},
+							planQty: {
+								template: function(valueMap) {
+									return valueMap.sum;
+									}
+							}
+				        }
+				    }
 			});
+	
+	//조회 버튼: 조건별(기간, 업체, 제품) 생산계획 조회
+	$('#btnSearch').click(function() {
+		var planStartDt = document.getElementById('planStartDt').value
+		var planEndDt = document.getElementById('planEndDt').value
+		var coCd = document.getElementById('coCd').value
+		var prdtCd = document.getElementById('prdtCd').value
+		console.log(planStartDt + "~" + planEndDt + "& coCd:" + coCd + "& prdtCd:" + prdtCd);
+		var params = {
+				'planStartDt': planStartDt,
+				'planEndDt': planEndDt,
+				'coCd': coCd,
+				'prdtCd': prdtCd
+		}
+		$.ajax({
+			url : '${pageContext.request.contextPath}/grid/planGrid.do',
+			data : params,
+			dataType:"json",
+			contentType : 'application/json; charset=utf-8',
+		}).done(function(pln) {
+			planDgrid.resetData(pln["data"]["contents"]);
+		})
+	})
+	
+	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
+	$('#btnReset').click(function() {
+		planListFrm.reset();
+		planDgrid.resetData([]);
+	})
 			
-	planListGrid.on('onGridUpdated', function() {
-		planListGrid.refreshLayout();
+	planDgrid.on('onGridUpdated', function() {
+		planDgrid.refreshLayout();
 	});
+	
+	//Excel 버튼
 	
 </script>
 </body>
