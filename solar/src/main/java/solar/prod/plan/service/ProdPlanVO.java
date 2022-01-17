@@ -8,6 +8,8 @@ public class ProdPlanVO {
 	//order
 	String orderNo;		//주문번호
 	String recvDt;		//접수일자
+//	String coCd;		//업체코드
+	String progInfo;	//진행정보
 	String paprdDt;		//납기일자
 	String orderQty; 	//주문량
 	
@@ -34,7 +36,11 @@ public class ProdPlanVO {
 	String planEndDt;	//기간끝
 //	String prdtCd; 		//제품코드
 	String prdtNm; 		//제품명
+	String prdtSpec;	//제품규격
+	String prdtUnit;	//제품단위
 	String coCd;		//업체코드
 	String coNm;		//업체명
-	
+	String bizno;		//사업자등록번호
+	String coFg;		//업체구분
+
 }

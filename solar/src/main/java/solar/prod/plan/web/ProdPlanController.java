@@ -42,15 +42,114 @@ public class ProdPlanController {
 			return "prod/indicaList";
 		}
 	 
-	//생산계획 조회
+	//생산계획상세 조회
 	@GetMapping("/grid/planGrid.do")
 	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
-		List<?> pPlanList = ppService.selectPlan(ppVo);
-		Map<String,Object> data = new HashMap<>();
-		data.put("contents", pPlanList);
+		List<?> list = ppService.selectPlan(ppVo);
+		Map<String,Object> map = new HashMap<>();
+		map.put("contents", list);
 		model.addAttribute("result", true);
-		model.addAttribute("data", data);
-		System.out.println(data);
+		model.addAttribute("data", map);
+		System.out.println("data:" + map);
 		return "jsonView";
 		}
+	
+	//등록
+	
+	
+	//삭제
+	
+	
+	//생산계획서검색 모달
+	@RequestMapping("/modal/findProdPlan")
+	public String findProdPlan() {
+		System.out.println("생산계획서검색 모달호출");
+		return "modal/findProdPlan";
+	}
+		
+	//생산계획서검색 모달그리드
+	@GetMapping("/grid/findProdPlan.do")
+	public String findProdPlanGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.findProdPlan(ppVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("data:" + map);
+		return "jsonView";
+	}
+		
+	//생산계획서검색 - 계획상세조회
+	@GetMapping("/grid/searchPlan.do")
+	public String selectPlanGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.searchPlan(ppVo);
+		model.addAttribute("data", list);
+		return "jsonView";
+	}
+		
+	//주문서검색 모달
+	@RequestMapping("/modal/findOrder")
+	public String findOrder() {
+		System.out.println("주문서검색 모달호출");
+		return "modal/findOrder";
+	}
+	
+	//주문서검색 모달그리드
+	@GetMapping("/grid/findOrder.do")
+	public String findOrderGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.findProdPlan(ppVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("data:" + map);
+		return "jsonView";
+	}
+	
+	//주문서검색 - 계획상세조회
+	@GetMapping("/grid/searchOrder.do")
+	public String selectOrderGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.searchOrder(ppVo);
+		model.addAttribute("data", list);
+		return "jsonView";
+	}
+
+	//업체검색 모달
+	@RequestMapping("/modal/findCoCd")
+	public String findCoCd() {
+		System.out.println("업체검색 모달호출");
+		return "modal/findCoCd";
+	}
+	
+	//업체검색 모달그리드
+	@GetMapping("/grid/findCoCd.do")
+	public String findCoCdGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.findCoCd(ppVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
+	
+	//제품검색 모달
+	@RequestMapping("/modal/findPrdtCd")
+	public String findPrdtCd() {
+		System.out.println("제품검색 모달호출");
+		return "modal/findPrdtCd";
+	}
+	
+	//제품검색 모달그리드
+	@GetMapping("/grid/findPrdtCd.do")
+	public String findPrdtCdGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.findPrdtCd(ppVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
+	
 }
