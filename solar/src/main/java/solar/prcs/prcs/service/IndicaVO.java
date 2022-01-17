@@ -18,6 +18,7 @@ public class IndicaVO {
 	Date indicaDt;
 	String planDetaNo;
 	String prdtCd;
+	String prdtNm;
 	String prodFg;
 	String indicaQty;
 	String wkOrd;
