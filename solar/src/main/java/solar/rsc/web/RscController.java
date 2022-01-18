@@ -45,10 +45,16 @@ public class RscController {
 	@Autowired
 	RscRtService rscRtService;
 	
-	//발주페이지
+	//발주참조 페이지 요청
 	@GetMapping("rsc/ordr")
 	public String rscOrdr() {
 		return "rsc/ordr";
+	}
+	
+	//발주관리 페이지 요청
+	@GetMapping("rsc/ordradmin")
+	public String rscOrdrAdmin() {
+		return "rsc/ordradmin";
 	}
 	
 	//발주데이터
