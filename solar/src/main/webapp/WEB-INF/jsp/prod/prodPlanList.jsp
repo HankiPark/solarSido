@@ -31,12 +31,12 @@
 				<th>업체코드</th>
 				<td>
 					<input type="text" id="coCd" name="coCd" readonly>
-					<button type="button" id="coCdFind">찾기</button>
+					<button type="button" id="coCdFind">🔍</button>
 				</td>
 				<th>제품코드</th>
 				<td>
 					<input type="text" id="prdtCd" name="prdtCd" readonly>
-					<button type="button" id="prdtCdFind">찾기</button>
+					<button type="button" id="prdtCdFind">🔍</button>
 				</td>
 			</tr>
 		</table>

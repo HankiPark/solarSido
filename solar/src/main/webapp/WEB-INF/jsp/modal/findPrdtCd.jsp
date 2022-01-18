@@ -8,10 +8,10 @@
 </head>
 
 <body>
-	<label>제품명</label>
-	<input type="text" id="prdNmFind">
 	<label>제품코드</label>
 	<input type="text" id="prdCdFind">
+	<label>제품명</label>
+	<input type="text" id="prdNmFind">
 	<button type="button" id="btnNm">검색</button>
 
 	<div id="prdtCdGrid"></div>

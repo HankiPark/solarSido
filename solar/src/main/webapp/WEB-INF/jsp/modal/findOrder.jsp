@@ -66,7 +66,7 @@ function orderList(){
 			dataType:"json",
 			contentType : 'application/json; charset=utf-8',
 		}).done(function(pln) {
-			console.log(pln.data)
+			console.log(pln.data) 
 			planDgrid.resetData(pln.data);
 		}).fail(function(reject){
 			console.log(reject);

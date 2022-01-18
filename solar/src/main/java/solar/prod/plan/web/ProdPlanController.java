@@ -51,6 +51,7 @@ public class ProdPlanController {
 		List<?> list = ppService.selectPlan(ppVo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);
+		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
 		System.out.println("map:" + map);
@@ -62,7 +63,7 @@ public class ProdPlanController {
 	public String modifyPlan(Model model, ProdPlanVO ppVo, 
 							@RequestBody ModifyVO<ProdPlanVO> mvo) throws Exception {
 		ppService.modifyData(mvo);
-		System.out.println("mvo:"+mvo);
+		System.out.println("mvo:" + ppService.modifyData(mvo));
 		model.addAttribute("mode", "upd");
 		return "jsonView";
 	}

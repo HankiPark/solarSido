@@ -24,17 +24,21 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 		if(mvo.getCreatedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getCreatedRows()) {
 				ppMapper.insertPlanD(ppVo);
+				System.out.println("ins mvo:" + mvo);
 				}
 			}
 		if(mvo.getDeletedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getDeletedRows()) {
 				ppMapper.deletePlanD(ppVo);
-				System.out.println("del" +ppVo);
+				System.out.println("del mvo:" + mvo);
+				System.out.println("del ppvo: " + ppVo);
+				System.out.println("del rows:" + mvo.getDeletedRows());
 				}
 			}
 		if(mvo.getUpdatedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
 				ppMapper.updatePlanD(ppVo);
+				System.out.println("upd mvo:" + mvo);
 				}
 			}
 		return 1;

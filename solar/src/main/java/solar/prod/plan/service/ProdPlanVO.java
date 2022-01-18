@@ -19,7 +19,7 @@ public class ProdPlanVO {
 	String planNm;		//생산계획명
 	
 	//PlanD
-	String planDetaNo;  //생산계획상세번호
+	int planDetaNo;  	//생산계획상세번호
 //	String planNo;		//생산계획번호
 //	Date planDt;		//계획일자
 //	String orderNo;		//주문번호
