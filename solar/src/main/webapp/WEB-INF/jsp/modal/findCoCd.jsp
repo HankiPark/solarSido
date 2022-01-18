@@ -8,10 +8,10 @@
 </head>
 
 <body>
-	<label>업체명</label>
-	<input type="text" id="coNmFind">
 	<label>업체코드</label>
 	<input type="text" id="coCdFind">
+	<label>업체명</label>
+	<input type="text" id="coNmFind">
 	<button type="button" id="btnfindCo">검색</button>
 
 	<div id="coCdGrid"></div>

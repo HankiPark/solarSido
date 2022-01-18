@@ -18,7 +18,8 @@
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord,
 		A.plan_dt,
-		A.plan_nm
+		A.plan_nm,
+		 '10' as day_out_put
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -40,20 +41,6 @@
 	ORDER BY paprd_dt, order_qty
 </select>
 
-<select id="searchOrder" resultType="ProdPlanVO">
-	SELECT 
-		order_deta_no,
-		order_no,
-		TO_CHAR(paprd_dt, 'YYYY-MM-DD') paprd_dt,
-		prdt_cd,
-		order_qty
-	FROM order_tb A, order_d B
-	<if test="orderNo != null and orderNo != ''">
-		WHERE order_no = #{orderNo}
-	</if>
-
-</select>
-
 <select id="findProdPlan" resultType="ProdPlanVO">
 	SELECT
 		plan_no,
@@ -61,10 +48,10 @@
 		plan_nm	
 	FROM PLAN
 		<if test="planStartDt != null and planStartDt != ''">
-		AND B.plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY-MM-DD')
+		AND plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY-MM-DD')
 		</if>
 		<if test="planEndDt != null and planEndDt != ''">
-		AND B.plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
+		AND plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
 		</if>
 	ORDER BY plan_no
 </select>
@@ -75,56 +62,79 @@
 	WHERE prog_info != '종료'
 </select>
 
+<select id="searchOrder" resultType="ProdPlanVO">
+	SELECT 
+		B.order_deta_no,
+		B.order_no,
+		TO_CHAR(A.paprd_dt, 'YYYY-MM-DD') paprd_dt, 
+		B.prdt_cd,
+		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
+		B.order_qty,
+        B.prdt_stc,
+        '10' as day_out_put
+	FROM order_tb A, order_d B
+	WHERE A.order_no = B.order_no
+	<if test="orderNo != null and orderNo != ''">
+		AND B.order_no = #{orderNo}
+	</if>
+</select>
+
 <select id="findCoCd" resultType="ProdPlanVO">
 	SELECT * 
 	FROM co
-	<where>
-		<choose>
-			<when
-				test="coCd !=null and coCd !='' and coNm !=null and coNm !=''">
-				co_cd = #{coCd} and co_nm = #{coNm}
-			</when>
-			<when test="coCd !=null and coCd !=''">
-				co_cd = #{coCd}
-			</when>
-			<when test=" coNm !=null and coNm !=''">
-				co_nm = #{coNm}
-			</when>
-		</choose>
-	</where>
+	WHERE co_fg = 'P'
+	<if test="coCd !=null and coCd !=''">
+		AND co_cd like '%'||#{coCd}||'%'
+	</if>
+	<if test=" coNm !=null and coNm !=''">
+		AND co_nm like '%'||#{coNm}||'%'
+	</if>
 </select>
 	
 <select id="findPrdtCd" resultType="ProdPlanVO">
 	SELECT *
 	FROM prdt
-		<where>
-			<choose>
-				<when
-					test="prdtCd !=null and prdtCd !='' and prdtNm !=null and prdtNm !=''">
-					prdt_cd = #{prdtCd} and prdt_nm = #{prdtNm}
-				</when>
-				<when test="prdtCd !=null and prdtCd !=''">
-					prdt_cd = #{prdtCd}
-				</when>
-				<when test=" prdtNm !=null and prdtNm !=''">
-					prdt_nm = #{prdtNm}
-				</when>
-			</choose>
-		</where>
-		ORDER BY prdt_cd asc
+	WHERE 1=1
+	<if test="prdtCd !=null and prdtCd !=''">
+		AND prdt_cd like '%'||#{prdtCd}||'%'
+	</if>
+	<if test=" prdtNm !=null and prdtNm !=''">
+		AND prdt_nm like '%'||#{prdtNm}||'%'
+	</if>
+	ORDER BY prdt_cd asc
 </select>
 
 <insert id="insertPlan">
-	INSERT INTO plan
-	VALUES(CREATENO('PLA', PLANSEQ.nextval), SYSDATE, #{planNm})
+	INSERT INTO plan (plan_no,
+					  plan_dt,
+					  plan_nm)
+	VALUES( CREATENO('PLA', PLANSEQ.nextval), 
+			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
+			#{planNm} )
 </insert>
 
 <insert id="insertPlanD">
-	<selectKey keyProperty="deta" resultType="int" order="BEFORE"> 
-		select nvl(max(plan_deta_no), 0)+1 from plan_d
+	<selectKey keyProperty="planDetaNo" resultType="int" order="BEFORE"> 
+		SELECT nvl(max(plan_deta_no), 0)+1 from plan_d
 	</selectKey>
-	INSERT INTO plan_d
-	VALUES(deta, #{planNo}, #{planDt}, #{orderNo}, #{recvDt}, #{prdtCd}, #{planQty}, #{wkOrd}, #{wkDt})
+	INSERT INTO plan_d (plan_deta_no,
+						plan_no,
+						plan_dt,
+						order_no,
+						recv_dt,
+						prdt_cd,
+						plan_qty,
+						wk_ord,
+						wk_dt)
+	VALUES( planDetaNo, 
+			CREATENO('PLA', PLANSEQ.nextval), 
+			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
+			#{orderNo}, 
+			TO_DATE(#{recvDt}, 'YYYY/MM/DD'),
+			#{prdtCd}, 
+			#{planQty}, 
+			#{wkOrd}, 
+			TO_DATE(#{wkDt}, 'YYYY/MM/DD') )
 </insert>
 
 <delete id="deletePlan">
@@ -134,15 +144,47 @@
 
 <delete id="deletePlanD">
 	DELETE FROM plan_d
-	WHERE plan_no = #{planNo}
-	AND prdt_cd = #{prdtCd}
+	WHERE plan_deta_no = #{planDetaNo}
+	AND plan_no = #{planNo}
 </delete>
 
 <update id="updatePlan">
-
+	UPDATE plan
+	SET plan_dt = TO_DATE(#{planDt}, 'YYYY/MM/DD'),
+		plan_nm = #{planNm}
+	WHERE plan_no = #{planNo}
 </update>
 
 <update id="updatePlanD">
-
+<if test="planNo!=null and planNo!=''">
+	UPDATE plan_D
+	SET	plan_dt = #{planDt},
+		plan_qty = #{planQty},
+		wk_ord = #{wkOrd},
+		wk_dt = #{wkDt}
+	WHERE plan_deta_no = #{planDetaNo}
+	AND plan_no = #{planNo}
+</if>
+	<selectKey keyProperty="planDetaNo" resultType="int" order="BEFORE"> 
+		SELECT nvl(max(plan_deta_no), 0)+1 from plan_d
+	</selectKey>
+	INSERT INTO plan_d (plan_deta_no,
+						plan_no,
+						plan_dt,
+						order_no,
+						recv_dt,
+						prdt_cd,
+						plan_qty,
+						wk_ord,
+						wk_dt)
+	VALUES( #{planDetaNo}, 
+			CREATENO('PLA', PLANSEQ.nextval), 
+			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
+			#{orderNo}, 
+			TO_DATE(#{recvDt}, 'YYYY/MM/DD'),
+			#{prdtCd}, 
+			#{planQty}, 
+			#{wkOrd}, 
+			TO_DATE(#{wkDt}, 'YYYY/MM/DD') )
 </update>
 </mapper>

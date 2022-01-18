@@ -28,7 +28,7 @@
 					<td colspan="3">
 						<input type="date" id="planStartDt" name="planStartDt"> 
 						~<input type="date" id="planEndDt" name="planEndDt">
-						<button type="button" id="btnSearch">조회</button>
+						<button type="button" id="btnSearch">🔍</button>
 					</td>
 				</tr>
 				<tr>
@@ -97,7 +97,7 @@
 			  },
 			  {
 			    header: '계획일자',
-			    name: 'planNo',
+			    name: 'planDt',
 			    hidden: true
 			  },
 			  {
@@ -127,6 +127,10 @@
 	    	        required: true
 	    	      }
 			  },
+			  { header: '접수일자',
+			    name: 'orderNo',
+			   	hidden: true
+			  },
 			  {
 			    header: '납기일자',
 			    name: 'paprdDt',
@@ -143,8 +147,11 @@
 			    header: '작업량',
 			    name: 'planQty',
 			    editor : 'text',
+			    validation: {
+	    	        required: true
+	    	      },
 			    onAfterChange(e) {
-	    			console.log(e.rowKey)
+	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
 	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
 	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
 	    	    }    	
@@ -161,6 +168,9 @@
 			    header: '작업일자',
 			    name: 'wkDt',
 			    editor :'datePicker',
+			    validation: {
+	    	        required: true
+	    	      },
 				filter: {
 		            type: 'date',
 		            format: 'YYYY-MM-DD'
@@ -186,6 +196,7 @@
 	planDgrid.on('response', function(ev) { 
 		console.log(ev);
 		let res = JSON.parse(ev.xhr.response);
+		console.log(res);
 		if (res.mod =='upd'){
 			planDgrid.clear();
 		}
@@ -217,7 +228,8 @@
  	$('#btnSearch').on('click', function(){
  		console.log("생산계획서 검색")
 		prodPlanDialog.dialog("open");
-		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", function() { planList() })
+		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", 
+									function() { planList() })
 	});
 			
 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
@@ -249,7 +261,7 @@
 					},
 					datatype: 'json',
 					success: function(){
-						planNm = null;
+						
 					}
 				})
 			    alert("삭제되었습니다.")
@@ -272,7 +284,7 @@
 		if ( ev["columnName"] == "orderNo" ) {
 			orderDialog.dialog("open");
 			$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
-					function() { orderList() })
+									function() { orderList() })
 		} 
 	}); 
 
