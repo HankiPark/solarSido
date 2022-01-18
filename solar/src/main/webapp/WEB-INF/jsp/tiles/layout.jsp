@@ -14,8 +14,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link href="${pageContext.request.contextPath}/resources/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <!-- Custom CSS -->
-    <link href="${pageContext.request.contextPath}/resources/dist/css/style.min.css" rel="stylesheet">
+ <link
+	href="${pageContext.request.contextPath}/resources/dist/css/style.min.css"
+	rel="stylesheet">
       <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
@@ -43,22 +44,8 @@
 </style>
 </head>
 <body>
-<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
-   
-<header class="topbar" data-navbarbg="skin6">
-      <tiles:insertAttribute name="header"></tiles:insertAttribute>
-  </header>
-  <aside class="left-sidebar" data-sidebarbg="skin6">
- <tiles:insertAttribute name="left"></tiles:insertAttribute>
-  </aside>
-
-  <div class="page-wrapper">
 
         <tiles:insertAttribute name="body"></tiles:insertAttribute>
-</div>
-<tiles:insertAttribute name="footer"></tiles:insertAttribute>
-
-
 
 
     <script src="${pageContext.request.contextPath}/resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -73,7 +60,8 @@
     <script src="${pageContext.request.contextPath}/resources/assets/libs/moment/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/dist/js/pages/calendar/cal-init.js"></script>
-
+<script
+			src="${pageContext.request.contextPath}/resources/dist/js/iframe-custom.js"></script>
 <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
 </body>
 </html>

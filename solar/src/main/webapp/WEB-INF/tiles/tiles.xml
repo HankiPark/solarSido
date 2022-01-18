@@ -16,13 +16,7 @@
 		template="/WEB-INF/jsp/tiles/layout.jsp">
 		<!-- <put-attribute name="loadFile" value="/WEB-INF/jsp/tiles/loadFile.jsp" 
 			/> -->
-		<put-attribute name="header"
-			value="/WEB-INF/jsp/tiles/header.jsp" />
-		<put-attribute name="left"
-			value="/WEB-INF/jsp/tiles/left.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer"
-			value="/WEB-INF/jsp/tiles/footer.jsp" />
 	</definition>
 
 
@@ -31,11 +25,7 @@
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/{1}/{2}.jsp" />
 	</definition>
-	<definition name="egovframework/com/*/*"
-		extends="layouts-tiles">
-		<put-attribute name="body"
-			value="/WEB-INF/jsp/egovframework/com/{1}/{2}.jsp" />
-	</definition>
+
 
 
 
