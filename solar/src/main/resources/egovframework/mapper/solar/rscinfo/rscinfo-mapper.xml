@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.mapper.solar.rscinfo.rscinfo-mapper">
+
+<select id="rscinfoList" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
+	SELECT * FROM RSC
+</select>
+
+<select id="rscinfofind" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
+	SELECT * FROM RSC
+	<where>
+		<if test="rscNm != null and rscNm != ''">
+			AND RSC_NM LIKE '%' || #{rscNm} || '%'
+		</if>
+	</where>
+	order by RSC_CD asc
+</select>
+</mapper>

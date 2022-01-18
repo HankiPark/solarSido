@@ -8,6 +8,7 @@ public interface CmmndataMapper {
 	
 	//마스터테이블
 	List<CmmndataVO> cmmndataList(CmmndataVO cmmndataVO);
+	List<CmmndataVO> cmmndataFind(CmmndataVO cmmndataVO);
 	public CmmndataVO cmmndataInfo(CmmndataVO cmmndataVO);
 	
 	//디테일 테이블
