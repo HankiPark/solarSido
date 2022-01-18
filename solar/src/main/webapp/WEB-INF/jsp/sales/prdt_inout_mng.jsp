@@ -300,15 +300,17 @@ a {
 					}, {
 						header : '입고일자',
 						name : 'prdtDt',
-						editor : 'datePicker'
+						editor : 'datePicker',
+						 validation: {
+						        required: true
+						      }
 					}, {
 						header : '제품LOT',
 						name : 'prdtLot',
 						editor : 'text',
-						relations : [ {
-							targetNames : [ 'prdtCd', 'prdtNm', 'indicaNo' ],
-							editable : false
-						} ]
+						validation: {
+					        required: true
+					      }
 					}, {
 						header : '제품코드',
 						name : 'prdtCd'
@@ -483,7 +485,10 @@ a {
 					}, {
 						header : '주문번호',
 						name : 'orderNo',
-						editor : 'text'
+						editor : 'text',
+						validation: {
+						        required: true
+						      }
 					}, {
 						header : '회사명',
 						name : 'coNm'
