@@ -60,6 +60,9 @@
 					class="hide-menu">자재관리</span></a>
 				<ul aria-expanded="false"
 					class="collapse  first-level base-level-line">
+					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordradmin"
+						class="sidebar-link"><span class="hide-menu"> 자재 발주 관리
+						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/ordr"
 						class="sidebar-link"><span class="hide-menu"> 자재 발주 참조(기능완)
 						</span></a></li>
@@ -70,7 +73,7 @@
 						class="sidebar-link"><span class="hide-menu"> 자재 입고 조회(기능완)
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/out"
-						class="sidebar-link"><span class="hide-menu"> 자재 출고 조회(기능완)
+						class="sidebar-link"><span class="hide-menu"> 자재 출고 조회
 						</span></a></li>
 					<li class="sidebar-item"><a href="${pageContext.request.contextPath}/rsc/rt"
 						class="sidebar-link"><span class="hide-menu"> 자재 반품 조회(기능완)
