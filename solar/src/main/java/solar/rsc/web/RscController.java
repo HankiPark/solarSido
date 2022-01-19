@@ -218,6 +218,7 @@ public class RscController {
 		return "rsc/rt";
 	}
 	
+	//자재반품데이터요청
 	@GetMapping("rsc/rtData")
 	public String rscRtData(@RequestParam Map map, Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
@@ -234,6 +235,12 @@ public class RscController {
 		
 		model.addAttribute("data", data);
 		return "jsonView";
+	}
+	
+	//불량률그래프 임시
+	@GetMapping("rsc/inferGraph")
+	public String rscInferGraph() {
+		return "rsc/infergraph";
 	}
 	
 }
