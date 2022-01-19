@@ -82,11 +82,10 @@
 <select id="findCoCd" resultType="ProdPlanVO">
 	SELECT * 
 	FROM co
-	WHERE co_fg = 'P'
 	<if test="coCd !=null and coCd !=''">
 		AND co_cd like '%'||#{coCd}||'%'
 	</if>
-	<if test=" coNm !=null and coNm !=''">
+	<if test="coNm !=null and coNm !=''">
 		AND co_nm like '%'||#{coNm}||'%'
 	</if>
 </select>
@@ -98,7 +97,7 @@
 	<if test="prdtCd !=null and prdtCd !=''">
 		AND prdt_cd like '%'||#{prdtCd}||'%'
 	</if>
-	<if test=" prdtNm !=null and prdtNm !=''">
+	<if test="prdtNm !=null and prdtNm !=''">
 		AND prdt_nm like '%'||#{prdtNm}||'%'
 	</if>
 	ORDER BY prdt_cd asc

@@ -33,18 +33,6 @@ public class ProdPlanController {
 			return "prod/prodPlanList";
 		}
 	 
-	//생산지시관리 페이지이동
-	 @RequestMapping("/prod/indicaMng")
-		public String indMng() {
-			return "prod/indicaMng";
-		}
-	 
-	//생산지시조회 페이지이동
-	 @RequestMapping("/prod/indicaList")
-		public String indList() {
-			return "prod/indicaList";
-		}
-	 
 	//생산계획상세 조회
 	@GetMapping("/grid/planGrid.do")
 	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
