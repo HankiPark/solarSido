@@ -413,7 +413,7 @@
 		<script
 			src="${pageContext.request.contextPath}/resources/dist/js/demo1.js"></script>
 	
-<script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+<script type="text/javascript" src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 </body>
 </html>
 

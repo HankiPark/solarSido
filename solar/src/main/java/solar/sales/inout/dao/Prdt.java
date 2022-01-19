@@ -42,6 +42,8 @@ public class Prdt {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date paprdDt;
+	String valid;
+	
 
 	String restQty;
 	

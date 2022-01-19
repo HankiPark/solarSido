@@ -309,7 +309,8 @@ a {
 						name : 'prdtLot',
 						editor : 'text',
 						validation: {
-					        required: true
+					        required: true,
+					        unique : true
 					      }
 					}, {
 						header : '제품코드',
@@ -323,6 +324,9 @@ a {
 					}, {
 						header : '생산지시번호',
 						name : 'indicaNo'
+					}, {
+						header : '중복체크',
+						name : 'valid'
 					}
 
 					],

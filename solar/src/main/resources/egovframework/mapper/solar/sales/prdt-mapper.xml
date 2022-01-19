@@ -7,7 +7,8 @@
 		p.prdt_cd,
 		o.prdt_nm,
 		o.prdt_spec,
-		k.indica_no
+		k.indica_no,
+		'Y'
 		from prdt_stc p join prdt o
 		on p.prdt_cd = o.prdt_cd
 		join
