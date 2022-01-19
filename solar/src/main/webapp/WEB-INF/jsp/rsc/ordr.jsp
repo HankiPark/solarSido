@@ -90,7 +90,7 @@
         name: 'coNm'
       },
       {
-          header: '검수여부',
+          header: '상태',
           name: 'inspCls',
           formatter: 'listItemText',
           editor: {
@@ -102,7 +102,7 @@
         }
     ]
   });
-  
+  grid.disableColumn('inspCls');
   grid.on('response',function(){
       grid.refreshLayout();
     });
@@ -127,7 +127,9 @@
 
   let coDialog = $("#coModal").dialog({
     modal: true,
-    autoOpen: false
+    autoOpen: false,
+	width : 600,
+	height : 600
   });
 
   $("#coSearchBtn").on("click", function () {
@@ -139,7 +141,9 @@
 
   let rscDialog = $("#rscModal").dialog({
     modal: true,
-    autoOpen: false
+    autoOpen: false,
+	width : 600,
+	height : 600
   });
 
   $("#rscSearchBtn").on("click", function () {

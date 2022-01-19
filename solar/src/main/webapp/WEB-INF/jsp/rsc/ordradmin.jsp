@@ -22,11 +22,14 @@
     자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
     <button type="button" id="ordrQueryBtn">조회</button><br>
     <button type="button" id="prependRowBtn">행 삽입</button>
+    <button type="button" id="saveBtn">저장</button>
+    <button type="button" id="deleteBtn">삭제</button>
   </form>
   <div id="grid"></div>
 </body>
 
 <script>
+	let evVar;
 	let d = new Date();
 	let nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
 	document.getElementById('ordrDtStt').value = nd.toISOString().slice(0, 10);
@@ -34,7 +37,7 @@
 
 	let ordrDataSource = {
 			  api: {
-				    readData: { url: 'ordrData', method: 'GET'},
+				    readData: { url: 'ordrData?inspCls=rs001', method: 'GET'},
 					modifyData: {url: 'ordrData',method: 'PUT'}
 				  },
 				  contentType : 'application/json',
@@ -63,6 +66,10 @@
         name: 'ordrDt'
       },
       {
+        header: '발주번호',
+        name: 'ordrCd'
+      },
+      {
         header: '자재명',
         name: 'rscNm'
       },
@@ -72,26 +79,15 @@
       },
       {
         header: '발주량',
-        name: 'ordrQty'
-      },
-      {
-        header: '받은 수량',
-        name: 'rscIstQty'
-      },
-      {
-        header: '불량량',
-        name: 'rscInferQty'
-      },
-      {
-        header: '발주번호',
-        name: 'ordrCd'
+        name: 'ordrQty',
+        editor: 'text'
       },
       {
         header: '업체',
         name: 'coNm'
       },
       {
-          header: '검수여부',
+          header: '상태',
           name: 'inspCls',
           formatter: 'listItemText',
           editor: {
@@ -104,8 +100,19 @@
     ]
   });
   
+  grid.disableColumn('inspCls');
   grid.on('response',function(){
       grid.refreshLayout();
+    });
+  grid.on('click',function(ev){
+      if(ev.columnName =='rscNm' || ev.columnName == 'rscCd' || ev.columnName == 'coNm'){
+    	  evVar = ev;
+    	  rscDialog.dialog("open");
+	   	  $("#rscModal").load("../rsc");
+      }
+      /* if(ev.columnName == 'inspCls'){
+    	  return false;
+      } */
     });
 
 //
@@ -123,20 +130,39 @@
 		'rsc':rsc
 	});
   });
-  
   let prependRowBtn = document.getElementById("prependRowBtn");
   prependRowBtn.addEventListener("click",function(){
 	  grid.prependRow({
-		  "ordrDt":d.toISOString().slice(0, 10),
+		  "ordrDt":d.toISOString().slice(0, 4)+"/"+d.toISOString().slice(5, 7)+"/"+d.toISOString().slice(8, 10),
 		  "inspCls":"rs001"
 	  });
+  });
+  let saveBtn = document.getElementById("saveBtn");
+  saveBtn.addEventListener("click",function(){
+	  let newRows = grid.getModifiedRows().createdRows;
+	  for(let newRow of newRows){
+		  if(newRow.rscCd == '' || newRow.ordrQty == '' || parseInt(newRow.ordrQty)+'' == 'NaN'){
+			  alert('유효한 값을 입력하세요.');
+			  return false;
+		  }
+	  }
+	  grid.request('modifyData');
+  });
+  let deleteBtn = document.getElementById("deleteBtn");
+  deleteBtn.addEventListener("click",function(){
+	  let checkedRowKeys = grid.getCheckedRowKeys();
+	  for(let rowkey of checkedRowKeys){
+	  grid.removeRow(rowkey);
+	  }
   });
 
 //
 
   let coDialog = $("#coModal").dialog({
     modal: true,
-    autoOpen: false
+    autoOpen: false,
+	width : 600,
+	height : 600
   });
 
   $("#coSearchBtn").on("click", function () {
@@ -148,7 +174,9 @@
 
   let rscDialog = $("#rscModal").dialog({
     modal: true,
-    autoOpen: false
+    autoOpen: false,
+	width : 600,
+	height : 600
   });
 
   $("#rscSearchBtn").on("click", function () {

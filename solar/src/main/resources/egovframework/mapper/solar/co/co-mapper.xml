@@ -6,4 +6,15 @@
 		select * from co
 	</select>
 
+	<select id="search" resultType="solar.co.cmmn.service.Co">
+		select * from co
+		where 1=1
+		and co_fg = 'R'
+		<if test='coCd != null and coCd != ""'>
+			and co_cd like '%'||#{coCd}||'%'
+		</if>
+		<if test='coNm != null and coNm != ""'>
+			and co_Nm like '%'||#{coNm}||'%'
+		</if>
+	</select>
 </mapper>

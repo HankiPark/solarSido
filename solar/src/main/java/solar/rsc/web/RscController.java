@@ -73,8 +73,6 @@ public class RscController {
 		data.put("pagination", page);
 		
 		model.addAttribute("data", data);
-		System.out.println("param: "+map);
-		System.out.println("result: "+model);
 		return "jsonView";
 	}
 
@@ -92,8 +90,8 @@ public class RscController {
 	
 	//자재목록 데이터요청
 	@GetMapping("rsc/rscData")
-	public String rscData(Model model) {
-		model.addAttribute("rsc",rscService.selectAll());
+	public String rscData(@RequestParam Map map, Model model) {
+		model.addAttribute("rsc",rscService.search(map));
 		return "jsonView";
 	}
 	
@@ -158,7 +156,6 @@ public class RscController {
 	//입고조회페이지 데이터
 	@GetMapping("rsc/inData")
 	public String rscInData(@RequestParam Map map, Model model) {
-		System.out.println("param: "+map);
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
 		List<?> list = rscInOutService.search(map);
@@ -172,8 +169,6 @@ public class RscController {
 		data.put("pagination", page);
 		
 		model.addAttribute("data", data);
-		
-		System.out.println("result: "+model);
 		return "jsonView";
 	}
 	
@@ -181,7 +176,6 @@ public class RscController {
 	@ResponseBody
 	@PostMapping("rsc/in/rscin")
 	public int rscIn(@RequestBody RscInOut rscInOut, Model model) {
-		System.out.println(rscInOut);
 		rscInOutService.insert(rscInOut);
 		rscInOutService.stcInc(rscInOut);
 		return 202;
@@ -202,7 +196,6 @@ public class RscController {
 	//재고데이터 요청
 	@GetMapping("rsc/stcData")
 	public String rscStcData(@RequestParam Map map, Model model) {
-		System.out.println("param: "+map);
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
 		List<?> list = rscStcService.search(map);
@@ -216,8 +209,6 @@ public class RscController {
 		data.put("pagination", page);
 		
 		model.addAttribute("data", data);
-		
-		System.out.println("result: "+model);
 		return "jsonView";
 	}
 	
@@ -229,7 +220,6 @@ public class RscController {
 	
 	@GetMapping("rsc/rtData")
 	public String rscRtData(@RequestParam Map map, Model model) {
-		System.out.println("param: "+map);
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
 		List<?> list = rscRtService.search(map);
@@ -243,8 +233,6 @@ public class RscController {
 		data.put("pagination", page);
 		
 		model.addAttribute("data", data);
-		
-		System.out.println("result: "+model);
 		return "jsonView";
 	}
 	

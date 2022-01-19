@@ -118,7 +118,9 @@
 
 	let coDialog = $("#coModal").dialog({
 		modal: true,
-		autoOpen: false
+		autoOpen: false,
+		width : 600,
+		height : 600
 	});
 
 	$("#coSearchBtn").on("click", function () {
@@ -130,7 +132,9 @@
 
 	let rscDialog = $("#rscModal").dialog({
 		modal: true,
-		autoOpen: false
+		autoOpen: false,
+		width : 600,
+		height : 600
 	});
 
 	$("#rscSearchBtn").on("click", function () {

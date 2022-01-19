@@ -51,4 +51,23 @@
 		where ordr_cd = #{ordrCd}
 	</update>
 	
+	<insert id="insert" parameterType="solar.rsc.ordr.service.RscOrdr">
+		insert into rsc_or
+		values (
+			'ror'||to_char(sysdate,'yyMMdd')||trim(to_char(rscordrseq.nextval,'000')),
+			sysdate,
+			#{rscCd},
+			#{ordrQty},
+			fn_get_co_cd_by_co_nm(#{coNm}),
+			#{ordrQty},
+			0,
+			'rs001'
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="solar.rsc.ordr.service.RscOrdr">
+		delete from rsc_or
+		where ordr_cd = #{ordrCd}
+	</delete>
+	
 </mapper>

@@ -1,6 +1,7 @@
 package solar.co.cmmn.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,11 @@ public class CoServiceImpl implements CoService{
 	@Override
 	public List<Co> selectAll() {
 		return coMapper.selectAll();
+	}
+
+	@Override
+	public List<Co> search(Map map) {
+		return coMapper.search(map);
 	}
 
 }
