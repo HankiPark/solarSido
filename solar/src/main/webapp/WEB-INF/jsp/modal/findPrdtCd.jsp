@@ -9,15 +9,16 @@
 
 <body>
 	<label>제품코드</label>
-	<input type="text" id="prdCdFind">
+	<input type="text" id="prdtCdFind">
 	<label>제품명</label>
-	<input type="text" id="prdNmFind">
-	<button type="button" id="btnNm">검색</button>
+	<input type="text" id="prdtNmFind">
+	<button type="button" id="btnfind">검색</button>
 
 	<div id="prdtCdGrid"></div>
 </body>
 
 <script type="text/javascript">
+function prdtCdList(){
  prdtCdGrid = new tui.Grid(
 			{
 				el : document.getElementById('prdtCdGrid'),
@@ -30,6 +31,8 @@
 					},
 					contentType : 'application/json'
 				},
+				scrollX : false,
+				scrollY : true,
 				bodyHeight : 500,
 				columns : [ {
 					header : '제품코드',
@@ -47,9 +50,9 @@
 			});
 
 	//검색버튼
-	$('#btnNm').on('click', function() {
-		var prdtNm = $("#prdNmFind").val();
-		var prdtCd = $("#prdCdFind").val();
+	$('#btnfind').on('click', function() {
+		var prdtNm = $("#prdtNmFind").val();
+		var prdtCd = $("#prdtCdFind").val();
 		var params = {
 			'prdtNm' : prdtNm,
 			'prdtCd' : prdtCd
@@ -73,6 +76,7 @@
 	prdtCdGrid.on('onGridUpdated', function() {
 		prdtCdGrid.refreshLayout();
 	});
+}
 </script>
 
 </html>

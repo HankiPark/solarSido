@@ -17,7 +17,7 @@
 
 <!-- 검색테이블 -->
 <div>
-	<form action="planListFrm" name="planListFrm">
+	<form action="searchFrm" name="searchFrm">
 		<input type="hidden" id="planNo" name="planNo" value="planNo">
 		<table>
 			<tr>
@@ -31,12 +31,12 @@
 				<th>업체코드</th>
 				<td>
 					<input type="text" id="coCd" name="coCd" readonly>
-					<button type="button" id="coCdFind">🔍</button>
+					<button type="button" id="btnCoCdFind">🔍</button>
 				</td>
 				<th>제품코드</th>
 				<td>
 					<input type="text" id="prdtCd" name="prdtCd" readonly>
-					<button type="button" id="prdtCdFind">🔍</button>
+					<button type="button" id="btnPrdtCdFind">🔍</button>
 				</td>
 			</tr>
 		</table>
@@ -71,7 +71,7 @@
 		width: 600
 	});
 
-	$("#coCdFind").on("click", function(){
+	$("#btnCoCdFind").on("click", function(){
 		console.log("업체검색")
 		coCdDialog.dialog("open");
 		$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
@@ -85,10 +85,10 @@
 		height : 600
 	});
   
- 	$('#prdtCdFind').on('click', function(){
+ 	$('#btnPrdtCdFind').on('click', function(){
  		console.log("제품검색")
 		prdtCdDialog.dialog("open");
-		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd")
+		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function(){ prdtCdList() })
 	});
    
   //계획 조회 그리드
@@ -218,7 +218,7 @@
 	
 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
 	$('#btnReset').click(function() {
-		planListFrm.reset();
+		searchFrm.reset();
 		planDgrid.resetData([]);
 	})
 			

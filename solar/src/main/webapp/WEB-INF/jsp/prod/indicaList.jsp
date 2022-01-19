@@ -17,8 +17,8 @@
 
 <!-- 검색테이블 -->
 <div>
-	<form action="idcListFrm" name="idcListFrm">
-		<input type="hidden" id="planNo" name="planNo" value="planNo">
+	<form action="searchFrm" name="searchFrm">
+		<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
 		<table>
 			<tr>
 				<th>지시일자</th>
@@ -31,12 +31,12 @@
 				<th>업체코드</th>
 				<td>
 					<input type="text" id="coCd" name="coCd" readonly>
-					<button type="button" id="coCdFind">🔍</button>
+					<button type="button" id="btnCoCdFind">🔍</button>
 				</td>
 				<th>제품코드</th>
 				<td>
 					<input type="text" id="prdtCd" name="prdtCd" readonly>
-					<button type="button" id="prdtCdFind">🔍</button>
+					<button type="button" id="btnPrdtCdFind">🔍</button>
 				</td>
 			</tr>
 		</table>
@@ -50,14 +50,14 @@
 <hr/>
 
 <!-- 생산지시 상세 그리드-->
-<div id="planDgrid"></div>
+<div id="indicaDgrid"></div>
 
 <!-- 스크립트 -->
 <script type="text/javascript">
 	let coCd;
 	let prdtCd;
 	
-	//계획일자 Default: sysdate
+	//지시일자 Default: sysdate
 	let pEndDt = new Date();
 	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
 	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
@@ -71,7 +71,7 @@
 		width: 600
 	});
 
-	$("#coCdFind").on("click", function(){
+	$("#btnCoCdFind").on("click", function(){
 		console.log("업체검색")
 		coCdDialog.dialog("open");
 		$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
@@ -85,13 +85,153 @@
 		height : 600
 	});
   
- 	$('#prdtCdFind').on('click', function(){
+ 	$('#btnPrdtCdFind').on('click', function(){
  		console.log("제품검색")
 		prdtCdDialog.dialog("open");
-		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd")
+		$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function(){ prdtCdList() })
 	});
-   
 
+ 	//지시 조회 그리드
+	const indicaDdataSource = {
+		  api: {
+		    	readData: { url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
+					    	method: 'GET'
+		    				},
+				}, 
+			contentType: 'application/json'
+		};
+	
+	const indicaDgrid = new tui.Grid({
+		el: document.getElementById('indicaDgrid'),
+		data: indicaDdataSource,
+		scrollX: false,
+		scrollY: true,
+		bodyHeight: 500,
+		columns: [
+					 {
+					    header: '지시상세번호',
+					    name: 'indicaDetaNo',
+				        hidden: true
+					  },
+					  {
+					    header: '지시번호',
+					    name: 'indicaNo',
+					    sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '업체코드',
+					    name: 'coCd',
+				    	sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '제품코드',
+					    name: 'prdtCd',    
+				    	sortingType: 'desc',
+				        sortable: true
+					  },		  
+					  {
+					    header: '제품명',
+					    name: 'prdtNm'
+					  },
+					  {
+					    header: '주문번호',
+					    name: 'orderNo',
+				    	sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '납기일자',
+					    name: 'paprdDt',
+					    sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '주문량',
+					    name: 'orderQty',
+					    sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '지시량',
+					    name: 'indicaQty',
+					  },
+					  {
+					    header: '생산구분',
+					    name: 'prodFg',
+					  },
+					  {
+					    header: '작업일자',
+					    name: 'wkDt',
+					    sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '작업순서',
+					    name: 'wkOrd',
+					  },
+			 		 ],
+			 		summary: {
+				        position: 'bottom',
+				        height: 50,
+				        columnContent: {
+				        	indicaDt: {
+				        		template: function(valueMap) {
+				        			return '합계';
+				        			},
+				        		align:'center'
+							},
+							orderQty: {
+								template: function(valueMap) {
+									return valueMap.sum;
+									}
+							},
+							indicaQty: {
+								template: function(valueMap) {
+									return valueMap.sum;
+									}
+							}
+				        }
+				    }
+			});
+	
+	//조회 버튼: 조건별(기간, 업체, 제품) 생산지시 조회
+	$('#btnSearch').click(function() {
+		var planStartDt = document.getElementById('planStartDt').value
+		var planEndDt = document.getElementById('planEndDt').value
+		var coCd = document.getElementById('coCd').value
+		var prdtCd = document.getElementById('prdtCd').value
+		console.log(planStartDt + "~" + planEndDt + "& coCd:" + coCd + "& prdtCd:" + prdtCd);
+		var params = {
+				'planStartDt': planStartDt,
+				'planEndDt': planEndDt,
+				'coCd': coCd,
+				'prdtCd': prdtCd
+		}
+		$.ajax({
+			url : '${pageContext.request.contextPath}/grid/indicaGrid.do',
+			data : params,
+			dataType:"json",
+			contentType : 'application/json; charset=utf-8',
+		}).done(function(pln) {
+			indicaDgrid.resetData(pln["data"]["contents"]);
+		})
+	})
+	
+	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
+	$('#btnReset').click(function() {
+		searchFrm.reset();
+		indicaDgrid.resetData([]);
+	})
+			
+	indicaDgrid.on('onGridUpdated', function() {
+		indicaDgrid.refreshLayout();
+	});
+	
+	//Excel 버튼
+	
+	
 </script>
 </body>
 </html>
