@@ -49,8 +49,9 @@ public class PrcsController {
 	  @GetMapping("/prcs/prcsItem") 
 	  public String getItem(ClotVO vo, Model model) {
 	  
-	  Map<String, Object> map = new HashMap(); map.put("contents",
-	  prcsservice.selectPrcsItem(vo)); model.addAttribute("result", true);
+	  Map<String, Object> map = new HashMap(); 
+	  map.put("contents", prcsservice.selectPrcsItem(vo)); 
+	  model.addAttribute("result", true);
 	  model.addAttribute("data", map);
 	  
 	  return "jsonView"; 

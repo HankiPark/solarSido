@@ -16,13 +16,12 @@
 	<div>
 		<div class="row">
 			<div class="col-5">
-				지시번호 : <input type="text" id="indicaDetaNo"><button type="button" id="searchIndica">돋</button><br><br>
+				지시번호 : <input type="text" id="indicaDetaNo"><button type="button" id="searchIndica">🔍</button><br><br>
 				제품코드 : <input type="text" id="prdtCd"><br><br>
-				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchEqm">돋</button><br><br>
-				설비코드 : <input type="text" id="eqmCd"><br><br>
-				라인번호 : <input type="text" id="liNo"><br><br>
+				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchEqm">🔍</button><br><br>
+				라인번호 : <input type="text" id="liNm"><br><br>
 				<br>
-				작업자 : <input type="text" id="empId"><button type="button" id="searchIndic">돋</button> 작업량 : <input type="text" id="wkQty"><br><br> 
+				작업자 : <input type="text" id="empId"><button type="button" id="searchIndic">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
 				<input type="text" id="frTm"><button id="btnStart">시작</button><input type="text" id="toTm"><button id="btnStart">종료</button><br>
 				<button id="btnAddPerf">실적등록</button>
 			</div>
@@ -141,15 +140,19 @@
  			}
  			prcsGrid.readData(1,readParams,true);
  			prcsGrid.refreshLayout();
+ 			
+ 			$.ajax({
+ 				
+ 			})
+ 			
  				
  		} 
  		
- 		function innPrcsEqm(prcsNm, eqmCd, lineNm){
+ 		function innPrcsEqm(prcsNm, liNm){
  			$("#prcsNm").val(prcsNm);
- 			$("#eqmCd").val(eqmCd);
- 			$("#liNm").val(lineNm);
+ 			$("#liNm").val(liNm);
  			
- 			prcsEqmDialog.dilog("close");
+ 			prcsEqmDialog.dialog("close");
  			
  		}
  		
