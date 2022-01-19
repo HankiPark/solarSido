@@ -10,6 +10,7 @@ import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.PrcsVO;
+import solar.prcs.prcs.service.RscConVO;
 
 @Service
 public class PrcsServiceImpl implements PrcsService {
@@ -40,6 +41,12 @@ public class PrcsServiceImpl implements PrcsService {
 	@Override
 	public List<PrcsEqmVO> selectPrcsEqm(PrcsEqmVO vo) {
 		return prcsmapper.selectPrcsEqm(vo);
+	}
+
+
+	@Override
+	public List<RscConVO> selectPrcsItemRSC(RscConVO vo) {
+		return prcsmapper.selectPrcsItemRSC(vo);
 	}
 	 
 	 
