@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.cmm.rscinfo.service.RscinfoService;
@@ -52,6 +54,29 @@ public class RscinfoController {
 		model.addAttribute("data", map);
 		
 		return "jsonView";
+	}
+	
+	@RequestMapping("/rscinfo.do")
+	@ResponseBody
+	public Map<String, Object> rscinfo(@RequestParam("rscCd") String rscCd) {
+		RscinfoVO rscinfoVO = new RscinfoVO();
+		rscinfoVO.setRscCd(rscCd);
+		rscinfoVO = rscinfoService.rscinfo(rscinfoVO);
+		
+		Map<String, Object> data = new HashMap<>();
+		data.put("result", rscinfoVO);
+		
+		return data;
+	}
+	
+	@RequestMapping("/rscinfoUpdate.do")
+	public int rscinfoUpdate(RscinfoVO rscinfoVO) {
+		return rscinfoService.rscinfoUpdate(rscinfoVO);
+	}
+	
+	@RequestMapping("/rscinfoDelete.do")
+	public int rscinfoDelete(RscinfoVO rscinfoVO) {
+		return rscinfoService.rscinfoDelete(rscinfoVO);
 	}
 	
 	@RequestMapping("/grid/rscinfoUpdateIn.do")

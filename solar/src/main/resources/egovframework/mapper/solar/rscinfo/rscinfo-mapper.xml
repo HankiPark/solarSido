@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.mapper.solar.rscinfo.rscinfo-mapper">
+<mapper namespace="solar.cmm.rscinfo.service.impl.RscinfoMapper">
 
 <select id="rscinfoList" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
 	SELECT * FROM RSC
@@ -15,4 +15,64 @@
 	</where>
 	order by RSC_CD asc
 </select>
+
+<select id="rscinfo" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
+	SELECT distinct r.rsc_cd,
+					r.rsc_nm,
+					r.saf_stc,
+					c.co_cd,
+					c.co_nm,
+					r.rsc_spec,
+					r.rsc_unit,
+					r.rsc_img,
+					r.rsc_untprc
+			FROM rsc r, co c
+			WHERE r.co_cd = c.co_cd
+			AND r.rsc_cd Like #{rscCd}
+</select>
+
+<insert id="rscinfoInsert" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">
+	<![CDATA[	
+		INSERT INTO RSC
+		(	RSC_CD,
+			RSC_NM,
+			SAF_STC,
+			CO_CD,
+			CD_NM,
+			RSC_SPEC,
+			RSC_UNIT,
+			RSC_IMG,
+			RSC_UNTPRC)
+		VALUES(
+			#{rscCd},
+			#{rscNm},
+			#{safStc},
+			#{coCd},
+			#{coNm},
+			#{rscSpec},
+			#{rscUnit},
+			#{rscImg},
+			#{rscUntprc}
+		)
+	]]>
+</insert>
+
+<update id="rscinfoUpdate" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">
+	UPDATE RSC
+	SET RSC_CD = #{rscCd},
+		RSC_NM = #{rscNm},
+		SAF_STC = #{safStc},
+		CO_CD = #{coCd},
+		CO_NM = #{coNm},
+		RSC_SPEC = #{rscSpec},
+		RSC_IMG = #{rscImg},
+		RSC_UNTPRC = #{rscUntprc}
+	WHERE RSC_CD = #{rscCd}
+</update>
+
+<delete id="rscinfoDelete" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">
+	DELETE FROM RSC
+	WHERE RSC_CD = #{rscCd}
+</delete>
+
 </mapper>
