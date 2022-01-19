@@ -5,5 +5,19 @@
 	<select id="selectAll" resultType="solar.rsc.cmmn.service.Rsc">
 		select * from rsc
 	</select>
-
+	
+	<select id="search" resultType="solar.rsc.cmmn.service.Rsc">
+		select r.*, c.co_nm
+		from rsc r
+		join co c
+		on r.co_cd = c.co_cd
+		where 1=1
+		<if test='rscCd != null and rscCd != ""'>
+			and co_cd like '%'||#{coCd}||'%'
+		</if>
+		<if test='coNm != null and coNm != ""'>
+			and co_Nm like '%'||#{coNm}||'%'
+		</if>
+		order by r.rsc_cd
+	</select>
 </mapper>

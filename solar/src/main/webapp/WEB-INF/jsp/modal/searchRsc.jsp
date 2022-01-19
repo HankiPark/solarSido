@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<label>업체명</label>
+	<input type="text" id="coNm">
+	<label>자재코드</label>
+	<input type="text" id="rscCd">
+	<button type="button" id="btnfindCo">검색</button>
 	<div id="rscGrid"></div>
 </body>
 <script>
@@ -24,6 +29,10 @@ var rscGrid = new tui.Grid({
         name: 'rscNm'
       },
       {
+        header: '업체명',
+        name: 'coNm'
+      },
+      {
         header: '업체코드',
         name: 'coCd'
       },
@@ -37,24 +46,42 @@ var rscGrid = new tui.Grid({
       },
       {
   		header: '단가',
-  		name: 'rscUntPrc'
+  		name: 'rscUntprc'
       }
     ]
   });
   
-$.ajax({
-    url: "../rsc/rscData",
-    method: "GET",
-    dataType: "JSON"
-  }).done(function (result) {
-	  console.log(result.rsc);
-    rscGrid.resetData(result.rsc);
-    rscGrid.refreshLayout();
-  });
+	var btnfindCo = document.getElementById("btnfindCo");
+	btnfindCo.addEventListener('click',function(){
+		  let coNm = document.getElementById('coNm').value;
+		  let rscCd = document.getElementById('rscCd').value;
+		  request(coNm, rscCd);
+	});
+	
+	function request(coNm='', rscCd=''){
+		  $.ajax({
+			    url: "../rsc/rscData?coNm="+coNm+"&rscCd="+rscCd,
+			    method: "GET",
+			    dataType: "JSON"
+			  }).done(function (result) {
+				  console.log(result.rsc);
+			    rscGrid.resetData(result.rsc);
+			    rscGrid.refreshLayout();
+			  });
+	}
+	request();
   
   rscGrid.on('dblclick',function(ev){
-	  document.ordrQueryFrm.rsc.value = rscGrid.getValue(ev.rowKey, "rscCd");
+	  if(evVar != undefined){
+		  grid.setValue(evVar.rowKey,'rscNm',rscGrid.getValue(ev.rowKey,'rscNm'));
+		  grid.setValue(evVar.rowKey,'rscCd',rscGrid.getValue(ev.rowKey,'rscCd'));
+		  grid.setValue(evVar.rowKey,'coNm',rscGrid.getValue(ev.rowKey,'coNm'));
+		  evVar = undefined;
+	  }else{
+		  document.ordrQueryFrm.rsc.value = rscGrid.getValue(ev.rowKey, "rscCd");
+	  }
 	  rscDialog.dialog("close");
+	  
   });
 </script>
 </html>

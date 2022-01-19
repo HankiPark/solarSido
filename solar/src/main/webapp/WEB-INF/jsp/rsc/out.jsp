@@ -58,6 +58,8 @@
 	let inspDialog = $("#inspModal").dialog({
 		modal: true,
 		autoOpen: false,
+		width : 600,
+		height : 600,
 		buttons: {
 			"입력": function () {
 				if (sum > grid.getValue(curRowKey, 'rscIstQty')) {
@@ -111,11 +113,12 @@
 				name: 'coNm'
 			},
 			{
-				header: '검수여부',
+				header: '상태',
 				name: 'inspCls',
 				formatter: 'listItemText',
 				editor: {
 					type: 'select',
+					disabled: true,
 					options: {
 						listItems: cmmnCodes.codes.rscst
 					}
@@ -163,7 +166,9 @@
 
 	let coDialog = $("#coModal").dialog({
 		modal: true,
-		autoOpen: false
+		autoOpen: false,
+		width : 600,
+		height : 600
 	});
 
 	$("#coSearchBtn").on("click", function () {
@@ -175,7 +180,9 @@
 
 	let rscDialog = $("#rscModal").dialog({
 		modal: true,
-		autoOpen: false
+		autoOpen: false,
+		width : 600,
+		height : 600
 	});
 
 	$("#rscSearchBtn").on("click", function () {

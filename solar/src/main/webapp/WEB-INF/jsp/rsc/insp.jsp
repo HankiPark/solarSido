@@ -120,7 +120,7 @@
 		},
     ]
   });
-  
+  	grid.disableColumn('inspCls');
 	grid.hideColumn('rtngdResnCd');
 	grid.hideColumn('rtngdDt');
 	
@@ -144,6 +144,8 @@
 	let inspDialog = $("#inspModal").dialog({
 		modal: true,
 		autoOpen: false,
+		width : 600,
+		height : 600,
 		buttons: {"입력":function(){
 			if(sum > grid.getValue(curRowKey,'rscIstQty')){
 			  alert('총량보다 많은 불량량을 입력할 수 없습니다.');
@@ -202,7 +204,9 @@
 
   let coDialog = $("#coModal").dialog({
     modal: true,
-    autoOpen: false
+    autoOpen: false,
+	width : 600,
+	height : 600
   });
 
   $("#coSearchBtn").on("click", function () {
@@ -214,7 +218,9 @@
 
   let rscDialog = $("#rscModal").dialog({
     modal: true,
-    autoOpen: false
+    autoOpen: false,
+	width : 600,
+	height : 600
   });
 
   $("#rscSearchBtn").on("click", function () {

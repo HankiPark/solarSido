@@ -16,4 +16,5 @@ public class RscOrdr {
 	String rscPassedQty;
 	String rtngdResnCd;
 	String rtngdDt;
+	String coCd;
 }

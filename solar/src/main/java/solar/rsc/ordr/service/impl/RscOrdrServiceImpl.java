@@ -28,12 +28,24 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 
 	@Override
 	public void modify(ModifyVO<RscOrdr> mvo) {
+		System.out.println("@@@@modify");
+		
+		if(mvo.getCreatedRows() != null) {
+			System.out.println(mvo.getCreatedRows());
+			
+			for(RscOrdr rscOrdr : mvo.getCreatedRows()) {
+				System.out.println(rscOrdr);
+				rscOrdrMapper.insert(rscOrdr);
+			}
+		}
+		
 		if(mvo.getUpdatedRows() != null) {
+			System.out.println(mvo.getUpdatedRows());
+			
 			for(RscOrdr rscOrdr : mvo.getUpdatedRows()) {
 				rscOrdrMapper.update(rscOrdr);
 				
 				if(rscOrdr.getInspCls().equals("rs002") && !rscOrdr.getRscInferQty().equals("0")) {
-					System.out.println("번호: "+rscOrdr.getOrdrCd()+", 불량량"+rscOrdr.getRscInferQty());
 					Map<Object,Object> map = new HashMap<Object, Object>();
 					map.put("rtngdResnCd", rscOrdr.getRtngdResnCd());
 					map.put("ordrCd", rscOrdr.getOrdrCd());
@@ -41,6 +53,14 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 					map.put("ordrDt", rscOrdr.getOrdrDt());
 					rscRtMapper.insert(map);
 				}
+			}
+		}
+		if(mvo.getDeletedRows() != null) {
+			System.out.println(mvo.getDeletedRows());
+			
+			for(RscOrdr rscOrdr : mvo.getDeletedRows()) {
+				System.out.println(rscOrdr);
+				rscOrdrMapper.delete(rscOrdr);
 			}
 		}
 	}
