@@ -37,6 +37,10 @@
 		    header: '공정코드',
 		    name: 'prcsCd'
 		  },
+		  {
+			header: '설비코드',
+			name: 'eqmCd'
+		  },
 	      {
 	        header: '공정명',
 	        name: 'prcsNm'
@@ -56,15 +60,15 @@
 		prcsEqmGrid.refreshLayout();
 	});
 	
-	prcsEqmGrid.on('dbclick', (ev)=>{
+	prcsEqmGrid.on('dblclick', (ev)=>{
 		var rk = ev.rowKey;
 		
 		var prcsNm = prcsEqmGrid.getValue(rk,"prcsNm");
 		var eqmCd = prcsEqmGrid.getValue(rk,"eqmCd");
-		var lineNm = "1번 라인";
+		var liNm = "1번 라인";
 		
-		if(!prcsNm.equals("null")){
-			innPrcsEqm(prcsNm, eqmCd, lineNm);
+		if(prcsNm!=="null"){
+			innPrcsEqm(prcsNm, liNm);
 		}
 		
 	})

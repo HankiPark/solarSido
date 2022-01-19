@@ -64,12 +64,18 @@
 
 </select>
 
+<select id="selectPrcsItemRSC" resultType="solar.prcs.prcs.service.RscConVO">
+
+</select>
+
+
 <select id="selectPrcsEqm" resultType="solar.prcs.prcs.service.PrcsEqmVO">
 	select p.prcs_fg,
 	        p.prcs_nm,
 	        p.prcs_desct,
 	        p.prcs_unit,
 	        p.prod_pd,
+	        e.eqm_cd,
 	        e.eqm_fg,
 	        e.eqm_nm,
 	        e.eqm_mdl,
