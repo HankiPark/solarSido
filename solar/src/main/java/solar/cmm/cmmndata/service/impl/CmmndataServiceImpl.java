@@ -34,5 +34,10 @@ public class CmmndataServiceImpl implements CmmndataService {
 		// TODO Auto-generated method stub
 		return cmmndataMapper.cmmndataDetailList(cmmndataVO);
 	}
+
+	@Override
+	public List<CmmndataVO> cmmndataFind(CmmndataVO cmmndataVO) {
+		return cmmndataMapper.cmmndataFind(cmmndataVO);
+	}
 	
 }

@@ -48,4 +48,19 @@ public class CmmndataController {
 		model.addAttribute("data", data);	
 		return "jsonView";
 	}
+	
+	@GetMapping("/grid/cmmndataFind")
+	public String cmmnfind(Model model, CmmndataVO cmmndataVO) throws Exception{
+		
+		List<?> cmmnList = cmmndataService.cmmndataFind(cmmndataVO);
+		model.addAttribute("result", true);
+		Map<String, Object>map = new HashMap();
+		Map<String, Object>map2 = new HashMap();
+		map.put("contents", cmmnList);
+		map2.put("page", 1);
+		map2.put("totalCount", cmmnList.size());
+		model.addAttribute("data", map);
+		
+		return "jsonView";
+	}
 }

@@ -8,7 +8,7 @@
  		SELECT 	* FROM CMMN_DATA
 	</select>
  -->	
-	<select id="cmmndataList" resultType = "solar.cmm.cmmndata.dao.CmmndataVO">
+	<select id="cmmndataList" resultType ="solar.cmm.cmmndata.dao.CmmndataVO">
 		SELECT 	* FROM CMMN_DATA
 		<where>
 			<if test="cmmnCdNm != null and cmmnCdNm != ''">
@@ -16,6 +16,16 @@
 			</if>
 		</where>
 		ORDER BY CMMN_CD_ID
+	</select>
+	
+	<select id="cmmndataFind" resultType="solar.cmm.cmmndata.dao.CmmndataVO">
+	SELECT * FROM CMMN_DATA
+	<where>
+		<if test="cmmnCdNm != null and cmmnCdNm != ''">
+			AND CMMN_CD_NM LIKE '%' || #{cmmnCdNm} || '%'
+		</if>
+	</where>
+	order by CMMN_CD_ID asc
 	</select>
 	
 <insert id="createCode">
