@@ -20,6 +20,7 @@
 		<typeAlias alias="Prdt"		type="solar.sales.inout.dao.Prdt" />
 		<typeAlias alias="EqmVO"		type="solar.eqm.mng.service.EqmVO" />
 		<typeAlias alias="ProdPlanVO"		type="solar.prod.plan.service.ProdPlanVO" />
+		<typeAlias alias="IndicaVO"		type="solar.prod.indica.service.IndicaVO" />
 	</typeAliases>
     
 </configuration>
