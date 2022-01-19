@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.cmm.rscinfo.service.RscinfoService;
 import solar.sales.order.dao.ModifyVO;
@@ -65,6 +64,11 @@ public class RscinfoServiceImpl implements RscinfoService{
 	}
 		
 		return 1;
+	}
+
+	@Override
+	public RscinfoVO rscinfo(RscinfoVO rscinfoVO) {
+		return rscinfoMapper.rscinfo(rscinfoVO);
 	}
 
 }

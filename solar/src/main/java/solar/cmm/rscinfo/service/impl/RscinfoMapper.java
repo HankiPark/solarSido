@@ -8,6 +8,7 @@ import solar.sales.order.dao.ModifyVO;
 public interface RscinfoMapper {
 	List<RscinfoVO> rscinfoList(RscinfoVO rscinfoVO);
 	List<RscinfoVO> rscinfofind(RscinfoVO rscinfoVO);
+	RscinfoVO rscinfo(RscinfoVO rscinfoVO);
 	public int rscinfoInsert(RscinfoVO rscinfoVO);
 	public int rscinfoUpdate(RscinfoVO rscinfoVO);
 	public int rscinfoDelete(RscinfoVO rscinfoVO);

@@ -32,7 +32,7 @@ var dataSource = {
 					   },
 				modifyData: { url: '${pageContext.request.contextPath}/grid/uoprcdUpdate.do', 
 							method: 'POST',
-							cache:false			
+							cache:false			 
 					}
 				},
 /*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
