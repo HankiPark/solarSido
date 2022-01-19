@@ -24,12 +24,13 @@
 				</select>
 			</div>
 </div>
-<button type="button" id="btnSlNm">찾기</button>
+<button type="button" id="btnSlNm">조회</button>
 <div id="gridSl"></div>
 <script type="text/javascript">
-console.log("a"+"${coList[0].coNm}");
-document.getElementById('startT2').value = nd.toISOString().slice(0, 10);
-document.getElementById('endT2').value = d.toISOString().slice(0, 10);
+var d2 = new Date();
+var nd2 = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
+document.getElementById('startT2').value = nd2.toISOString().slice(0, 10);
+document.getElementById('endT2').value = d2.toISOString().slice(0, 10);
 
 		function slList(){
 		/* 	박한기 패배하고 하드코딩하다.. 2022/1/14

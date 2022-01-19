@@ -2,19 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.sales.inout.service.impl.PrdtMapper">
 	<select id="findList" resultType="Prdt">
-		select p.prdt_lot,
-		p.prdt_dt,
-		p.prdt_cd,
-		o.prdt_nm,
-		o.prdt_spec,
-		k.indica_no,
-		'Y'
-		from prdt_stc p join prdt o
-		on p.prdt_cd = o.prdt_cd
-		join
-		indica_d k
-		on p.indica_deta_no=k.indica_deta_no
-		where
+		select 
+			p.prdt_inx,
+			p.prdt_lot,
+			p.prdt_dt,
+			p.prdt_cd,
+			o.prdt_nm,
+			o.prdt_spec,
+			k.indica_no
+			from prdt_stc p join prdt o
+			on p.prdt_cd = o.prdt_cd
+			join
+			indica_d k
+			on p.indica_deta_no=k.indica_deta_no
+			where
 			   	<![CDATA[	
 					TO_CHAR(p.prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(p.prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
 				]]>
@@ -165,7 +166,7 @@
 	</insert>
 
 	<delete id="deleteInPrdt">
-		delete from prdt_stc where prdt_lot=#{prdtLot} and
+		delete from prdt_stc where prdt_inx=#{prdtInx} and
 		prdt_fg ='I'
 
 	</delete>
@@ -191,7 +192,7 @@
 							and prdt_fg='I'
 	</insert>
 
-
+<!-- 안쓸지도? -->
 	<update id="updateInPrdt">
 		merge into prdt_stc a
 		using (select
@@ -254,10 +255,10 @@
 	</select>
 	
 	<select id="findSlipLot" resultType="Prdt">
-	
 		select prdt_lot,
 				prdt_cd,
-				#{prdtNm} 
+				#{prdtNm} as prdt_nm,
+				  #{indicaDetaNo} as indica_deta_no 
 				from prdt_stc 
 				where indica_deta_no = #{indicaDetaNo} 
 					and prdt_fg='O' and prdt_cd=#{prdtCd}

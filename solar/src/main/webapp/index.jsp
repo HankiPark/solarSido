@@ -74,58 +74,58 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-info-circle"></i>
               <p>
                기준정보관리
-                <i class="right fas fa-angle-left"></i>
+                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/cmmndata" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>공통코드 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/rscinfo" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재정보 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/prdtbom" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>제품 BOM 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/fair" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>공정 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/emp" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>사원 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/uoprcd" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>비가동코드 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/prdtinfer" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>제품 불량코드 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/common/rscinfer" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 불량코드 관리</p>
                 </a>
               </li>
@@ -142,25 +142,25 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/sales/order" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>주문서 참조</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/sales/prdt_inout_mng" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>입출고 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>입출고 조회</p>
                 </a>
               </li>
                <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>반품 관리</p>
                 </a>
               </li>
@@ -168,7 +168,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-leaf"></i>
               <p>
                자재관리
                 <i class="fas fa-angle-left right"></i>
@@ -177,49 +177,49 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/ordr" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 발주 참조(기능완)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/inadmin" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 입고 관리(기능 완)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{pageContext.request.contextPath}/rsc/in" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>자재 입고 조회(기능완) </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/out" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon nav-icon"></i>
                   <p>자재 출고 조회(기능완) </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/rt" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p> 자재 반품 조회(기능완) </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/stc" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>자재 재고 조회(기능완)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p> 자재 LOT별 재고 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>자재 LOT별 재고 조회</p>
                 </a>
               </li>
@@ -227,7 +227,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+              <i class="nav-icon fas fa-cogs"></i>
               <p>
                 생산관리
                 <i class="fas fa-angle-left right"></i>
@@ -236,43 +236,43 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/prod/prodPlanMng" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>생산계획 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/prod/prodPlanList" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>생산계획 조회</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/prod/indicaMng" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>생산지시 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/prod/indicaList" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>생산지시 조회</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/prcs/prcsprog" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>공정 진행 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/forms/validation.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>공정 실적 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/forms/validation.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>공정 실적 조회</p>
                 </a>
               </li>
@@ -280,7 +280,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fas fa-industry"></i>
               <p>
                 설비 관리
                 <i class="fas fa-angle-left right"></i>
@@ -289,19 +289,19 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/eqm/eqmMng" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>설비 관리</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/eqm/nonMovingMng" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>설비 비가동 관리(NY)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/eqm/nonMovingList" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>설비 비가동 조회(NY)</p>
                 </a>
               </li>
@@ -318,25 +318,25 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/insp" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 검수 관리(기능완)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>자재 검수 조회</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>제품 생산 조회(추적?)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p> LOT별 생산이력 조회</p>
                 </a>
               </li>
@@ -413,7 +413,7 @@
 		<script
 			src="${pageContext.request.contextPath}/resources/dist/js/demo1.js"></script>
 	
-<script type="text/javascript" src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+
 </body>
 </html>
 

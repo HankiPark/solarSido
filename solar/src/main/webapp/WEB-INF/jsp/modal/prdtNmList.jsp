@@ -9,7 +9,7 @@
 <body>
 <label>제품명</label> <input type="text" id="prdNmFind">
 <label>제품코드</label> <input type="text" id="prdCdFind">
-<button type="button" id="btnNm">찾기</button>
+<button type="button" id="btnNm">조회</button>
 <div id="gridD"></div>
 <script type="text/javascript">
 

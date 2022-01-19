@@ -47,6 +47,29 @@
         <tiles:insertAttribute name="body"></tiles:insertAttribute>
 
 
+<script type="text/javascript">
+$(function(){
+	
+
+	$("button:contains('조회')").html("🔍조회");
+	 	$("button:contains('조회')").css("width","66");
+		$("button:contains('조회')").css("height","30");
+		$("button:contains('조회')").css("padding","6 1 6 3"); 
+	$("button:contains('삭제')").prepend("<i class='far fa-trash-alt'> </i> ");
+	$("button:contains('삭제')").css("height","30");
+	$("button:contains('삭제')").css("padding","6 1 6 3"); 
+	
+	$("button:contains('저장')").prepend("<i class='far fa-save'> </i> ");
+	$("button:contains('저장')").css("height","30");
+	$("button:contains('저장')").css("padding","6 1 6 3"); 
+	$("button:contains('추가')").prepend("<i class='far fa-plus-square'> </i> ");
+	$("button:contains('추가')").css("height","30");
+	$("button:contains('추가')").css("padding","6 1 6 3"); 
+	
+	}
+)
+</script>
+
     <script src="${pageContext.request.contextPath}/resources/assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- apps -->
     <script src="${pageContext.request.contextPath}/resources/dist/js/app-style-switcher.js"></script>

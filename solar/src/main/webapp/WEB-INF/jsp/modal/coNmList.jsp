@@ -9,7 +9,7 @@
 <body>
 <label>업체명</label> <input type="text" id="coNmFind">
 <label>업체코드</label> <input type="text" id="coCdFind">
-<button type="button" id="btnCoNm">찾기</button>
+<button type="button" id="btnCoNm">조회</button>
 <div id="gridCo"></div>
 <script type="text/javascript">
 

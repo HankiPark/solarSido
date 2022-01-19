@@ -256,7 +256,7 @@ button:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled) {
   cursor: pointer; 
-  background :linear-gradient(to right, #da8cff, #9a55ff);
+  background-color :#5f76e8;
   color : #ffffff;
   border-radius: 8px;
   border:0;

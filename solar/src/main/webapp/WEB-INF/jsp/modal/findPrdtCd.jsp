@@ -12,7 +12,7 @@
 	<input type="text" id="prdCdFind">
 	<label>제품명</label>
 	<input type="text" id="prdNmFind">
-	<button type="button" id="btnNm">검색</button>
+	<button type="button" id="btnNm">조회</button>
 
 	<div id="prdtCdGrid"></div>
 </body>

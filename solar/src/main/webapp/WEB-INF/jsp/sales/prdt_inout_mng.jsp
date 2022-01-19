@@ -191,7 +191,7 @@ a {
 									
 									
 								}).done((res)=>{
-												console.log("초기화완료")
+												
 												a=res["num2"];
 												
 												//전표번호 부여(기본)
@@ -324,9 +324,6 @@ a {
 					}, {
 						header : '생산지시번호',
 						name : 'indicaNo'
-					}, {
-						header : '중복체크',
-						name : 'valid'
 					}
 
 					],
@@ -338,7 +335,7 @@ a {
 			inGrid.refreshLayout();
 		});
 		inGrid.on('response', function(ev) {
-			console.log(ev);
+	
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				inGrid.resetOriginData();
@@ -349,9 +346,7 @@ a {
 				.on(
 						'click',
 						function(ev) {
-							console.log(ev["columnName"]);
-							console.log(inGrid
-									.getValue(ev["rowKey"], "prdtLot"));
+							
 							if (ev["columnName"] == "prdtLot") {
 								dialog2.dialog("open");
 								$("#dialog-lot")
@@ -376,26 +371,19 @@ a {
 				'prdNm' : prdNm
 			}
 
-			$.ajax({
-				url : '${pageContext.request.contextPath}/grid/prdtInput.do',
-				data : params,
-				dataType : "json",
-				contentType : 'application/json; charset=utf-8',
-
-			}).done(function(res) {
+		
 				/* inGrid.enable(); */
-				inGrid.resetData(res["data"]["contents"]);
+				inGrid.readData(1,params,true);
 				/* 		for (var i = 0; i < sres["data"]["contents"].length; i++) {
-							inGrid.disableRow(i);
-						} */
-			})
+							inGrid.disableRow(i);*/
+	
 
 		})
 
 		//행추가버튼
 		$('#insertBtn').on('click', function appendRow(index) {
 
-			inGrid.appendRow(null, {
+			inGrid.appendRow({}, {
 				extendPrevRowSpan : true,
 				focus : true,
 				at : 0
@@ -405,7 +393,14 @@ a {
 		$('#updateBtn').on('click', function appendRow(index) {
 
 			inGrid.blur(); 
-			inGrid.request('modifyData');
+		
+			if(inGrid.validate().length!=0){
+				toastr.error("제품lot은 중복될수 없습니다");
+				
+			}else{
+				inGrid.request('modifyData');
+				
+			}
 
 		});
 		$('#deleteBtn').on('click', function appendRow(index) {
@@ -535,7 +530,7 @@ a {
 			outGrid.refreshLayout();
 		});
 		outGrid.on('response', function(ev) {
-			console.log(ev);
+		
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				outGrid.clear(); 
@@ -713,27 +708,36 @@ a {
 					]
 
 				});
+
 		
 		//주문번호 modal
 		outGrid2.on("click",(ev)=>{
 			if(ev["columnName"]=="oustQty"){
+				if(outGrid2.getValue(ev["rowKey"],"oustQty")!=0){
+			
 				dialog6.dialog("open");
 				$("#dialog-outEndList")
 						.load(
 								"${pageContext.request.contextPath}/modal/outEndList.do",
 								function() {
+									
 									rowKeyNm=ev["rowKey"];
+									console.log(rowKeyNm)
 									outEndList()
+									
 								})
+			}else{
+			toastr.warning("출고수량이 없습니다.")	
 			}
 			
 			
 			
-		})
+			
+		}})
 		
 		
 		outGrid2.on('onGridUpdated', function() {
-			console.log("리프레쉬")
+		
 			outGrid2.refreshLayout();
 		});
 		outGrid2.refreshLayout();

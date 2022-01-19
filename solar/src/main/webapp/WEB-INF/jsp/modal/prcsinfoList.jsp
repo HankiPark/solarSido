@@ -9,7 +9,7 @@
 <body>
 <label>공정코드</label> <input type = "text" id="prcsCdIn">
 <label>공정명</label> <input type = "text" id="prcsNmIn">
-<button type = "button" id ="btnFind">찾기</button>
+<button type = "button" id ="btnFind">조회</button>
 <div id = "gridPrcs">
 </div>
 

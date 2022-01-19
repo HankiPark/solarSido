@@ -11,7 +11,7 @@
 	<input type="text" id="coNm">
 	<label>자재코드</label>
 	<input type="text" id="rscCd">
-	<button type="button" id="btnfindCo">검색</button>
+	<button type="button" id="btnfindCo">조회</button>
 	<div id="rscGrid"></div>
 </body>
 <script>

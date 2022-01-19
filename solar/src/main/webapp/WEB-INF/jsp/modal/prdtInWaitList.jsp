@@ -14,7 +14,7 @@
 					id="endT2" type="date" data-role="datebox"
 					data-options='{"mode": "calbox"}'>
 <label>제품명</label> <input type="text" id="prdNm2">
-<button type="button" id="btnF">찾기</button>
+<button type="button" id="btnF">조회</button>
 <div id="inWaitGrid"></div>
 <script type="text/javascript">
 	//날짜설정

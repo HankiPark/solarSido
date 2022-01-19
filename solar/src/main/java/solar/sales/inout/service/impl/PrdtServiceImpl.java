@@ -38,7 +38,6 @@ public class PrdtServiceImpl implements PrdtService {
 		for(Prdt vo : mvo.getCreatedRows()) {
 			System.out.println("vo는"+vo);
 			pmapper.insertInPrdt(vo);
-			System.out.println(pmapper.inStcUpdate(vo));
 			}
 		}
 		if(mvo.getDeletedRows()!=null) {
@@ -48,7 +47,8 @@ public class PrdtServiceImpl implements PrdtService {
 		}
 		if(mvo.getUpdatedRows()!=null) {
 			for(Prdt vo : mvo.getUpdatedRows()) {
-				pmapper.updateInPrdt(vo);
+				pmapper.deleteInPrdt(vo);
+				pmapper.insertInPrdt(vo);
 			}
 		}
 		return 1;
@@ -72,7 +72,7 @@ public class PrdtServiceImpl implements PrdtService {
 		if(mvo.getCreatedRows()!=null) {
 			pmapper.insertOutPrdt(mvo.getCreatedRows().get(0));
 			for(Prdt vo : mvo.getCreatedRows()) {
-				System.out.println(vo);
+				
 				pmapper.insertOutD(vo);
 				
 				System.out.println(pmapper.updateStatePrdt(vo)+"설정완료");

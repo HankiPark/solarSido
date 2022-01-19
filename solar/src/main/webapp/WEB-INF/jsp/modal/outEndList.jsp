@@ -28,8 +28,6 @@
 
 			contentType : 'application/json'
 		};
-			console.log(outGrid2.getValue(rowKeyNm,"slipDetaNo"));
-			console.log(outGrid2.getValue(rowKeyNm,"prdtCd"));
 			const gridEnd = new tui.Grid({
 				el : document.getElementById('gridEnd'), // 컨테이너 엘리먼트
 				data : dataSourceD,
