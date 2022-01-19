@@ -65,7 +65,18 @@
 </select>
 
 <select id="selectPrcsItemRSC" resultType="solar.prcs.prcs.service.RscConVO">
-
+	
+	select rsc_con_no,
+			indica_deta_no,
+			recv_dt,
+			recv_dt,
+			plan_dt,
+			order_no,
+			rsc_lot,
+			rsc_con_qty 	
+	from rsc_con
+	where indica_deta_no= #{indicaDetaNo}
+	
 </select>
 
 

@@ -97,7 +97,7 @@
 		var indicaNo = indicaGrid.getValue(rk,"indicaNo");
 		var indicaDetaNo = indicaGrid.getValue(rk,"indicaDetaNo");
 		var prdtNm = indicaGrid.getValue(rk,"prdtNm");
-		
+		var indicaQty = indicaGrid.getValue(rk,"indicaQty");
 		
 		var inddd = indicaNo + "-" + indicaDetaNo;
 		var prd = indicaGrid.getValue(rk,"prdtCd");
@@ -109,7 +109,7 @@
 		
 		// 더블클릭하여 선택된 row의 지시번호가 null이 아닐때 공정페이지에 정보넘어가면서 이벤트발생
 		if(inddd!=="null-null"){
-			innIndica(inddd, prd, indicaDetaNo);
+			innIndica(inddd, prd, indicaDetaNo, indicaQty);
 		}
 		
 	});

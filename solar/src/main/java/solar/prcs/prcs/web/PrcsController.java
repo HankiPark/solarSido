@@ -13,6 +13,7 @@ import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsService;
+import solar.prcs.prcs.service.RscConVO;
 
 @Controller
 public class PrcsController {
@@ -43,8 +44,9 @@ public class PrcsController {
 		
 		return "jsonView";
 	}
+	
 	/*------------------------------------------------------------------------------------------------ */
-	// 공정명검색
+	// LOT추적 테이블을 탐색해 최초 등록된 장비 가져오는 명령
 	
 	  @GetMapping("/prcs/prcsItem") 
 	  public String getItem(ClotVO vo, Model model) {
@@ -55,6 +57,14 @@ public class PrcsController {
 	  model.addAttribute("data", map);
 	  
 	  return "jsonView"; 
+	  }
+	 
+	// 상세지시 번호를 메인페이지로 가져올때 가져온 번호를 기준으로 등록된 소모자재테이블 조회
+	  
+	  @GetMapping("/prcs/prcsItemRsc")
+	  public String getItemRsc(RscConVO vo, Model model) {  
+		model.addAttribute("RSC", prcsservice.selectPrcsItemRSC(vo));	  
+		return "jsonView";
 	  }
 	 
 	/*------------------------------------------------------------------------------------------------ */
