@@ -27,14 +27,29 @@
 		AND B.indica_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY/MM/DD')
 		</if>
 		<if test="coCd != null and coCd != ''">
-		AND (SELECT co_cd FROM order_tb WHERE order_no = P.order_no) co_cd = #{coCd}
+		AND (SELECT co_cd FROM order_tb WHERE order_no = P.order_no) = #{coCd}
 		</if>
 		<if test="prdtCd != null and prdtCd != ''">
-		AND (SELECT prdt_cd FROM order_tb WHERE order_no = P.order_no) prdt_cd = #{prdtCd}
+		AND B.prdt_cd = #{prdtCd}
 		</if>
 		<if test="indicaNo != null and indicaNo != ''">
 		AND B.indica_no = #{indicaNo}
 		</if>
+</select>
+
+<select id="findIndica" resultType="IndicaVO">
+	SELECT
+		indica_no,
+		TO_CHAR(indica_dt, 'YYYY-MM-DD') indica_dt,
+		indica_nm	
+	FROM indica
+		<if test="planStartDt != null and planStartDt != ''">
+		AND indica_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY-MM-DD')
+		</if>
+		<if test="planEndDt != null and planEndDt != ''">
+		AND indica_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
+		</if>
+	ORDER BY indica_no
 </select>
 
 </mapper>

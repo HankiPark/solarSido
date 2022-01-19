@@ -6,4 +6,6 @@ public interface IndicaService {
 
 	List<?> selectIdc(IndicaVO idcVo);
 
+	List<?> findIndica(IndicaVO idcVo);
+
 }

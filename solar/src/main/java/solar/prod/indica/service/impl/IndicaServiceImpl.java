@@ -17,4 +17,9 @@ public class IndicaServiceImpl implements IndicaService {
 	public List<?> selectIdc(IndicaVO idcVo) {
 		return idcMapper.selectIdc(idcVo);
 	}
+
+	@Override
+	public List<?> findIndica(IndicaVO idcVo) {
+		return idcMapper.findIndica(idcVo);
+	}
 }

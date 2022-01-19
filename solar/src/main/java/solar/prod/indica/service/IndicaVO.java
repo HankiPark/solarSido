@@ -17,7 +17,7 @@ public class IndicaVO {
 	int planDetaNo;		//계획상세번호
 	String prdtCd;		//제품코드
 	String prodFg;		//생산구분
-	String indicaQty;	//지시량
+	int indicaQty;		//지시량
 	String wkOrd;		//작업순서
 	String wkDt;		//작업일자
 	String planDt;		//계획일자
@@ -45,5 +45,5 @@ public class IndicaVO {
 
 	//주문
 	String paprdDt;		//납기일자
-	String orderQty; 	//주문량
+	int orderQty; 	//주문량
 }
