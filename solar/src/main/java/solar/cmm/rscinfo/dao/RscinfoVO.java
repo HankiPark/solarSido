@@ -7,9 +7,10 @@ public class RscinfoVO {
 	String rscCd;
 	String rscNm;
 	String safStc;
-	String coCd;
 	String rscSpec;
 	String rscUnit;
 	String rscImg;
 	String rscUntprc;
+	String coCd;
+	String coNm;
 }

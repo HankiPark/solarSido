@@ -86,9 +86,10 @@
 		data: planDdataSource, 
 		scrollX: false,
 		scrollY: true,
-		width: 1250,
 		bodyHeight: 500,
-		rowHeaders: ['checkbox'],
+		rowHeaders: [{
+			type: 'checkbox',
+			width: 70}],
 		columns: [
 			 {
 			    header: '계획상세번호',

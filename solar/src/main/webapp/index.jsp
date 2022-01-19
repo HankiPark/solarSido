@@ -176,39 +176,82 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/rsc/inferGraph" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>불량률(임시)</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/rsc/ordradmin" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>자재 발주 관리(ㅇ)</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/ordr" class="nav-link">
+<<<<<<< HEAD
                   <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 발주 참조(기능완)</p>
+=======
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>자재 발주 참조(ㅇ)</p>
+>>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/inadmin" class="nav-link">
+<<<<<<< HEAD
                   <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 입고 관리(기능 완)</p>
+=======
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>자재 입고 관리(ㅇ)</p>
+>>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
                 </a>
               </li>
               <li class="nav-item">
+<<<<<<< HEAD
                 <a href="{pageContext.request.contextPath}/rsc/in" class="nav-link">
                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 입고 조회(기능완) </p>
+=======
+                <a href="${pageContext.request.contextPath}/rsc/in" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>자재 입고 조회(ㅇ) </p>
+>>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/out" class="nav-link">
+<<<<<<< HEAD
                   <i class="fas fa-search nav-icon nav-icon"></i>
                   <p>자재 출고 조회(기능완) </p>
+=======
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>자재 출고 조회</p>
+>>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/rt" class="nav-link">
+<<<<<<< HEAD
                   <i class="fas fa-search nav-icon"></i>
                   <p> 자재 반품 조회(기능완) </p>
+=======
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> 자재 반품 조회(ㅇ) </p>
+>>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/stc" class="nav-link">
+<<<<<<< HEAD
                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 재고 조회(기능완)</p>
+=======
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>자재 재고 조회(ㅇ)</p>
+>>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
                 </a>
               </li>
               <li class="nav-item">
@@ -364,6 +407,7 @@
       <ul class="navbar-nav overflow-hidden" role="tablist"></ul>
       <a class="nav-link bg-light" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a>
       <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
+      <a class="nav-link bg-light" href="javascript:void(0);" onclick="refresh()"><i class="fas fa-expand"></i></a>
     </div>
     <div class="tab-content">
       <div class="tab-empty">
@@ -415,5 +459,13 @@
 	
 
 </body>
+<script>
+	function refresh(){
+		let iframes = document.getElementsByTagName('iframe');
+		for(let iframe of iframes){
+			iframe.contentWindow.location.reload();
+		}
+	}
+</script>
 </html>
 

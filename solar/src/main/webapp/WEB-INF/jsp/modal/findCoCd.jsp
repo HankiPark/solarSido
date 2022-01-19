@@ -12,7 +12,9 @@
 	<input type="text" id="coCdFind">
 	<label>업체명</label>
 	<input type="text" id="coNmFind">
+
 	<button type="button" id="btnfindCo">조회</button>
+
 
 	<div id="coCdGrid"></div>
 </body>
@@ -51,13 +53,14 @@ function coCdList(){
 			});
 
 	//검색버튼
-	$('#btnCoNm').on('click', function() {
+	$('#btnfind').on('click', function() {
 		var coNm = $("#coNmFind").val();
 		var coCd = $("#coCdFind").val();
+		console.log(coCd);
+		console.log(coNm);
 		var Params = {
 			'coCd' : coCd,
-			'coNm' : coNm,
-			'coFg' : 'P'
+			'coNm' : coNm
 		}
 		$.ajax({
 			url : '${pageContext.request.contextPath}/grid/findCoCd.do',
@@ -72,6 +75,7 @@ function coCdList(){
 	//그리드 내부 더블클릭
 	coCdGrid.on('dblclick', function(ev) {
 		$('#coCd').val(coCdGrid.getValue(ev["rowKey"], "coCd"));
+		$('#coNm').val(coCdGrid.getValue(ev["rowKey"], "coNm"));
 		coCdDialog.dialog("close");
 	});
 

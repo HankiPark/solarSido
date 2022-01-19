@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.prod.indica.service.impl.IndicaMapper">
+
+<select id="selectIdc" resultType="IndicaVO">
+	SELECT 
+		B.indica_deta_no,
+		B.indica_no,
+		(SELECT co_cd FROM order_tb WHERE order_no = p.order_no) co_cd,
+		B.prdt_cd,
+		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
+		P.order_no,
+		TO_CHAR((SELECT paprd_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY/MM/DD') paprd_dt,
+		O.order_qty,
+		B.indica_qty,
+		B.prod_fg,
+		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
+		B.wk_ord
+	FROM indica_d B, plan_d P, order_d O
+	WHERE  B.plan_deta_no = P.plan_deta_no
+	AND P.order_no = O.order_no
+	AND B.prdt_cd = O.prdt_cd
+		<if test="planStartDt != null and planStartDt != ''">
+		AND B.indica_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY/MM/DD')
+		</if>
+		<if test="planEndDt != null and planEndDt != ''">
+		AND B.indica_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY/MM/DD')
+		</if>
+		<if test="coCd != null and coCd != ''">
+		AND (SELECT co_cd FROM order_tb WHERE order_no = P.order_no) co_cd = #{coCd}
+		</if>
+		<if test="prdtCd != null and prdtCd != ''">
+		AND (SELECT prdt_cd FROM order_tb WHERE order_no = P.order_no) prdt_cd = #{prdtCd}
+		</if>
+		<if test="indicaNo != null and indicaNo != ''">
+		AND B.indica_no = #{indicaNo}
+		</if>
+</select>
+
+</mapper>
