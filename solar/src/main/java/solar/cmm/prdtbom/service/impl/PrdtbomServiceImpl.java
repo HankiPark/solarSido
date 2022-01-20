@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prdtbom.dao.PrdtbomVO;
 import solar.cmm.prdtbom.service.PrdtbomService;
 import solar.sales.order.dao.ModifyVO;
@@ -65,6 +64,18 @@ public class PrdtbomServiceImpl implements PrdtbomService{
 	}
 		
 		return 1;
+	}
+
+	@Override
+	public List<PrdtbomVO> prdtinfoFind(PrdtbomVO prdtvomVO) {
+		// TODO Auto-generated method stub
+		return prdtbomMapper.prdtinfoFind(prdtvomVO);
+	}
+
+	@Override
+	public List<PrdtbomVO> prdtList(PrdtbomVO prdtbomVO) {
+		// TODO Auto-generated method stub
+		return prdtbomMapper.prdtList(prdtbomVO);
 	}
 	
 }

@@ -70,13 +70,21 @@ public class RscinfoController {
 	}
 	
 	@RequestMapping("/rscinfoUpdate.do")
+	@ResponseBody
 	public int rscinfoUpdate(RscinfoVO rscinfoVO) {
 		return rscinfoService.rscinfoUpdate(rscinfoVO);
 	}
 	
+	@RequestMapping("/rscinfoInsert.do")
+	@ResponseBody
+	public int rscinfoInsert(RscinfoVO rscinfoVO) {
+		return rscinfoService.rscinfoInsert(rscinfoVO);
+	}
+	
 	@RequestMapping("/rscinfoDelete.do")
+	@ResponseBody
 	public int rscinfoDelete(RscinfoVO rscinfoVO) {
-		return rscinfoService.rscinfoDelete(rscinfoVO);
+		return rscinfoService.rscinfoUpdate(rscinfoVO);
 	}
 	
 	@RequestMapping("/grid/rscinfoUpdateIn.do")
