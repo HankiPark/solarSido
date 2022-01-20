@@ -169,28 +169,28 @@
 					    name: 'wkOrd',
 					  },
 			 		 ],
-			 		summary: {
-				        position: 'bottom',
-				        height: 50,
-				        columnContent: {
-				        	planDt: {
-				        		template: function(valueMap) {
-				        			return '합계';
-				        			},
-				        		align:'center'
-							},
-							orderQty: {
-								template: function(valueMap) {
-									return valueMap.sum;
-									}
-							},
-							planQty: {
-								template: function(valueMap) {
-									return valueMap.sum;
-									}
-							}
-				        }
-				    }
+ 		summary: {
+	        position: 'bottom',
+	        height: 50,
+	        columnContent: {
+	        	planDt: {
+	        		template: function(valueMap) {
+	        			return '합계';
+	        			},
+	        		align:'center'
+				},
+				orderQty: {
+					template: function(valueMap) {
+						return valueMap.sum;
+						}
+				},
+				planQty: {
+					template: function(valueMap) {
+						return valueMap.sum;
+						}
+				}
+	        }
+	    }
 			});
 	
 	//조회 버튼: 조건별(기간, 업체, 제품) 생산계획 조회

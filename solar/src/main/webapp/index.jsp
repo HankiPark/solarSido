@@ -175,7 +175,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="${pageContext.request.contextPath}/sales/prdt_inout_ref" class="nav-link">
                   <i class="fas fa-search nav-icon"></i>
                   <p>입출고 조회</p>
                 </a>

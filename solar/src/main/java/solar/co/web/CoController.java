@@ -16,6 +16,19 @@ public class CoController {
 	@Autowired
 	CoService coService;
 	
+	//업체목록 모달
+	@GetMapping("co")
+	public String getCo() {
+		return "modal/searchCo";
+	}
+	
+	//업체 다중선택 모달
+	@GetMapping("comul")
+	public String getCoMul() {
+		return "modal/searchCoMul";
+	}
+	
+	//업체목록 모달 데이터
 	@GetMapping("co/coData")
 	public String getCoData(@RequestParam Map map, Model model) {
 		model.addAttribute("co", coService.search(map));

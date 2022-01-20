@@ -27,6 +27,11 @@ public class PrdtbomController {
 		return "common/prdtbom";
 	}
 	
+	@RequestMapping("modal/prdtlistbom")
+	public String prdtbommodal() {
+		return "modal/prdtlistbom";
+	}
+	
 	@GetMapping("/grid/prdtbomList.do")
 	public String prdtbomList(Model model, PrdtbomVO prdtbomVO) throws Exception{
 		List<?> prdtbomList = prdtbomService.prdtbomList(prdtbomVO);
@@ -35,6 +40,32 @@ public class PrdtbomController {
 		data.put("contents", prdtbomList);
 		model.addAttribute("result", true);
 		model.addAttribute("data", data);
+		return "jsonView";
+	}
+	
+	@GetMapping("/grid/prdtmodalList.do")
+	public String prdtmodalList(Model model, PrdtbomVO prdtbomVO) throws Exception{
+		List<?> prdtList = prdtbomService.prdtList(prdtbomVO);
+		Map<String,Object> data = new HashMap<>();
+		Map<String,Object> map = new HashMap<>();
+		data.put("contents", prdtList);
+		model.addAttribute("result", true);
+		model.addAttribute("data", data);
+		return "jsonView";
+	}
+	
+	@GetMapping("/grid/prdtinfoSearch")
+	public String prdtfind(Model model, PrdtbomVO prdtbomVO) throws Exception{
+		
+		List<?> prdtList = prdtbomService.prdtinfoFind(prdtbomVO);
+		model.addAttribute("result", true);
+		Map<String, Object>map = new HashMap();
+		Map<String, Object>map2 = new HashMap();
+		map.put("contents", prdtList);
+		map2.put("page", 1);
+		map2.put("totalCount", prdtList.size());
+		model.addAttribute("data", map);
+		
 		return "jsonView";
 	}
 	

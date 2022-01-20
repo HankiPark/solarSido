@@ -4,36 +4,80 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" />
+<script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>불량률</h1>
-	<div id="curve_chart" style="width: 900px; height: 500px"></div>
+	<h1>불량불량</h1>
+	<div id="coModal" title="업체 목록"></div>
+	연도<input type="text" id="year">
+	발주업체: <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
+	<br><button id="sendRequest" onclick="inferRequest()">조회</button>
+	<div id="chartDiv"></div>
 </body>
 <script>
-	import Chart from '@toast-ui/chart'
-	const chart = Chart.columnChart({el, data, options});
-	const data = {
-			  categories: ['Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-			  series: [
-			    {
-			      name: 'Budget',
-			      data: [5000, 3000, 5000, 7000, 6000, 4000, 1000]
-			    },
-			    {
-			      name: 'Income',
-			      data: [8000, 4000, 7000, 2000, 6000, 3000, 5000]
-			    },
-			    {
-			      name: 'Expenses',
-			      data: [4000, 4000, 6000, 3000, 4000, 5000, 7000]
-			    },
-			    {
-			      name: 'Debt',
-			      data: [3000, 4000, 3000, 1000, 2000, 4000, 3000]
-			    }
-			  ]
-			}
+	let categories = [];
+	let series;
+	
+	function inferRequest(){
+		let year = document.getElementById('year').value;
+		let coCds = document.getElementById('coCds').value;
+		
+	    fetch('inferGraphData',{
+	        method:'POST',
+	        body:JSON.stringify({coCds:coCds,year:year}),
+	        headers:{'Content-Type':'application/json'}
+	    }).then(data=>data.json())
+	    .then((result)=>{
+	    	for(let i of result.inferRates){
+	    		categories.push(i.coCd);
+	    	}
+	        console.log(categories);
+	    });
+	}
+    
+	series = [
+		{
+            name: 'first',
+            data: [2.7, 2, 1.1]
+        },
+        {
+            name: 'second',
+            data: [2, 1, 0.5]
+        },
+        {
+            name: 'third',
+            data: [2.7, 1, 1.2]
+        },
+        {
+            name: 'fourth',
+            data: [2.3, 1.6, 2.5]
+        }];
+	
+	const el = document.getElementById('chartDiv');
+    const data = {categories,series};
+    const options = {
+    		chart: {
+    			title: '분기별 자재 불량률',
+    			width: 900,
+    			height: 400,
+    		},
+    };
+
+    const chart = toastui.Chart.barChart({ el, data, options });
+    
+    let coDialog = $("#coModal").dialog({
+        modal: true,
+        autoOpen: false,
+    	width : 600,
+    	height : 600
+      });
+
+      $("#coSearchBtn").on("click", function () {
+        coDialog.dialog("open");
+        $("#coModal").load("../comul");
+      });
+      
 </script>
 </html>

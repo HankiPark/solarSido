@@ -75,8 +75,9 @@
 				},
 			modifyData: { 
 				url: '${pageContext.request.contextPath}/grid/planModify.do', 
-				method: 'POST'}
-				},
+				method: 'POST'
+				}
+			},
 		contentType: 'application/json',
 		initialRequest: false //초기에 안보이게 함
 	}
