@@ -29,6 +29,11 @@ public class PrdtController {
 		/* model.addAttribute("coList", (pservice.findCo())); */
 		return "sales/prdt_inout_mng";
 	}
+	@RequestMapping("/sales/prdt_inout_ref")
+	public String prdtPageRef(Model model) {
+		/* model.addAttribute("coList", (pservice.findCo())); */
+		return "sales/prdt_inout_ref";
+	}
 
 	// 입출고 조회
 	@RequestMapping("/grid/prdtInput.do")
