@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.cmm.code.service.CmmnCdService;
 import solar.rsc.cmmn.service.RscService;
+import solar.rsc.infer.service.RscInferRate;
 import solar.rsc.infer.service.RscInferService;
 import solar.rsc.inout.service.RscInOut;
 import solar.rsc.inout.service.RscInOutService;
 import solar.rsc.ordr.service.RscOrdr;
 import solar.rsc.ordr.service.RscOrdrService;
-import solar.rsc.rt.service.RscRt;
 import solar.rsc.rt.service.RscRtService;
 import solar.rsc.stc.service.RscStcService;
 import solar.sales.order.dao.ModifyVO;
@@ -76,12 +76,6 @@ public class RscController {
 		return "jsonView";
 	}
 
-	//업체목록 모달
-	@GetMapping("co")
-	public String getCo() {
-		return "modal/searchCo";
-	}
-	
 	//자재목록 모달
 	@GetMapping("rsc")
 	public String rsc() {
@@ -241,6 +235,16 @@ public class RscController {
 	@GetMapping("rsc/inferGraph")
 	public String rscInferGraph() {
 		return "rsc/infergraph";
+	}
+	
+	//불량률그래프 데이터
+	@PostMapping("rsc/inferGraphData")
+	public String rscInferGraphData(@RequestBody Map map, Model model) {
+		System.out.println(map);
+		List<RscInferRate> list = rscInferService.getQuarteredInferRate(map);
+		System.out.println(list);
+		model.addAttribute("inferRates",list);
+		return "jsonView";
 	}
 	
 }

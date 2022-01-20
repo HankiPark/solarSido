@@ -6,4 +6,26 @@
 		select * from cmmn_data_d where cmmn_cd_id = 'rscinfer'
 	</select>
 
+	<select id="getQuarteredInferRate" parameterType="map" resultType="solar.rsc.infer.service.RscInferRate">
+		select to_number(to_char(sum(o.rsc_infer_qty)/sum(o.ordr_qty)*100,'000.00')) "infer_rate",
+			sum(o.rsc_infer_qty) "infer_qty",
+			sum(o.ordr_qty) "ordr_qty",
+			o.co_cd
+		from rsc_or o
+		join rsc_rt rt
+			on o.ordr_cd = rt.ordr_cd
+		where 1=1
+		<if test='year != null and year != ""'>
+			and to_char(rt.rtngd_dt,'yyyy') = #{year}
+		</if>
+		<if test='coCds.size != 0'>
+		and o.co_cd in 
+			<foreach collection="coCds" item="coCd" separator="," open="(" close=")" index="index">
+				#{coCd}
+			</foreach>
+		</if>
+		group by co_cd
+		order by co_cd
+	</select>
+
 </mapper>
