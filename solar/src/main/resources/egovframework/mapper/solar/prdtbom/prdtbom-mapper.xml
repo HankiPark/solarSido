@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="egovframework.mapper.solar.prdtbom.prdtbom-mapper">
+<mapper namespace="solar.cmm.prdtbom.service.impl.PrdtbomMapper">
 	
+	<select id="prdtbomList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
+	   	SELECT  a.rsc_cd,
+                    a.rsc_nm,
+                    b.prdt_cd,
+                    b.prdt_nm,
+					a.rsc_use_qty,
+					a.prdt_spec
+			FROM prdt_bom a, prdt b
+			WHERE a.prdt_cd = b.prdt_cd
+	</select>
+	
+	<select id = "prdtList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
+		SELECT * FROM PRDT
+	</select>
+	
+	<select id="prdtinfoFind" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
+		SELECT 	* FROM PRDT
+		<where>
+			<if test="prdtCd != null and prdtCd != ''">
+			AND PRDT_CD LIKE '%' || #{prdtCd} || '%'
+			</if>
+			<if test="prdtNm != null and prdtNm != ''">
+			AND PRDT_NM LIKE '%' || #{prdtNm} || '%'
+			</if>	
+		</where>
+		ORDER BY PRDT_CD
+	</select>
 
+	<insert id="prdtbomInsert">
+		INSERT INTO PRDT_BOM
+					(RSC_CD,
+					PRDT_CD,
+					RSC_NM,
+					RSC_USE_QTY,
+					PRDT_SPEC)
+			VALUES(#{rscCd},
+					#{prdtCd},
+					#{rscNm},
+					#{rscUseQty},
+					#{prdtSpec})
+	</insert>
+	
+	<update id="prdtbomUpdate">
+		UPDATE PRDT_BOM
+		SET RSC_CD = #{rscCd}
+			PRDT_CD = #{prdtCd}
+			RSC_NM = #{rscNm}
+			RSC_USE_QTY = #{rscUseQty}
+			PRDT_SPEC = #{prdtSpec}
+		WHERE RSC_CD = #{rscCd}
+	</update>
+	
+	<delete id="prdtbomDelete">
+	DELETE FROM PRDT_BOM
+	WHERE RSC_CD = #{rscCd}
+	</delete>
 </mapper>

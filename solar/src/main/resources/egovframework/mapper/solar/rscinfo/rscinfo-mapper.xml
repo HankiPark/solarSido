@@ -38,7 +38,6 @@
 			RSC_NM,
 			SAF_STC,
 			CO_CD,
-			CD_NM,
 			RSC_SPEC,
 			RSC_UNIT,
 			RSC_IMG,
@@ -48,7 +47,7 @@
 			#{rscNm},
 			#{safStc},
 			#{coCd},
-			#{coNm},
+
 			#{rscSpec},
 			#{rscUnit},
 			#{rscImg},
@@ -63,7 +62,6 @@
 		RSC_NM = #{rscNm},
 		SAF_STC = #{safStc},
 		CO_CD = #{coCd},
-		CO_NM = #{coNm},
 		RSC_SPEC = #{rscSpec},
 		RSC_IMG = #{rscImg},
 		RSC_UNTPRC = #{rscUntprc}
