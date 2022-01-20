@@ -24,7 +24,8 @@
 				작업자 : <input type="text" id="empId"><button type="button" id="searchIndic">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
 				<input type="text" id="frTm"><button id="btnStart">시작</button><input type="text" id="toTm"><button id="btnEnd" disabled="disabled">종료</button><br>
 				<button id="btnAddPerf">실적등록</button>
-				<button id="btnTest">테스트용</button>
+				<button id="btnTest1">테스트용1</button>
+				<button id="btnTest2">테스트용2</button>
 				<div>
 					<!-- 실시간으로 변화할 파트  -->
 					<h1 id="prcsTimer"></h1>
@@ -59,14 +60,18 @@
 	// 지시상세에 엮여있는 소모자재의 리스트를 담아둘 변수
 	let prcsItemRsc
 	
-	// 버튼 함수에서 사용하는 변수
+	// 공정 버튼 함수에서 사용하는 변수
 	let sPresent, ePresent;
 	let btnStart = document.getElementById("btnStart");
 	let btnEnd = document.getElementById("btnEnd");
+	let tAmount = 0;
 	let u1=0;
 	let u2=0;
 	let u3=0;
 	let u4=0;
+	
+	let time = 0;
+	let timerFlag = true;
 	
 		 
 	
@@ -140,16 +145,10 @@
 		
 		$("#toTm").val(eTime);
 		
+
 	});
 	
-	// 테스트 버튼
-	$("#btnTest").on("click", function(){
-		console.log(prcsGrid.getColumns());
-		console.log(prcsGrid.getData());
-		console.log(prcsGrid.getRowCount());
-		
-		
-	});
+
 
 	
 		// 공정 진행 그리드 데이터 컬럼선언
@@ -198,9 +197,10 @@
  		// 지시상세 페이지에서 정보를 넘겨받아 지시에 종속된 자재 리스트를 불러오는함수
  		function innIndica(inddd, prd, indicaDetaNo, indicaQty){
  			
+ 			tAmount = indicaQty;
  			$("#indicaDetaNo").val(inddd);
  			$("#prdtCd").val(prd);
- 			document.getElementById("wkQty").placeholder = "목표량 : "+indicaQty;
+ 			document.getElementById("wkQty").placeholder = "목표량 : "+tAmount;
  			
  			indicaDialog.dialog("close");
  			 			
@@ -237,27 +237,73 @@
  			
  			prcsEqmDialog.dialog("close");
 			
-	 		for(let i = 0; i < count; i++){
+	 	/* 	for(let i = 0; i < count; i++){
 	 			prcsGrid.setColumnValues("prcsCd",prcsNm,false);
-	 		}
+	 		} */
 	 			 		
  		}
  		
+ 		$(document).ready(function(){
+ 				PrcsTimer();
+ 			});
+ 		
+ 		function init(){
+ 			document.getElementById("prcsTimer").innerHTML = "00-00-00"
+ 		}
+ 		
  		// 타이머 
- 		function PrcsTimer(u1,u2,u3,u4){
- 			var time = time+1;
+ 		function PrcsTimer(){
+ 			var timer;
  			var sec = "0";
  			var min = "0";
  			var hour = "0";
  			
- 		 	/* if(time/216000>=1){
- 				hour = time%216000;
- 			}else if()
- 		 */
+ 			// 테스트 버튼
+ 			$("#btnTest1").on("click", function(){
+ 				console.log(prcsGrid.getColumns());
+ 				console.log(prcsGrid.getData());
+ 				console.log(prcsGrid.getRowCount());
+ 				console.log(tAmount);
+ 				timerFlag = false;
+ 				
+ 				if(time==0){
+ 					init();
+ 				}
+ 				
+ 				timer = setInterval(function(){
+ 					time++;
+ 					
+ 					if(time)
+ 					
+ 					min = Math.floor(time/60);
+ 					hour = Math.floor(min/60);
+ 					sec = time%60;
+ 					min = min%60;
+ 					
+ 					var fh = hour;
+ 					var fm = min;
+ 					var fs = sec;
+ 					
+ 					if(fh<10) fh = "0"+ hour;
+ 					if(fm<10) fm = "0"+ min;
+ 					if(fs<10) fs = "0"+ sec;
+					 					
+ 					document.getElementById("prcsTimer").innerHTML = fh+"-"+fm+"-"+fs; }, 1000);
+ 			});
+	 			
+ 				$("#btnTest2").on("click", function(){
+	 				// 타이머 종료 기능
+	 	 			if(time != 0){
+	 	 				clearInterval(timer);
+	 	 			    starFlag = true;
+	 	 			}
+				});
+		}
+ 		
  			
  			
- 			
- 		}
+ 		
+ 		
  		
  		
  		
