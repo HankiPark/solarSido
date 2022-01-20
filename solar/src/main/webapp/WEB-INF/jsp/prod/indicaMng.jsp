@@ -63,7 +63,7 @@
 	document.getElementById('indicaDt').value = iDt.toISOString().substring(0, 10);
 	
 	//지시 조회 그리드
-	const indicaDdataSource = {
+	let indicaDdataSource = {
 		  api: {
 		    	readData: {
 					url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
@@ -72,12 +72,13 @@
 		    	modifyData: {
 		    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
 					method: 'POST'
-				}, 
+							}
+		  },
 			contentType: 'application/json',
 			initialRequest: false //초기에 안보이게 함
-		};
+		}
 	
-	const indicaDgrid = new tui.Grid({
+	let indicaDgrid = new tui.Grid({
 		el: document.getElementById('indicaDgrid'),
 		data: indicaDdataSource,
 		scrollX: false,
@@ -105,7 +106,10 @@
 					    header: '제품코드',
 					    name: 'prdtCd',    
 				    	sortingType: 'desc',
-				        sortable: true
+				        sortable: true,
+				        validation: {
+			    	        required: true
+			    	      }
 					  },		  
 					  {
 					    header: '제품명',
@@ -132,21 +136,51 @@
 					  {
 					    header: '지시량',
 					    name: 'indicaQty',
+					    validation: {
+			    	        required: true
+			    	      },
+			    	      onAfterChange(e) {
+				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
+				    	    	indicaDgrid.setValue(e.rowKey, 'prodDay',
+				    	    					e.value / indicaDgrid.getValue(e.rowKey, 'dayOutput'));
+				    	    }    	
+					  },
+					  {
+					    header: '일생산량',
+					    name: 'dayOutput',
+					  },
+					  {
+					    header: '생산일수',
+					    name: 'prodDay',
 					  },
 					  {
 					    header: '생산구분',
 					    name: 'prodFg',
+					    formatter: 'listItemText',
+				    	editor: {
+				    		type:'select',
+				    		options: {
+				    			listItems: [
+				    				{text:'정상', value:'정상'},
+				    				{text:'재작업', value:'재작업'}
+				    				]
+					    		}
+					  		}
 					  },
 					  {
 					    header: '작업일자',
 					    name: 'wkDt',
 					    sortingType: 'desc',
-				        sortable: true
+				        sortable: true,
+				        validation: {
+			    	        required: true
+			    	      }
 					  },
 					  {
 					    header: '작업순서',
 					    name: 'wkOrd',
-					  },
+					    editor: 'text'
+					  }
 			 		 ]
 			});
 	
@@ -173,7 +207,7 @@
 		indicaDgrid.removeCheckedRows(true);
 	});
 	
-	//조회 버튼: 계획서 모달
+	//조회 버튼: 지시서 모달
 	let indicaDialog = $("#indicaModal").dialog({
 		autoOpen : false,
 		modal : true,
@@ -189,7 +223,7 @@
 									function() { indicaList() })
 	});
 	
- 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
+ 	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
 	$('#btnReset').click(function() {
 		indicaMngFrm.reset();
 		indicaDgrid.resetData([]);
