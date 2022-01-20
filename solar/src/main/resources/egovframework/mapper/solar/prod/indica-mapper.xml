@@ -15,7 +15,9 @@
 		B.indica_qty,
 		B.prod_fg,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
-		B.wk_ord
+		B.wk_ord,
+		'10' as day_out_put,
+		(B.indica_qty/10) as prod_day
 	FROM indica_d B, plan_d P, order_d O
 	WHERE  B.plan_deta_no = P.plan_deta_no
 	AND P.order_no = O.order_no
@@ -50,6 +52,12 @@
 		AND indica_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
 		</if>
 	ORDER BY indica_no
+</select>
+
+<select id="selectRscList" resultType="IndicaVO">
+	SELECT *
+	FROM prdt_bom
+	WHERE prdt_cd = #{prdtCd}
 </select>
 
 </mapper>

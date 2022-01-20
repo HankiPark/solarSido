@@ -50,7 +50,24 @@
 			<button type="button" id="rowDel">삭제</button>
 		</div>
 	</div>
+	<hr />
 
+	<div class="row">
+	<!-- 소요자재 그리드 -->
+	<div id="rscGrid" class="col-4" >
+		<label>제품코드</label>
+		<input type="text" id="prdtCd" name="prdtCd" readonly> 
+		<label>제품명</label>
+		<input type="text" id="prdtNm" name="prdtNm" readonly> 
+	</div>
+	<div id="rscLotGrid" class="col-7"  >
+		<label>자재코드</label>
+		<input type="text" id="prdtCd" name="prdtCd" readonly> 
+		<label>자재명</label>
+		<input type="text" id="prdtNm" name="prdtNm" readonly> 
+	</div>
+	</div>
+	
 	<!-- 스크립트 -->
 	<script type="text/javascript">
 	//지시일자 Default: sysdate
@@ -83,7 +100,10 @@
 		data: indicaDdataSource,
 		scrollX: false,
 		scrollY: true,
-		bodyHeight: 500,
+		bodyHeight: 250,
+		rowHeaders: [{
+			type: 'checkbox',
+			width: 70}],
 		columns: [
 					 {
 					    header: '지시상세번호',
@@ -105,6 +125,7 @@
 					  {
 					    header: '제품코드',
 					    name: 'prdtCd',    
+					    editor: 'text',
 				    	sortingType: 'desc',
 				        sortable: true,
 				        validation: {
@@ -136,6 +157,7 @@
 					  {
 					    header: '지시량',
 					    name: 'indicaQty',
+					    editor : 'text',
 					    validation: {
 			    	        required: true
 			    	      },
@@ -170,6 +192,7 @@
 					  {
 					    header: '작업일자',
 					    name: 'wkDt',
+					    editor :'datePicker',
 					    sortingType: 'desc',
 				        sortable: true,
 				        validation: {
@@ -180,6 +203,10 @@
 					    header: '작업순서',
 					    name: 'wkOrd',
 					    editor: 'text'
+					  },
+					  {
+					    header: '제품LOT_NO 생성',
+					    name: 'prdt_lot'
 					  }
 			 		 ]
 			});
@@ -215,7 +242,6 @@
 		height : 600
 	});
 	
-
  	$('#btnSearch').on('click', function(){
  		console.log("작업지시서 검색")
 		indicaDialog.dialog("open");
@@ -228,6 +254,130 @@
 		indicaMngFrm.reset();
 		indicaDgrid.resetData([]);
 	})
+	
+	//그리드 내부 더블클릭 이벤트
+	indicaDgrid.on('click', function(ev){
+		console.log(indicaDgrid.getValue(ev["rowKey"], "prdtCd"));
+		let prdtCd = indicaDgrid.getValue(ev["rowKey"], "prdtCd")
+		
+		$('prdtCd').val(indicaDgrid.getValue(ev["rowKey"], "prdtCd"));
+		
+		var GridParams = {
+				'prdtCd' : prdtCd
+		};
+		
+		rscGrid.readData(1, GridParams, true);
+	});
+ 	
+ 	
+	//제품별 소요 자재 목록 그리드
+	let rscDataSource = {
+		  api: {
+		    	readData: {
+					url: '${pageContext.request.contextPath}/grid/rscGrid.do', 
+					method: 'GET',
+					initParams : { prdtCd: 'prdtCd'}
+		    				}
+		  },
+			contentType: 'application/json',
+			initialRequest: false //초기에 안보이게 함
+		}
+	
+	let rscGrid = new tui.Grid({
+		el: document.getElementById('rscGrid'),
+		data: rscDataSource,
+		scrollX: false,
+		scrollY: true,
+		rowHeaders : [ 'rowNum' ],
+		bodyHeight: 250,
+		columns: [
+					 {
+					    header: '제품코드',
+					    name: 'prdtCd',
+					    hidden: true
+					  },
+					  {
+					    header: '자재코드',
+					    name: 'rscCd'
+					  },
+					  {
+					    header: '자재명',
+					    name: 'rscNm'
+					  },
+					  {
+					    header: '소요량',
+					    name: 'rscUseQty'
+					  }
+				]
+	});
+ 	
+	rscGrid.on('onGridUpdated', function() {
+		rscGrid.refreshLayout(); 
+		indicaDgrid.refreshLayout();
+	});
+	
+	
+	//소요 자재 그리드
+	let rscLotDataSource = {
+		  api: {
+		    	readData: {
+					url: '${pageContext.request.contextPath}/grid/rscLotGrid.do', 
+					method: 'GET'
+		    				}
+		  },
+			contentType: 'application/json',
+			initialRequest: false //초기에 안보이게 함
+		}
+	
+	let rscLotGrid = new tui.Grid({
+		el: document.getElementById('rscLotGrid'),
+		data: rscLotDataSource,
+		scrollX: false,
+		scrollY: true,
+		rowHeaders : [ 'rowNum','checkbox' ],
+		bodyHeight: 200,
+		columns: [
+					 {
+					    header: '자재코드',
+					    name: 'rscCd',
+					    hidden: true
+					  },
+					  {
+					    header: '자재LOT_NO',
+					    name: 'rscLot'
+					  },
+					  {
+					    header: '재고량',
+					    name: 'rscQty'
+					  },
+					  {
+					    header: '투입량',
+					    name: 'rscQty'
+					  }
+				],
+		summary: {
+	        position: 'bottom',
+	        height: 50,
+	        columnContent: {
+	        	rscLot: {
+	        		template: function(valueMap) {
+	        			return '합계';
+	        			},
+	        		align:'center'
+				},
+				rscQty: {
+					template: function(valueMap) {
+						return valueMap.sum;
+						}
+				},
+				rscQty: {
+					template: function(valueMap) {
+						return valueMap.sum;
+						}
+				}
+	        }
+	    }
+	});
 	
 	</script>
 </body>

@@ -69,4 +69,16 @@ public class IndicaController {
 		model.addAttribute("data", list);
 		return "jsonView";
 	}
+	
+	//제품별 소요 자재 목록 그리드
+	@GetMapping("/grid/rscGrid.do")
+	public String rscGrid(Model model, IndicaVO idcVo) throws Exception {
+		List<?> list = idcService.selectRscList(idcVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
 }
