@@ -13,6 +13,7 @@
 	<input type="text" id="coCd">
 	<button type="button" id="btnfindCo">검색</button>
 	<div id="coGrid"></div>
+	<button type="button" id="btnSelectCompleted">선택완료</button>
 </body>
 <script>
 var coGrid = new tui.Grid({
@@ -20,21 +21,22 @@ var coGrid = new tui.Grid({
     scrollX: false,
     scrollY: false,
     data: [],
+    rowHeaders: ['checkbox'],
     columns: [
-      {
-        header: '업체명',
-        name: 'coNm'
-      },
-	  {
-        header: '업체코드',
-        name: 'coCd'
-      },
-      {
-        header: '사업자등록번호',
-        name: 'bizno'
-      }
-    ]
-  });
+        {
+          header: '업체명',
+          name: 'coNm'
+        },
+  	  {
+          header: '업체코드',
+          name: 'coCd'
+        },
+        {
+          header: '사업자등록번호',
+          name: 'bizno'
+        }
+      ]
+    });
   
   
   var btnfindCo = document.getElementById("btnfindCo");
@@ -56,9 +58,19 @@ var coGrid = new tui.Grid({
 		  });
   }
   request();
-  coGrid.on('dblclick',function(ev){
-	  document.ordrQueryFrm.co.value = coGrid.getValue(ev.rowKey, "coCd");
+  
+  var btnSelectCompleted = document.getElementById('btnSelectCompleted');
+  btnSelectCompleted.addEventListener('click',function(){
+	  let checkedRowKeys = coGrid.getCheckedRowKeys();
+	  let coCds = '';
+	  for(checkedRowKey of checkedRowKeys){
+		  coCds += ","+coGrid.getValue(checkedRowKey, 'coCd');
+	  }
+	  coCds = coCds.substr(1);
+	  let coCdsInput = document.getElementById("coCds");
+	  coCdsInput.value = coCds;
 	  coDialog.dialog("close");
   });
+  
 </script>
 </html>
