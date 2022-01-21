@@ -133,21 +133,17 @@ a {
 					header : 'index',
 					name : 'prdtInx',
 					hidden : true
+				},
+				{
+					header : '입출고구분',
+					name : 'prdtFg'
 				}, {
-					header : '입고일자',
-					name : 'prdtDt',
-					editor : 'datePicker',
-					 validation: {
-					        required: true
-					      }
+					header : '입출고일자',
+					name : 'prdtDt'
 				}, {
 					header : '제품LOT',
 					name : 'prdtLot',
-					editor : 'text',
-					validation: {
-				        required: true,
-				        unique : true
-				      }
+					editor : 'text'
 				}, {
 					header : '제품코드',
 					name : 'prdtCd'

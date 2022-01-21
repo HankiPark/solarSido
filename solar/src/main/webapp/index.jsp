@@ -429,15 +429,7 @@
 
 <script type="text/javascript">
 var socket  = null;
-$(document).ready(function(){
-    // 웹소켓 연결
-    sock = new SockJS("<c:url value="/echo-ws"/>");
-    socket = sock;
 
-    // 데이터를 전달 받았을때 
-    sock.onmessage = onMessage; // toast 생성
-    ...
-});
 
 // toast생성 및 추가
 function onMessage(evt){
