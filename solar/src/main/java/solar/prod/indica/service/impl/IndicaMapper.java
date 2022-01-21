@@ -7,4 +7,8 @@ import solar.prod.indica.service.IndicaVO;
 public interface IndicaMapper {
 
 	List<?> selectIdc(IndicaVO idcVo);
+	
+	List<?> findIndica(IndicaVO idcVo);
+	
+	List<?> selectRscList(IndicaVO idcVo);
 }

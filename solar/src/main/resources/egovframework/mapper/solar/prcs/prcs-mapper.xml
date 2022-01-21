@@ -43,7 +43,7 @@
     AND i.INDICA_DT = id.INDICA_DT
 	
 	<if test="sDate != null">
-		AND TO_CHAR(i.INDICA_DT,'yyyy-MM-dd') = #{sDate}	
+		AND TRUNC(i.INDICA_DT) = #{sDate}	
 	</if>
 	
 </select>

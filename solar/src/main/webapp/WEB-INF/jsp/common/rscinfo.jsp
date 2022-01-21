@@ -5,13 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>자재정보관리</title>
+
 </head>
 <body>
+	<form name="rscfrm" id="rscfrm" method="post">
 	<label>자재명 검색</label>
 	<input type="text" id="rscNmFind">
 	<button type="button" id="btnFind">검색</button><br>
 	<button type="button" id="btnSave">저장</button><br>
 	<button type="button" id="btnReset">정보리셋</button><br>
+	<button type="button" id="btnDelete">삭제</button><br>
 	<div id="grid"></div>	
 	<br>
 	<label>자재코드</label> <input type="text" id="rscCd" readonly = "readonly"><br>
@@ -19,10 +22,11 @@
 	<label>규격</label> <input type="text" id="rscSpec" ><br>
 	<label>관리단위</label> <input type="text" id="rscUnit"><br>
 	<label>업체코드</label> <input type="text" id="coCd" readonly = "readonly"><button type="button" id="coCdFind">조회</button><br>
-	<label>업체명</label> <input type="text" id="coNm"><br>
+	<label>업체명</label> <input type="text" id="coNm" readonly = "readonly"><br>
 	<label>단가</label> <input type="text" id="rscUntprc" ><br>
 	<label>안전재고</label> <input type="text" id="safStc"><br>
 	<div id="coCdModal" title="업체명단"></div>
+	</form>
 	<script>
 	
 	var dataSource = {
@@ -102,7 +106,6 @@
 			var row = ev.rowKey;
 			var code = grid.getValue(row, 'rscCd');
 			$("#rscCd").prop('readonly', true);
-			
 				$.ajax({
 					url : "${pageContext.request.contextPath}/rscinfo.do",
 					type : "POST",
@@ -115,7 +118,6 @@
 						$("#rscNm").val(vo["rscNm"]);
 						$("#rscSpec").val(vo["rscSpec"]);
 						$("#rscUnit").val(vo["rscUnit"]);
-						$("#rscNm").val(vo["rscNm"]);
 						$("#coCd").val(vo["coCd"]);
 						$("#coNm").val(vo["coNm"]);
 						$("#rscUntprc").val(vo["rscUntprc"]);
@@ -153,7 +155,46 @@
 			$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
 		});
 
-		
-	</script>
+/*
+		 $('#btnSave').on('click', function(){
+			 var rscCd = $("#rscCd").val();
+			 var rscNm = $("rscNm").val();
+			 if($("#rscCd").is("[readonly]")){
+						 $.ajax({
+							url :"${pageContext.request.contextPath}/rscinfoUpdate.do",
+							type : "POST",
+							datatype : "json",
+							cache: false,
+							data: $("#rscfrm").serialize() 
+		 });
+		}
+	});
+*/
+		$('#btnReset').on('click', function(){
+			$('#rscCd').val('');
+			$('#rscNm').val('');
+			$('#rscSpec').val('');
+			$('#rscUnit').val('');
+			$('#coCd').val('');
+			$('#coNm').val('');
+			$('#rscUntprc').val('');
+			$('#safStc').val('');
+			$("#rscCd").removeAttr("readonly");
+		});
+/*
+		 $('#btnDelete').on('click', function(){
+			 $.ajax({
+				 url : "${pageContext.request.contextPath}/rscinfoDelete.do"
+				 type : "POST",
+				 data: $("rscfrm").serialize();
+				 cache: false,
+				 datatype : "json",
+				 success : function(data){
+					 
+				 }
+			 })
+		 });
+*/		
+</script>
 </body>
 </html>

@@ -19,7 +19,8 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		 '10' as day_out_put
+		'10' as day_out_put,
+		(B.plan_qty/10) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -82,6 +83,7 @@
 <select id="findCoCd" resultType="ProdPlanVO">
 	SELECT * 
 	FROM co
+	WHERE 1=1
 	<if test="coCd !=null and coCd !=''">
 		AND co_cd like '%'||#{coCd}||'%'
 	</if>
@@ -176,7 +178,7 @@
 						plan_qty,
 						wk_ord,
 						wk_dt)
-	VALUES( #{planDetaNo}, 
+	VALUES( planDetaNo, 
 			CREATENO('PLA', PLANSEQ.nextval), 
 			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
 			#{orderNo}, 

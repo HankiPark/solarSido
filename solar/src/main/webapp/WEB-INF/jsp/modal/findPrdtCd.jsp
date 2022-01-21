@@ -11,13 +11,8 @@
 	<label>제품코드</label>
 	<input type="text" id="prdtCdFind">
 	<label>제품명</label>
-<<<<<<< HEAD
-	<input type="text" id="prdNmFind">
-	<button type="button" id="btnNm">조회</button>
-=======
 	<input type="text" id="prdtNmFind">
 	<button type="button" id="btnfind">검색</button>
->>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
 
 	<div id="prdtCdGrid"></div>
 </body>

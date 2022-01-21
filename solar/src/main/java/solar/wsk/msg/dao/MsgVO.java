@@ -7,4 +7,5 @@ public class MsgVO {
 	String cmd;
 	String id;
 	String msg;
+	String type;
 }

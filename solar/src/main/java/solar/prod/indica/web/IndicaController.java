@@ -32,7 +32,7 @@ public class IndicaController {
 	
 	 //생산지시상세 조회
 	@GetMapping("/grid/indicaGrid.do")
-	public String planGrid(Model model, IndicaVO idcVo) throws Exception {
+	public String indicaGrid(Model model, IndicaVO idcVo) throws Exception {
 		List<?> list = idcService.selectIdc(idcVo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);
@@ -42,5 +42,43 @@ public class IndicaController {
 		System.out.println("map:" + map);
 		return "jsonView";
 		}
-		 
+	
+	//생산지시서검색 모달
+	@RequestMapping("/modal/findIndica")
+	public String findIndica() {
+		System.out.println("생산지시서검색 모달호출");
+		return "modal/findIndica";
+	}
+		
+	//생산지시서검색 모달그리드
+	@GetMapping("/grid/findIndica.do")
+	public String findIndicaGrid(Model model, IndicaVO idcVo) throws Exception {
+		List<?> list = idcService.findIndica(idcVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
+		
+	//생산지시서검색 - 계획상세조회
+	@GetMapping("/grid/searchIndica.do")
+	public String selectIndicaGrid(Model model, IndicaVO idcVo) throws Exception {
+		List<?> list = idcService.selectIdc(idcVo);
+		model.addAttribute("data", list);
+		return "jsonView";
+	}
+	
+	//제품별 소요 자재 목록 그리드
+	@GetMapping("/grid/rscGrid.do")
+	public String rscGrid(Model model, IndicaVO idcVo) throws Exception {
+		List<?> list = idcService.selectRscList(idcVo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
 }
