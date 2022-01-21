@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
  <script src="https://kit.fontawesome.com/2c1f4275fd.js" crossorigin="anonymous"></script>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/mbjs.ico">
 
 
 
