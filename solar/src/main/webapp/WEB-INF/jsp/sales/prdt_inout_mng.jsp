@@ -66,11 +66,9 @@ a {
 	<div id="iG">
 		<div class="row">
 			<div data-role="fieldcontain" class="col-7">
-				<label for="defandroid">날짜 선택</label> <input name="startT"
-					id="startT" type="date" data-role="datebox"
-					data-options='{"mode": "calbox"}'> ~ <input name="endT"
-					id="endT" type="date" data-role="datebox"
-					data-options='{"mode": "calbox"}'>
+				<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
+					id="startT" type="text" data-role="datebox"
+					data-options='{"mode": "calbox"}'> 
 			</div>
 			<div data-role="fieldcontain" class="col-5">
 				<label>제품명</label> <input type="text" id="prdNm">
@@ -160,6 +158,39 @@ a {
 <script>
 let rowKeyNm;
 let tempNo=0;
+var d = new Date();
+//daterangepicker설정
+$(function() {
+	
+	  $('input[name="startT"]').daterangepicker({
+		  showDropdowns: true,
+	    opens: 'right',
+	    startDate: moment().startOf('hour').add(-7, 'day'),
+		  endDate: moment().startOf('hour'),
+		  minYear: 1990,
+		    maxYear: 2025,
+		  autoApply: true,
+		    locale: {
+		      format: 'YYYY-MM-DD',
+		    	  separator: " ~ ",
+		          applyLabel: "적용",
+		          cancelLabel: "닫기",
+		          prevText: '이전 달',
+		          nextText: '다음 달',
+		          monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		          daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+		          showMonthAfterYear: true,
+		          yearSuffix: '년'
+		    }
+	  }, function(start, end, label) {
+	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+	  },
+	  
+	  );
+	  
+	  
+	  
+	});
 
 	//탭 설정
 	const tabList = document.querySelectorAll('.tab_menu .list li');
@@ -202,11 +233,11 @@ let tempNo=0;
 							}
 						});
 					}
-	//날짜 설정(입고/출고)
+/* 	//날짜 설정(입고/출고)
 	var d = new Date();
 	var nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
 	document.getElementById('startT').value = nd.toISOString().slice(0, 10);
-	document.getElementById('endT').value = d.toISOString().slice(0, 10);
+	document.getElementById('endT').value = d.toISOString().slice(0, 10); */
 
 	//modal 설정
 	let dialog = $("#dialog-form").dialog({
@@ -352,8 +383,8 @@ let tempNo=0;
 	//조회버튼
 	$('#findgrid').on('click', function() {
 
-		var startT = $("#startT").val();
-		var endT = $("#endT").val();
+		var startT = $("#startT").val().substring(0,10);
+		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
 		var params = {
 			'startT' : startT,

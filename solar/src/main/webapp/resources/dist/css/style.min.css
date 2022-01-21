@@ -356,6 +356,12 @@ h5, .h5 {
 h6, .h6 {
   font-size: 0.875rem; }
 
+.dtp {
+	width : 220px;
+	text-align: center;
+}
+
+
 .lead {
   font-size: 1.25rem;
   font-weight: 300; }
@@ -4263,6 +4269,17 @@ button.close {
   background-color: transparent;
   border: 0;
   appearance: none; }
+
+.daterangepicker select.monthselect {
+    margin-right: 2%;
+    width: 56%;
+    height: 20px  !important;
+}
+.daterangepicker select.yearselect {
+    width: 40%;
+    height: 20px  !important;
+}
+
 
 a.close.disabled {
   pointer-events: none; }
