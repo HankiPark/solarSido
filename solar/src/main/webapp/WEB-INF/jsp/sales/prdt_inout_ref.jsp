@@ -58,20 +58,19 @@ a {
 		<div data-role="fieldcontain" class="col-4">
 			<label for="defandroid">날짜 선택</label> <input name="startT"
 				class="dtp" id="startT" type="text" data-role="datebox"
-				data-options='{"mode": "calbox"}'> ~ <input name="endT"
-				id="endT" type="date" data-role="datebox"
 				data-options='{"mode": "calbox"}'>
 		</div>
 		<div data-role="fieldcontain" class="col-2">
-			<label>제품구분</label> <label><input type="checkbox" name="ref"
-				value="I">입고</label> <label><input type="checkbox"
+			<label>제품구분</label> <label><input type="checkbox" name="ref" id="inref"
+				value="I">입고</label> <label><input type="checkbox" id="outref"
 				name="ref" value="O">출고</label>
 		</div>
 		<div data-role="fieldcontain" class="col-2">
 			<label>제품명</label> <input type="text" id="prdNm">
 		</div>
-		<div data-role="fieldcontain" class="col-2" style="display: none">
+		<div id="coo" data-role="fieldcontain" class="col-2" style="display: none">
 			<label>회사명</label> <input type="text" id="coNm">
+			<button type="button" id="static">월별 출고 통계</button>
 		</div>
 	</div>
 	<button type="button" id="findgrid">조회</button>
@@ -84,6 +83,7 @@ a {
 
 
 	<div id="dialog-form" title="제품명단"></div>
+	<div id="dialog-out" title="월별 출고"></div>
 
 	<script type="text/javascript">
 
@@ -128,6 +128,12 @@ a {
 		width : 700,
 		height : 700
 	});
+	let dialog2 = $("#dialog-out").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 700,
+		height : 700
+	});
 	
 	//제품이름검색시
 	$('#prdNm')
@@ -149,7 +155,7 @@ a {
 				data : {
 					api : {
 						readData : {
-							url : '${pageContext.request.contextPath}/grid/prdtInput.do',
+							url : '${pageContext.request.contextPath}/grid/prdtSearch.do',
 							method : 'GET'
 						}
 					},
@@ -175,12 +181,14 @@ a {
 					header : '입출고구분',
 					name : 'prdtFg'
 				}, {
-					header : '입출고일자',
-					name : 'prdtDt'
+					header : '생산지시번호/출고전표번호',
+					name : 'indicaNo'
 				}, {
 					header : '제품LOT',
-					name : 'prdtLot',
-					editor : 'text'
+					name : 'prdtLot'
+				}, {
+					header : '입출고일자',
+					name : 'prdtDt'
 				}, {
 					header : '제품코드',
 					name : 'prdtCd'
@@ -190,9 +198,6 @@ a {
 				}, {
 					header : '규격',
 					name : 'prdtSpec'
-				}, {
-					header : '생산지시번호',
-					name : 'indicaNo'
 				}
 
 				],
@@ -201,16 +206,55 @@ a {
 			});
 	
 	$('#findgrid').on('click', function() {
-
+		
+		if($("input:checkbox[name=ref]").is(":checked")==false){
+			toastr.warning("입/출고를 선택해주세요")
+		}else{
 		var startT = $("#startT").val().substring(0,10);
 		var endT = $("#startT").val().substring(13,23);
-		console.log($("#endT").val())
-		console.log(startT);
-		console.log(endT);
-
-	})
-	
-	
+		var prdNm = $("#prdNm").val();
+		if($("input:checkbox[name=ref]:checked").length==2){
+			var chk = null;
+			var co =  $("#coNm").val();
+		}else if($('input:checkbox[name=ref]:checked').val()=='O'){
+			var chk = $('input:checkbox[name=ref]:checked').val();
+			var co =  $("#coNm").val();
+		}else{
+			var chk = $('input:checkbox[name=ref]:checked').val();
+			var co =  null;
+		}
+		
+		var params = {
+				'startT' : startT,
+				'endT' : endT,
+				'prdSt' : chk,
+				'prdNm' : prdNm,
+				'coNm' : co
+				
+			}
+		console.log(params)
+			/* inGrid.enable(); */
+			Grid.readData(1,params,true);
+		
+		}})
+		
+		$("#outref").change(function(ev){
+			$("#coo").toggle();
+		})
+		
+		
+		$('#static')
+	.on(
+			'click',
+			function() {
+				dialog2.dialog("open");
+				$("#dialog-out")
+						.load(
+								"${pageContext.request.contextPath}/modal/prdtOutChart",
+								function() {
+									prdtOutChart()
+								})
+			});
 	</script>
 </body>
 </html>

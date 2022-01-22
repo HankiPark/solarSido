@@ -5,27 +5,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 </head>
 <body>
 
-<label for="defandroid">날짜 선택</label> <input name="startT2"
-					id="startT2" type="date" data-role="datebox"
-					data-options='{"mode": "calbox"}'> ~ <input name="endT2"
-					id="endT2" type="date" data-role="datebox"
-					data-options='{"mode": "calbox"}'>
+<label for="defandroid">날짜 선택</label> <input name="startT2" class="dtp"
+					id="startT2" type="text" data-role="datebox"
+					data-options='{"mode": "calbox"}'> 
 <label>제품명</label> <input type="text" id="prdNm2">
 <button type="button" id="btnF">조회</button>
 <div id="inWaitGrid"></div>
 <script type="text/javascript">
 	//날짜설정
-var d = new Date();
+/* var d = new Date();
 var nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
 document.getElementById('startT2').value = nd.toISOString().slice(0, 10);
-document.getElementById('endT2').value = d.toISOString().slice(0, 10);
+document.getElementById('endT2').value = d.toISOString().slice(0, 10); */
+$(function() {
 	
+	  $('input[name="startT2"]').daterangepicker({
+		  showDropdowns: true,
+	    opens: 'right',
+	    startDate: moment().startOf('hour').add(-7, 'day'),
+		  endDate: moment().startOf('hour'),
+		  minYear: 1990,
+		    maxYear: 2025,
+		  autoApply: true,
+		    locale: {
+		      format: 'YYYY-MM-DD',
+		    	  separator: " ~ ",
+		          applyLabel: "적용",
+		          cancelLabel: "닫기",
+		          prevText: '이전 달',
+		          nextText: '다음 달',
+		          monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		          daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+		          showMonthAfterYear: true,
+		          yearSuffix: '년'
+		    }
+	  }, function(start, end, label) {
+	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+	  },
+	  
+	  );
+	});
 	
 	//modal
 	function prdtInWait(key){
+	
+	
+	
+	
 		const inWaitGrid = new tui.Grid({
 			el : document.getElementById('inWaitGrid'), // 컨테이너 엘리먼트
 			data : null,
@@ -64,8 +96,8 @@ document.getElementById('endT2').value = d.toISOString().slice(0, 10);
 		//검색버튼누를시
 		$('#btnF').on('click',function(){
 			
-			var startT2 = $("#startT2").val();
-			var endT2 = $("#endT2").val();
+			var startT2 = $("#startT2").val().substring(0,10);
+			var endT2 = $("#startT2").val().substring(13,23);
 			var prdNm2 = $("#prdNm2").val();
 			var params ={'startT':startT2,
 					'endT':endT2,

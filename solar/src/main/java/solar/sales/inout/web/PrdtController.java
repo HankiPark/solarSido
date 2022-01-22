@@ -183,6 +183,13 @@ public class PrdtController {
 		
 		return "modal/outWaitList";
 	}
+	//출고 완료 차트 modal
+	@GetMapping("/modal/prdtOutChart")
+	public String prdtOutChart(Model model, Prdt prdt) {
+		
+		
+		return "modal/prdtOutChart";
+	}
 
 	
 	//출고 대기중인 물건리스트 
@@ -244,6 +251,20 @@ public class PrdtController {
 	@GetMapping("/grid/outEndList.do")
 	public String outEndListGrid(Model model, Prdt prdt) {
 		List<?> list = pservice.findSlipLot(prdt);
+		model.addAttribute("result", true);
+		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		model.addAttribute("data", map);
+		
+		return "jsonView";
+	}
+	//입출고조회
+	@GetMapping("/grid/prdtSearch.do")
+	public String prdtSearchGrid(Model model, Prdt prdt) {
+		List<?> list = pservice.prdtSearch(prdt);
 		model.addAttribute("result", true);
 		Map<String, Object> map = new HashMap();
 		Map<String, Object> map2 = new HashMap();

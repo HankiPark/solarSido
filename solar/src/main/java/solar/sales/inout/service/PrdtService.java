@@ -14,6 +14,7 @@ public interface PrdtService {
 	List<Prdt> OutWaitList(Prdt vo);
 	List<Prdt> findSlipList(Prdt vo);
 	List<Prdt> findSlipLot(Prdt vo);
+	List<Prdt> prdtSearch(Prdt vo);
 	//List<Prdt> findCo();
 	int inPrdt(Prdt vo);
 	int modifyData(ModifyVO<Prdt> mvo);

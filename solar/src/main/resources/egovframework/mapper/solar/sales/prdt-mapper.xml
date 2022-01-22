@@ -264,4 +264,45 @@
 					and prdt_fg='O' and prdt_cd=#{prdtCd}
 	</select>
 	
+	
+	
+	<!-- 입출고조회 -->
+	
+		
+	<select id="prdtSearch" resultType="Prdt">
+		select p.prdt_inx,
+				p.prdt_lot,
+				p.prdt_fg,
+				p.prdt_cd,
+				INDICAWHERE(p.prdt_fg,p.indica_deta_no) as indica_no,
+				p.prdt_dt,
+				(select d.prdt_nm from prdt d where d.prdt_cd=p.prdt_cd) as prdt_nm,
+				(select o.prdt_spec from prdt o where o.prdt_cd = p.prdt_cd ) as prdt_spec
+				
+		from prdt_stc p
+		<where>
+			<![CDATA[	
+					TO_CHAR(p.prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(p.prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')
+				]]>
+				<choose>
+					<when test="prdSt !=null and prdSt !=''">
+						and p.prdt_fg= #{prdSt}
+					</when>
+					<otherwise>
+						and p.prdt_fg= 'I' or p.prdt_fg='O'
+					</otherwise>
+				</choose>
+			<if test='prdSt == "O" and coNm !=null and coNm !=""'>
+				and (select k.co_nm from oust k join oust_d l on k.slip_no = l.slip_no where l.slip_deta_no=p.indica_deta_no)=#{coNm}
+			</if>
+			<if test="prdNm != '' and prdNm !=null">
+				and (select d.prdt_nm from prdt d where d.prdt_cd=p.prdt_cd)=#{prdNm}
+			</if>
+			order by p.prdt_inx
+		
+		
+		</where>
+	</select>
+	
+	
 </mapper>

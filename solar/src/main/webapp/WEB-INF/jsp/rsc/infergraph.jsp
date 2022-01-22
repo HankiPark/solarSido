@@ -4,8 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" />
-<script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
+
 <title>Insert title here</title>
 </head>
 <body>

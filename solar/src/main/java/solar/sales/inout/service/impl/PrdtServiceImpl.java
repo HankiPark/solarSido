@@ -158,6 +158,12 @@ public class PrdtServiceImpl implements PrdtService {
 		return pmapper.findSlipLot(vo);
 	}
 
+	@Override
+	public List<Prdt> prdtSearch(Prdt vo) {
+		// TODO Auto-generated method stub
+		return pmapper.prdtSearch(vo);
+	}
+
 	
 	
 	

@@ -405,10 +405,10 @@ $(function() {
 		});
 	});
 	$('#updateBtn').on('click', function appendRow(index) {
-
+		console.log(inGrid.validate())
 		inGrid.blur(); 
 	
-		if(inGrid.validate().length!=0){
+		if(inGrid.validate().length!=0 ){
 			toastr.error("제품lot은 중복될수 없습니다");
 			
 		}else{
