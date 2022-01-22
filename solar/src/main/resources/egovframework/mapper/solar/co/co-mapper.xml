@@ -16,5 +16,6 @@
 		<if test='coNm != null and coNm != ""'>
 			and co_Nm like '%'||#{coNm}||'%'
 		</if>
+		order by co_cd
 	</select>
 </mapper>
