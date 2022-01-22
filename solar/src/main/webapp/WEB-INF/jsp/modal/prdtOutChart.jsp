@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div
+<div>
  <canvas id="myChart"></canvas>
 
 </div>
@@ -20,7 +20,7 @@
 			  ];
 			var d = new Date();
 			var nd = new Date(d.getFullYear(), d.getMonth());
-			for(i=12;i>0;i--){
+			for(i=11;i>=-1;i--){
 				labels.push(new Date(d.getFullYear(), d.getMonth()-i).toISOString().slice(0, 7))
 			}
 			  let data = {
@@ -32,9 +32,37 @@
 			      data: [0, 10, 5, 2, 20, 30, 45],
 			    }] */
 			  };
-				//for문 제품명 다 나올때까지 label에 들어감 data에 날짜가 있다면 count 넣고 아니면 0주입 datasets추가할것
+			  
+			  $.ajax({
+				  url:'${pageContext.request.contextPath}/ajax/prdtChart.do',
+					contentType: 'application/json; charset=utf-8',
+					dataType: 'json',
+					async: false,
+				}).done(function(res){
+					var dataset={};
+					var dd=[];
+					$.each(res.data,function(a,b){
+						dataset.label=b[0].prdtCd;
+						let dat = [];
+						for(let i=0;i<13;i++){
+							dat.push(b[i].valid);
+							console.log(b[i].valid)
+						}
+						dataset.borderColor = 'rgb('+(Math.floor(Math.random() * 250) + 1)+','+(Math.floor(Math.random() * 250) + 1)+','+(Math.floor(Math.random() * 250) + 1)+')';
+						dataset.data=dat;
+						let kk= JSON.parse(JSON.stringify(dataset));
+						dd.push(kk);
+						
+						console.log(dd);
+						
+					})
+					data.datasets=dd;
+					
+					
+				})	 
 				
-			  const config = {
+				
+	 		  const config = {
 			    type: 'line',
 			    data: data,
 			    options: {}

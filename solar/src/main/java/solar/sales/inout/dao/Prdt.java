@@ -59,6 +59,9 @@ public class Prdt {
 	String copNm;
 	String copCd;
 	String prdSt;
+	//yyyy-MM
+	String twit;
+	
 	
 	//modal추가정보
 	String prdtAmt;

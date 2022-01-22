@@ -164,6 +164,18 @@ public class PrdtServiceImpl implements PrdtService {
 		return pmapper.prdtSearch(vo);
 	}
 
+	@Override
+	public List<Prdt> prdtChart(Prdt vo) {
+		// TODO Auto-generated method stub
+		return pmapper.prdtChart(vo);
+	}
+
+	@Override
+	public List<Prdt> prdtList(Prdt vo) {
+		// TODO Auto-generated method stub
+		return pmapper.prdtList(vo);
+	}
+
 	
 	
 	

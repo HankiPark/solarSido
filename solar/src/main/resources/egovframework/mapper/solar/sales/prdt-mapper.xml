@@ -304,5 +304,30 @@
 		</where>
 	</select>
 	
+	<select id="prdtList" resultType="Prdt">
+		select distinct p.prdt_cd from prdt p join prdt_stc s on p.prdt_cd=s.prdt_cd where s.prdt_fg='O'
+	</select>
+	
+	<select id="prdtChart" resultType="Prdt">
+	SELECT 
+		  nvl(sum(a.cnt),0) as valid, 
+		  TO_CHAR(b.dt, 'YYYYMM') as twit,
+		  #{prdtCd} as prdt_cd
+	FROM (select to_char(prdt_dt,'YYYYMMDD') as ddt, count(*) cnt,prdt_cd 
+		<![CDATA[
+				from prdt_stc where TO_CHAR(prdt_dt,'yyyyMMDD')>= TO_CHAR(add_months(sysdate,-12),'yyyyMMDD')
+				and TO_CHAR(prdt_dt,'yyyyMMDD')<=TO_CHAR(add_months(sysdate,0),'yyyyMMDD')
+				  and prdt_fg='O' and prdt_cd=#{prdtCd}
+		  ]]>
+		  	group by to_char(prdt_dt,'YYYYMMDD'),prdt_cd) a,
+		(select  TO_DATE(TO_CHAR(sysdate-365,'yyyyMMdd')) +LEVEL -1 as dt 
+			from dual 
+			<![CDATA[
+			connect by LEVEL <= (TO_DATE(TO_CHAR(sysdate,'yyyyMMdd')) -TO_DATE(TO_CHAR(sysdate-365,'yyyyMMdd')) +1)) b
+			]]>
+			where b.dt = a.ddt(+)
+		group by  TO_CHAR(b.dt, 'YYYYMM'),#{prdtCd}
+		order by twit asc
+	</select>
 	
 </mapper>

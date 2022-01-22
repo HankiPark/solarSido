@@ -215,6 +215,21 @@ public class PrdtController {
 		
 		return "jsonView";
 	}
+	//Ow초기화
+	@GetMapping("/ajax/prdtChart.do")
+	public String prdtChartData(Model model, Prdt prdt) {
+		List<Prdt> list = pservice.prdtList(prdt);
+		Map<String,Object> map = new HashMap();
+		model.addAttribute("pr",  list);
+		Prdt pd = new Prdt();
+		for(int i =0;i<list.size();i++) {
+			pd.setPrdtCd(list.get(i).getPrdtCd());
+			map.put("da"+i, pservice.prdtChart(pd));
+			
+		}
+		model.addAttribute("data", map);
+		return "jsonView";
+	}
 	
 	@PostMapping("/ajax/insertOw.do")
 	public String updateOw2(Model model, Prdt prdt,@RequestBody ModifyVO<Prdt> mvo) {

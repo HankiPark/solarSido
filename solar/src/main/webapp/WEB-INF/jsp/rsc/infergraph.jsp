@@ -2,81 +2,173 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
-
 <title>Insert title here</title>
 </head>
+
 <body>
-	<h1>불량불량</h1>
-	<div id="coModal" title="업체 목록"></div>
-	연도<input type="text" id="year">
-	발주업체: <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
-	<br><button id="sendRequest" onclick="inferRequest()">조회</button>
-	<div id="chartDiv"></div>
+    <h1>불량불량</h1>
+    <div id="coModal" title="업체 목록"></div>
+    연도<input type="text" id="year" value="2022">
+    발주업체: <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
+    <br><button id="sendRequest" onclick="inferRequest()">조회</button>
+    <div id="barChartDiv"></div>
+    <div id="pieChartDiv"></div>
 </body>
 <script>
-	let categories = [];
-	let series;
-	
-	function inferRequest(){
-		let year = document.getElementById('year').value;
-		let coCds = document.getElementById('coCds').value;
-		
-	    fetch('inferGraphData',{
-	        method:'POST',
-	        body:JSON.stringify({coCds:coCds,year:year}),
-	        headers:{'Content-Type':'application/json'}
-	    }).then(data=>data.json())
-	    .then((result)=>{
-	    	for(let i of result.inferRates){
-	    		categories.push(i.coCd);
-	    	}
-	        console.log(categories);
-	    });
-	}
-    
-	series = [
-		{
-            name: 'first',
-            data: [2.7, 2, 1.1]
-        },
-        {
-            name: 'second',
-            data: [2, 1, 0.5]
-        },
-        {
-            name: 'third',
-            data: [2.7, 1, 1.2]
-        },
-        {
-            name: 'fourth',
-            data: [2.3, 1.6, 2.5]
-        }];
-	
-	const el = document.getElementById('chartDiv');
-    const data = {categories,series};
-    const options = {
-    		chart: {
-    			title: '분기별 자재 불량률',
-    			width: 900,
-    			height: 400,
-    		},
-    };
+    let categories = [];
+    let series = [];
+    let inferData = [];
 
-    const chart = toastui.Chart.barChart({ el, data, options });
-    
+    inferRequest();
+
+    function inferRequest() {
+
+        categories = [];
+        series = [{
+                name: '1분기',
+                data: []
+            },
+            {
+                name: '2분기',
+                data: []
+            },
+            {
+                name: '3분기',
+                data: []
+            },
+            {
+                name: '4분기',
+                data: []
+            }
+        ];
+
+        let year = document.getElementById('year').value;
+        let coCds = document.getElementById('coCds').value;
+
+        fetch('inferGraphData', {
+                method: 'POST',
+                body: JSON.stringify({
+                    coCds: coCds,
+                    year: year
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(data => data.json())
+            .then((result) => {
+                inferData = result.inferRates;
+
+                for (let i of result.inferRates) {
+                    categories.push(i.coNm);
+                    series[0].data.push(i.inferRateFirst);
+                    series[1].data.push(i.inferRateSecond);
+                    series[2].data.push(i.inferRateThird);
+                    series[3].data.push(i.inferRateFourth);
+                }
+                console.log(categories);
+                console.log(series);
+
+
+                const el = document.getElementById('barChartDiv');
+                const data = {
+                    categories,
+                    series
+                };
+                const options = {
+                    chart: {
+                        title: '분기별 자재 불량률',
+                        width: 700,
+                        height: 400,
+                    },
+                    series: {
+                        selectable: true
+                    }
+                };
+
+                $('#barChartDiv').empty();
+                const chart = toastui.Chart.barChart({
+                    el,
+                    data,
+                    options
+                });
+
+                chart.on('selectSeries', (ev) => {
+                    temp(ev.bar[0].data);
+                });
+            });
+    }
+
     let coDialog = $("#coModal").dialog({
         modal: true,
         autoOpen: false,
-    	width : 600,
-    	height : 600
-      });
+        width: 600,
+        height: 600
+    });
 
-      $("#coSearchBtn").on("click", function () {
+    $("#coSearchBtn").on("click", function () {
         coDialog.dialog("open");
         $("#coModal").load("../comul");
-      });
-      
+    });
+
+    function temp(val) {
+    	
+    	
+        quarter = val.label.substr(0, 1); //몇분기인지(미사용)
+
+        for (let inf of inferData) {
+            if (inf.coNm == val.category) {
+                console.log(inf.coNm);
+                
+                if(inf.inferQtyFirst == null){
+                	inf.inferQtyFirst = 0; 
+                }
+                if(inf.inferQtySecond == null){
+                	inf.inferQtySecond = 0;
+                }
+                if(inf.inferQtyThird == null){
+                	inf.inferQtyThird = 0;
+                }
+                if(inf.inferQtyFourth == null){
+                	inf.inferQtyFourth = 0;
+                }
+                
+            	const el = document.getElementById('pieChartDiv');
+            	$('#pieChartDiv').empty();
+                const data = {
+                  categories: ['불량량'],
+                  series: [
+                    {
+                      name: '1분기',
+                      data: parseInt(inf.inferQtyFirst),
+                    },
+                    {
+                      name: '2분기',
+                      data: parseInt(inf.inferQtySecond),
+                    },
+                    {
+                      name: '3분기',
+                      data: parseInt(inf.inferQtyThird),
+                    },
+                    {
+                      name: '4분기',
+                      data: parseInt(inf.inferQtyFourth),
+                    },
+                  ],
+                };
+                const options = {
+                  chart: { title: '불량량', width: 600, height: 400 },
+                };
+
+                const chart = toastui.Chart.pieChart({ el, data, options });
+                
+                console.log(data);
+                
+            }
+        }
+    }
 </script>
+
 </html>
