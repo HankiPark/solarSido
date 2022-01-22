@@ -7,25 +7,100 @@
 	</select>
 
 	<select id="getQuarteredInferRate" parameterType="map" resultType="solar.rsc.infer.service.RscInferRate">
-		select to_number(to_char(sum(o.rsc_infer_qty)/sum(o.ordr_qty)*100,'000.00')) "infer_rate",
-			sum(o.rsc_infer_qty) "infer_qty",
-			sum(o.ordr_qty) "ordr_qty",
-			o.co_cd
-		from rsc_or o
-		join rsc_rt rt
-			on o.ordr_cd = rt.ordr_cd
-		where 1=1
-		<if test='year != null and year != ""'>
-			and to_char(rt.rtngd_dt,'yyyy') = #{year}
-		</if>
-		<if test='coCds.size != 0'>
-		and o.co_cd in 
-			<foreach collection="coCds" item="coCd" separator="," open="(" close=")" index="index">
-				#{coCd}
-			</foreach>
-		</if>
-		group by co_cd
-		order by co_cd
+		select 
+		     (select to_number(to_char(sum(o.rsc_infer_qty)/sum(o.ordr_qty)*100,'000.00')) 
+		     	from rsc_or o
+		     	left join rsc_rt rt
+		        	on o.ordr_cd = rt.ordr_cd
+		     	where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'01'
+		     		and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'03'
+					and o.co_cd =c.co_cd
+				group by co_cd) "infer_rate_first",(select sum(o.rsc_infer_qty)
+													from rsc_or o
+													left join rsc_rt rt
+		   												on o.ordr_cd = rt.ordr_cd
+													where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'01'
+														and  to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'03'
+														and o.co_cd =c.co_cd
+													group by co_cd) "infer_qty_first",(select sum(o.ordr_qty)
+																						from rsc_or o
+																						left join rsc_rt rt
+																							on o.ordr_cd = rt.ordr_cd
+																						where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'01'
+																							and  to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'03'
+																							and o.co_cd =c.co_cd
+																						group by co_cd) "ordr_qty_first",(select to_number(to_char(sum(o.rsc_infer_qty)/sum(o.ordr_qty)*100,'000.00')) 
+																															from rsc_or o
+																															left join rsc_rt rt
+																																on o.ordr_cd = rt.ordr_cd
+																															where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'04'
+																																and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'06'
+																																and o.co_cd =c.co_cd
+																															group by co_cd) "infer_rate_second",(select sum(o.rsc_infer_qty)
+																																									from rsc_or o
+																																									left join rsc_rt rt
+																																									   on o.ordr_cd = rt.ordr_cd
+																																									where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'04'
+																																									and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'06'
+																																									and o.co_cd =c.co_cd
+																																									group by co_cd) "infer_qty_second",(select sum(o.ordr_qty)
+																																																		from rsc_or o
+																																																		left join rsc_rt rt
+																																																		   on o.ordr_cd = rt.ordr_cd
+																																																		where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'04'
+																																																			and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'06'
+																																																			and o.co_cd =c.co_cd
+																																																		group by co_cd) "ordr_qty_second", (select to_number(to_char(sum(o.rsc_infer_qty)/sum(o.ordr_qty)*100,'000.00')) 
+																																																											from rsc_or o
+																																																											left join rsc_rt rt
+																																																											   on o.ordr_cd = rt.ordr_cd
+																																																											where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'07'
+																																																												and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'09'
+																																																												and o.co_cd =c.co_cd
+																																																											group by co_cd) "infer_rate_third",(select sum(o.rsc_infer_qty)
+																																																																				from rsc_or o
+																																																																				left join rsc_rt rt
+																																																																				   on o.ordr_cd = rt.ordr_cd
+																																																																				where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'07'
+																																																																					and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'09'
+																																																																					and o.co_cd =c.co_cd
+																																																																				group by co_cd) "infer_qty_third",(select sum(o.ordr_qty)
+																																																																													from rsc_or o
+																																																																													left join rsc_rt rt
+																																																																													   on o.ordr_cd = rt.ordr_cd
+																																																																													where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'07'
+																																																																														and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'09'
+																																																																														and o.co_cd =c.co_cd
+																																																																													group by co_cd) "ordr_qty_third",(select to_number(to_char(sum(o.rsc_infer_qty)/sum(o.ordr_qty)*100,'000.00')) 
+																																																																																						from rsc_or o
+																																																																																						left join rsc_rt rt
+																																																																																						   on o.ordr_cd = rt.ordr_cd
+																																																																																						where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'10'
+																																																																																							and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'12'
+																																																																																							and o.co_cd =c.co_cd
+																																																																																						group by co_cd) "infer_rate_fourth",(select sum(o.rsc_infer_qty)
+																																																																																																from rsc_or o
+																																																																																																left join rsc_rt rt
+																																																																																																   on o.ordr_cd = rt.ordr_cd
+																																																																																																where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'10'
+																																																																																																	and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'12'
+																																																																																																	and o.co_cd =c.co_cd
+																																																																																																group by co_cd) "infer_qty_fourth",(select sum(o.ordr_qty)
+																																																																																																									from rsc_or o
+																																																																																																									left join rsc_rt rt
+																																																																																																									   on o.ordr_cd = rt.ordr_cd
+																																																																																																									where to_char(rt.rtngd_dt,'yyyyMM') >= #{year}||'10'
+																																																																																																										and to_char(rt.rtngd_dt,'yyyyMM') <![CDATA[<=]]> #{year}||'12'
+																																																																																																										and o.co_cd =c.co_cd
+																																																																																																									group by co_cd) "ordr_qty_fourth"
+			,c.co_nm from co c
+		<where>
+		     	<if test='coCds.size != 0'>
+		     		c.co_cd in
+		     			<foreach collection="coCds" item="coCd" separator="," open="(" close=")" index="index">
+						#{coCd}
+		        		</foreach>
+		 		</if>
+		</where>
 	</select>
-
 </mapper>
