@@ -5,6 +5,16 @@
 	<select id="fairList" resultType="solar.cmm.prcs.dao.FairVO">
 	SELECT * FROM PRCS
 	</select>
+	
+	<select id="prcsdataFind" resultType="solar.cmm.prcs.dao.FairVO">
+	SELECT * FROM PRCS
+	<where>
+		<if test="prcsNm != null and prcsNm != ''">
+			AND PRCS_NM LIKE '%' || #{prcsNm} || '%'
+		</if>
+	</where>
+	order by PRCS_CD asc
+	</select>
 
 	<select id="findPrcs" resultType="solar.cmm.prcs.dao.FairVO">
 	SELECT * FROM PRCS

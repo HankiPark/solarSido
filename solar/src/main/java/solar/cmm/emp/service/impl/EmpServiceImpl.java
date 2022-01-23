@@ -64,4 +64,10 @@ public class EmpServiceImpl implements EmpService{
 		return 1;
 	}
 
+	@Override
+	public List<EmpVO> empdataFind(EmpVO empVO) {
+		// TODO Auto-generated method stub
+		return empMapper.empdataFind(empVO);
+	}
+
 }

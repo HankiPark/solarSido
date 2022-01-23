@@ -4,6 +4,16 @@
 	<select id="prdtList" resultType="solar.cmm.prdt.dao.PrdtInferVO">
 		SELECT * FROM PRDT_INFER_CD 
     </select>
+    
+   <select id="prdtinferdataFind" resultType="solar.cmm.prdt.dao.PrdtInferVO">
+	SELECT * FROM PRDT_INFER_CD
+	<where>
+		<if test="prdtInferNm != null and prdtInferNm != ''">
+			AND PRDT_INFER_NM LIKE '%' || #{prdtInferNm} || '%'
+		</if>
+	</where>
+	order by PRDT_INFER_CD asc
+	</select>
 
     <insert id="prdtInsert">
 		INSERT INTO PRDT_INFER_CD(PRDT_INFER_CD, PRCS_INFER_CD, PRDT_INFER_NM, PRDT_INFER_DESCT) 

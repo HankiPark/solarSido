@@ -2,11 +2,13 @@ package solar.cmm.prdt.service.impl;
 
 import java.util.List;
 
+import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.prdt.dao.PrdtInferVO;
 import solar.sales.order.dao.ModifyVO;
 
 public interface CmmPrdtMapper {
 	List<PrdtInferVO> prdtList(PrdtInferVO prdtInferVo);
+	List<PrdtInferVO> prdtinferdataFind(PrdtInferVO prdtInferVo);
 	public PrdtInferVO findById(String no);
 	public int prdtInsert(PrdtInferVO prdtInferVo);
 	public int prdtUpdate(PrdtInferVO prdtInferVo);

@@ -7,6 +7,7 @@ import solar.sales.order.dao.ModifyVO;
 
 public interface EmpMapper {
 	List<EmpVO> empList(EmpVO empVO);
+	List<EmpVO> empdataFind(EmpVO empVO);
 	public EmpVO findById(String no);
 	public int empInsert(EmpVO empVO);
 	public int empUpdate(EmpVO empVO);

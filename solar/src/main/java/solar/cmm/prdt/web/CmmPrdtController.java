@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.prdt.dao.PrdtInferVO;
 import solar.cmm.prdt.service.CmmPrdtService;
 import solar.cmm.prdt.service.impl.CmmPrdtMapper;
@@ -43,6 +44,21 @@ public class CmmPrdtController {
 	public String insertUpdate(Model model, PrdtInferVO prdtInferVo, @RequestBody ModifyVO<PrdtInferVO> modifyVO) throws Exception{
 		prdtService.modifyData(modifyVO);
 		model.addAttribute("mode", "upd");
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("/grid/prdtinferdataFind")
+	public String prdtinferfind(Model model, PrdtInferVO prdtInferVO) throws Exception{
+		
+		List<?> prdtinferList = prdtService.prdtinferdataFind(prdtInferVO);
+		model.addAttribute("result", true);
+		Map<String, Object>map = new HashMap();
+		Map<String, Object>map2 = new HashMap();
+		map.put("contents", prdtinferList);
+		map2.put("page", 1);
+		map2.put("totalCount", prdtinferList.size());
+		model.addAttribute("data", map);
 		
 		return "jsonView";
 	}

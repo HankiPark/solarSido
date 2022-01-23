@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.emp.service.EmpService;
 import solar.cmm.emp.service.impl.EmpMapper;
-import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.sales.order.dao.ModifyVO;
 
 @Controller
@@ -45,6 +45,21 @@ public class EmpController {
 	public String insertUpdate(Model model, EmpVO empVO, @RequestBody ModifyVO<EmpVO> modifyVO) throws Exception{
 		empService.modifyData(modifyVO);
 		model.addAttribute("mode", "upd");
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("/grid/empdataFind")
+	public String cmmnfind(Model model, EmpVO empVO) throws Exception{
+		
+		List<?> empList = empService.empdataFind(empVO);
+		model.addAttribute("result", true);
+		Map<String, Object>map = new HashMap();
+		Map<String, Object>map2 = new HashMap();
+		map.put("contents", empList);
+		map2.put("page", 1);
+		map2.put("totalCount", empList.size());
+		model.addAttribute("data", map);
 		
 		return "jsonView";
 	}

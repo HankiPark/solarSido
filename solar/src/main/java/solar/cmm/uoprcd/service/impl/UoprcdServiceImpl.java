@@ -64,4 +64,10 @@ public class UoprcdServiceImpl implements UoprcdService{
 		return 1;
 	}
 
+	@Override
+	public List<UoprcdVO> uoprcddataFind(UoprcdVO uoprcdVO) {
+		// TODO Auto-generated method stub
+		return uoprcdMapper.uoprcddataFind(uoprcdVO);
+	}
+
 }

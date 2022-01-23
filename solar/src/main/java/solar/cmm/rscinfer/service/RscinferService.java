@@ -7,6 +7,7 @@ import solar.sales.order.dao.ModifyVO;
 
 public interface RscinferService {
 	List<RscinferVO> rscinferList(RscinferVO rscinferVO);
+	List<RscinferVO> rscinferdataFind(RscinferVO rscinferVO);
 	public RscinferVO findById(String no);
 	public int rscinferInsert(RscinferVO rscinferVO);
 	public int rscinferUpdate(RscinferVO rscinferVO);

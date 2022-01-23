@@ -13,6 +13,8 @@
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
 	<button type="button" id="btnSave">저장</button>
+	<input type = "text" id="rscinferNminfo">
+	<div><button type="button" id="btnfind">검색</button></div>
 </div>
 	<div id="grid">
 		
@@ -74,7 +76,7 @@ grid.on('response', function(ev) {
 	});
 	
 $('#btnAdd').on('click', function appendRow(index){
-	grid.appendRow(null, {
+	grid.appendRow( {}, {
 		extendPrevRowSpan : true,
 		focus : true,
 		at : 0
@@ -88,6 +90,24 @@ $('#btnDel').on('click', function appendRow(index){
 	grid.blur();
 	grid.removeCheckedRows(true);
 });
+
+$('#btnfind').on('click', function(){
+	var rscInferNm = $("#rscinferNminfo").val();
+	var parameter = {
+			'rscInferNm' : rscInferNm
+	}
+	$.ajax({
+		url : '${pageContext.request.contextPath}/grid/rscinferdataFind',
+		data : parameter,
+		contentType: 'application/json; charset=utf-8'
+	}).done(function(res){
+		var info = JSON.parse(res);
+		grid.resetData(info["data"]["contents"]);
+	})
+	
+});
+
+
 </script>
 </body>
 </html>
