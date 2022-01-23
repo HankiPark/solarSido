@@ -4,9 +4,13 @@ import java.util.List;
 
 public interface PrcsService {
 
-	List<PrcsVO> selectAll();
+	List<PrcsPrMVO> selectAll();
 	List<IndicaVO> selectPDay(IndicaVO vo);
 	List<ClotVO> selectPrcsItem(ClotVO vo);
 	List<PrcsEqmVO> selectPrcsEqm(PrcsEqmVO vo);
 	List<RscConVO> selectPrcsItemRSC(RscConVO vo);
+	
+	List<PrcsPrMVO> insertPrcsPrM(PrcsPrMVO vo);
+	List<PrcsPrMVO> updatePrcsPrM(PrcsPrMVO vo);
+	
 }
