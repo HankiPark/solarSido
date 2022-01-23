@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
+import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.cmm.uoprcd.dao.UoprcdVO;
 import solar.cmm.uoprcd.service.UoprcdService;
 import solar.cmm.uoprcd.service.impl.UoprcdMapper;
@@ -81,6 +82,21 @@ public class UoprcdController {
 		System.out.println(mvo);
 		uoprcdService.modifyData(mvo);
 		model.addAttribute("mode", "upd");
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("/grid/uoprcddataFind")
+	public String uoprcdFind(Model model, UoprcdVO uoprcdVO) throws Exception{
+		
+		List<?> uoprcdList = uoprcdService.uoprcddataFind(uoprcdVO);
+		model.addAttribute("result", true);
+		Map<String, Object>map = new HashMap();
+		Map<String, Object>map2 = new HashMap();
+		map.put("contents", uoprcdList);
+		map2.put("page", 1);
+		map2.put("totalCount", uoprcdList.size());
+		model.addAttribute("data", map);
 		
 		return "jsonView";
 	}

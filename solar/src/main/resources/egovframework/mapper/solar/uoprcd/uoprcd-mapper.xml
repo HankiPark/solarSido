@@ -4,7 +4,17 @@
 
 	<select id="uoprcdList" resultType="solar.cmm.uoprcd.dao.UoprcdVO">
 		SELECT * FROM UOPR_CD
-		</select>
+	</select>
+		
+	<select id="uoprcddataFind" resultType="solar.cmm.uoprcd.dao.UoprcdVO">
+	SELECT * FROM UOPR_CD
+	<where>
+		<if test="uoprCd != null and uoprCd != ''">
+			AND UOPR_NM LIKE '%' || #{uoprNm} || '%'
+		</if>
+	</where>
+	order by UOPR_CD asc
+	</select>
 
     <insert id="uoprcdInsert">
 		INSERT INTO UOPR_CD(UOPR_CD, PRCS_CD, PRCS_NM, UOPR_NM, UOPR_DESCT) 

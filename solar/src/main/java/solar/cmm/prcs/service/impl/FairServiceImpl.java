@@ -62,6 +62,12 @@ public class FairServiceImpl implements FairService {
 	public List<FairVO> findPrcs(FairVO fairVO) {
 		return fairMapper.findPrcs(fairVO);
 	}
+
+	@Override
+	public List<FairVO> prcsdataFind(FairVO fairVO) {
+		// TODO Auto-generated method stub
+		return fairMapper.prcsdataFind(fairVO);
+	}
 }
 
 

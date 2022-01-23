@@ -4,6 +4,17 @@
 	<select id="empList" resultType="solar.cmm.emp.dao.EmpVO">
 		SELECT * FROM EMP
     </select>
+    
+    <select id="empdataFind" resultType="solar.cmm.emp.dao.EmpVO">
+	SELECT * FROM EMP
+	<where>
+		<if test="empNm != null and empNm != ''">
+			AND EMP_NM LIKE '%' || #{empNm} || '%'
+		</if>
+	</where>
+	order by EMP_ID asc
+	</select>
+    
 	
 	<insert id="empInsert">
 		INSERT INTO EMP(EMP_ID, EMP_PW, EMP_NM, EMP_NO, DEPT, WKDTY, PHONE, EMAIL, HIRE_DATE) 

@@ -64,4 +64,10 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 		return 1;
 	}
 
+	@Override
+	public List<PrdtInferVO> prdtinferdataFind(PrdtInferVO prdtInferVo) {
+		// TODO Auto-generated method stub
+		return prdtMapper.prdtinferdataFind(prdtInferVo);
+	}
+
 }

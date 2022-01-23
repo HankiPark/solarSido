@@ -8,6 +8,7 @@ import solar.sales.order.dao.ModifyVO;
 public interface FairMapper {
 	List<FairVO> fairList(FairVO fairVO);
 	List<FairVO> findPrcs(FairVO fairVO);
+	List<FairVO> prcsdataFind(FairVO fairVO);
 	public int fairInsert(FairVO fairVO);
 	public int fairUpdate(FairVO fairVO);
 	public int fairDelete(FairVO fairVO);

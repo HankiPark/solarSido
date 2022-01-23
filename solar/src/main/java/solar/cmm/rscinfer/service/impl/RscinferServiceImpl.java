@@ -65,4 +65,10 @@ public class RscinferServiceImpl implements RscinferService{
 		}
 		return 1;
 	}
+
+	@Override
+	public List<RscinferVO> rscinferdataFind(RscinferVO rscinferVO) {
+		// TODO Auto-generated method stub
+		return rscinferMapper.rscinferdataFind(rscinferVO) ;
+	}
 }

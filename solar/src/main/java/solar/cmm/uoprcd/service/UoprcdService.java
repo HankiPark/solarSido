@@ -7,6 +7,7 @@ import solar.sales.order.dao.ModifyVO;
 
 public interface UoprcdService {
 	List<UoprcdVO> uoprcdList(UoprcdVO uoprcdVO);
+	List<UoprcdVO> uoprcddataFind(UoprcdVO uoprcdVO);
 	public UoprcdVO findById(String no);
 	public int uoprcdInsert(UoprcdVO uoprcdVO);
 	public int uoprcdUpdate(UoprcdVO uoprcdVO);

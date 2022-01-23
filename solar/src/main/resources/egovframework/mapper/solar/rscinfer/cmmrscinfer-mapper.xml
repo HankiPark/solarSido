@@ -4,6 +4,16 @@
 	<select id="rscinferList" resultType="solar.cmm.rscinfer.dao.RscinferVO">
 		SELECT * FROM RSC_INFER_CD
     </select>
+    
+   <select id="rscinferdataFind" resultType="solar.cmm.rscinfer.dao.RscinferVO">
+	SELECT * FROM RSC_INFER_CD
+	<where>
+		<if test="rscInferNm != null and rscInferNm != ''">
+			AND RSC_INFER_NM LIKE '%' || #{rscInferNm} || '%'
+		</if>
+	</where>
+	order by RTNGD_RESN_CD asc
+	</select>
 
     <insert id="rscinferInsert">
 		INSERT INTO RSC_INFER_CD(RTNGD_RESN_CD, RSC_INFER_NM, RSC_INFER_DESCT) 

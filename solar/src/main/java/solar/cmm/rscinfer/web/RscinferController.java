@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.cmm.rscinfer.service.RscinferService;
 import solar.cmm.rscinfer.service.impl.RscinferMapper;
@@ -44,6 +45,21 @@ public class RscinferController {
 	public String insertUpdate(Model model, RscinferVO rscinferVO, @RequestBody ModifyVO<RscinferVO> modifyVO) throws Exception{
 		rscinferService.modifyData(modifyVO);
 		model.addAttribute("mode", "upd");
+		
+		return "jsonView";
+	}
+	
+	@GetMapping("/grid/rscinferdataFind")
+	public String rscinferFind(Model model, RscinferVO rscinferVO) throws Exception{
+		
+		List<?> rscinferList = rscinferService.rscinferdataFind(rscinferVO);
+		model.addAttribute("result", true);
+		Map<String, Object>map = new HashMap();
+		Map<String, Object>map2 = new HashMap();
+		map.put("contents", rscinferList);
+		map2.put("page", 1);
+		map2.put("totalCount", rscinferList.size());
+		model.addAttribute("data", map);
 		
 		return "jsonView";
 	}
