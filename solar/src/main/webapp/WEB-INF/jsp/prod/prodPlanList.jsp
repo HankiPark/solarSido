@@ -52,11 +52,12 @@
 <!-- 생산계획 상세 그리드-->
 <div id="planDgrid"></div>
 
+</body>
+
 <!-- 스크립트 -->
 <script type="text/javascript">
 	let coCd;
 	let prdtCd;
-	
 	//계획일자 Default: sysdate
 	let pEndDt = new Date();
 	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
@@ -92,18 +93,16 @@
 	});
    
   //계획 조회 그리드
-	const planDdataSource = {
-		  api: {
-		    	readData: { url: '${pageContext.request.contextPath}/grid/planGrid.do', 
-					    	method: 'GET'
-		    				},
-				}, 
-			contentType: 'application/json'
-		};
-	
 	const planDgrid = new tui.Grid({
 		el: document.getElementById('planDgrid'),
-		data: planDdataSource,
+		data: {
+			  api: {
+			    	readData: { url: '${pageContext.request.contextPath}/grid/planGrid.do', 
+						    	method: 'GET'
+			    				}
+					}, 
+				contentType: 'application/json'
+			},
 		scrollX: false,
 		scrollY: true,
 		bodyHeight: 500,
@@ -111,62 +110,73 @@
 					  {
 					    header: '계획번호',
 					    name: 'planNo',
+					    align: 'center',
 					    sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '계획일자',
 					    name: 'planDt',
+					    align: 'center',
 				    	sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '업체코드',
 					    name: 'coCd',
+					    align: 'center',
 				    	sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '제품코드',
-					    name: 'prdtCd',    
+					    name: 'prdtCd',
+					    align: 'center',
 				    	sortingType: 'desc',
 				        sortable: true
 					  },		  
 					  {
 					    header: '제품명',
-					    name: 'prdtNm'
+					    name: 'prdtNm',
+					    align: 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
+					    align: 'center',
 				    	sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '납기일자',
 					    name: 'paprdDt',
+					    align: 'center',
 					    sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '주문량',
 					    name: 'orderQty',
+					    align: 'center',
 					    sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '계획량',
 					    name: 'planQty',
+					    align: 'center'
 					  },
 					  {
 					    header: '작업일자',
 					    name: 'wkDt',
+					    align: 'center',
 					    sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
 					    header: '작업순서',
 					    name: 'wkOrd',
+					    align: 'center'
 					  },
 			 		 ],
  		summary: {
@@ -174,24 +184,24 @@
 	        height: 50,
 	        columnContent: {
 	        	planDt: {
-	        		template: function(valueMap) {
-	        			return '합계';
+	        		template: function(summary) {
+	        			return '합계:';
 	        			},
 	        		align:'center'
 				},
 				orderQty: {
-					template: function(valueMap) {
-						return valueMap.sum;
+					template: function(summary) {
+						return summary.sum;
 						}
 				},
 				planQty: {
-					template: function(valueMap) {
-						return valueMap.sum;
+					template: function(summary) {
+						return summary.sum;
 						}
 				}
 	        }
 	    }
-			});
+	});
 	
 	//조회 버튼: 조건별(기간, 업체, 제품) 생산계획 조회
 	$('#btnSearch').click(function() {
@@ -227,7 +237,5 @@
 	});
 	
 	//Excel 버튼
-	
 </script>
-</body>
 </html>

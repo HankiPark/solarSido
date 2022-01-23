@@ -37,16 +37,13 @@ function planList(){
 				}]
 			});
 
-	prodPlanGrid.on('click', (ev) => {
-		console.log(ev);
-	})
-	
 	//그리드 내부 더블클릭
 	prodPlanGrid.on('dblclick', function(ev) {
-
-		$('#planDt').val(prodPlanGrid.getValue(ev["rowKey"], "planDt"));
-		$('#planNm').val(prodPlanGrid.getValue(ev["rowKey"], "planNm"));
-		console.log("planDt:" + planDt + "&planNm:" + planNm);
+		$('#planNo').val(prodPlanGrid.getValue(ev["rowKey"], "planNo"));
+ 		$('#planDt').val(prodPlanGrid.getValue(ev["rowKey"], "planDt"));
+		$('#planNm').val(prodPlanGrid.getValue(ev["rowKey"], "planNm")); 
+		$('#selPlanNo').val(prodPlanGrid.getValue(ev["rowKey"], "planNo")); 
+		
 		var planNo = prodPlanGrid.getValue(ev["rowKey"], "planNo")
 		var params = {
 				'planNo': planNo
@@ -57,7 +54,6 @@ function planList(){
 			dataType:"json",
 			contentType : 'application/json; charset=utf-8',
 		}).done(function(pln) {
-			console.log(pln)
 			console.log(pln.data)
 			planDgrid.resetData(pln.data);
 		}).fail(function(reject){

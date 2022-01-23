@@ -1,7 +1,6 @@
 package solar.prod.plan.service;
 
 import java.util.List;
-import java.util.Map;
 
 import solar.sales.order.dao.ModifyVO;
 
@@ -27,4 +26,8 @@ public interface ProdPlanService {
 	List<ProdPlanVO> searchOrder(ProdPlanVO ppVo);
 	List<ProdPlanVO> findCoCd(ProdPlanVO ppVo);
 	List<ProdPlanVO> findPrdtCd(ProdPlanVO ppVo);
+
+	List<?> selectPstc(ProdPlanVO ppVo);
+
+	List<?> selectRstc(ProdPlanVO ppVo);
 }

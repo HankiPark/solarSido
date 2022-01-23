@@ -12,6 +12,8 @@ public class ProdPlanVO {
 	String progInfo;	//진행정보
 	String paprdDt;		//납기일자
 	int orderQty; 		//주문량
+	int prdtStc;		//제품재고
+	int pSafStc;		//안전재고
 	
 	//Plan
 	String planNo;		//생산계획번호
@@ -42,5 +44,13 @@ public class ProdPlanVO {
 	String coNm;		//업체명
 	String bizno;		//사업자등록번호
 	String coFg;		//업체구분
-
+	
+	//rsc
+	String psafStc;		//제품안전재고
+	String rcomQty;		//추천작업량
+	String rscCd;		//자재코드
+	String rscStc;		//자재재고량
+	String safStc;		//자재안전재고
+	String ndStc;		//자재필요량
+	String shtStc;		//자재부족량
 }

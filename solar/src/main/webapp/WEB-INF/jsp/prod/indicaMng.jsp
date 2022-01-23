@@ -53,23 +53,24 @@
 	<hr />
 
 	<div class="row">
-	<!-- 소요자재 그리드 -->
-	<div id="rscGrid" class="col-4" >
-		<label>제품코드</label>
-		<input type="text" id="prdtCd" name="prdtCd" readonly> 
-		<label>제품명</label>
-		<input type="text" id="prdtNm" name="prdtNm" readonly> 
-	</div>
-	<div id="rscLotGrid" class="col-7"  >
-		<label>자재코드</label>
-		<input type="text" id="prdtCd" name="prdtCd" readonly> 
-		<label>자재명</label>
-		<input type="text" id="prdtNm" name="prdtNm" readonly> 
-	</div>
+		<!-- 소요자재 그리드 -->
+		<div id="rscGrid" class="col-4" >
+			<label>제품코드</label>
+			<input type="text" id="prdtCd" name="prdtCd" readonly> 
+			<label>제품명</label>
+			<input type="text" id="prdtNm" name="prdtNm" readonly> 
+		</div>
+		<div id="rscLotGrid" class="col-7"  >
+			<label>자재코드</label>
+			<input type="text" id="rscCd" name="rscCd" readonly> 
+			<label>자재명</label>
+			<input type="text" id="rscNm" name="rscNm" readonly> 
+		</div>
 	</div>
 	
-	<!-- 스크립트 -->
-	<script type="text/javascript">
+</body>
+<!-- 스크립트 -->
+<script type="text/javascript">
 	//지시일자 Default: sysdate
 	let pEndDt = new Date();
 	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
@@ -80,24 +81,22 @@
 	document.getElementById('indicaDt').value = iDt.toISOString().substring(0, 10);
 	
 	//지시 조회 그리드
-	let indicaDdataSource = {
-		  api: {
-		    	readData: {
-					url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
-					method: 'GET'
-		    				},
-		    	modifyData: {
-		    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
-					method: 'POST'
-							}
-		  },
-			contentType: 'application/json',
-			initialRequest: false //초기에 안보이게 함
-		}
-	
 	let indicaDgrid = new tui.Grid({
 		el: document.getElementById('indicaDgrid'),
-		data: indicaDdataSource,
+		data: {
+			  api: {
+			    	readData: {
+						url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
+						method: 'GET'
+			    				},
+			    	modifyData: {
+			    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
+						method: 'POST'
+								}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
 		scrollX: false,
 		scrollY: true,
 		bodyHeight: 250,
@@ -255,37 +254,38 @@
 		indicaDgrid.resetData([]);
 	})
 	
-	//그리드 내부 더블클릭 이벤트
+	//지시상세 그리드 내부 클릭 이벤트
 	indicaDgrid.on('click', function(ev){
-		console.log(indicaDgrid.getValue(ev["rowKey"], "prdtCd"));
 		let prdtCd = indicaDgrid.getValue(ev["rowKey"], "prdtCd")
+		let prdtNm = indicaDgrid.getValue(ev["rowKey"], "prdtNm")
 		
-		$('prdtCd').val(indicaDgrid.getValue(ev["rowKey"], "prdtCd"));
+		console.log(prdtCd);
+		$('#prdtCd').val(prdtCd);
+		$('#prdtNm').val(prdtNm);
 		
-		var GridParams = {
-				'prdtCd' : prdtCd
+		var rscGridParams = {
+				'prdtCd' : prdtCd,
+				'prdtNm' : prdtNm
 		};
 		
-		rscGrid.readData(1, GridParams, true);
+		rscGrid.readData(1, rscGridParams, true);
 	});
  	
  	
 	//제품별 소요 자재 목록 그리드
-	let rscDataSource = {
-		  api: {
-		    	readData: {
-					url: '${pageContext.request.contextPath}/grid/rscGrid.do', 
-					method: 'GET',
-					initParams : { prdtCd: 'prdtCd'}
-		    				}
-		  },
-			contentType: 'application/json',
-			initialRequest: false //초기에 안보이게 함
-		}
-	
 	let rscGrid = new tui.Grid({
 		el: document.getElementById('rscGrid'),
-		data: rscDataSource,
+		data: {
+			  api: {
+			    	readData: {
+						url: '${pageContext.request.contextPath}/grid/rscGrid.do', 
+						method: 'GET',
+						initParams : { prdtCd: 'prdtCd'}
+			    				}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
 		scrollX: false,
 		scrollY: true,
 		rowHeaders : [ 'rowNum' ],
@@ -316,22 +316,37 @@
 		indicaDgrid.refreshLayout();
 	});
 	
+	//자재목록 그리드 내부 클릭 이벤트
+	rscGrid.on('click', function(ev){
+		let rscCd = rscGrid.getValue(ev["rowKey"], "rscCd")
+		let rscNm = rscGrid.getValue(ev["rowKey"], "rscNm")
+		
+		console.log(rscCd);
+		$('#rscCd').val(rscCd);
+		$('#rscNm').val(rscNm);
+		
+		var lotGridParams = {
+				'rscCd' : rscCd,
+				'rscNm' : rscNm
+		};
+		
+		rscLotGrid.readData(1, lotGridParams, true);
+	});
 	
-	//소요 자재 그리드
-	let rscLotDataSource = {
-		  api: {
-		    	readData: {
-					url: '${pageContext.request.contextPath}/grid/rscLotGrid.do', 
-					method: 'GET'
-		    				}
-		  },
-			contentType: 'application/json',
-			initialRequest: false //초기에 안보이게 함
-		}
-	
+	//소요 자재 Lot 그리드
 	let rscLotGrid = new tui.Grid({
 		el: document.getElementById('rscLotGrid'),
-		data: rscLotDataSource,
+		data:  {
+			  api: {
+			    	readData: {
+						url: '${pageContext.request.contextPath}/grid/rscLotGrid.do', 
+						method: 'GET',
+						initParams : { rscCd: 'rscCd'}
+			    				}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
 		scrollX: false,
 		scrollY: true,
 		rowHeaders : [ 'rowNum','checkbox' ],
@@ -348,7 +363,7 @@
 					  },
 					  {
 					    header: '재고량',
-					    name: 'rscQty'
+					    name: 'rscStc'
 					  },
 					  {
 					    header: '투입량',
@@ -378,7 +393,5 @@
 	        }
 	    }
 	});
-	
-	</script>
-</body>
+</script>
 </html>
