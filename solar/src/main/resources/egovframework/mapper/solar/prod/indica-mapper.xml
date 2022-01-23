@@ -60,4 +60,10 @@
 	WHERE prdt_cd = #{prdtCd}
 </select>
 
+<select id="selectRscLot" resultType="IndicaVO">
+	SELECT *
+	FROM rsc_inout
+	WHERE rsc_cd = #{rscCd}
+</select>
+
 </mapper>

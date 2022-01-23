@@ -11,4 +11,6 @@ public interface IndicaMapper {
 	List<?> findIndica(IndicaVO idcVo);
 	
 	List<?> selectRscList(IndicaVO idcVo);
+	
+	List<?> selectRscLot(IndicaVO idcVo);
 }

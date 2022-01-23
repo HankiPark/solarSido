@@ -19,7 +19,7 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		'10' as day_out_put,
+		'10' as day_output,
 		(B.plan_qty/10) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
@@ -41,6 +41,30 @@
 		</if>
 	ORDER BY paprd_dt, order_qty
 </select>
+
+<select id="selectPstc" resultType="ProdPlanVO">
+	SELECT
+		prdt_cd,
+		order_qty,
+		prdt_stc,
+		'50' as p_saf_stc
+	FROM order_d
+	WHERE order_no = #{orderNo}
+</select>
+
+<select id="selectRstc" resultType="ProdPlanVO">
+	SELECT
+		a.prdt_cd,
+		a.rsc_cd,
+		(SELECT rsc_stc FROM rsc_stc WHERE rsc_cd = b.rsc_cd) rsc_stc,
+		b.saf_stc
+	FROM prdt_bom a, rsc b, order_d o
+	WHERE a.rsc_cd = b.rsc_cd
+    AND   a.prdt_cd = o.prdt_cd
+    and o.order_no = #{orderNo}
+    order by prdt_cd
+</select>
+
 
 <select id="findProdPlan" resultType="ProdPlanVO">
 	SELECT
@@ -166,26 +190,6 @@
 	WHERE plan_deta_no = #{planDetaNo}
 	AND plan_no = #{planNo}
 </if>
-	<selectKey keyProperty="planDetaNo" resultType="int" order="BEFORE"> 
-		SELECT nvl(max(plan_deta_no), 0)+1 from plan_d
-	</selectKey>
-	INSERT INTO plan_d (plan_deta_no,
-						plan_no,
-						plan_dt,
-						order_no,
-						recv_dt,
-						prdt_cd,
-						plan_qty,
-						wk_ord,
-						wk_dt)
-	VALUES( planDetaNo, 
-			CREATENO('PLA', PLANSEQ.nextval), 
-			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
-			#{orderNo}, 
-			TO_DATE(#{recvDt}, 'YYYY/MM/DD'),
-			#{prdtCd}, 
-			#{planQty}, 
-			#{wkOrd}, 
-			TO_DATE(#{wkDt}, 'YYYY/MM/DD') )
 </update>
+
 </mapper>

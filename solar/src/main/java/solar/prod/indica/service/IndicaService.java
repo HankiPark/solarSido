@@ -10,4 +10,6 @@ public interface IndicaService {
 
 	List<?> selectRscList(IndicaVO idcVo);
 
+	List<?> selectRscLot(IndicaVO idcVo);
+
 }

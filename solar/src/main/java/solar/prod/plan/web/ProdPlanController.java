@@ -33,7 +33,7 @@ public class ProdPlanController {
 			return "prod/prodPlanList";
 		}
 	 
-	//생산계획상세 조회
+	//생산계획상세 조회 그리드
 	@GetMapping("/grid/planGrid.do")
 	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
 		List<?> list = ppService.selectPlan(ppVo);
@@ -44,7 +44,33 @@ public class ProdPlanController {
 		model.addAttribute("data", map);
 		System.out.println("map:" + map);
 		return "jsonView";
-		}
+	}
+	
+	//제품재고 조회 그리드
+	@GetMapping("/grid/pStcGrid.do")
+	public String pStcGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.selectPstc(ppVo);
+		Map<String,Object> map = new HashMap<>();
+		map.put("contents", list);
+		System.out.println("list:"+list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
+	
+	//자재재고 조회 그리드
+	@GetMapping("/grid/rStcGrid.do")
+	public String rStcGrid(Model model, ProdPlanVO ppVo) throws Exception {
+		List<?> list = ppService.selectRstc(ppVo);
+		Map<String,Object> map = new HashMap<>();
+		map.put("contents", list);
+		System.out.println("list:"+list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
 	
 	//modifyData
 	@PostMapping("/grid/planModify.do")
@@ -59,7 +85,6 @@ public class ProdPlanController {
 	//생산계획서검색 모달
 	@RequestMapping("/modal/findProdPlan")
 	public String findProdPlan() {
-		System.out.println("생산계획서검색 모달호출");
 		return "modal/findProdPlan";
 	}
 		
@@ -86,7 +111,6 @@ public class ProdPlanController {
 	//주문서검색 모달
 	@RequestMapping("/modal/findOrder")
 	public String findOrder() {
-		System.out.println("주문서검색 모달호출");
 		return "modal/findOrder";
 	}
 	
@@ -113,7 +137,6 @@ public class ProdPlanController {
 	//업체검색 모달
 	@RequestMapping("/modal/findCoCd")
 	public String findCoCd() {
-		System.out.println("업체검색 모달호출");
 		return "modal/findCoCd";
 	}
 	
@@ -132,7 +155,6 @@ public class ProdPlanController {
 	//제품검색 모달
 	@RequestMapping("/modal/findPrdtCd")
 	public String findPrdtCd() {
-		System.out.println("제품검색 모달호출");
 		return "modal/findPrdtCd";
 	}
 	
