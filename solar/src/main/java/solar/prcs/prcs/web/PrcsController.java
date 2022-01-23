@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
+import solar.prcs.prcs.service.PrcsPrMVO;
 import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.RscConVO;
 
@@ -87,5 +89,18 @@ public class PrcsController {
 		  return "jsonView";
 	  }
 	  
+	  /*------------------------------------------------------------------------------------------------ */
+	  // 공정 진입시 호출될 명령
+	  
+	  // 시작버튼 누를시 작업번호 일시 생
+	  @PostMapping("prcs/insertPrcsPrM")
+	  public String insertPrcsPrM(PrcsPrMVO vo, Model model) {
+		  Map<String, Object> map = new HashMap();
+		  map.put("contents", prcsservice.insertPrcsPrM(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  return "jsonView";
+		  
+	  }
 	  
 }

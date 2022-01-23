@@ -9,7 +9,7 @@ import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsService;
-import solar.prcs.prcs.service.PrcsVO;
+import solar.prcs.prcs.service.PrcsPrMVO;
 import solar.prcs.prcs.service.RscConVO;
 
 @Service
@@ -20,7 +20,7 @@ public class PrcsServiceImpl implements PrcsService {
 
 	
 	@Override
-	public List<PrcsVO> selectAll() {
+	public List<PrcsPrMVO> selectAll() {
 		return prcsmapper.selectAll();
 	}
 
@@ -47,6 +47,19 @@ public class PrcsServiceImpl implements PrcsService {
 	@Override
 	public List<RscConVO> selectPrcsItemRSC(RscConVO vo) {
 		return prcsmapper.selectPrcsItemRSC(vo);
+	}
+
+
+	@Override
+	public List<PrcsPrMVO> insertPrcsPrM(PrcsPrMVO vo) {
+		return prcsmapper.insertPrcsPrM(vo);
+	}
+
+
+	@Override
+	public List<PrcsPrMVO> updatePrcsPrM(PrcsPrMVO vo) {
+		// TODO Auto-generated method stub
+		return prcsmapper.updatePrcsPrM(vo);
 	}
 	 
 	 

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 @Data
-public class PrcsVO {
+public class PrcsPrMVO {
 
 	String wk_no;
 	@JsonFormat(pattern="yyyy/MM/dd", timezone="Asia/Seoul")		// 보낼때  받을때
@@ -20,7 +20,6 @@ public class PrcsVO {
 	String istQty;
 	String wkQty;
 	String inferQty;
-	String prdtLot;
 	String expcTm;
 	String realTm;
 	String prcsCd;
