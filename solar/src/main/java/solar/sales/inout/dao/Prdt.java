@@ -56,8 +56,7 @@ public class Prdt {
 	Date endT;
 	String prdNm;
 	String prdCd;
-	String copNm;
-	String copCd;
+
 	String prdSt;
 	//yyyy-MM
 	String twit;

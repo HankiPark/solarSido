@@ -176,6 +176,12 @@ public class PrdtServiceImpl implements PrdtService {
 		return pmapper.prdtList(vo);
 	}
 
+	@Override
+	public List<Prdt> findCo(Prdt vo) {
+		// TODO Auto-generated method stub
+		return pmapper.findCo(vo);
+	}
+
 	
 	
 	

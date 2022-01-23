@@ -17,7 +17,7 @@ public interface PrdtService {
 	List<Prdt> prdtSearch(Prdt vo);
 	List<Prdt> prdtChart(Prdt vo);
 	List<Prdt> prdtList(Prdt vo);
-	//List<Prdt> findCo();
+	List<Prdt> findCo(Prdt vo);
 	int inPrdt(Prdt vo);
 	int modifyData(ModifyVO<Prdt> mvo);
 	int modifyOutData(ModifyVO<Prdt> mvo);

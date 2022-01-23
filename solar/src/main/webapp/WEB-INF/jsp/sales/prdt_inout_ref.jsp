@@ -70,7 +70,7 @@ a {
 		</div>
 		<div id="coo" data-role="fieldcontain" class="col-2" style="display: none">
 			<label>회사명</label> <input type="text" id="coNm">
-			<button type="button" id="static">월별 출고 통계</button>
+			<button type="button" id="static">제품출고 통계</button>
 		</div>
 	</div>
 	<button type="button" id="findgrid">조회</button>
@@ -83,6 +83,7 @@ a {
 
 
 	<div id="dialog-form" title="제품명단"></div>
+	<div id="dialog-co" title="업체명단"></div>
 	<div id="dialog-out" title="월별 출고"></div>
 
 	<script type="text/javascript">
@@ -134,6 +135,12 @@ a {
 		width : 700,
 		height : 700
 	});
+	let dialog3 = $("#dialog-co").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 700,
+		height : 700
+	});
 	
 	//제품이름검색시
 	$('#prdNm')
@@ -146,6 +153,18 @@ a {
 								"${pageContext.request.contextPath}/modal/prdtNmList",
 								function() {
 									NmList()
+								})
+			});
+	$('#coNm')
+	.on(
+			'click',
+			function() {
+				dialog3.dialog("open");
+				$("#dialog-co")
+						.load(
+								"${pageContext.request.contextPath}/modal/coNmList",
+								function() {
+									CoList()
 								})
 			});
 	

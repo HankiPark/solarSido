@@ -66,6 +66,12 @@
 			<if test="coFg ='P'">
 				co_fg='P'
 			</if>
+			<if test="coCd!=null and coCd!=''">
+				and co_cd=#{coCd}
+			</if>
+			<if test="coNm !=null and coNm!=''">
+				and co_nm=#{coNm}
+			</if>
 		</where>
 	</select>
 	<!-- 전표번호 조회 -->

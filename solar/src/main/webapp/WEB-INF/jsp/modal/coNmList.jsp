@@ -58,8 +58,8 @@
 				var coNm = $("#coNmFind").val();
 				var coCd = $("#coCdFind").val();
 				var coParams ={
-						'copNm':coNm,
-						'copCd':coCd,
+						'coNm':coNm,
+						'coCd':coCd,
 						'coFg': 'P'
 						}
 				
@@ -71,7 +71,8 @@
 					
 				}).done(function(res){
 					var sres = JSON.parse(res);
-					gridD.resetData(sres["data"]["contents"]);
+					console.log(sres)
+					gridCo.resetData(sres["data"]["contents"]);
 				})
 			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')
 				.then(res=>res.json())

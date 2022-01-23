@@ -19,7 +19,7 @@ public interface PrdtMapper {
 	List<Prdt> prdtList(Prdt vo);
 	
 	
-	//List<Prdt> findCo();
+	List<Prdt> findCo(Prdt vo);
 	int inPrdt(Prdt vo);
 	int modifyData(ModifyVO<Prdt> mvo);
 	int insertInPrdt(Prdt vo);

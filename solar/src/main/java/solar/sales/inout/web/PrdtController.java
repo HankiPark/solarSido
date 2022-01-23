@@ -85,24 +85,25 @@ public class PrdtController {
 
 	}
 
-	/*
-	 * //회사이름조회
-	 * 
-	 * @GetMapping("/modal/coNmList") public String CoNmList() {
-	 * 
-	 * return "modal/coNmList"; }
-	 * 
-	 * //회사이름검색 grid 불러오기
-	 * 
-	 * @GetMapping("/grid/coNmList.do") public String CoNmListGrid(Model model,Prdt
-	 * prdt) { List<?> list=pservice.findCo(prdt);
-	 * model.addAttribute("result",true); Map<String,Object> map = new HashMap();
-	 * Map<String,Object> map2 = new HashMap(); map.put("contents", list);
-	 * map2.put("page",1); map2.put("totalCount", list.size());
-	 * model.addAttribute("data", map);
-	 * 
-	 * return "jsonView"; }
-	 */
+	
+	  //회사이름조회
+	  
+	  @GetMapping("/modal/coNmList") public String CoNmList() {
+	  
+	  return "modal/coNmList"; }
+	  
+	  //회사이름검색 grid 불러오기
+	  
+	  @GetMapping("/grid/coNmList.do") 
+	  public String CoNmListGrid(Model model,Prdt  prdt) {
+		  List<?> list=pservice.findCo(prdt);
+	  model.addAttribute("result",true); Map<String,Object> map = new HashMap();
+	  Map<String,Object> map2 = new HashMap(); map.put("contents", list);
+	  map2.put("page",1); map2.put("totalCount", list.size());
+	  model.addAttribute("data", map);
+	  
+	  return "jsonView"; }
+	 
 	// 전표저장 및 전표번호 재발급
 	@PostMapping("/grid/slipOutputUpdate.do")
 	public String slipOutputUpdate(Model model, Prdt prdt, @RequestBody ModifyVO<Prdt> mvo) {

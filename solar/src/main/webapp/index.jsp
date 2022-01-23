@@ -79,8 +79,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="${pageContext.request.contextPath}" class="brand-link">
-      <img src="${pageContext.request.contextPath}/resources/assets/images/logo-icon.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <img src="${pageContext.request.contextPath}/resources/assets/images/logo-text.png" alt="AdminLTE Logo" class="dark-logo" style="opacity: .8">
+      <img src="${pageContext.request.contextPath}/resources/mbjs.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" >
+      <img src="${pageContext.request.contextPath}/resources/solarsido.png" alt="AdminLTE Logo" class="dark-logo" style="opacity: .8">
       
     </a>
 
