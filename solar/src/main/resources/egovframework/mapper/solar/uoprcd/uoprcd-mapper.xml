@@ -9,7 +9,7 @@
 	<select id="uoprcddataFind" resultType="solar.cmm.uoprcd.dao.UoprcdVO">
 	SELECT * FROM UOPR_CD
 	<where>
-		<if test="uoprCd != null and uoprCd != ''">
+		<if test="uoprNm != null and uoprNm != ''">
 			AND UOPR_NM LIKE '%' || #{uoprNm} || '%'
 		</if>
 	</where>

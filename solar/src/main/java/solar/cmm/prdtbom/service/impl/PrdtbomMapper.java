@@ -7,6 +7,7 @@ import solar.sales.order.dao.ModifyVO;
 
 public interface PrdtbomMapper {
 	List<PrdtbomVO>	prdtbomList(PrdtbomVO prdtbomVO);
+	List<PrdtbomVO> prdtbomSearch(PrdtbomVO prdtbomVO);
 	List<PrdtbomVO> prdtList(PrdtbomVO prdtbomVO);
 	List<PrdtbomVO>	prdtbomFind(PrdtbomVO prdtbomVO);
 	List<PrdtbomVO> prdtinfoFind(PrdtbomVO prdtvomVO);

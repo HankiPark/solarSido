@@ -16,18 +16,17 @@
 	<button type="button" id="btnfind">조회</button>
 
 
-	<div id="coCdGrid"></div>
+	<div id="prdtGrid"></div>
 </body>
 
 <script type="text/javascript">
-function prdtList(){
-	const prdtGrid = new tui.Grid(
+	prdtGrid = new tui.Grid(
 			{
 				el : document.getElementById('prdtGrid'),
 				data : {
 					api : {
 						readData : {
-							url : '${pageContext.request.contextPath}/grid/findCoCd.do',
+							url : '${pageContext.request.contextPath}/grid/prdtmodalList.do',
 							method : 'GET'
 						}
 					},
@@ -64,33 +63,31 @@ function prdtList(){
 	$('#btnfind').on('click', function() {
 		var prdtCd = $("#prdtCdFind").val();
 		var prdtNm = $("#prdtNmFind").val();
-		console.log(coCd);
-		console.log(coNm);
 		var Params = {
-			'coCd' : coCd,
-			'coNm' : coNm
+			'prdtCd' : prdtCd,
+			'prdtNm' : prdtNm
 		}
 		$.ajax({
-			url : '${pageContext.request.contextPath}/grid/findCoCd.do',
+			url : '${pageContext.request.contextPath}/grid/prdtinfoSearch',
 			data : Params,
 			contentType : 'application/json; charset=utf-8'
 		}).done(function(res) {
 			var sres = JSON.parse(res);
-			coCdGrid.resetData(sres["data"]["contents"]);
+			prdtGrid.resetData(sres["data"]["contents"]);
 		})
 	});
 
 	//그리드 내부 더블클릭
-	coCdGrid.on('dblclick', function(ev) {
-		$('#coCd').val(coCdGrid.getValue(ev["rowKey"], "coCd"));
-		$('#coNm').val(coCdGrid.getValue(ev["rowKey"], "coNm"));
-		coCdDialog.dialog("close");
+	prdtGrid.on('dblclick', function(ev) {
+		$('#prdtCd').val(prdtGrid.getValue(ev["rowKey"], "prdtCd"));
+		$('#prdtNm').val(prdtGrid.getValue(ev["rowKey"], "prdtNm"));
+		$('#prdtSpec').val(prdtGrid.getValue(ev["rowKey"], "prdtSpec"));
+		dialog.dialog("close");
 	});
 
-	coCdGrid.on('onGridUpdated', function() {
-		coCdGrid.refreshLayout();
+	prdtGrid.on('onGridUpdated', function() {
+		prdtGrid.refreshLayout();
 	});
-}
 </script>
 
 </html>
