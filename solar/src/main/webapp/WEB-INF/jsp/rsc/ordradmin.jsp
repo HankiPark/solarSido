@@ -29,7 +29,6 @@
 </body>
 
 <script>
-	let evVar;
 	let d = new Date();
 	let nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
 	document.getElementById('ordrDtStt').value = nd.toISOString().slice(0, 10);
