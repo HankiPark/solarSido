@@ -17,35 +17,70 @@
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
-		<br>
+		발주일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
 		발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
 		자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
 		<button type="button" id="ordrQueryBtn">조회</button>
 		<button type="button" id="inspSaveBtn">저장</button>
 	</form>
-	<div id="grid"></div>
-	<ul>
-		<li>발주량: <span id="ordrQty"></span></li>
-		<li>검수합격량: <span id="rscPassedQty"></span></li>
-		<li>수량확인<input id="confirmedQty"></li>
-		<li><button type="button" id="btnIn">입고</button></li>
-	</ul>
+	<div class="flex row">
+		<div id="grid" class="col-8"></div>
+		<div class="col-4">
+			<ul>
+				<li>발주량: <span id="ordrQty"></span></li>
+				<li>검수합격량: <span id="rscPassedQty"></span></li>
+				<li>수량확인<input id="confirmedQty"></li>
+				<li><button type="button" id="btnIn">입고</button></li>
+			</ul>
+		</div>
+	</div>
 </body>
 
 <script>
 	let cmmnCodes;
 	let curRowKey;
 	let sum;
-	let ordrDtStt;
-	let ordrDtEnd;
+	let date = new Date();
+	let ordrDtEnd = date.toISOString().substr(0,10);
+	date.setDate(date.getDate() - 7);
+	let ordrDtStt = date.toISOString().substr(0,10);
 	let co;
 	let rsc;
+	$(function() {
+		   
+	     $('input[name="datePicker"]').daterangepicker({
+	        showDropdowns: true,
+	       opens: 'right',
+	       startDate: moment().startOf('hour').add(-7, 'day'),
+	        endDate: moment().startOf('hour'),
+	        minYear: 1990,
+	          maxYear: 2025,
+	        autoApply: true,
+	          locale: {
+	            format: 'YYYY-MM-DD',
+	               separator: " ~ ",
+	                applyLabel: "적용",
+	                cancelLabel: "닫기",
+	                prevText: '이전 달',
+	                nextText: '다음 달',
+	                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	                daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+	                showMonthAfterYear: true,
+	                yearSuffix: '년'
+	          }
+	     }, function(start, end, label) {
+	       ordrDtStt = start.format('YYYY-MM-DD');
+	       ordrDtEnd = end.format('YYYY-MM-DD');
+	     },
+	     
+	     );
+	   });
 	let ordrDataSource = {
 		api: {
 			readData: {
 				url: 'ordrData?inspCls=rs002',
-				method: 'GET'
+				method: 'GET',
+				initialRequest: false,
 			},
 			modifyData: {
 				url: 'ordrData',
@@ -62,7 +97,6 @@
 		async: false,
 	}).done(function (data) {
 		cmmnCodes = data;
-		console.log(data);
 	});
 
 	let inspDialog = $("#inspModal").dialog({
@@ -88,7 +122,7 @@
 
 	var grid = new tui.Grid({
 		el: document.getElementById('grid'),
-		scrollX: false,
+		scrollX: true,
 		scrollY: false,
 		data: ordrDataSource,
 		rowHeaders: ['checkbox'],
@@ -99,7 +133,8 @@
 			},
 			{
 				header: '자재명',
-				name: 'rscNm'
+				name: 'rscNm',
+				width: 220
 			},
 			{
 				header: '자재코드',
@@ -136,9 +171,7 @@
 	});
 	grid.disableColumn('inspCls');
 	grid.on('response', function (ev) {
-		console.log(ev.xhr.response);
 		if (ev.xhr.responseText == "201") {
-			console.log("201");
 			grid.readData();
 		}
 		grid.refreshLayout();
@@ -155,13 +188,19 @@
 			rscPassedQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
 		}
 	});
+	grid.on('onGridMounted',function(){
+		grid.readData(1,{
+			'ordrDtStt':ordrDtStt,
+			'ordrDtEnd':ordrDtEnd,
+			'co':co,
+			'rsc':rsc,
+		});
+	});
 
 	//
 
 	let ordrQueryBtn = document.getElementById("ordrQueryBtn");
 	ordrQueryBtn.addEventListener("click", function () {
-		ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
-		ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
 		co = document.ordrQueryFrm.co.value;
 		rsc = document.ordrQueryFrm.rsc.value;
 		rtngdResnCd = '';
