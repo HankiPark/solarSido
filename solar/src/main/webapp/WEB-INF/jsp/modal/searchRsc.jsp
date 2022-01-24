@@ -15,6 +15,7 @@
 	<div id="rscGrid"></div>
 </body>
 <script>
+var evVar;
 var rscGrid = new tui.Grid({
     el: document.getElementById('rscGrid'),
     scrollX: true,
