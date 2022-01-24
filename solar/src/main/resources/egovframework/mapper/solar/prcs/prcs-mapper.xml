@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.prcs.prcs.service.impl.PrcsMapper">
 
-<select id="selectAll" resultType="solar.prcs.prcs.service.PrcsVO">
+<select id="selectAll" resultType="solar.prcs.prcs.service.PrcsPrMVO">
 
 		select wk_no,
 				wk_dt,
@@ -108,5 +108,39 @@
 	
 
 </select>
+
+
+<insert id="insertPrcsPrM">
+	insert prcs_pr_m into (wk_no,
+							wk_dt,
+							prod_fg,
+							prdt_cd,
+							ist_qty,
+							expc_tm,
+							real_tm,
+							prcs_cd,
+							indica_deta_no,
+							indica_no,
+							indica_dt
+					)
+					values ((select nvl(max(wk_no),0)+1 from prcs_pr_m),
+							trunc(sysdate),
+							#{prodFg},
+							#{prodCd},
+							#{istQty},
+							#{expcTm},
+							#{realTm},
+							#{prcsCd},
+							#{indicaDetaNo},
+							#{indicaNo},
+							#{IndicaDt}
+					)
+					
+
+
+
+
+
+</insert>
 
 </mapper>
