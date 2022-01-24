@@ -16,6 +16,24 @@
 	order by RSC_CD asc
 </select>
 
+	<select id="findRsc" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
+	SELECT * FROM RSC
+	<where>
+		<choose>
+			<when test="rscCd !=null and rscCd!='' and rscNm!=null and rscNm!=''">
+			RSC_CD=#{rscCd} and RSC_NM=#{rscNm}
+			</when>
+			<when test="rscCd !=null and rscCd!=''">
+			RSC_CD=#{rscCd}
+			</when>
+			<when test="rscNm!=null and rscNm!=''">
+			RSC_NM=#{rscNm}
+			</when>
+		</choose>
+	</where>
+	order by PRCS_CD asc
+	</select>
+
 <select id="rscinfo" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
 	SELECT distinct r.rsc_cd,
 					r.rsc_nm,

@@ -3,14 +3,17 @@
 <mapper namespace="solar.cmm.prdtbom.service.impl.PrdtbomMapper">
 	
 	<select id="prdtbomList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
-	   	SELECT  a.rsc_cd,
-                    a.rsc_nm,
-                    b.prdt_cd,
-                    b.prdt_nm,
-					a.rsc_use_qty,
-					a.prdt_spec
-			FROM prdt_bom a, prdt b
-			WHERE a.prdt_cd = b.prdt_cd
+		SELECT * FROM PRDT_BOM
+	</select>
+	
+	<select id="prdtbomSearch" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
+		SELECT * FROM PRDT_BOM
+	<where>
+		<if test="prdtCd != null and prdtCd != ''">
+			AND PRDT_CD LIKE '%' || #{prdtCd} || '%'
+		</if>
+	</where>
+	order by RSC_CD asc
 	</select>
 	
 	<select id = "prdtList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">

@@ -12,7 +12,8 @@
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
-	<button type="button" id="btnSave">저장</button>
+	<button type="button" id="btnSave">저장</button><br>
+	<label>불량명 입력</label>
 	<input type = "text" id="prdtinferNminfo">
 	<div><button type="button" id="btnfind">검색</button></div>
 </div>

@@ -77,5 +77,16 @@ public class PrdtbomServiceImpl implements PrdtbomService{
 		// TODO Auto-generated method stub
 		return prdtbomMapper.prdtList(prdtbomVO);
 	}
+
+	@Override
+	public List<PrdtbomVO> prdtbomSearch(PrdtbomVO prdtbomVO) {
+		List<PrdtbomVO> l1 = null;
+		try {
+			l1 = prdtbomMapper.prdtbomSearch(prdtbomVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return l1;
+	}
 	
 }
