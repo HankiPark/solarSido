@@ -34,6 +34,7 @@
 		<if test='rsc != null and rsc != ""'>
 			AND r.rsc_cd = #{rsc}
 		</if>
+		order by o.ordr_dt
 	</select>
 
 </mapper>
