@@ -12,9 +12,7 @@
 	<input type="text" id="coCdFind">
 	<label>업체명</label>
 	<input type="text" id="coNmFind">
-
-	<button type="button" id="btnfindCo">조회</button>
-
+	<button type="button" id="btnfindCo">검색</button>
 
 	<div id="coCdGrid"></div>
 </body>
@@ -53,7 +51,7 @@ function coCdList(){
 			});
 
 	//검색버튼
-	$('#btnfind').on('click', function() {
+	$('#btnfindCo').on('click', function() {
 		var coNm = $("#coNmFind").val();
 		var coCd = $("#coCdFind").val();
 		console.log(coCd);

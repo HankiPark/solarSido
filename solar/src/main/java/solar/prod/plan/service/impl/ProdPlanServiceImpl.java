@@ -23,22 +23,32 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	public int modifyData(ModifyVO<ProdPlanVO> mvo) {
 		if(mvo.getCreatedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getCreatedRows()) {
-				ppMapper.insertPlanD(ppVo);
-				System.out.println("ins mvo:" + mvo);
+				System.out.println("등록:" + mvo);
+				//ppMapper.insertPlanD(ppVo);
 				}
 			}
 		if(mvo.getDeletedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getDeletedRows()) {
+				System.out.println("삭제:" + mvo);
 				ppMapper.deletePlanD(ppVo);
-				System.out.println("del mvo:" + mvo);
-				System.out.println("del ppvo: " + ppVo);
-				System.out.println("del rows:" + mvo.getDeletedRows());
 				}
 			}
 		if(mvo.getUpdatedRows()!=null) {
-			for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
-				ppMapper.updatePlanD(ppVo);
-				System.out.println("upd mvo:" + mvo);
+				System.out.println(mvo.getUpdatedRows().get(0).getPlanNo());
+				if (mvo.getUpdatedRows().get(0).getPlanNo() != null) {
+					for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
+					System.out.println("수정:" + mvo);
+						ppMapper.updatePlan(ppVo);
+						ppMapper.updatePlanD(ppVo);
+					}
+				} else {
+					for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
+						System.out.println("등록:" + mvo);
+						if (ppVo == mvo.getUpdatedRows().get(0)) {
+							ppMapper.insertPlan(ppVo);
+						}
+						ppMapper.insertPlanD(ppVo);
+					}
 				}
 			}
 		return 1;
