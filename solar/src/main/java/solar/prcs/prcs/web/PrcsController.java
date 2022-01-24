@@ -68,6 +68,8 @@ public class PrcsController {
 		model.addAttribute("RSC", prcsservice.selectPrcsItemRSC(vo));	  
 		return "jsonView";
 	  }
+	  
+	  
 	 
 	/*------------------------------------------------------------------------------------------------ */
 	// 설비검색 Modal 페이지 호출
@@ -87,6 +89,13 @@ public class PrcsController {
 		  model.addAttribute("data", map);
 		  
 		  return "jsonView";
+	  }
+	  
+	  // 선택한 공정이 몇개의 설비가 존재하는지 prcsCd를 조건으로 검색해서 데이터를 받아 리턴
+	  @GetMapping("/prcs/searchPrcsEqmDetail")
+	  public String getPrcsEqmDetail(PrcsEqmVO vo, Model model) {
+		  model.addAttribute("PRCS", prcsservice.selectPrcsEqm(vo));
+		return "jsonView";
 	  }
 	  
 	  /*------------------------------------------------------------------------------------------------ */
