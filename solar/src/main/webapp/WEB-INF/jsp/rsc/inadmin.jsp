@@ -134,7 +134,7 @@
 			{
 				header: '자재명',
 				name: 'rscNm',
-				width: 220
+				width: 220,
 			},
 			{
 				header: '자재코드',
@@ -180,8 +180,6 @@
 	grid.on('click', function (ev) {
 		if (ev.columnName == "inspCls") {
 			curRowKey = ev.rowKey;
-			//inspDialog.dialog("open");
-			//$("#inspModal").load("./inout/setInOut");
 			let ordrQty = document.getElementById("ordrQty");
 			let rscPassedQty = document.getElementById("rscPassedQty");
 			ordrQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
@@ -265,14 +263,11 @@
 			body: JSON.stringify({
 				rscSlipNo: "rin",
 				rscCd: grid.getValue(grid.getFocusedCell().rowKey, 'rscCd'),
-				//rscLot: "|| to_char(sysdate,'yyMMdd') || trim(to_char(RSCLOTSEQ.nextval, '000'))",
 				rscQty: grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty'),
 				rscFg: 1,
 				rscAmt: 12300
 			})
 		});
- 		
- 		
 	});
 </script>
 
