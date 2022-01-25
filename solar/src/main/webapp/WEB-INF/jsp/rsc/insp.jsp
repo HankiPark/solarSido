@@ -18,7 +18,7 @@
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="검수"></div>
 		<form id="ordrQueryFrm" name="ordrQueryFrm">
-			발주일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
+			발주일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
 			미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
 			<br>
 			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
@@ -33,8 +33,10 @@
 	let cmmnCodes;
 	let curRowKey;
 	let sum;
-	let ordrDtStt;
-	let ordrDtEnd;
+	let date = new Date();
+	let ordrDtEnd = date.toISOString().substr(0,10);
+	date.setDate(date.getDate() - 7);
+	let ordrDtStt = date.toISOString().substr(0,10);
 	let co;
 	let rsc;
 	let inspCls;
@@ -49,8 +51,39 @@
 				readData: { url: 'ordrData', method: 'GET'},
 				modifyData: {url: 'ordrData',method: 'PUT'}
 			},
-			contentType : 'application/json'
+			contentType : 'application/json',
+			initialRequest: false,
 	};
+	
+	$(function() {
+		   
+	     $('input[name="datePicker"]').daterangepicker({
+	        showDropdowns: true,
+	       opens: 'right',
+	       startDate: moment().startOf('hour').add(-7, 'day'),
+	        endDate: moment().startOf('hour'),
+	        minYear: 1990,
+	          maxYear: 2025,
+	        autoApply: true,
+	          locale: {
+	            format: 'YYYY-MM-DD',
+	               separator: " ~ ",
+	                applyLabel: "적용",
+	                cancelLabel: "닫기",
+	                prevText: '이전 달',
+	                nextText: '다음 달',
+	                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	                daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+	                showMonthAfterYear: true,
+	                yearSuffix: '년'
+	          }
+	     }, function(start, end, label) {
+	       ordrDtStt = start.format('YYYY-MM-DD');
+	       ordrDtEnd = end.format('YYYY-MM-DD');
+	     },
+	     
+	     );
+	   });
 
 //공통코드 가져옴
 	$.ajax({
@@ -59,7 +92,6 @@
 	 async: false,
 	}).done(function(data){
 	 cmmnCodes = data;
-	 console.log(data);
 	});
 	
   var grid = new tui.Grid({
@@ -133,13 +165,20 @@
     }); */
     
 	grid.on('response',function(ev){
-		console.log(ev.xhr.response);
       if(ev.xhr.responseText =="201"){
-    	  console.log("201");
     	  grid.readData();
       }
       grid.refreshLayout();
     });
+	grid.on('onGridMounted',function(){
+		grid.readData(1,{
+			'ordrDtStt':ordrDtStt,
+			'ordrDtEnd':ordrDtEnd,
+			'co':co,
+			'rsc':rsc,
+			'inspCls':inspCls
+		});
+	});
 
 	let inspDialog = $("#inspModal").dialog({
 		modal: true,
@@ -185,11 +224,8 @@
 
   let ordrQueryBtn = document.getElementById("ordrQueryBtn");
   ordrQueryBtn.addEventListener("click", function () {
-    ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
-    ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
     co = document.ordrQueryFrm.co.value;
     rsc = document.ordrQueryFrm.rsc.value;
-    console.log(document.ordrQueryFrm.isNotInspected.checked);
     inspCls = document.ordrQueryFrm.isNotInspected.checked ? 'rs001' : null;
 	grid.readData(1,{
 		'ordrDtStt':ordrDtStt,

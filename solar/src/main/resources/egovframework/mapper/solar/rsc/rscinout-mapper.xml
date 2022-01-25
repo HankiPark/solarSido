@@ -49,11 +49,11 @@
 		    JOIN co c ON r.co_cd = c.co_cd
 		WHERE
 		    1 = 1
-		<if test='dtStt != null and dtStt != ""'>
-			AND trunc(i.rsc_dt) <![CDATA[>= #{dtStt}]]>
+		<if test='ordrDtStt != null and ordrDtStt != ""'>
+			AND trunc(i.rsc_dt) <![CDATA[>= #{ordrDtStt}]]>
 		</if>
-		<if test='dtEnd != null and dtEnd != ""'>
-			AND trunc(i.rsc_dt) <![CDATA[<= #{dtEnd}]]>
+		<if test='ordrDtEnd != null and ordrDtEnd != ""'>
+			AND trunc(i.rsc_dt) <![CDATA[<= #{ordrDtEnd}]]>
 		</if>
 		<if test='co != null and co != ""'>
 			AND c.co_cd = #{co}

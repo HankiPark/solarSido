@@ -71,11 +71,7 @@
   });
   
   grid.on('response',function(ev){
-	  console.log(ev.xhr)
       grid.refreshLayout();
-	  
-	  console.log(grid.getValue(1, 'rscStc'));
-
     });
   
   grid.on('onGridUpdated',function(){

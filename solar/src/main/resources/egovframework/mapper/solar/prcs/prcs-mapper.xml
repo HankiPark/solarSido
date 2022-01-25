@@ -106,6 +106,10 @@
 	from prcs p, eqm e
 	where p.prcs_cd = e.prcs_cd
 	
+	<if test="prcsCd != null">
+	AND e.prcs_cd = #{prcsCd}
+	</if>
+	
 
 </select>
 

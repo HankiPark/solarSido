@@ -22,11 +22,11 @@
 	WHERE  B.plan_deta_no = P.plan_deta_no
 	AND P.order_no = O.order_no
 	AND B.prdt_cd = O.prdt_cd
-		<if test="planStartDt != null and planStartDt != ''">
-		AND B.indica_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY/MM/DD')
+		<if test="startT != null and startT != ''">
+		AND B.indica_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY/MM/DD')
 		</if>
-		<if test="planEndDt != null and planEndDt != ''">
-		AND B.indica_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY/MM/DD')
+		<if test="endT != null and endT != ''">
+		AND B.indica_dt <![CDATA[<=]]> TO_DATE(#{endT}, 'YYYY/MM/DD')
 		</if>
 		<if test="coCd != null and coCd != ''">
 		AND (SELECT co_cd FROM order_tb WHERE order_no = P.order_no) = #{coCd}
@@ -45,11 +45,11 @@
 		TO_CHAR(indica_dt, 'YYYY-MM-DD') indica_dt,
 		indica_nm	
 	FROM indica
-		<if test="planStartDt != null and planStartDt != ''">
-		AND indica_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY-MM-DD')
+		<if test="startT != null and startT != ''">
+		AND indica_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY-MM-DD')
 		</if>
-		<if test="planEndDt != null and planEndDt != ''">
-		AND indica_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
+		<if test="endT != null and endT != ''">
+		AND indica_dt <![CDATA[<=]]> TO_DATE(#{endT}, 'YYYY-MM-DD')
 		</if>
 	ORDER BY indica_no
 </select>

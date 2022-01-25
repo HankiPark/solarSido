@@ -71,4 +71,10 @@ public class RscinfoServiceImpl implements RscinfoService{
 		return rscinfoMapper.rscinfo(rscinfoVO);
 	}
 
+	@Override
+	public List<RscinfoVO> findRsc(RscinfoVO rscinfoVO) {
+		// TODO Auto-generated method stub
+		return rscinfoMapper.findRsc(rscinfoVO);
+	}
+
 }

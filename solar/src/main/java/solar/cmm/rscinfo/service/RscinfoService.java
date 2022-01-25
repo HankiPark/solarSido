@@ -6,6 +6,7 @@ import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.sales.order.dao.ModifyVO;
 
 public interface RscinfoService {
+	List<RscinfoVO> findRsc(RscinfoVO rscinfoVO);
 	List<RscinfoVO> rscinfoList(RscinfoVO rscinfoVO);
 	List<RscinfoVO> rscinfofind(RscinfoVO rscinfoVO);
 	RscinfoVO rscinfo(RscinfoVO rscinfoVO);
