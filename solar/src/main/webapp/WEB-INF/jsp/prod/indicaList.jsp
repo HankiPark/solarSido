@@ -23,8 +23,7 @@
 			<tr>
 				<th>지시일자</th>
 				<td colspan="3">
-					<input type="date" id="planStartDt" name="planStartDt">
-					~<input type="date" id="planEndDt" name="planEndDt">
+					<input type="text" id="startT" name="startT">
 				</td>
 			</tr>
 			<tr>
@@ -55,14 +54,37 @@
 
 <!-- 스크립트 -->
 <script type="text/javascript">
-let coCd;
-let prdtCd;
-	//지시일자 Default: sysdate
-	let pEndDt = new Date();
-	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
-	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
-	document.getElementById('planEndDt').value = pEndDt.toISOString().substring(0, 10);
-	 
+	let coCd;
+	let prdtCd;
+	
+	$(function() {
+		$('input[name="startT"]').daterangepicker({
+			showDropdowns: true,
+			opens: 'right',
+			startDate: moment().startOf('hour').add(-7, 'day'),
+			endDate: moment().startOf('hour'),
+			minYear: 1990,
+			maxYear: 2025,
+			autoApply: true,
+			locale: {
+				format: 'YYYY-MM-DD',
+				separator: " ~ ",
+				applyLabel: "적용",
+				cancelLabel: "닫기",
+				prevText: '이전 달',
+				nextText: '다음 달',
+				monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+				showMonthAfterYear: true,
+				yearSuffix: '년'
+				}
+			}, 
+		function(start, end, label) {
+			console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			}
+		);
+	});
+
 	//업체검색 모달
 	let coCdDialog = $("#coCdModal").dialog({
 		autoOpen: false,
@@ -100,7 +122,8 @@ let prdtCd;
 						    	method: 'GET'
 			    				},
 					}, 
-				contentType: 'application/json'
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
 			},
 		scrollX: false,
 		scrollY: true,
@@ -187,19 +210,19 @@ let prdtCd;
 				        height: 50,
 				        columnContent: {
 				        	indicaDt: {
-				        		template: function(valueMap) {
+				        		template: function(summary) {
 				        			return '합계';
 				        			},
 				        		align:'center'
 							},
 							orderQty: {
-								template: function(valueMap) {
-									return valueMap.sum;
+								template: function(summary) {
+									return summary.sum;
 									}
 							},
 							indicaQty: {
-								template: function(valueMap) {
-									return valueMap.sum;
+								template: function(summary) {
+									return summary.sum;
 									}
 							}
 				        }
@@ -208,14 +231,14 @@ let prdtCd;
 	
 	//조회 버튼: 조건별(기간, 업체, 제품) 생산지시 조회
 	$('#btnSearch').click(function() {
-		var planStartDt = document.getElementById('planStartDt').value
-		var planEndDt = document.getElementById('planEndDt').value
+		var startT = $("#startT").val().substring(0,10);
+		var endT = $("#startT").val().substring(13,23);
 		var coCd = document.getElementById('coCd').value
 		var prdtCd = document.getElementById('prdtCd').value
-		console.log(planStartDt + "~" + planEndDt + "& coCd:" + coCd + "& prdtCd:" + prdtCd);
+		console.log(startT + "~" + endT + "& coCd:" + coCd + "& prdtCd:" + prdtCd);
 		var params = {
-				'planStartDt': planStartDt,
-				'planEndDt': planEndDt,
+				'startT': startT,
+				'endT': endT,
 				'coCd': coCd,
 				'prdtCd': prdtCd
 		}

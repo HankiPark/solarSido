@@ -28,6 +28,5 @@ public interface ProdPlanService {
 	List<ProdPlanVO> findPrdtCd(ProdPlanVO ppVo);
 
 	List<?> selectPstc(ProdPlanVO ppVo);
-
 	List<?> selectRstc(ProdPlanVO ppVo);
 }

@@ -35,8 +35,8 @@ public class IndicaVO {
 	int rscConQty;		//소요량
 	
 	//검색
-	String planStartDt; //기간시작
-	String planEndDt;	//기간끝
+	String startT; 		//기간시작
+	String endT;		//기간끝
 	String prdtNm; 		//제품명
 	String prdtSpec;	//제품규격
 	String prdtUnit;	//제품단위

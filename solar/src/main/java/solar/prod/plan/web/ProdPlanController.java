@@ -38,7 +38,7 @@ public class ProdPlanController {
 	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
 		List<?> list = ppService.selectPlan(ppVo);
 		Map<String,Object> map = new HashMap<>();
-		map.put("contents", list);
+		map.put("contents", list);	
 		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
@@ -77,7 +77,7 @@ public class ProdPlanController {
 	public String modifyPlan(Model model, ProdPlanVO ppVo, 
 							@RequestBody ModifyVO<ProdPlanVO> mvo) throws Exception {
 		ppService.modifyData(mvo);
-		System.out.println("mvo:" + ppService.modifyData(mvo));
+//		System.out.println("mvo:" + ppService.modifyData(mvo)); //절대 실행하지 말 것 변수에 담아서 할것
 		model.addAttribute("mode", "upd");
 		return "jsonView";
 	}

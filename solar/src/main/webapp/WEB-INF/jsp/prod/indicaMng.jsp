@@ -22,8 +22,7 @@
 				<tr>
 					<th>지시기간</th>
 					<td colspan="3">
-						<input type="date" id="planStartDt" name="planStartDt"> 
-						~<input type="date" id="planEndDt" name="planEndDt">
+						<input type="text" id="startT" name="startT">
 						<button type="button" id="btnSearch">🔍</button>
 					</td>
 				</tr>
@@ -71,12 +70,36 @@
 </body>
 <!-- 스크립트 -->
 <script type="text/javascript">
-	//지시일자 Default: sysdate
-	let pEndDt = new Date();
-	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
-	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
-	document.getElementById('planEndDt').value = pEndDt.toISOString().substring(0, 10);
-	 
+
+	//계획일자 Default: sysdate
+	$(function() {
+		$('input[name="startT"]').daterangepicker({
+			showDropdowns: true,
+			opens: 'right',
+			startDate: moment().startOf('hour').add(-7, 'day'),
+			endDate: moment().startOf('hour'),
+			minYear: 1990,
+			maxYear: 2025,
+			autoApply: true,
+			locale: {
+				format: 'YYYY-MM-DD',
+				separator: " ~ ",
+				applyLabel: "적용",
+				cancelLabel: "닫기",
+				prevText: '이전 달',
+				nextText: '다음 달',
+				monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+				daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+				showMonthAfterYear: true,
+				yearSuffix: '년'
+				}
+			}, 
+		function(start, end, label) {
+			console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+			}
+		);
+	});
+
 	let iDt = new Date();
 	document.getElementById('indicaDt').value = iDt.toISOString().substring(0, 10);
 	

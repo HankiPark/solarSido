@@ -13,7 +13,6 @@ public class ProdPlanVO {
 	String paprdDt;		//납기일자
 	int orderQty; 		//주문량
 	int prdtStc;		//제품재고
-	int pSafStc;		//안전재고
 	
 	//Plan
 	String planNo;		//생산계획번호
@@ -34,8 +33,8 @@ public class ProdPlanVO {
 	String prodDay;		//생산일수
 	
 	//search
-	String planStartDt; //기간시작
-	String planEndDt;	//기간끝
+	String startT;		 //기간시작
+	String endT;		//기간끝
 //	String prdtCd; 		//제품코드
 	String prdtNm; 		//제품명
 	String prdtSpec;	//제품규격

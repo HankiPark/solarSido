@@ -48,13 +48,10 @@ function orderList(){
 					}
 				]
 			});
-
-	orderGrid.on('click', (ev) => {
-		console.log(ev);
-	})
 	
 	//그리드 내부 더블클릭
 	orderGrid.on('dblclick', function(ev) {
+		console.log(ev);
 		var orderNo = orderGrid.getValue(ev["rowKey"], "orderNo")
 		console.log("orderNo:" + orderNo);
 		var params = {
@@ -67,8 +64,9 @@ function orderList(){
 			contentType : 'application/json; charset=utf-8',
 		}).done(function(pln) {
 			console.log(pln.data)
-			//planDgrid.resetData(pln.data);
-			planDgrid.appendRow(pln.data);
+			planDgrid.resetData(pln.data);
+			//planDgrid.appendRows(pln.data);
+			console.log(planDgrid.getModifiedRows());
 		}).fail(function(reject){
 			console.log(reject);
 		})

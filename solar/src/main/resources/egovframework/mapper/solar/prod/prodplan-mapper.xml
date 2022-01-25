@@ -24,11 +24,11 @@
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
-		<if test="planStartDt != null and planStartDt != ''">
-		AND B.plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY/MM/DD')
+		<if test="startT != null and startT != ''">
+		AND B.plan_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY/MM/DD')
 		</if>
-		<if test="planEndDt != null and planEndDt != ''">
-		AND B.plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY/MM/DD')
+		<if test="endT != null and endT != ''">
+		AND B.plan_dt <![CDATA[<=]]> TO_DATE(#{endT}, 'YYYY/MM/DD')
 		</if>
 		<if test="coCd != null and coCd != ''">
 		AND O.co_cd = #{coCd}
@@ -47,9 +47,10 @@
 		prdt_cd,
 		order_qty,
 		prdt_stc,
-		'50' as p_saf_stc
+		'10' as psaf_stc
 	FROM order_d
 	WHERE order_no = #{orderNo}
+	AND prdt_cd = #{prdtCd}
 </select>
 
 <select id="selectRstc" resultType="ProdPlanVO">
@@ -67,24 +68,29 @@
 
 
 <select id="findProdPlan" resultType="ProdPlanVO">
-	SELECT
-		plan_no,
-		TO_CHAR(plan_dt, 'YYYY-MM-DD') plan_dt,
-		plan_nm	
-	FROM PLAN
-		<if test="planStartDt != null and planStartDt != ''">
-		AND plan_dt <![CDATA[>=]]> TO_DATE(#{planStartDt}, 'YYYY-MM-DD')
-		</if>
-		<if test="planEndDt != null and planEndDt != ''">
-		AND plan_dt <![CDATA[<=]]> TO_DATE(#{planEndDt}, 'YYYY-MM-DD')
-		</if>
-	ORDER BY plan_no
+	SELECT DISTINCT
+		a.plan_no,
+		TO_CHAR(a.plan_dt, 'YYYY-MM-DD') plan_dt,
+		a.plan_nm	
+	FROM plan a
+    LEFT JOIN plan_d b ON b.plan_no = a.plan_no
+    JOIN order_d o ON o.order_no = b.order_no
+    AND order_qty > indica_qty
 </select>
 
 <select id="findOrder" resultType="ProdPlanVO">
-	SELECT *
-	FROM order_tb
-	WHERE prog_info != '종료'
+	SELECT DISTINCT
+	    o.order_no, 
+	    TO_CHAR(o.recv_dt, 'YYYY-MM-DD') recv_dt,
+	    o.co_cd,
+	    o.prog_info,
+	    o.paprd_dt
+	FROM order_tb o 
+	LEFT JOIN plan_d p ON p.order_no = o.order_no
+	JOIN order_d od ON od.order_no = o.order_no
+	WHERE o.prog_info != '종료'
+	AND p.plan_no is null
+	AND od.order_qty>od.indica_qty
 </select>
 
 <select id="searchOrder" resultType="ProdPlanVO">
@@ -92,6 +98,7 @@
 		B.order_deta_no,
 		B.order_no,
 		TO_CHAR(A.paprd_dt, 'YYYY-MM-DD') paprd_dt, 
+		TO_CHAR(A.recv_dt, 'YYYY-MM-DD') recv_dt,
 		B.prdt_cd,
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_qty,
@@ -151,8 +158,8 @@
 						plan_qty,
 						wk_ord,
 						wk_dt)
-	VALUES( planDetaNo, 
-			CREATENO('PLA', PLANSEQ.nextval), 
+	VALUES( #{planDetaNo}, 
+			(SELECT nvl(max(plan_no),0) FROM PLAN), 
 			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
 			#{orderNo}, 
 			TO_DATE(#{recvDt}, 'YYYY/MM/DD'),
