@@ -352,13 +352,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/rsc/insp" class="nav-link">
+                <a href="${pageContext.request.contextPath}/rsc/inspadmin" class="nav-link">
                   <i class="fas fa-file-signature nav-icon"></i>
-                  <p>자재 검수 관리(기능완)</p>
+                  <p>자재 검수 관리(ㅇ)</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="${pageContext.request.contextPath}" class="nav-link">
+                <a href="${pageContext.request.contextPath}/rsc/insp" class="nav-link">
                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 검수 조회</p>
                 </a>

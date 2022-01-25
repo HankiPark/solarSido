@@ -96,10 +96,16 @@ public class RscController {
 		return "jsonView";
 	}
 	
-	//검수관리페이지 이동
+	//검수조회페이지 이동
 	@GetMapping("rsc/insp")
 	public String rscInsp() {
 		return "rsc/insp";
+	}
+	
+	//검수관리페이지 이동
+	@GetMapping("rsc/inspadmin")
+	public String rscInspAdmin() {
+		return "rsc/inspadmin";
 	}
 	
 	//검수 목록 요청
