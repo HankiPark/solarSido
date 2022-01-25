@@ -15,6 +15,7 @@
 	<button type="button" id="btnSave">저장</button><br>
 	<button type="button" id="btnReset">정보리셋</button><br>
 	<button type="button" id="btnDelete">삭제</button><br>
+	<button type = "button" id="btnInsert">추가</button>
 	<div id="grid"></div>	
 	<br>
 	<label>자재코드</label> <input type="text" id="rscCd" readonly = "readonly"><br>
@@ -28,6 +29,40 @@
 	<div id="coCdModal" title="업체명단"></div>
 	</form>
 	<script>
+	toastr.options = {
+			  "closeButton": false,
+			  "debug": false,
+			  "newestOnTop": false,
+			  "progressBar": true,
+			  "positionClass": "toast-top-right",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "100",
+			  "hideDuration": "1000",
+			  "timeOut": "1500",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
+	
+	function SaveComplete(){
+		toastr.success('저장완료');
+	}
+	
+	function SaveFail(){
+		toastr.warning('저장실패');
+	}
+	function DeleteComplete(){
+		toastr.success('삭제완료');
+	}
+	function DeleteFail(){
+		toastr.warning('삭제실패');
+	}
+	function ResetComplete(){
+		toastr.info('데이터 리셋완료 데이터 추가 요망');
+	}
 	
 	var dataSource = {
 			api : {
@@ -149,12 +184,11 @@
 			width: 600
 		});
 
-		$("#coCdFind").on("click", function(){
+		$("#coCdFind").on("click", function(){	
 			console.log("업체검색")
 			coCdDialog.dialog("open");
 			$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
 		});
-
 /*
 		 $('#btnSave').on('click', function(){
 			 var rscCd = $("#rscCd").val();
@@ -166,10 +200,14 @@
 							datatype : "json",
 							cache: false,
 							data: $("#rscfrm").serialize() 
+							success : function(){
+								SaveComplete()
+			}
 		 });
 		}
 	});
 */
+		 
 		$('#btnReset').on('click', function(){
 			$('#rscCd').val('');
 			$('#rscNm').val('');
@@ -180,6 +218,7 @@
 			$('#rscUntprc').val('');
 			$('#safStc').val('');
 			$("#rscCd").removeAttr("readonly");
+			ResetComplete();
 		});
 /*
 		 $('#btnDelete').on('click', function(){

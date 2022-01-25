@@ -9,14 +9,11 @@
 </head>
 <body>
 <h2>공통자료관리</h2>
-<div>
-	<button type="button" id="btnAdd">추가</button>
-	<button type="button" id="btnDel">삭제</button>
-	<button type="button" id="btnSave">저장</button>
-</div>
 <label>공통코드ID 검색</label> <div><input type = "text" id="cmmnNminfo"></div>
 <div><button type="button" id="btnfind">검색</button></div>
-<div id= "grid"></div>
+<div id= "grid"></div><br>
+	<button type="button" id="btnDel">삭제</button>
+	<button type="button" id="btnSave">저장</button>
 <div id= "detailgrid"></div>
 <script>
 var dataSource = {
@@ -97,8 +94,7 @@ $('#btnfind').on('click', function(){
 var detailgridinfo = {
 		  api: {
 		    	readData: { url: '${pageContext.request.contextPath}/grid/cmmndataDetail.do', 
-					    	method: 'GET' ,
-					    	initParams : {cmmnCdId : 'prcs'}
+					    	method: 'GET'
 					   },
 				modifyData: { url: '${pageContext.request.contextPath}/modifyData', 
 							method: 'PUT' }
@@ -118,19 +114,23 @@ var detailgrid = new tui.Grid({
 		  [
 			{
 				header : '공통코드상세ID',
-				name : 'cmmnCdDetaId'
+				name : 'cmmnCdDetaId',
+				editor : 'text'
 			},
 			{
 				header : '공통코드ID',
 				name : 'cmmnCdId',
+				editor : 'text'
 			},
 			{
 				header : '코드명',
 				name : 'cmmnCdNm',
+				editor : 'text'
 			},
 			{
 				header : '설명',
 				name : 'cmmnCdDesct',
+				editor : 'text'
 			}	
 		 ]
 	  });
@@ -150,16 +150,17 @@ detailgrid.on('response', function(ev) {
 			detailgrid.refreshLayout()
 			}
 	});
-	
-btnAdd.addEventListener("click", function(){
-	grid.appendRow({})
-})
-btnDel.addEventListener("click", function(){
-	grid.removeCheckedRows(true);
-})
-btnSave.addEventListener("click", function(){
-	grid.request('modifyData');
-})
+
+$('#btnSave').on('click', function appendRow(index){
+	detailgrid.blur();
+	detailgrid.request('modifyData');
+});
+$('#btnDel').on('click', function appendRow(index){
+	detailgrid.blur();
+	detailgrid.removeCheckedRows(true);
+});
+
+
 </script>
 </body>
 
