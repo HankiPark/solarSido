@@ -54,28 +54,34 @@ a {
 </head>
 <body>
 	<h2>제품 입/출고조회</h2>
-	<div class="row">
-		<div data-role="fieldcontain" class="col-4">
-			<label for="defandroid">날짜 선택</label> <input name="startT"
-				class="dtp" id="startT" type="text" data-role="datebox"
-				data-options='{"mode": "calbox"}'>
-		</div>
-		<div data-role="fieldcontain" class="col-2">
-			<label>제품구분</label> <label><input type="checkbox" name="ref" id="inref"
-				value="I">입고</label> <label><input type="checkbox" id="outref"
-				name="ref" value="O">출고</label>
-		</div>
-		<div data-role="fieldcontain" class="col-2">
-			<label>제품명</label> <input type="text" id="prdNm">
-		</div>
-		<div id="coo" data-role="fieldcontain" class="col-2" style="display: none">
-			<label>회사명</label> <input type="text" id="coNm">
-			<button type="button" id="static">제품출고 통계</button>
+	<div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
+			<div class="row">
+
+				<div data-role="fieldcontain" class="col-4">
+					<label for="defandroid">날짜 선택</label> <input name="startT"
+						class="dtp" id="startT" type="text" data-role="datebox"
+						data-options='{"mode": "calbox"}'>
+				</div>
+				<div data-role="fieldcontain" class="col-2">
+					<label>제품구분</label> <label><input type="checkbox" name="ref" id="inref"
+						value="I">입고</label> <label><input type="checkbox" id="outref"
+						name="ref" value="O">출고</label>
+				</div>
+				</div>
+			<div class="row">
+				<div data-role="fieldcontain" class="col-2">
+					<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px" > 🔍 </button>
+				</div>
+				<div id="coo" data-role="fieldcontain" class="col-7" style="display: none">
+					<label>회사명</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> &nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" id="static">제품출고 통계</button>
 		</div>
 	</div>
 	<button type="button" id="findgrid">조회</button>
 
-
+		</div>
+		</div>
 	<div id="Grid"></div>
 
 
@@ -143,7 +149,7 @@ a {
 	});
 	
 	//제품이름검색시
-	$('#prdNm')
+	$('#prdtNmBtn')
 	.on(
 			'click',
 			function() {
@@ -155,7 +161,7 @@ a {
 									NmList()
 								})
 			});
-	$('#coNm')
+	$('#coNmBtn')
 	.on(
 			'click',
 			function() {
@@ -188,9 +194,7 @@ a {
 					width : 100,
 					align : 'left',
 					valign : 'bottom'
-				}, {
-					type : 'checkbox'
-				} ],
+				}],
 				columns : [ {
 					header : 'index',
 					name : 'prdtInx',

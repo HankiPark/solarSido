@@ -219,7 +219,15 @@ button {
 button:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color; }
-
+.tui-calendar .tui-calendar-btn-next-month{
+	background-color: #fff !important;
+}
+.tui-calendar .tui-calendar-btn-prev-month{
+	background-color: #fff !important;
+}
+.ui-dialog-titlebar-close {
+	background-color: #fff !important;
+}
 input,
 button,
 select,

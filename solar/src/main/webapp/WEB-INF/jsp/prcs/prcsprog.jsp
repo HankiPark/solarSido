@@ -219,8 +219,12 @@
  				async: false,
  				contentType: 'application/json',
  				success : function(result){
- 					prcsItemRsc = result.RSC;
- 					console.log("소요자재LOT 리스트 > "+ prcsItemRsc);
+ 					//prcsItemRsc = JSON.stringify(result.RSC[0]);
+ 					//prcsItemRsc = JSON.stringify(result.RSC);
+ 					console.log(result.RSC)
+ 					console.log(result.RSC[0])
+ 					console.log(result.RSC[0].rscConNo)
+ 					 console.log("소요자재LOT 리스트 > "+result.RSC[0]);
  				},
  				error : function(result){
  					console.log("에러")
@@ -289,6 +293,15 @@
  					if(fs<10) fs = "0"+ sec;
 					 					
  					document.getElementById("prcsTimer").innerHTML = fh+"-"+fm+"-"+fs; }, 1000);
+ 					
+ 					/* ---------------------------------------------------------------------------------- */
+ 					// 공정 정보를 조건으로 실제 함수를 구현할 몸체
+ 					
+ 						
+ 					
+ 					
+ 					// 구현 함수 끝
+ 					/* ---------------------------------------------------------------------------------- */
  			});
 	 			
  				$("#btnTest2").on("click", function(){
@@ -296,6 +309,13 @@
 	 	 			if(time != 0){
 	 	 				clearInterval(timer);
 	 	 			    starFlag = true;
+	 	 			  	/* ---------------------------------------------------------------------------------- */	 	 			    
+	 	 			    // 종료 버튼 눌렀을때 처리되어야될 페이지 요소수정과 함께 호출될 실적정보를 정리할 함수위치
+	 	 			    
+	 	 			    
+	 	 			  	
+	 	 			    //
+	 	 			  	/* ---------------------------------------------------------------------------------- */
 	 	 			}
 				});
 		}

@@ -6,10 +6,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+
 </head>
 
 <body>
 	<h2>주문서 참조</h2>
+		<div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
 	<div class="row">
 		<div data-role="fieldcontain" class="col-6">
 			<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
@@ -34,6 +37,8 @@
 		<div>
 		<button type="button" id="findgrid">조회</button>
 	</div>
+	</div>
+	</div>
 	<div id="grid"></div>
 	<div id="dialog-form" title="주문 상세 목록"></div>
 
@@ -41,6 +46,8 @@
 
 
 	<script type="text/javascript">
+
+	
 	$(function() {
 		
 		  $('input[name="startT"]').daterangepicker({
@@ -120,6 +127,7 @@
 
 		});
 		grid.on('onGridUpdated', function() {
+			$('td[data-column-name$="deNum"]').css('backgroundColor','#87A890');
 			grid.refreshLayout();
 		});
 		grid

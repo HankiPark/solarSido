@@ -40,7 +40,7 @@ a {
 
 .tab_menu .list li.is_on .btn {
 	font-weight: bold;
-	color: green;
+	color: #5f76e8;
 }
 
 .tab_menu .list li.is_on .cont {
@@ -64,21 +64,22 @@ a {
 	</div>
 
 	<div id="iG">
-		<div class="row">
-			<div data-role="fieldcontain" class="col-7">
-				<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
-					id="startT" type="text" data-role="datebox"
-					data-options='{"mode": "calbox"}'> 
-			</div>
-			<div data-role="fieldcontain" class="col-5">
-				<label>제품명</label> <input type="text" id="prdNm">
-			</div>
-		</div>
+		<div class="card card-pricing card-primary card-white">
+			<div class="card-body" id="grid">
+				<div class="row">
+					<div data-role="fieldcontain" class="col-3">
+						<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
+							id="startT" type="text" data-role="datebox"
+							data-options='{"mode": "calbox"}'> 
+					</div>
+					<div data-role="fieldcontain" class="col-5">
+						<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px"> 🔍 </button>
+					</div>
+				</div>
 		<div>
 			<button type="button" id="findgrid">조회</button>
 		</div>
-		<div class="card card-pricing card-primary card-white">
-			<div class="card-body" id="grid">
+
 				<div align="right">
 					<button type="button" id="insertBtn"
 						class="btn btn-default btn-simple btn-sm">추가</button>
@@ -95,16 +96,17 @@ a {
 
 	<div id="oG">
 
+		<div id="C">
+				<div class="card card-pricing card-primary card-white">
+			<div class="card-body" >
 
 		<div>
 			<button type="button" id="findgrid2">조회</button>
 		</div>
-		<div id="C">
 			<label for="slipNm">부여될 전표번호</label><br> <input id="slipNm"
 				type="text" readonly>
 
-			<div class="card card-pricing card-primary card-white">
-				<div class="card-body">
+	
 					<div align="right">
 						<button type="button" id="insertBtn2"
 							class="btn btn-default btn-simple btn-sm">추가</button>
@@ -116,21 +118,27 @@ a {
 				</div>
 			</div>
 			<div id="outGrid"></div>
+			</div>
+			
 
-		</div>
 
 		<div id="noC" style="display: none">
+		<div class="card card-pricing card-primary card-white">
+			<div class="card-body" >
+			<div>
+			<button type="button" id="findgrid3">조회</button>
+		</div>
 			<label for="slipNm2">조회중인 전표번호</label><br> <input id="slipNm2"
 				type="text" readonly>
 
-			<div class="card card-pricing card-primary card-white">
-				<div class="card-body">
+	
 					<div align="right">
 						<button type="button" id="excelBtn"
 							class="btn btn-default btn-simple btn-sm">excel</button>
 
-					</div>
-				</div>
+			
+			</div>
+			</div>
 			</div>
 			<div id="outGrid2"></div>
 
@@ -221,6 +229,7 @@ $(function() {
 							contentType: 'application/json; charset=utf-8',
 							async: false,
 							}).done((res)=>{
+								console.log(res)
 								a=res["num2"];	
 								
 								//전표번호 부여(기본)
@@ -282,7 +291,7 @@ $(function() {
 	});
 
 	//제품이름검색시
-	$('#prdNm').on('click',function() {
+	$('#prdtNmBtn').on('click',function() {
 		dialog.dialog("open");
 		$("#dialog-form").load(
 			"${pageContext.request.contextPath}/modal/prdtNmList", 
@@ -405,6 +414,11 @@ $(function() {
 		});
 	});
 	$('#updateBtn').on('click', function appendRow(index) {
+		for(let i=inGrid.getRowCount();i>=0;i--){
+			if(inGrid.getValue(i,"prdtLot")=='' ||inGrid.getValue(i,"prdtLot")==null ||inGrid.getValue(i,"prdtDt")==null || inGrid.getValue(i,"prdtDt")==''){
+				inGrid.removeRow(i);
+			}
+		}
 		console.log(inGrid.validate())
 		inGrid.blur(); 
 	
@@ -439,6 +453,12 @@ $(function() {
 
 	//전표 조회버튼		
 	$('#findgrid2').on('click',function() {
+		dialog3.dialog("open");
+		$("#dialog-sl").load("${pageContext.request.contextPath}/modal/slipOutput",function() {
+			slList()
+			})
+			})
+	$('#findgrid3').on('click',function() {
 		dialog3.dialog("open");
 		$("#dialog-sl").load("${pageContext.request.contextPath}/modal/slipOutput",function() {
 			slList()
