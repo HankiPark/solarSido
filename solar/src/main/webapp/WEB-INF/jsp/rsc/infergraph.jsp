@@ -11,11 +11,15 @@
 <body>
     <h1>불량불량</h1>
     <div id="coModal" title="업체 목록"></div>
-    연도<input type="text" id="year" value="2022">
+    연도
+<!--     <input type="text" id="year" value="2022"> -->
+    <select id="year" value="${curYear }"></select>
     발주업체: <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
     <br><button id="sendRequest" onclick="inferRequest()">조회</button>
-    <div id="barChartDiv"></div>
-    <div id="pieChartDiv"></div>
+    <div class="flex row">
+	    <div id="barChartDiv" class="row-7"></div>
+	    <div id="pieChartDiv" class="row-5"></div>
+    </div>
 </body>
 <script>
     let categories = [];
@@ -23,6 +27,14 @@
     let inferData = [];
 
     inferRequest();
+    
+    let curYear = new Date().toISOString().substr(0,4);
+    let year = document.getElementById('year');
+    for(let i = curYear; i>=1990; i--){
+	    let opt = document.createElement('option');
+	    opt.innerText = i;
+	    year.appendChild(opt);
+    }
 
     function inferRequest() {
 
@@ -68,9 +80,6 @@
                     series[2].data.push(i.inferRateThird);
                     series[3].data.push(i.inferRateFourth);
                 }
-                console.log(categories);
-                console.log(series);
-
 
                 const el = document.getElementById('barChartDiv');
                 const data = {
@@ -120,7 +129,6 @@
 
         for (let inf of inferData) {
             if (inf.coNm == val.category) {
-                console.log(inf.coNm);
                 
                 if(inf.inferQtyFirst == null){
                 	inf.inferQtyFirst = 0; 
@@ -163,9 +171,6 @@
                 };
 
                 const chart = toastui.Chart.pieChart({ el, data, options });
-                
-                console.log(data);
-                
             }
         }
     }

@@ -17,7 +17,7 @@
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		입고일: <input type="date" id="ordrDtStt" name="ordrDtStt">~<input type="date" id="ordrDtEnd" name="ordrDtEnd">
+		입고일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
 		<br>
 		업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
 		자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
@@ -35,6 +35,39 @@
 	let ordrDtEnd;
 	let co;
 	let rsc;
+	let date = new Date();
+	let ordrDtEnd = date.toISOString().substr(0,10);
+	date.setDate(date.getDate() - 7);
+	let ordrDtStt = date.toISOString().substr(0,10);
+	$(function() {
+	   
+	     $('input[name="datePicker"]').daterangepicker({
+	        showDropdowns: true,
+	       opens: 'right',
+	       startDate: moment().startOf('hour').add(-7, 'day'),
+	        endDate: moment().startOf('hour'),
+	        minYear: 1990,
+	          maxYear: 2025,
+	        autoApply: true,
+	          locale: {
+	            format: 'YYYY-MM-DD',
+	               separator: " ~ ",
+	                applyLabel: "적용",
+	                cancelLabel: "닫기",
+	                prevText: '이전 달',
+	                nextText: '다음 달',
+	                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	                daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+	                showMonthAfterYear: true,
+	                yearSuffix: '년'
+	          }
+	     }, function(start, end, label) {
+	       ordrDtStt = start.format('YYYY-MM-DD');
+	       ordrDtEnd = end.format('YYYY-MM-DD');
+	     },
+	     
+	     );
+	   });
 	let ordrDataSource = {
 		api: {
 			readData: {
@@ -42,7 +75,8 @@
 				method: 'GET'
 			}
 		},
-		contentType: 'application/json'
+		contentType: 'application/json',
+		initialRequest: false,
 	};
 
 	//공통코드 가져옴
@@ -52,7 +86,6 @@
 		async: false,
 	}).done(function (data) {
 		cmmnCodes = data;
-		console.log(data);
 	});
 
 	let inspDialog = $("#inspModal").dialog({
@@ -128,14 +161,19 @@
 	});
 
 	grid.on('response', function (ev) {
-		console.log(ev.xhr.response);
 		if (ev.xhr.responseText == "201") {
-			console.log("201");
 			grid.readData();
 		}
 		grid.refreshLayout();
 	});
-
+	grid.on('onGridMounted',function(){
+		grid.readData(1,{
+			'ordrDtStt':ordrDtStt,
+			'ordrDtEnd':ordrDtEnd,
+			'co':co,
+			'rsc':rsc,
+		});
+	});
 /* 	grid.on('click', function (ev) {
 		console.log(ev);
 		if (ev.columnName == "rscPassedQty") {
@@ -150,8 +188,6 @@
 
 	let ordrQueryBtn = document.getElementById("ordrQueryBtn");
 	ordrQueryBtn.addEventListener("click", function () {
-		ordrDtStt = document.ordrQueryFrm.ordrDtStt.value;
-		ordrDtEnd = document.ordrQueryFrm.ordrDtEnd.value;
 		co = document.ordrQueryFrm.co.value;
 		rsc = document.ordrQueryFrm.rsc.value;
 		grid.readData(1, {
