@@ -12181,7 +12181,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 
 .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
 .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
-  background: linear-gradient(to right,#8971ea,#7f72ea,#7574ea,#6a75e9,#5f76e8);
+  background: linear-gradient(to right,#FD9E77,#E37C6B,#FA8383,#E36BA7);
   color: #fff;
   border-radius:0 60px 60px 0;
 }

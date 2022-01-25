@@ -486,7 +486,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 					cell = row.getCell(2); //메뉴명
 					if (cell != null) {
 						vo.setMenuNm("" + cell.getStringCellValue());
-					}
+					} 
 					cell = row.getCell(3); //상위메뉴번호
 					if (cell != null) {
 						Double doubleCell = new Double(cell.getNumericCellValue());
@@ -509,6 +509,7 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 						vo.setProgrmFileNm("" + cell.getStringCellValue());
 					}
 				}
+				System.out.println(vo);
 				if (insertMenuManageBind(vo)) {
 					count++;
 				}
@@ -519,10 +520,12 @@ public class EgovMenuManageServiceImpl extends EgovAbstractServiceImpl implement
 				success = false;
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			LOGGER.error("["+ e.getClass() +"] : ", e.getMessage());
 			success = false;
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			//2017.02.13 	이정은 	시큐어코딩(ES)-부적절한 예외 처리[CWE-253, CWE-440, CWE-754]
 			LOGGER.error("["+ e.getClass() +"] : ", e.getMessage());
 			success = false;

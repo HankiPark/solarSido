@@ -2873,9 +2873,18 @@
       var parentLi = $relativeTarget.parents(SELECTOR_LI).first();
       var isOpen = parentLi.hasClass(CLASS_NAME_OPEN);
 
+
+
+
       if (isOpen) {
         this.collapse($__default['default'](treeviewMenu), parentLi);
       } else {
+		  $('ul.nav-sidebar').find('li').removeClass('menu-is-opening');
+		  $('ul.nav-sidebar').find('li').removeClass('menu-open');
+		  $('ul.nav-sidebar').find('li').find('ul').css('display','none');
+	
+		
+	
         this.expand($__default['default'](treeviewMenu), parentLi);
       }
     } // Private
