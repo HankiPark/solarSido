@@ -395,8 +395,8 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
     <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
-      <div class="nav-item dropdown">
-        <a class="nav-link bg-danger dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
+      <div class="nav-item dropdown" >
+        <a class="nav-link dropdown-toggle" style="background-color:#fff; color:red" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
         <div class="dropdown-menu mt-0">
           <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all">Close All</a>
           <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all-other">Close All Other</a>

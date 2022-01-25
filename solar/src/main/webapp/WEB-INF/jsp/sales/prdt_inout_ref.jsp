@@ -50,6 +50,58 @@ a {
 #oG {
 	display: none;
 }
+input#inref {
+display : none;
+}
+
+input#outref {
+display : none;
+}
+
+input#inref+label{
+display: inline-block;
+        width: 15px;
+        height: 15px;
+        border:3px solid #e37c6b;
+        margin-bottom:0px;
+               position: relative;
+      
+}
+input#inref:checked + label::after{
+        content:'✔';
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+position: absolute;
+		top:-2px;
+		left:0;
+        background-color: #e37c6b;
+        color:#fff;
+         margin-bottom:0px;
+      }
+input#outref+label{
+display: inline-block;
+        width: 15px;
+        height: 15px;
+        border:3px solid #e37c6b;
+        margin-bottom:0px;
+               position: relative;
+      
+}
+input#outref:checked + label::after{
+        content:'✔';
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+position: absolute;
+		top:-2px;
+		left:-1px;
+        background-color: #e37c6b;
+        color:#fff;
+         margin-bottom:0px;
+      }
+
+
 </style>
 </head>
 <body>
@@ -58,19 +110,19 @@ a {
 		<div class="card-body" >
 			<div class="row">
 
-				<div data-role="fieldcontain" class="col-4">
+				<div data-role="fieldcontain" >
 					<label for="defandroid">날짜 선택</label> <input name="startT"
 						class="dtp" id="startT" type="text" data-role="datebox"
 						data-options='{"mode": "calbox"}'>
 				</div>
-				<div data-role="fieldcontain" class="col-2">
-					<label>제품구분</label> <label><input type="checkbox" name="ref" id="inref"
-						value="I">입고</label> <label><input type="checkbox" id="outref"
-						name="ref" value="O">출고</label>
-				</div>
-				</div>
+			</div>
 			<div class="row">
 				<div data-role="fieldcontain" class="col-2">
+					<label>제품구분</label> <label><input type="checkbox" name="ref" id="inref"
+						value="I"><label for="inref"></label>입고</label> <label><input type="checkbox" id="outref"
+						name="ref" value="O"><label for="outref"></label>출고</label>
+				</div>
+				<div data-role="fieldcontain" class="col-3">
 					<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px" > 🔍 </button>
 				</div>
 				<div id="coo" data-role="fieldcontain" class="col-7" style="display: none">
