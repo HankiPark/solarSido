@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<h2>주문서 참조</h2>
+	<h1>주문서 참조</h1>
 
 		<div class="card card-pricing card-primary card-white">
 		<div class="card-body" >

@@ -105,7 +105,7 @@ position: absolute;
 </style>
 </head>
 <body>
-	<h2>제품 입/출고조회</h2>
+	<h1>제품 입/출고조회</h1>
 	<div class="card card-pricing card-primary card-white">
 		<div class="card-body" >
 			<div class="row">
@@ -130,7 +130,7 @@ position: absolute;
 					<button type="button" id="static">제품출고 통계</button>
 		</div>
 	</div>
-	<button type="button" id="findgrid">조회</button>
+	<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
 
 		</div>
 		</div>

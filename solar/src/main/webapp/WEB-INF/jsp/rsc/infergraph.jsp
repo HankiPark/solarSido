@@ -9,13 +9,17 @@
 </head>
 
 <body>
-    <h1>불량불량</h1>
+    <h1>불량</h1>
     <div id="coModal" title="업체 목록"></div>
-    연도
+    <div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
+   <div><label>연도</label>
 <!--     <input type="text" id="year" value="2022"> -->
-    <select id="year" value="${curYear }"></select>
-    발주업체: <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
-    <br><button id="sendRequest" onclick="inferRequest()">조회</button>
+    <select id="year" value="${curYear }"></select></div>
+   <label> 발주업체:</label> <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
+    <button id="sendRequest" onclick="inferRequest()" style="margin-left:-10px">조회</button>
+    </div>
+    </div>
     <div class="flex row">
 	    <div id="barChartDiv" class="row-7"></div>
 	    <div id="pieChartDiv" class="row-5"></div>

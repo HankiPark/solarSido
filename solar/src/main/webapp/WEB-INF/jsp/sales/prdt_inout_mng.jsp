@@ -53,7 +53,7 @@ a {
 </style>
 </head>
 <body>
-	<h2>제품 입/출고관리</h2>
+	<h1>제품 입/출고관리</h1>
 	<div class="wrap">
 		<div class="tab_menu">
 			<ul class="list">
