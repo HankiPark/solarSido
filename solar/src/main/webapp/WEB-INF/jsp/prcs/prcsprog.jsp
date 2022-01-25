@@ -65,10 +65,20 @@
 	let btnStart = document.getElementById("btnStart");
 	let btnEnd = document.getElementById("btnEnd");
 	let tAmount = 0;
+	let unitPTime = [];
 	let u1=0;
 	let u2=0;
 	let u3=0;
 	let u4=0;
+	
+	let unit1;
+	let unit2;
+	let unit3;
+	let unit4;
+	
+	let rscItem;
+	let prcsEqmList;
+	
 	
 	let time = 0;
 	let timerFlag = true;
@@ -105,48 +115,6 @@
 		$("#prcsEqmDialog-form").load("${pageContext.request.contextPath}/modal/searchPrcsEqm", function(){})
 	});
 	
-	// 공정 시작 버튼 호출 이벤트
-	$("#btnStart").on("click", function(ev){
-		//init
-		$("#frTm").val("");
-		btnStart.disabled = true;
-		btnEnd.disabled = false;
-				
-		const sTm = new Date(); 
-		var sHours = sTm.getHours();
-		var sMinutes = sTm.getMinutes();
-		var sSeconds = sTm.getSeconds();
-		
-		var sTime = sHours+"시 "+sMinutes+"분 "+sSeconds+"초";
-		
-		console.log(sTime);
-		console.log($("#frTm"));
-		
-		$("#frTm").val(sTime);
-		
-	});
-	
-	// 공정 종료 버튼 호출 이벤트
-	$("#btnEnd").on("click", function(){
-		//init
-		$("#toTm").val("");
-		btnStart.disabled = false;
-		btnEnd.disabled = true;
-		
-		const eTm = new Date();
-		var eHours = eTm.getHours();
-		var eMinutes = eTm.getMinutes();
-		var eSeconds = eTm.getSeconds();
-		
-		var eTime = eHours+"시 "+eMinutes+"분 "+eSeconds+"초";
-		
-		console.log(eTime);
-		console.log($("#toTm"));
-		
-		$("#toTm").val(eTime);
-		
-
-	});
 	
 
 
@@ -219,8 +187,15 @@
  				async: false,
  				contentType: 'application/json',
  				success : function(result){
- 					prcsItemRsc = result.RSC;
- 					console.log("소요자재LOT 리스트 > "+ prcsItemRsc);
+ 					const {RSC} = result;
+ 					rscItem = {RSC}
+ 					console.log("소요자재LOT 리스트 > "+RSC);
+ 					console.log("----------------------------------");
+ 					console.log(rscItem);
+ 					console.log("----------------------------------");
+ 					console.log(RSC)
+ 					console.log(RSC[0]);
+ 					
  				},
  				error : function(result){
  					console.log("에러")
@@ -231,18 +206,89 @@
  		} 
 
  		// 공정명, 라인번호 기입
- 		function innPrcsEqm(prcsNm, liNm){
+ 		function innPrcsEqm(prcsNm, prcsCd, liNm){
  			$("#prcsNm").val(prcsNm);
  			$("#liNm").val(liNm);
  			
+ 			$.ajax({
+ 				url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
+ 				data : {
+ 					'prcsCd':prcsCd	
+ 				},
+ 				dataType: 'JSON',
+ 				async: false,
+ 				contentType: 'application/json',
+ 				success : function(result){
+ 					const {PRCS} = result;
+ 					prcsEqmList = {PRCS}
+ 					console.log("공정내 설비 리스트 > "+PRCS);
+ 					console.log("----------------------------------");
+ 					console.log(prcsEqmList);
+ 					console.log("----------------------------------");
+ 					console.log(PRCS)
+ 					console.log(PRCS[0]);
+ 					console.log(PRCS[0].prcsNm);
+ 					
+ 					for(var i = 0; i<prcsGrid.getRowCount(); i++){
+ 						prcsGrid.setValue(i,'prcsCd',PRCS[0].prcsNm,false);
+ 					}	
+ 				},
+ 				error : function(result){
+ 					console.log("에러")
+ 				}
+ 			});
  			prcsEqmDialog.dialog("close");
-			
-	 	/* 	for(let i = 0; i < count; i++){
-	 			prcsGrid.setColumnValues("prcsCd",prcsNm,false);
-	 		} */
-	 			 		
  		}
+
  		
+ 		//*************************************************************
+
+ 		// 공정 시작 버튼 호출 이벤트
+	/* $("#btnStart").on("click", function(ev){
+		//init
+		$("#frTm").val("");
+		btnStart.disabled = true;
+		btnEnd.disabled = false;
+				
+		const sTm = new Date(); 
+		var sHours = sTm.getHours();
+		var sMinutes = sTm.getMinutes();
+		var sSeconds = sTm.getSeconds();
+		
+		var sTime = sHours+"시 "+sMinutes+"분 "+sSeconds+"초";
+		
+		console.log(sTime);
+		console.log($("#frTm"));
+		
+		$("#frTm").val(sTime);
+		
+	});
+	
+	// 공정 종료 버튼 호출 이벤트
+	$("#btnEnd").on("click", function(){
+		//init
+		$("#toTm").val("");
+		btnStart.disabled = false;
+		btnEnd.disabled = true;
+		
+		const eTm = new Date();
+		var eHours = eTm.getHours();
+		var eMinutes = eTm.getMinutes();
+		var eSeconds = eTm.getSeconds();
+		
+		var eTime = eHours+"시 "+eMinutes+"분 "+eSeconds+"초";
+		
+		console.log(eTime);
+		console.log($("#toTm"));
+		
+		$("#toTm").val(eTime);
+		
+
+	}); */
+	
+ 		
+ 		//*************************************************************
+ 	
  		$(document).ready(function(){
  				PrcsTimer();
  			});
@@ -259,7 +305,27 @@
  			var hour = "0";
  			
  			// 테스트 버튼
- 			$("#btnTest1").on("click", function(){
+ 			$("#btnStart").on("click", function(ev){
+ 				
+ 				// 시작버튼 시간 이벤트
+ 				$("#frTm").val("");
+ 				btnStart.disabled = true;
+ 				btnEnd.disabled = false;
+ 						
+ 				const sTm = new Date(); 
+ 				var sHours = sTm.getHours();
+ 				var sMinutes = sTm.getMinutes();
+ 				var sSeconds = sTm.getSeconds();
+ 				
+ 				var sTime = sHours+"시 "+sMinutes+"분 "+sSeconds+"초";
+ 				
+ 				console.log(sTime);
+ 				console.log($("#frTm"));
+ 				
+ 				$("#frTm").val(sTime);
+ 				
+ 				// 시작버튼 시간 이벤트끝
+ 				
  				console.log(prcsGrid.getColumns());
  				console.log(prcsGrid.getData());
  				console.log(prcsGrid.getRowCount());
@@ -272,8 +338,6 @@
  				
  				timer = setInterval(function(){
  					time++;
- 					
- 					if(time)
  					
  					min = Math.floor(time/60);
  					hour = Math.floor(min/60);
@@ -289,32 +353,159 @@
  					if(fs<10) fs = "0"+ sec;
 					 					
  					document.getElementById("prcsTimer").innerHTML = fh+"-"+fm+"-"+fs; }, 1000);
+ 				
+ 					for(let i =0; i< prcsEqmList.PRCS.length;i++){
+ 						unitPTime.push(prcsEqmList.PRCS[i].ptime);
+ 					}  
+ 					
+ 					unitPTime.push('1000');
+ 					unitPTime.push('500');
+ 					unitPTime.push('720');
+ 					
+ 					console.log(prcsEqmList);
+ 					console.log("공정설비갯수"+prcsEqmList.PRCS.length);
+ 					console.log("-------------------------ptime")
+ 					console.log(prcsEqmList.PRCS[0].ptime);
+ 					console.log("-------------------------ptime")
+ 					console.log(unitPTime);
+ 					
+ 					
+ 					
+ 					/* ---------------------------------------------------------------------------------- */
+ 					// 공정 정보를 조건으로 실제 함수를 구현할 몸체
+ 					console.log("--------------------------------설비 선택 유무 조건");
+ 					console.log(!!unitPTime[0]);
+ 					console.log(!!unitPTime[1]);	
+ 					console.log(!!unitPTime[2]);
+ 					console.log(!!unitPTime[3]);
+ 					console.log("--------------------------------설비 선택 유무 조건"); 						
+ 					
+ 					
+ 					for(var i = 0; i<prcsGrid.getRowCount(); i++){
+ 						if(prcsGrid.getValue(i,'lowSt')==="W"){
+ 							prcsGrid.setValue(i,'lowSt','P',false);
+ 						}
+ 					}
+ 					
+ 					if(!!unitPTime[0]){
+ 						u1 = 10*unitPTime[0];
+ 						unit1 = setTimeout(function tick() {
+ 							if(timerFlag===true){
+ 								clearTimeout(unit1);
+ 							}
+ 							console.log("1번 유닛 완료");
+ 							
+ 							/* $.ajax({
+ 								
+ 							}) */
+
+ 							unit1 = setTimeout(tick, u1); // (*)
+ 							}, u1);
+ 					}
+ 					
+ 					if(!!unitPTime[1]){
+ 						u2 = 10*unitPTime[1];
+ 						unit2 = setTimeout(function tick() {
+ 							if(timerFlag===true){
+ 								clearTimeout(unit2);
+ 							}
+ 							console.log("2번 유닛 완료");
+ 							
+ 							/* $.ajax({
+ 								
+ 							}) */
+
+ 							unit2 = setTimeout(tick, u2); // (*)
+ 							}, u2);
+ 					}
+ 					
+ 					if(!!unitPTime[2]){
+ 						u3 = 10*unitPTime[2];
+ 						unit3 = setTimeout(function tick() {
+ 							if(timerFlag===true){
+ 								clearTimeout(unit3);
+ 							}
+ 							console.log("3번 유닛 완료");
+ 							
+ 							/* $.ajax({
+ 								
+ 							}) */
+
+ 							unit3 = setTimeout(tick, u3); // (*)
+ 							}, u3);
+ 					}
+ 					
+ 					if(!!unitPTime[3]){
+ 						u4 = 10*unitPTime[3];
+ 						unit4 = setTimeout(function tick() {
+ 							if(timerFlag===true){
+ 								clearTimeout(unit4);
+ 							}
+ 							console.log("4번 유닛 완료");
+ 							
+ 							/* $.ajax({
+ 								
+ 							}) */
+
+ 							unit4 = setTimeout(tick, u4); // (*)
+ 							}, u4);
+ 					}
+ 					
+ 					
+ 					// 구현 함수 끝
+ 					/* ---------------------------------------------------------------------------------- */
  			});
 	 			
- 				$("#btnTest2").on("click", function(){
+ 				$("#btnEnd").on("click", function(){
+ 					// init
+ 					$("#toTm").val("");
+ 					btnStart.disabled = false;
+ 					btnEnd.disabled = true;
+ 					
+ 					clearTimeout(unit1);
+ 					clearTimeout(unit2);
+ 					clearTimeout(unit3);
+ 					clearTimeout(unit4);
+ 					
+ 					// 종료버튼 시간 이벤트
+ 					const eTm = new Date();
+ 					var eHours = eTm.getHours();
+ 					var eMinutes = eTm.getMinutes();
+ 					var eSeconds = eTm.getSeconds();
+ 					
+ 					var eTime = eHours+"시 "+eMinutes+"분 "+eSeconds+"초";
+ 					
+ 					console.log(eTime);
+ 					console.log($("#toTm"));
+ 					
+ 					$("#toTm").val(eTime);
+ 					// 종료버튼 시간 이벤트 끝
+ 					
+ 					
 	 				// 타이머 종료 기능
 	 	 			if(time != 0){
 	 	 				clearInterval(timer);
-	 	 			    starFlag = true;
+	 	 				timerFlag = true;
+	 	 			    
+	 	 			  	unitPTime = [];
+	 	 			    
+	 	 			 	for(var i = 0; i<prcsGrid.getRowCount(); i++){
+	 						if(prcsGrid.getValue(i,'lowSt')==="P"){
+	 							prcsGrid.setValue(i,'lowSt','W',false);
+	 						}
+	 					}
+	 	 			  	
+	 	 			  	/* ---------------------------------------------------------------------------------- */	 	 			    
+	 	 			    // 종료 버튼 눌렀을때 처리되어야될 페이지 요소수정과 함께 호출될 실적정보를 정리할 함수위치
+	 	 			    
+	 	 			    
+	 	 			  	
+	 	 			    //
+	 	 			  	/* ---------------------------------------------------------------------------------- */
 	 	 			}
 				});
 		}
- 		
  			
- 			
- 		
- 		
- 		
- 		
- 		
- 		
- 		
  		
 	</script>
-	
-
-
-
-
-
 </html>
