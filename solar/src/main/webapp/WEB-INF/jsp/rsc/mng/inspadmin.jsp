@@ -107,7 +107,8 @@
       },
       {
         header: '자재명',
-        name: 'rscNm'
+        name: 'rscNm',
+        width: 220,
       },
       {
         header: '자재코드',

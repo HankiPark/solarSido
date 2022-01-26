@@ -12,17 +12,15 @@
 </head>
 
 <body>
-	<h1>자재 출고 조회</h1>
+	<h1>자재 반품 조회</h1>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		입고일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
-		<br>
-		업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+		발주일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
+ 		업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
 		자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
 		<button type="button" id="ordrQueryBtn">조회</button>
-		<button type="button" id="inspSaveBtn">저장</button>
 	</form>
 	<div id="grid"></div>
 </body>
@@ -31,16 +29,14 @@
 	let cmmnCodes;
 	let curRowKey;
 	let sum;
-	let ordrDtStt;
-	let ordrDtEnd;
-	let co;
-	let rsc;
 	let date = new Date();
 	let ordrDtEnd = date.toISOString().substr(0,10);
 	date.setDate(date.getDate() - 7);
 	let ordrDtStt = date.toISOString().substr(0,10);
+	let co;
+	let rsc;
 	$(function() {
-	   
+		   
 	     $('input[name="datePicker"]').daterangepicker({
 	        showDropdowns: true,
 	       opens: 'right',
@@ -71,12 +67,12 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: 'ordrData?inspCls=rs003',
-				method: 'GET'
+				url: 'rtData',
+				method: 'GET',
 			}
 		},
-		contentType: 'application/json',
 		initialRequest: false,
+		contentType: 'application/json'
 	};
 
 	//공통코드 가져옴
@@ -88,27 +84,6 @@
 		cmmnCodes = data;
 	});
 
-	let inspDialog = $("#inspModal").dialog({
-		modal: true,
-		autoOpen: false,
-		width : 600,
-		height : 600,
-		buttons: {
-			"입력": function () {
-				if (sum > grid.getValue(curRowKey, 'rscIstQty')) {
-					alert('총량보다 많은 불량량을 입력할 수 없습니다.');
-					return false;
-				}
-				grid.setValue(curRowKey, 'inspCls', 'rs002');
-				grid.setValue(curRowKey, 'rscInferQty', sum);
-				inspDialog.dialog("close");
-			},
-			"닫기": function () {
-				inspDialog.dialog("close");
-			}
-		}
-	});
-
 	var grid = new tui.Grid({
 		el: document.getElementById('grid'),
 		scrollX: false,
@@ -117,45 +92,33 @@
 		rowHeaders: ['checkbox'],
 		sortable: true,
 		columns: [{
-				header: '입고일',
-				name: 'rscDt'
+				header: '발주번호',
+				name: 'ordrCd'
 			},
 			{
 				header: '자재명',
-				name: 'rscNm'
+				name: 'rscNm',
+		        width: 220,
 			},
 			{
 				header: '자재코드',
 				name: 'rscCd'
 			},
 			{
-				header: '발주량',
-				name: 'ordrQty'
+				header: '반품량',
+				name: 'rscInferQty'
 			},
 			{
-				header: '합격량',
-				name: 'rscPassedQty',
-				editor: 'text'
+				header: '반품사유',
+				name: 'rtngdResnCd',
 			},
 			{
-				header: '발주번호',
-				name: 'ordrCd'
+				header: '발주일',
+				name: 'ordrDt'
 			},
 			{
-				header: '업체',
-				name: 'coNm'
-			},
-			{
-				header: '상태',
-				name: 'inspCls',
-				formatter: 'listItemText',
-				editor: {
-					type: 'select',
-					disabled: true,
-					options: {
-						listItems: cmmnCodes.codes.rscst
-					}
-				}
+				header: '반품일',
+				name: 'rtngdDt'
 			}
 		]
 	});
@@ -174,15 +137,6 @@
 			'rsc':rsc,
 		});
 	});
-/* 	grid.on('click', function (ev) {
-		console.log(ev);
-		if (ev.columnName == "rscPassedQty") {
-			if(grid.getValue(ev.rowKey, ev.columnName)==9){
-				grid.blur();
-				return false;
-			}
-		}
-	}); */
 
 	//
 
@@ -224,11 +178,6 @@
 	$("#rscSearchBtn").on("click", function () {
 		rscDialog.dialog("open");
 		$("#rscModal").load("../rsc");
-	});
-
-	let saveBtn = document.getElementById('inspSaveBtn');
-	saveBtn.addEventListener('click', function () {
-		grid.request('modifyData');
 	});
 
 </script>

@@ -28,11 +28,8 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 
 	@Override
 	public void modify(ModifyVO<RscOrdr> mvo) {
-		System.out.println("@@@@modify");
 		
 		if(mvo.getCreatedRows() != null) {
-			System.out.println(mvo.getCreatedRows());
-			
 			for(RscOrdr rscOrdr : mvo.getCreatedRows()) {
 				System.out.println(rscOrdr);
 				rscOrdrMapper.insert(rscOrdr);
@@ -40,8 +37,6 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 		}
 		
 		if(mvo.getUpdatedRows() != null) {
-			System.out.println(mvo.getUpdatedRows());
-			
 			for(RscOrdr rscOrdr : mvo.getUpdatedRows()) {
 				rscOrdrMapper.update(rscOrdr);
 				
@@ -56,8 +51,6 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 			}
 		}
 		if(mvo.getDeletedRows() != null) {
-			System.out.println(mvo.getDeletedRows());
-			
 			for(RscOrdr rscOrdr : mvo.getDeletedRows()) {
 				System.out.println(rscOrdr);
 				rscOrdrMapper.delete(rscOrdr);
