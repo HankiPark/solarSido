@@ -12,22 +12,100 @@
 	<label>자재명 검색</label>
 	<input type="text" id="rscNmFind">
 	<button type="button" id="btnFind">검색</button><br>
-	<button type="button" id="btnSave">저장</button><br>
-	<button type="button" id="btnReset">정보리셋</button><br>
-	<button type="button" id="btnDelete">삭제</button><br>
 	<div id="grid"></div>	
 	<br>
-	<label>자재코드</label> <input type="text" id="rscCd" readonly = "readonly"><br>
-	<label>자재명</label> <input type="text" id="rscNm"><br>
-	<label>규격</label> <input type="text" id="rscSpec" ><br>
-	<label>관리단위</label> <input type="text" id="rscUnit"><br>
-	<label>업체코드</label> <input type="text" id="coCd" readonly = "readonly"><button type="button" id="coCdFind">조회</button><br>
-	<label>업체명</label> <input type="text" id="coNm" readonly = "readonly"><br>
-	<label>단가</label> <input type="text" id="rscUntprc" ><br>
-	<label>안전재고</label> <input type="text" id="safStc"><br>
+	<button type="button" id="btnInsert">저장</button>
+	<button type="button" id="btnUpdate">수정</button>
+	<button type="button" id="btnReset">초기화</button>
+	<div class = "tableDetail">
+	<table id = table>
+	<tbody>
+		<tr>
+		 	<th scope="row">자재코드 *</th>
+		 	<td><input type="text" name="rscCd" id="rscCd" readonly = "readonly"></td>
+		</tr>
+		<tr>
+			<th scope="row">자재명 *</th>
+			<td><input type="text" name="rscNm" id="rscNm"></td>
+		</tr>
+		<tr>
+			<th scope="row">규격</th>	
+			<td><input type="text" name="rscSpec" id="rscSpec" ></td>
+		</tr>
+		<tr>
+			<th scope="row">관리단위</th>
+			<td><input type="text" name="rscUnit" id="rscUnit"></td>
+		</tr>
+		<tr>
+			<th scope="row">업체코드</th>
+			<td><input type="text" name="coCd" id="coCd" readonly = "readonly"><button type="button" id="coCdFind">조회</button></td>
+		</tr>
+		<tr>
+			<th scope="row">업체명</th>
+			<td><input type="text" name="coNm" id="coNm" readonly = "readonly"></td>
+		</tr>
+		<tr>
+			<th scope="row">단가</th>
+			<td><input type="text" name="rscUntprc" id="rscUntprc"></td>
+		</tr>
+		<tr>
+			<th scope="row">안전재고</th>
+			<td><input type="text" name="safStc" id="safStc"></td>
+		</tr>
+	</tbody>
+	</table>
+	</div>
 	<div id="coCdModal" title="업체명단"></div>
 	</form>
 	<script>
+	//업체검색 모달
+	let coCdDialog = $("#coCdModal").dialog({
+		autoOpen: false,
+		modal: true,
+		height: 600,
+		width: 600
+	});
+	
+	toastr.options = {
+			  "closeButton": false,
+			  "debug": false,
+			  "newestOnTop": false,
+			  "progressBar": true,
+			  "positionClass": "toast-top-right",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "100",
+			  "hideDuration": "1000",
+			  "timeOut": "1500",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
+	
+	function SaveComplete(){
+		toastr.success('저장완료');
+	}
+	
+	function SaveFail(){
+		toastr.warning('저장실패');
+	}
+	function DeleteComplete(){
+		toastr.success('삭제완료');
+	}
+	function DeleteFail(){
+		toastr.warning('삭제실패');
+	}
+	function ResetComplete(){
+		toastr.info('상세 데이터 리셋 완료');
+	}
+	function insertComplete(){
+		toastr.success('등록완료');
+	}
+	function insertFail(){
+		toastr.warning('등록실패');
+	}
 	
 	var dataSource = {
 			api : {
@@ -43,7 +121,7 @@
 			el : document.getElementById('grid'),
 			data : dataSource,
 			scrollY : true,
-			rowHeaders : [ 'rowNum'],
+			rowHeaders : ['rowNum'],
 			bodyHeight : 500,
 			columns : 
 			[ 
@@ -141,35 +219,39 @@
 			})
 		});
 		
-		//업체검색 모달
-		let coCdDialog = $("#coCdModal").dialog({
-			autoOpen: false,
-			modal: true,
-			height: 600,
-			width: 600
-		});
 
-		$("#coCdFind").on("click", function(){
+		$("#coCdFind").on("click", function(){	
 			console.log("업체검색")
 			coCdDialog.dialog("open");
 			$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
 		});
+		
+	$("#btnInsert").on("click", function(){
 
-/*
-		 $('#btnSave').on('click', function(){
-			 var rscCd = $("#rscCd").val();
-			 var rscNm = $("rscNm").val();
-			 if($("#rscCd").is("[readonly]")){
-						 $.ajax({
-							url :"${pageContext.request.contextPath}/rscinfoUpdate.do",
-							type : "POST",
-							datatype : "json",
-							cache: false,
-							data: $("#rscfrm").serialize() 
-		 });
-		}
+		$.ajax({
+			url: "${pageContext.request.contextPath}/rscinfoInsert.do",
+			method : "POST",
+			data: $("form").serialize(),
+			success:function(res){
+				grid.readData(1,{},true)
+				console.log(res);
+			}
+		})
+
 	});
-*/
+	
+	$("#btnUpdate").on("click", function(){		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/rscinfoUpdate.do",
+			method : "POST",
+			data: $("#rscfrm").serialize(),
+			success:function(res){
+				grid.readData(1,{},true)
+				console.log(res);
+			}
+		})
+	});
+		
 		$('#btnReset').on('click', function(){
 			$('#rscCd').val('');
 			$('#rscNm').val('');
@@ -180,6 +262,7 @@
 			$('#rscUntprc').val('');
 			$('#safStc').val('');
 			$("#rscCd").removeAttr("readonly");
+			ResetComplete();
 		});
 /*
 		 $('#btnDelete').on('click', function(){

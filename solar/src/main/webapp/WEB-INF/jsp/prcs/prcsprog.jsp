@@ -65,20 +65,10 @@
 	let btnStart = document.getElementById("btnStart");
 	let btnEnd = document.getElementById("btnEnd");
 	let tAmount = 0;
-	let unitPTime = [];
 	let u1=0;
 	let u2=0;
 	let u3=0;
 	let u4=0;
-	
-	let unit1;
-	let unit2;
-	let unit3;
-	let unit4;
-	
-	let rscItem;
-	let prcsEqmList;
-	
 	
 	let time = 0;
 	let timerFlag = true;
@@ -115,6 +105,48 @@
 		$("#prcsEqmDialog-form").load("${pageContext.request.contextPath}/modal/searchPrcsEqm", function(){})
 	});
 	
+	// 공정 시작 버튼 호출 이벤트
+	$("#btnStart").on("click", function(ev){
+		//init
+		$("#frTm").val("");
+		btnStart.disabled = true;
+		btnEnd.disabled = false;
+				
+		const sTm = new Date(); 
+		var sHours = sTm.getHours();
+		var sMinutes = sTm.getMinutes();
+		var sSeconds = sTm.getSeconds();
+		
+		var sTime = sHours+"시 "+sMinutes+"분 "+sSeconds+"초";
+		
+		console.log(sTime);
+		console.log($("#frTm"));
+		
+		$("#frTm").val(sTime);
+		
+	});
+	
+	// 공정 종료 버튼 호출 이벤트
+	$("#btnEnd").on("click", function(){
+		//init
+		$("#toTm").val("");
+		btnStart.disabled = false;
+		btnEnd.disabled = true;
+		
+		const eTm = new Date();
+		var eHours = eTm.getHours();
+		var eMinutes = eTm.getMinutes();
+		var eSeconds = eTm.getSeconds();
+		
+		var eTime = eHours+"시 "+eMinutes+"분 "+eSeconds+"초";
+		
+		console.log(eTime);
+		console.log($("#toTm"));
+		
+		$("#toTm").val(eTime);
+		
+
+	});
 	
 
 
@@ -149,6 +181,7 @@
 			   contentType : 'application/json'
 	};
 		
+
 	// 공정 진행 그리드 선언부
 	prcsGrid = new tui.Grid({
 	  el: document.getElementById('prcsGrid1'),
@@ -298,6 +331,8 @@
  				timer = setInterval(function(){
  					time++;
  					
+ 					if(time)
+ 					
  					min = Math.floor(time/60);
  					hour = Math.floor(min/60);
  					sec = time%60;
@@ -311,6 +346,7 @@
  					if(fm<10) fm = "0"+ min;
  					if(fs<10) fs = "0"+ sec;
 					 					
+
  					document.getElementById("prcsTimer").innerHTML = fh+"/"+fm+"/"+fs; 
  				
  				}, 1000);
@@ -340,6 +376,7 @@
  				
  					
  					
+
  					
 				/* ---------------------------------------------------------------------------------- */
 				// 공정 정보를 조건으로 실제 함수를 구현할 몸체
@@ -493,6 +530,7 @@
 				/* ---------------------------------------------------------------------------------- */
  			});
 	 			
+
  				// 종료버튼 이벤트 시작
  				$("#btnEnd").on("click", function(){
  					// init
@@ -520,19 +558,11 @@
  					// 종료버튼 시간 이벤트 끝
  					
  					
+
 	 				// 타이머 종료 기능
 	 	 			if(time != 0){
 	 	 				clearInterval(timer);
-	 	 				timerFlag = true;
-	 	 			    
-	 	 			  	unitPTime = [];
-	 	 			    
-	 	 			 	for(var i = 0; i<prcsGrid.getRowCount(); i++){
-	 						if(prcsGrid.getValue(i,'lowSt')==="P"){
-	 							prcsGrid.setValue(i,'lowSt','W',false);
-	 						}
-	 					}
-	 	 			  	
+	 	 			    starFlag = true;
 	 	 			  	/* ---------------------------------------------------------------------------------- */	 	 			    
 	 	 			    // 종료 버튼 눌렀을때 처리되어야될 페이지 요소수정과 함께 호출될 실적정보를 정리할 함수위치
 	 	 			    
@@ -544,7 +574,22 @@
  					// 종료버튼 끝
 				});
 		}
+ 		
+ 			
  			
  		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
 	</script>
+	
+
+
+
+
+
 </html>

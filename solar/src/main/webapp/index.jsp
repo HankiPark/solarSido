@@ -51,7 +51,14 @@
  <ul class="navbar-nav ml-auto">
   
 
-      <!-- Notifications Dropdown Menu -->
+     <!-- login -->
+      <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/uat/uia/egovLoginUsr.do">
+          <i class="fas fa-sign-in-alt"></i>
+          <span >login</span>
+        </a>
+      </li>
+       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
@@ -200,55 +207,54 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/inferGraph" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+               <i class="fas fa-search nav-icon"></i>
                   <p>불량률(임시)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/ordradmin" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>자재 발주 관리(ㅇ)</p>
+  <i class="fas fa-file-signature nav-icon"></i>                  <p>자재 발주 관리(ㅇ)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/ordr" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 발주 참조(ㅇ)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/inadmin" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                    <i class="fas fa-file-signature nav-icon"></i>
                   <p>자재 입고 관리(ㅇ)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/in" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 입고 조회(ㅇ) </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/out" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-search nav-icon"></i>
                   <p>자재 출고 조회</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/rt" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="fas fa-search nav-icon"></i>
                   <p> 자재 반품 조회(ㅇ) </p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/rsc/stc" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 재고 조회(ㅇ)</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="${pageContext.request.contextPath}" class="nav-link">
-                  <i class="fas fa-file-signature nav-icon"></i>
+                   <i class="fas fa-file-signature nav-icon"></i>
                   <p> 자재 LOT별 재고 관리</p>
                 </a>
               </li>
@@ -352,13 +358,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="${pageContext.request.contextPath}/rsc/insp" class="nav-link">
+                <a href="${pageContext.request.contextPath}/rsc/inspadmin" class="nav-link">
                   <i class="fas fa-file-signature nav-icon"></i>
-                  <p>자재 검수 관리(기능완)</p>
+                  <p>자재 검수 관리(ㅇ)</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="${pageContext.request.contextPath}" class="nav-link">
+                <a href="${pageContext.request.contextPath}/rsc/insp" class="nav-link">
                   <i class="fas fa-search nav-icon"></i>
                   <p>자재 검수 조회</p>
                 </a>
@@ -388,8 +394,8 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
     <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
-      <div class="nav-item dropdown">
-        <a class="nav-link bg-danger dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
+      <div class="nav-item dropdown" >
+        <a class="nav-link dropdown-toggle" style="background-color:#fff; color:red" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
         <div class="dropdown-menu mt-0">
           <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all">Close All</a>
           <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all-other">Close All Other</a>
@@ -414,10 +420,10 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    <strong>Copyright &copy; 2021- <a href="${pageContext.request.contextPath}">Solarsido</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.1.0
+      <b>Version</b> 1.1.0
     </div>
   </footer>
 

@@ -6,21 +6,27 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+
 </head>
 
 <body>
-	<h2>주문서 참조</h2>
+	<h1>주문서 참조</h1>
+
+		<div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
 	<div class="row">
-		<div data-role="fieldcontain" class="col-6">
+		<div data-role="fieldcontain" class="col-12">
 			<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
 				id="startT" type="text" data-role="datebox"
 				data-options='{"mode": "calbox"}'>
-				</div>
-				<div data-role="fieldcontain" class="col-4">
-			<label>자료구분</label>
+		</div>
+	</div>
+	<div class="row">
+				<div data-role="fieldcontain" class="col-3">
+			<label>자료구분</label> 
 			<input type="radio" name="dateTy" value="접수" checked>접수일자
 			<input type="radio" name="dateTy" value="납기">납기일자
-			</div><div data-role="fieldcontain" class="col-2">
+			</div><div data-role="fieldcontain" class="col-4">
 			<label>진행상태</label>
 			<select name="nowSt">
 				<option value="진행">진행</option>
@@ -32,15 +38,23 @@
 		
 		</div>
 		<div>
-		<button type="button" id="findgrid">조회</button>
+		<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
 	</div>
+	</div>
+	</div>
+	
+	</div>
+
 	<div id="grid"></div>
+
 	<div id="dialog-form" title="주문 상세 목록"></div>
 
 
 
 
 	<script type="text/javascript">
+
+	
 	$(function() {
 		
 		  $('input[name="startT"]').daterangepicker({
@@ -120,6 +134,7 @@
 
 		});
 		grid.on('onGridUpdated', function() {
+			$('td[data-column-name$="deNum"]').css('backgroundColor','#ECC9AB');
 			grid.refreshLayout();
 		});
 		grid

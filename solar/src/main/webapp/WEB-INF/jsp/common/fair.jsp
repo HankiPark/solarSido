@@ -22,6 +22,29 @@
 	</div>
 
 <script>
+toastr.options = {
+		  "closeButton": false,
+		  "debug": false,
+		  "newestOnTop": false,
+		  "progressBar": true,
+		  "positionClass": "toast-top-right",
+		  "preventDuplicates": false,
+		  "onclick": null,
+		  "showDuration": "100",
+		  "hideDuration": "1000",
+		  "timeOut": "1500",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
+
+function fairerror(){
+	if(('#prodPd')!= num){
+		toastr.warning('생산일수에 숫자만 입력해주세요')
+	}
+}
 
 var dataSource = {
 		  api: {
@@ -45,8 +68,7 @@ var grid = new tui.Grid({
 	  columns : [
 			{
 				header : '공정코드',
-				name : 'prcsCd',
-				editor : 'text'
+				name : 'prcsCd'
 			},
 			{
 				header : '공정구분',
@@ -117,7 +139,7 @@ $('#btnfind').on('click', function(){
 		url : '${pageContext.request.contextPath}/grid/prcsdataFind',
 		data : parameter,
 		contentType: 'application/json; charset=utf-8'
-	}).done(function(res){
+ 		}).done(function(res){
 		var info = JSON.parse(res);
 		grid.resetData(info["data"]["contents"]);
 	})

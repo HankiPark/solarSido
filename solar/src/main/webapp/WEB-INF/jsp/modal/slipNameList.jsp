@@ -95,7 +95,10 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 					
 					
 				}).done(function(res){
+					
 					var sres = JSON.parse(res);
+					console.log(sres.data)
+					console.log(sres.data.contents[0])
 					gridSl.resetData(sres["data"]["contents"]);
 				})
 			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')

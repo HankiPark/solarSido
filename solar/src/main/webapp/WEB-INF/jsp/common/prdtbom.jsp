@@ -15,7 +15,7 @@
 	<label>제품코드</label><input type = "text" id="prdtCd">
 	<label>제품명</label><input type = "text" id="prdtNm" readonly="readonly">
 	<label>규격</label><input type ="text" id="prdtSpec" readonly="readonly">
-	<button type="button" id="btnfindinfo">검색</button><br>
+	<button type="button" id="btnfindinfo">조회</button><br>
 	<div id="grid"></div>
 	<div id="dialog-form"></div>
 	<div id="dialog-form2"></div>
@@ -127,7 +127,6 @@
 		})
 		
 	});
-
 	
 	grid.on('click', function(ev){
 		if(ev["columnName"] == "rscCd") {

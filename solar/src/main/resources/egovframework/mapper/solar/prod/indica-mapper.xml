@@ -40,17 +40,14 @@
 </select>
 
 <select id="findIndica" resultType="IndicaVO">
-	SELECT
-		indica_no,
-		TO_CHAR(indica_dt, 'YYYY-MM-DD') indica_dt,
-		indica_nm	
-	FROM indica
-		<if test="startT != null and startT != ''">
-		AND indica_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY-MM-DD')
-		</if>
-		<if test="endT != null and endT != ''">
-		AND indica_dt <![CDATA[<=]]> TO_DATE(#{endT}, 'YYYY-MM-DD')
-		</if>
+	SELECT DISTINCT
+		i.indica_no,
+		TO_CHAR(i.indica_dt, 'YYYY-MM-DD') indica_dt,
+		i.indica_nm
+	FROM indica i
+    JOIN indica_d id  ON i.indica_no = id.indica_no
+    LEFT JOIN prcs_pr_m p ON (id.prdt_cd = p.prdt_cd AND id.indica_deta_no = p.indica_deta_no)
+    WHERE  p.wk_dt is null
 	ORDER BY indica_no
 </select>
 
@@ -64,6 +61,33 @@
 	SELECT *
 	FROM rsc_inout
 	WHERE rsc_cd = #{rscCd}
+</select>
+
+<select id="noIndicaPlan" resultType="ProdPlanVO">
+	SELECT 
+		B.plan_deta_no,
+		A.plan_no,
+		TO_CHAR(B.plan_dt, 'YYYY/MM/DD') plan_dt,
+		(SELECT co_nm FROM co WHERE co_cd = O.co_cd) co_nm,
+		O.co_cd,
+		TO_CHAR((SELECT recv_dt FROM order_tb WHERE order_no = b.order_no), 'YYYY/MM/DD') recv_dt,
+		B.prdt_cd, 
+		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
+		B.order_no,
+		TO_CHAR(O.paprd_dt, 'YYYY/MM/DD') paprd_dt,
+		(SELECT order_qty FROM order_d WHERE order_no = B.order_no AND prdt_cd =B.prdt_cd) order_qty,
+		B.plan_qty,
+		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
+		B.wk_ord,
+		A.plan_dt,
+		A.plan_nm,
+		'10' as day_output,
+		(B.plan_qty/10) as prod_day
+	FROM plan A, plan_d B, order_tb O
+	WHERE A.plan_no = B.plan_no
+    AND B.order_no = O.order_no
+    AND (SELECT order_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd) > (SELECT indica_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd)
+    ORDER BY paprd_dt, order_qty desc
 </select>
 
 </mapper>

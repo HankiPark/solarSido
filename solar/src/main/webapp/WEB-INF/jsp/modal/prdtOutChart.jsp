@@ -21,7 +21,7 @@
 			var d = new Date();
 			var nd = new Date(d.getFullYear(), d.getMonth());
 			for(i=11;i>=-1;i--){
-				labels.push(new Date(d.getFullYear(), d.getMonth()-i).toISOString().slice(0, 7))
+				labels.push(new Date(d.getFullYear(), d.getMonth()-i).toISOString().slice(2, 7))
 			}
 			  let data = {
 			    labels: labels,

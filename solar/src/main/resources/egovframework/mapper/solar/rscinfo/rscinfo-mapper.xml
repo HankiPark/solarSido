@@ -50,7 +50,6 @@
 </select>
 
 <insert id="rscinfoInsert" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">
-	<![CDATA[	
 		INSERT INTO RSC
 		(	RSC_CD,
 			RSC_NM,
@@ -65,13 +64,11 @@
 			#{rscNm},
 			#{safStc},
 			#{coCd},
-
 			#{rscSpec},
 			#{rscUnit},
 			#{rscImg},
 			#{rscUntprc}
 		)
-	]]>
 </insert>
 
 <update id="rscinfoUpdate" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">

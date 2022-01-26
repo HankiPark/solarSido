@@ -16,22 +16,36 @@
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
+		<div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
+			
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		발주일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
-		발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
-		자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
-		<button type="button" id="ordrQueryBtn">조회</button>
-		<button type="button" id="inspSaveBtn">저장</button>
+		<div>
+			<label>발주일:</label> <input type="text" id="datePicker" name="datePicker" class="dtp">
+		</div>
+		<div>
+		<label>발주업체:</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+		<label>	자재:</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
+		</div>
+		<button type="button" id="ordrQueryBtn" style="margin-left:-10px">조회</button>
+		<button type="button" id="inspSaveBtn" style="margin-left:-10px">저장</button>
 	</form>
+	</div>
+	</div>
+
 	<div class="flex row">
 		<div id="grid" class="col-8"></div>
 		<div class="col-4">
-			<ul>
-				<li>발주량: <span id="ordrQty"></span></li>
-				<li>검수합격량: <span id="rscPassedQty"></span></li>
-				<li>수량확인<input id="confirmedQty"></li>
-				<li><button type="button" id="btnIn">입고</button></li>
-			</ul>
+			<div class="card card-pricing card-primary card-white">
+				<div class="card-body" >
+					<ul>
+						<li>발주량: <span id="ordrQty"></span></li>
+						<li>검수합격량: <span id="rscPassedQty"></span></li>
+						<li>수량확인<input id="confirmedQty"></li>
+						<li><button type="button" id="btnIn">입고</button></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
@@ -134,7 +148,7 @@
 			{
 				header: '자재명',
 				name: 'rscNm',
-				width: 220
+				width: 220,
 			},
 			{
 				header: '자재코드',
@@ -180,8 +194,6 @@
 	grid.on('click', function (ev) {
 		if (ev.columnName == "inspCls") {
 			curRowKey = ev.rowKey;
-			//inspDialog.dialog("open");
-			//$("#inspModal").load("./inout/setInOut");
 			let ordrQty = document.getElementById("ordrQty");
 			let rscPassedQty = document.getElementById("rscPassedQty");
 			ordrQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
@@ -265,14 +277,11 @@
 			body: JSON.stringify({
 				rscSlipNo: "rin",
 				rscCd: grid.getValue(grid.getFocusedCell().rowKey, 'rscCd'),
-				//rscLot: "|| to_char(sysdate,'yyMMdd') || trim(to_char(RSCLOTSEQ.nextval, '000'))",
 				rscQty: grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty'),
 				rscFg: 1,
 				rscAmt: 12300
 			})
 		});
- 		
- 		
 	});
 </script>
 

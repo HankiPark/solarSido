@@ -219,16 +219,25 @@ button {
 button:focus {
   outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color; }
-
+.tui-calendar .tui-calendar-btn-next-month{
+	background-color: #fff !important;
+}
+.tui-calendar .tui-calendar-btn-prev-month{
+	background-color: #fff !important;
+}
+.ui-dialog-titlebar-close {
+	background-color: #fff !important;
+}
 input,
 button,
 select,
 optgroup,
 textarea {
-	Border:0;
-	background-color:#E1DBF0;
+	border: 2px solid #e37c6b;
+	background-color:#fff;
 	Border-radius:5px;
   margin: 0;
+  margin-left:7px;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit; }
@@ -242,7 +251,8 @@ select {
   text-transform: none; }
 
 select {
-  word-wrap: normal; }
+  word-wrap: normal; 
+  padding : 5px 5px 5px 0px;}
 
 button,
 [type="button"],
@@ -256,11 +266,12 @@ button:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled) {
   cursor: pointer; 
-  background-color :#5f76e8;
+  background-color :#e37c6b;
   color : #ffffff;
   border-radius: 8px;
   border:0;
-  PADDING-TOP : 3px}
+  PADDING-TOP : 3px;
+  margin-left : 8px}
 
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,
@@ -269,10 +280,37 @@ button::-moz-focus-inner,
   padding: 0;
   border-style: none; }
 
-input[type="radio"],
-input[type="checkbox"] {
-  box-sizing: border-box;
-  padding: 0; }
+input[type="radio"]
+ {
+      box-sizing: border-box;
+    padding: 0;
+    background-color: white;
+    appearance: none;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 100%;
+    margin-right: 0.1rem;
+    border: 2px solid #e37c6b}
+    
+ input[type="checkbox"]{
+   box-sizing: border-box;
+    padding: 0;
+    background-color: white;
+ 
+    width: 0.9rem;
+    height: 0.9rem;
+    margin-right: 0.1rem;
+    border: 2px solid #e37c6b
+ }   
+    
+input[type="radio"]:checked{
+	background-color: #e37c6b;
+    background-clip: content-box;
+    content: '';
+    padding : 1.7px;
+
+}
+
 
 input[type="date"],
 input[type="time"],
@@ -3415,7 +3453,8 @@ input[type="button"].btn-block {
   background-color: #fff;
   background-clip: border-box;
   border: 0 solid #e9ecef;
-  border-radius: 0.25rem; }
+  border-radius: 0.25rem; 
+  margin-left:10px;}
   .card > hr {
     margin-right: 0;
     margin-left: 0; }
@@ -8251,7 +8290,7 @@ Table Cell
 body {
   margin: 0;
   overflow-x: hidden;
-  color: #7c8798;
+  color: #000000;
   background: #f9fbfd; }
 
 html {

@@ -13,31 +13,30 @@
 	<hr />
 	
 	<!-- 모달 -->
-	<div id="prodPlanModal" title="미지시 계획서 목록"></div>
+	<div id="prodPlanModal" title="미지시 계획 목록"></div>
 	<div id="orderModal" title="미계획 주문서 목록"></div>
+	<div id="planDetailModal" title="생산계획서 조회"></div>
 	
 	<!-- 생산계획 테이블 -->
 	<div  class="row">
 		<div class="col-9">
 			<form action="planMngFrm" name="planMngFrm">
-				<label>test</label><input type="text" id="planNo" name="planNo"> <!-- 나중에 hidden으로-->
 				<div>
 					<label>계획일자<span style="color: red">*</span></label>
 					<input type="date" id="planDt" name="planDt" required>
 					<label>생산계획명<span style="color: red">*</span></label>
 					<input type="text" id="planNm" name="planNm" required>
 				</div>
-				<div align="center">
+				<div>
 					<button type="button" id="btnReset">초기화</button>
 					<button type="button" id="btnSave">저장</button>
-					<button type="button" id="btnDel">삭제</button>
+					<!--  <button type="button" id="btnDel">삭제</button> -->
 				</div>
 			</form>
 		</div>
 		<div class="col-3">
 			<label>생산계획서 조회</label>
-			<input type="text" id="startT" name="startT">
-			<button type="button" id="btnSearch">🔍</button>
+			<button type="button" id="btnFind">🔍</button>
 		</div>
 	</div>
 	<hr />
@@ -48,7 +47,7 @@
 			<div class="row">
 				<div class="col-8">
 					<label>계획번호</label>
-					<input type="text" id="selPlanNo" name="selPlanNo" readonly> 
+					<input type="text" id="planNo" name="planNo" readonly> 
 				</div>
 				<div id="btnMng" class="col-4">
 					<button type="button" id="planSearch">계획🔍</button>
@@ -60,7 +59,7 @@
 		<!-- 제품 재고체크 그리드-->
 		<div id="pStcGrid" class="col-3" >
 			<label>주문번호</label>
-			<input type="text" id="orderNo" name="orderNo" readonly> 
+			<input type="text" id="orderNo" name="orderNo" readonly> <br/>
 			<label>제품코드</label>
 			<input type="text" id="prdtCd" name="prdtCd" readonly> 
 		</div>
@@ -77,41 +76,12 @@
 		</div>
 	</div>
 	
-	<!-- 생산계획 전체 조회 그리드 -->
-	<div id="planListGrid"></div>
+	
 	
 </body>
 
 <!-- 스크립트 -->
 <script type="text/javascript">
-$(function() {
-	$('input[name="startT"]').daterangepicker({
-		showDropdowns: true,
-		opens: 'right',
-		startDate: moment().startOf('hour').add(-7, 'day'),
-		endDate: moment().startOf('hour'),
-		minYear: 1990,
-		maxYear: 2025,
-		autoApply: true,
-		locale: {
-			format: 'YYYY-MM-DD',
-			separator: " ~ ",
-			applyLabel: "적용",
-			cancelLabel: "닫기",
-			prevText: '이전 달',
-			nextText: '다음 달',
-			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-			daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
-			showMonthAfterYear: true,
-			yearSuffix: '년'
-			}
-		}, 
-	function(start, end, label) {
-		console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-		}
-	);
-});
-	
 	let pDt = new Date();
 	document.getElementById('planDt').value = pDt.toISOString().substring(0, 10);
 
@@ -207,6 +177,8 @@ $(function() {
 	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
 	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
 	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
+	    			rStcGrid.setValue(e.rowKey, 'ndStc',
+	    					e.value * rStcGrid.getValue(e.rowKey, 'rscUseQty'));
 	    	    }    	
 			  },
 			  {
@@ -313,7 +285,6 @@ $(function() {
 	  	console.log(ev.xhr)
 	  	planDgrid.refreshLayout();
      	pStcGrid.refreshLayout(); 
-
      	console.log(pStcGrid.getValue(1, 'prdtStc'));
    	});
 	
@@ -352,6 +323,10 @@ $(function() {
 					  {
 					    header: '자재코드',
 					    name: 'rscCd'
+					  },
+					  {
+					    header: '소요량',
+					    name: 'rscUseQty'
 					  },
 					  {
 					    header: '재고량',
@@ -562,137 +537,26 @@ $(function() {
 
 	*/
 	
-	//기간별 계획 조회 그리드
-	const planListGrid = new tui.Grid({
-		el: document.getElementById('planListGrid'),
-		data: {
-			  api: {
-			    	readData: { url: '${pageContext.request.contextPath}/grid/planGrid.do', 
-						    	method: 'GET'
-			    				}
-					}, 
-				contentType: 'application/json'
-			},
-		scrollX: false,
-		scrollY: true,
-		bodyHeight: 250,
-		columns: [
-					  {
-					    header: '계획번호',
-					    name: 'planNo',
-					    align: 'center',
-					    sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '계획일자',
-					    name: 'planDt',
-					    align: 'center',
-				    	sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '업체코드',
-					    name: 'coCd',
-					    align: 'center',
-				    	sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '제품코드',
-					    name: 'prdtCd',
-					    align: 'center',
-				    	sortingType: 'desc',
-				        sortable: true
-					  },		  
-					  {
-					    header: '제품명',
-					    name: 'prdtNm',
-					    align: 'center'
-					  },
-					  {
-					    header: '주문번호',
-					    name: 'orderNo',
-					    align: 'center',
-				    	sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '납기일자',
-					    name: 'paprdDt',
-					    align: 'center',
-					    sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '주문량',
-					    name: 'orderQty',
-					    align: 'center',
-					    sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '계획량',
-					    name: 'planQty',
-					    align: 'center'
-					  },
-					  {
-					    header: '작업일자',
-					    name: 'wkDt',
-					    align: 'center',
-					    sortingType: 'desc',
-				        sortable: true
-					  },
-					  {
-					    header: '작업순서',
-					    name: 'wkOrd',
-					    align: 'center'
-					  },
-			 		 ],
- 		summary: {
-	        position: 'bottom',
-	        height: 50,
-	        columnContent: {
-	        	planDt: {
-	        		template: function(summary) {
-	        			return '합계:';
-	        			},
-	        		align:'center'
-				},
-				orderQty: {
-					template: function(summary) {
-						return summary.sum;
-						}
-				},
-				planQty: {
-					template: function(summary) {
-						return summary.sum;
-						}
-				}
-	        }
-	    }
-	});
 	
-	//조회 버튼: 기간별 생산계획 조회
-	$('#btnSearch').click(function() {
-		var startT = $("#startT").val().substring(0,10);
-		var endT = $("#startT").val().substring(13,23);
-		var params = {
-				'startT': startT,
-				'endT': endT,
+	
+	//생산계획서 조회 버튼: 기간별 생산계획 조회
+	let planDetailDialog = $("#planDetailModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 600,
+		buttons : {
+			'확인': function(){
+				planDetailDialog.dialog("close");
+			}
 		}
-		$.ajax({
-			url : '${pageContext.request.contextPath}/grid/planGrid.do',
-			data : params,
-			dataType:"json",
-			contentType : 'application/json; charset=utf-8',
-		}).done(function(pln) {
-			planListGrid.resetData(pln["data"]["contents"]);
-		})
-	})
-	
-	planListGrid.on('onGridUpdated', function() {
-		planListGrid.refreshLayout();
+	});
+  
+ 	$('#btnFind').on('click', function(){
+ 		console.log("생산계획서 조회")
+		planDetailDialog.dialog("open");
+		$("#planDetailModal").load("${pageContext.request.contextPath}/modal/findPlanDetail", 
+									function() { planDetailList() })
 	});
 </script>
 

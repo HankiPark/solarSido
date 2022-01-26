@@ -13,6 +13,7 @@
 	<label>업체명</label>
 	<input type="text" id="coNmFind">
 	<button type="button" id="btnfindCo">검색</button>
+	<button type="button" id="btnReset">초기화</button>
 
 	<div id="coCdGrid"></div>
 </body>
@@ -69,7 +70,7 @@ function coCdList(){
 			coCdGrid.resetData(sres["data"]["contents"]);
 		})
 	});
-
+	
 	//그리드 내부 더블클릭
 	coCdGrid.on('dblclick', function(ev) {
 		$('#coCd').val(coCdGrid.getValue(ev["rowKey"], "coCd"));
@@ -80,6 +81,7 @@ function coCdList(){
 	coCdGrid.on('onGridUpdated', function() {
 		coCdGrid.refreshLayout();
 	});
+	
 }
 </script>
 

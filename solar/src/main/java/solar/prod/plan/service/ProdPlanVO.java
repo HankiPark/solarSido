@@ -52,4 +52,5 @@ public class ProdPlanVO {
 	String safStc;		//자재안전재고
 	String ndStc;		//자재필요량
 	String shtStc;		//자재부족량
+	String rscUseQty;	//자재사용량
 }

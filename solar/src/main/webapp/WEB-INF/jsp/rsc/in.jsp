@@ -16,12 +16,18 @@
   <h1>자재 입고 조회</h1>
   <div id="coModal" title="업체 목록"></div>
   <div id="rscModal" title="자재 목록"></div>
-  <form id="ordrQueryFrm" name="ordrQueryFrm">
-    발주일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
-    발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
-    자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
+  <div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
+  <form id="ordrQueryFrm" name="ordrQueryFrm"><div>
+   <label> 발주일:</label> <input type="text" id="datePicker" name="datePicker" class="dtp"></div>
+  <div>  <label>발주업체:</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+   <label>자재:</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button></div>
+    <br>
     <button type="button" id="ordrQueryBtn">조회</button>
   </form>
+  </div>
+  </div>
+  
   <div id="grid"></div>
 </body>
 

@@ -9,6 +9,7 @@
 		TO_CHAR(B.plan_dt, 'YYYY/MM/DD') plan_dt,
 		(SELECT co_nm FROM co WHERE co_cd = O.co_cd) co_nm,
 		O.co_cd,
+		TO_CHAR((SELECT recv_dt FROM order_tb WHERE order_no = b.order_no), 'YYYY/MM/DD') recv_dt,
 		B.prdt_cd, 
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_no,
@@ -39,7 +40,7 @@
 		<if test="planNo != null and planNo != ''">
 		AND B.plan_no = #{planNo}
 		</if>
-	ORDER BY paprd_dt, order_qty
+	ORDER BY paprd_dt, order_qty desc
 </select>
 
 <select id="selectPstc" resultType="ProdPlanVO">
@@ -47,7 +48,8 @@
 		prdt_cd,
 		order_qty,
 		prdt_stc,
-		'10' as psaf_stc
+		'10' as psaf_stc,
+		(order_qty-prdt_stc+10) rcom_qty
 	FROM order_d
 	WHERE order_no = #{orderNo}
 	AND prdt_cd = #{prdtCd}
@@ -57,12 +59,14 @@
 	SELECT
 		a.prdt_cd,
 		a.rsc_cd,
+		a.rsc_use_qty,
 		(SELECT rsc_stc FROM rsc_stc WHERE rsc_cd = b.rsc_cd) rsc_stc,
 		b.saf_stc
 	FROM prdt_bom a, rsc b, order_d o
 	WHERE a.rsc_cd = b.rsc_cd
     AND   a.prdt_cd = o.prdt_cd
-    and o.order_no = #{orderNo}
+    AND o.order_no = #{orderNo}
+    AND	o.prdt_cd = #{prdtCd}
     order by prdt_cd
 </select>
 

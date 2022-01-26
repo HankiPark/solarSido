@@ -12146,7 +12146,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 [class*="sidebar-dark-"] .sidebar a {
-  color: #818181;
+  color: #000000;
 }
 
 [class*="sidebar-dark-"] .sidebar a:hover, [class*="sidebar-dark-"] .sidebar a:focus {
@@ -12159,15 +12159,14 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 [class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link:hover, [class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link:focus {
-  background: linear-gradient(to right,#EFC638,#416EB6,#715CA8,#2B103B);
    border-radius: 30px 160px 160px 30px;
-  color: #fff;
+  color: #e37c6b;
 }
 
 [class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link.active, [class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link.active:hover, [class*="sidebar-dark-"] .nav-treeview > .nav-item > .nav-link.active:focus {
-  background: linear-gradient(to right,#FFD954,#E4B660,#F2AB39,#69391A);
   border-radius: 30px 160px 160px 30px;
-  color: #fff;
+  color: #fa8383;
+  background-color :#fff;
   
 }
 
@@ -12181,7 +12180,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 
 .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
 .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active {
-  background: linear-gradient(to right,#8971ea,#7f72ea,#7574ea,#6a75e9,#5f76e8);
+  background: linear-gradient(to right,#FD9E77,#E37C6B,#FA8383,#E36BA7);
   color: #fff;
   border-radius:0 60px 60px 0;
 }

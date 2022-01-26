@@ -13,19 +13,20 @@
 
 
 <body>
-	<h1>자재 검수 관리</h1>
+	<h1>자재 검수 조회</h1>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="검수"></div>
+	   <div class="card card-pricing card-primary card-white">
+		<div class="card-body" >
 		<form id="ordrQueryFrm" name="ordrQueryFrm">
-			발주일: <input type="text" id="datePicker" name="datePicker" class="dtp"><br>
-			미검수 자재만 표시<input type="checkbox" id="isNotInspected" name="isNotInspected">
-			<br>
-			발주업체: <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
-			자재: <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
-			<button type="button" id="ordrQueryBtn">조회</button>
-			<button type="button" id="inspSaveBtn">저장</button>
+			<div><label>발주일:</label> <input type="text" id="datePicker" name="datePicker" class="dtp"></div>
+		<div><label>	발주업체:</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
+		<label>	자재:</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button></div>
+			<button type="button" id="ordrQueryBtn" style="margin-left:-10px">조회</button>
 		</form>
+		</div>
+		</div>
 	<div id="grid"></div>
 </body>
 
@@ -107,7 +108,8 @@
       },
       {
         header: '자재명',
-        name: 'rscNm'
+        name: 'rscNm',
+        width: 220,
       },
       {
         header: '자재코드',
@@ -156,14 +158,6 @@
 	grid.hideColumn('rtngdResnCd');
 	grid.hideColumn('rtngdDt');
 	
-  
-/*     grid.on('beforeChange',function(ev){
-    	console.log('befgg')
-    	if(ev.columnName == 'inspCls'){
-    	return false;
-    	}
-    }); */
-    
 	grid.on('response',function(ev){
       if(ev.xhr.responseText =="201"){
     	  grid.readData();
@@ -176,48 +170,8 @@
 			'ordrDtEnd':ordrDtEnd,
 			'co':co,
 			'rsc':rsc,
-			'inspCls':inspCls
+			'inspCls':'rs002'
 		});
-	});
-
-	let inspDialog = $("#inspModal").dialog({
-		modal: true,
-		autoOpen: false,
-		width : 600,
-		height : 600,
-		buttons: {"입력":function(){
-			if(sum > grid.getValue(curRowKey,'rscIstQty')){
-			  alert('총량보다 많은 불량량을 입력할 수 없습니다.');
-			  return false;
-			}
-
-            //불량명 문자타입으로 나열
-            rtngdResnCd = '';
-			for(let i = 0; i < inferGrid.getRowCount(); i++){
-				if(inferGrid.getValue(i,"rscInferQty")!=null && inferGrid.getValue(i,"rscInferQty")!=''){
-                rtngdResnCd += ","+inferGrid.getValue(i,"cmmnCdNm");
-				}
-            }
-			rtngdResnCd = rtngdResnCd.substr(1);
-            //
-            
-			grid.setValue(curRowKey, 'inspCls', 'rs002');
-			grid.setValue(curRowKey, 'rtngdResnCd', rtngdResnCd);
-			//let d = new Date();
-			//grid.setValue(curRowKey, 'rtngdDt', d.toISOString().slice(0, 10));
-			grid.setValue(curRowKey, 'rscInferQty', sum);
-			inspDialog.dialog("close");
-		},
-		"닫기":function(){inspDialog.dialog("close");}
-		}
-	});
-	
-	grid.on('click',function(ev){
-	if(ev.columnName == "inspCls"){
-		curRowKey = ev.rowKey;
-		inspDialog.dialog("open");
-		$("#inspModal").load("inspModal");
-	}
 	});
 
 //
@@ -226,13 +180,12 @@
   ordrQueryBtn.addEventListener("click", function () {
     co = document.ordrQueryFrm.co.value;
     rsc = document.ordrQueryFrm.rsc.value;
-    inspCls = document.ordrQueryFrm.isNotInspected.checked ? 'rs001' : null;
 	grid.readData(1,{
 		'ordrDtStt':ordrDtStt,
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
 		'rsc':rsc,
-		'inspCls':inspCls
+		'inspCls':'rs002'
 	});
   });
 
@@ -264,10 +217,6 @@
     $("#rscModal").load("../rsc");
   });
 
-  let saveBtn = document.getElementById('inspSaveBtn');
-  saveBtn.addEventListener('click',function(){
-	  grid.request('modifyData');
-  });
 </script>
 
 </html>
