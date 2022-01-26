@@ -22,9 +22,9 @@ public class PrcsController {
 
 	@Autowired PrcsService prcsservice;
 	
-	@RequestMapping("/prcs/prcsprog")									// 공정관리 페이지 이동
+	@RequestMapping("/prcs/mng/prcsprog")									// 공정관리 페이지 이동
 	public String go() {
-		return "prcs/prcsprog";
+		return "prcs/mng/prcsprog";
 	}
 	
 	/*------------------------------------------------------------------------------------------------ */

@@ -23,7 +23,7 @@ public class EqmController {
 	@Autowired EqmService eqmService;
 	
 	//설비관리페이지 이동
-	@RequestMapping("/eqm/eqmMng")
+	@RequestMapping("/eqm/mng/eqmMng")
 	public String eqmList(Model model, EqmVO vo) {
 		return "eqm/mng/eqmMng";
 	}

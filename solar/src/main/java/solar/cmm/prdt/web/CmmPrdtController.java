@@ -23,7 +23,7 @@ public class CmmPrdtController {
 	@Autowired CmmPrdtService prdtService;
 	@Autowired CmmPrdtMapper prdtMapper;
 	
-	@RequestMapping("common/prdtinfer")
+	@RequestMapping("common/mng/prdtinfer")
 	public String prdtList() {
 		return "common/mng/prdtinfer";
 	}

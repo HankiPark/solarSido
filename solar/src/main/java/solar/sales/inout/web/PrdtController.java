@@ -23,13 +23,13 @@ public class PrdtController {
 	PrdtService pservice;
 
 	// 입출고관리 페이지 open
-	@RequestMapping("/sales/prdt_inout_mng")
+	@RequestMapping("/sales/mng/prdt_inout_mng")
 	public String prdtPage(Model model) {
 		model.addAttribute("num", pservice.makeNum());
 		/* model.addAttribute("coList", (pservice.findCo())); */
 		return "sales/mng/prdt_inout_mng";
 	}
-	@RequestMapping("/sales/prdt_inout_ref")
+	@RequestMapping("/sales/ref/prdt_inout_ref")
 	public String prdtPageRef(Model model) {
 		/* model.addAttribute("coList", (pservice.findCo())); */
 		return "sales/ref/prdt_inout_ref";

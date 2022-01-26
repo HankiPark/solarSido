@@ -26,7 +26,7 @@ public class UoprcdController {
 	@Autowired UoprcdMapper uoprcdMapper;
 	@Autowired FairService fairService;
 	
-	@RequestMapping("common/uoprcd")
+	@RequestMapping("common/mng/uoprcd")
 	public String uoprcdList() {
 		return "common/mng/uoprcd";
 	}

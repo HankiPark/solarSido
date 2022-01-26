@@ -23,7 +23,7 @@ public class EmpController {
 	@Autowired EmpService empService;
 	@Autowired EmpMapper empMapper;
 	
-	@RequestMapping("common/emp")
+	@RequestMapping("common/mng/emp")
 	public String empList() {
 		return "common/mng/emp";
 	}

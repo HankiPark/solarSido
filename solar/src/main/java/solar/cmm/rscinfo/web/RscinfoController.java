@@ -25,7 +25,7 @@ public class RscinfoController {
 	@Autowired RscinfoService rscinfoService;
 	@Autowired RscinfoMapper rscinfoMapper;
 	
-	@RequestMapping("common/rscinfo")
+	@RequestMapping("common/mng/rscinfo")
 	public String rscinfoList() {
 		return "common/mng/rscinfo";
 	}

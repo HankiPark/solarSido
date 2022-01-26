@@ -25,7 +25,7 @@ public class PrdtbomController {
 	@Autowired PrdtbomMapper prdtbomMapper;
 	@Autowired RscinfoService rscinfoService;
 	
-	@RequestMapping("common/prdtbom")
+	@RequestMapping("common/mng/prdtbom")
 	public String prdtbomList() {
 		return "common/mng/prdtbom";
 	}

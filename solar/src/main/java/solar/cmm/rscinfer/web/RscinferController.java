@@ -24,7 +24,7 @@ public class RscinferController {
 	@Autowired RscinferMapper rscinferMapper;
 	
 	
-	@RequestMapping("common/rscinfer")
+	@RequestMapping("common/mng/rscinfer")
 	public String rscinferList() {
 		return "common/mng/rscinfer";
 	}
