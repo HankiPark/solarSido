@@ -48,7 +48,7 @@ public class RscController {
 	//발주참조 페이지 요청
 	@GetMapping("rsc/ordr")
 	public String rscOrdr() {
-		return "rsc/ordr";
+		return "rsc/ref/ordr";
 	}
 	
 	//발주관리 페이지 요청
@@ -99,7 +99,7 @@ public class RscController {
 	//검수조회페이지 이동
 	@GetMapping("rsc/insp")
 	public String rscInsp() {
-		return "rsc/insp";
+		return "rsc/ref/insp";
 	}
 	
 	//검수관리페이지 이동
@@ -150,7 +150,7 @@ public class RscController {
 	//입고조회페이지
 	@GetMapping("rsc/in")
 	public String rscIn() {
-		return "rsc/in";
+		return "rsc/ref/in";
 	}
 	
 	//입고조회페이지 데이터
@@ -184,13 +184,13 @@ public class RscController {
 	//출고페이지
 	@GetMapping("rsc/out")
 	public String rscOut() {
-		return "rsc/out";
+		return "rsc/ref/out";
 	}
 	
 	//자재재고페이지
 	@GetMapping("rsc/stc")
 	public String rscStc() {
-		return "rsc/stc";
+		return "rsc/ref/stc";
 	}
 	
 	//재고데이터 요청
@@ -215,7 +215,7 @@ public class RscController {
 	//자재반품페이지 요청
 	@GetMapping("rsc/rt")
 	public String rscRt() {
-		return "rsc/rt";
+		return "rsc/ref/rt";
 	}
 	
 	//자재반품데이터요청
@@ -237,10 +237,10 @@ public class RscController {
 		return "jsonView";
 	}
 	
-	//불량률그래프 임시
+	//불량률그래프
 	@GetMapping("rsc/inferGraph")
 	public String rscInferGraph() {
-		return "rsc/infergraph";
+		return "rsc/ref/infergraph";
 	}
 	
 	//불량률그래프 데이터
