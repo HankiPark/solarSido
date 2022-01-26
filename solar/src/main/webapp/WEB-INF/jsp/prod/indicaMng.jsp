@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>생산지시 관리</title>
 </head>
 
 <body>
@@ -12,40 +12,45 @@
 	<hr />
 	
 	<!-- 모달 -->
+	<div id="planModal" title="미지시계획 조회">
+		<div id="planDgrid"></div>
+	</div>
 	<div id="indicaModal" title="생산지시서 목록"></div>
+	<div id="indicaDetailModal" title="생산지시서 조회"></div>
 	
 	<!-- 생산지시 테이블 -->
-	<div>
-		<form action="indicaMngFrm" name="indicaMngFrm">
-			<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
-			<table>
-				<tr>
-					<th>지시기간</th>
-					<td colspan="3">
-						<input type="date" id="planStartDt" name="planStartDt"> 
-						~<input type="date" id="planEndDt" name="planEndDt">
-						<button type="button" id="btnSearch">🔍</button>
-					</td>
-				</tr>
-				<tr>
-					<th>지시일자<span style="color: red">*</span></th>
-					<td><input type="date" id="indicaDt" name="indicaDt" required></td>
-					<th>생산지시명<span style="color: red">*</span></th>
-					<td><input type="text" id="indicaNm" name="indicaNm" required></td>
-				</tr>
-			</table>
-			<div align="center">
-				<button type="button" id="btnReset">초기화</button>
-				<button type="button" id="btnSave">저장</button>
-				<button type="button" id="btnDel">삭제</button>
-			</div>
-		</form>
+	<div  class="row">
+		<div class="col-9">
+			<form action="indicaMngFrm" name="indicaMngFrm">
+				<div>
+					<label>지시일자<span style="color: red">*</span></label>
+					<input type="date" id="indicaDt" name="indicaDt" required>
+					<label>생산지시명<span style="color: red">*</span></label>
+					<input type="text" id="indicaNm" name="indicaNm" required>
+				</div>
+				<div>
+					<button type="button" id="btnReset">초기화</button>
+					<button type="button" id="btnSave">저장</button>
+					<!-- <button type="button" id="btnDel">삭제</button> -->
+				</div>
+			</form>
+		</div>
+		<div class="col-3">
+			<label>생산지시서 조회</label>
+			<button type="button" id="btnFind">🔍</button>
+		</div>
 	</div>
 	<hr />
 
-	<!-- 생산지시 상세 그리드-->
-	<div id="indicaDgrid">
-		<div align="right">
+	<!-- 생산지시 상세 그리드--> 
+	<div id="indicaDgrid" class="row">
+		<div class="col-8">
+			<label>지시번호</label>
+			<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
+		</div>
+		<div id="btnMng" class="col-4">
+			<button type="button" id="planSearch">계획🔍</button>
+			<button type="button" id="indicaSearch">지시🔍</button>
 			<button type="button" id="rowAdd">추가</button>
 			<button type="button" id="rowDel">삭제</button>
 		</div>
@@ -60,7 +65,7 @@
 			<label>제품명</label>
 			<input type="text" id="prdtNm" name="prdtNm" readonly> 
 		</div>
-		<div id="rscLotGrid" class="col-7"  >
+		<div id="rscLotGrid" class="col-7">
 			<label>자재코드</label>
 			<input type="text" id="rscCd" name="rscCd" readonly> 
 			<label>자재명</label>
@@ -68,18 +73,15 @@
 		</div>
 	</div>
 	
+	<!-- 소요자재 히든그리드 -->
+	<div id="hiddenRscGrid"></div>
 </body>
+
 <!-- 스크립트 -->
 <script type="text/javascript">
-	//지시일자 Default: sysdate
-	let pEndDt = new Date();
-	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
-	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
-	document.getElementById('planEndDt').value = pEndDt.toISOString().substring(0, 10);
-	 
 	let iDt = new Date();
 	document.getElementById('indicaDt').value = iDt.toISOString().substring(0, 10);
-	
+	let list = [];
 	//지시 조회 그리드
 	let indicaDgrid = new tui.Grid({
 		el: document.getElementById('indicaDgrid'),
@@ -99,10 +101,10 @@
 			},
 		scrollX: false,
 		scrollY: true,
-		bodyHeight: 250,
+		bodyHeight: 200,
 		rowHeaders: [{
 			type: 'checkbox',
-			width: 70}],
+			width: 40}],
 		columns: [
 					 {
 					    header: '지시상세번호',
@@ -161,7 +163,7 @@
 			    	        required: true
 			    	      },
 			    	      onAfterChange(e) {
-				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
+				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    	    	indicaDgrid.setValue(e.rowKey, 'prodDay',
 				    	    					e.value / indicaDgrid.getValue(e.rowKey, 'dayOutput'));
 				    	    }    	
@@ -216,43 +218,7 @@
 	
 	indicaDgrid.on('click', (ev) => {
 		console.log(ev);
-	})
-	
-	//그리드 추가 버튼
-	rowAdd.addEventListener("click", function(){
-		indicaDgrid.appendRow({
-			extendPrevRowSpan : true,
-			focus : true,
-			at : 0
-		});
 	});
-	
-	//그리드 삭제 버튼
-	//false면 확인 안하고 삭제함
-	rowDel.addEventListener("click", function(){
-		indicaDgrid.removeCheckedRows(true);
-	});
-	
-	//조회 버튼: 지시서 모달
-	let indicaDialog = $("#indicaModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 900,
-		height : 600
-	});
-	
- 	$('#btnSearch').on('click', function(){
- 		console.log("작업지시서 검색")
-		indicaDialog.dialog("open");
-		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
-									function() { indicaList() })
-	});
-	
- 	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
-	$('#btnReset').click(function() {
-		indicaMngFrm.reset();
-		indicaDgrid.resetData([]);
-	})
 	
 	//지시상세 그리드 내부 클릭 이벤트
 	indicaDgrid.on('click', function(ev){
@@ -270,8 +236,96 @@
 		
 		rscGrid.readData(1, rscGridParams, true);
 	});
+	
+	//생산지시서 조회 버튼: 기간별 생산계획 조회
+	let indicaDetailDialog = $("#indicaDetailModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 600,
+		buttons : {
+			'확인': function(){
+				indicaDetailDialog.dialog("close");
+			}
+		}
+	});
+  
+ 	$('#btnFind').on('click', function(){
+ 		console.log("생산지시서 조회")
+		indicaDetailDialog.dialog("open");
+		$("#indicaDetailModal").load("${pageContext.request.contextPath}/modal/findIndicaDetail", 
+									function() { indicaDetailList() })
+	});
  	
+ 	//계획조회 버튼: 미지시 계획상세 모달
+	let planDetailDialog = $("#planModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 400,
+		buttons : {
+			"확인" : function(){
+				console.log('확인');
+				console.log(chkPlan);
+				indicaDgrid.appendRows(chkPlan);
+				planDetailDialog.dialog("close");
+			},
+			'취소': function(){
+				planDetailDialog.dialog("close");
+			}
+		}
+	});
+	
+ 	$('#planSearch').on('click', function(){
+ 		console.log("미지시 계획 검색")
+		planDetailDialog.dialog("open");
+		$("#planModal").load("${pageContext.request.contextPath}/modal/findPlanDlist", 
+									function() { planDList() })
+	});
  	
+	//지시조회 버튼: 미공정 지시서 모달
+	let indicaDialog = $("#indicaModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 400,
+		buttons : {
+			'취소': function(){
+				planDetailDialog.dialog("close");
+			}
+		}
+	});
+	
+ 	$('#indicaSearch').on('click', function(){
+ 		console.log("작업지시서 검색")
+		indicaDialog.dialog("open");
+		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
+									function() { indicaList() })
+	});
+ 	
+	//그리드 추가 버튼: 계획 없는 지시 등록
+	rowAdd.addEventListener("click", function(){
+		indicaDgrid.appendRow({
+			extendPrevRowSpan : true,
+			focus : true,
+			at : 0
+		});
+	});
+	
+	//그리드 삭제 버튼
+	//false면 확인 안하고 삭제함
+	rowDel.addEventListener("click", function(){
+		indicaDgrid.removeCheckedRows(true);
+	});
+	
+ 	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
+	$('#btnReset').click(function() {
+		indicaMngFrm.reset();
+		indicaDgrid.resetData([]);
+		rscGrid.resetData([]);
+		rscLotGrid.resetData([]);
+	})
+	
 	//제품별 소요 자재 목록 그리드
 	let rscGrid = new tui.Grid({
 		el: document.getElementById('rscGrid'),
@@ -289,6 +343,7 @@
 		scrollX: false,
 		scrollY: true,
 		rowHeaders : [ 'rowNum' ],
+		selectionUnit : 'row',
 		bodyHeight: 250,
 		columns: [
 					 {
@@ -349,7 +404,7 @@
 			},
 		scrollX: false,
 		scrollY: true,
-		rowHeaders : [ 'rowNum','checkbox' ],
+		rowHeaders : [ 'checkbox', 'rowNum' ],
 		bodyHeight: 200,
 		columns: [
 					 {
@@ -367,7 +422,8 @@
 					  },
 					  {
 					    header: '투입량',
-					    name: 'rscQty'
+					    name: 'rscQty',
+					    editor: 'text'
 					  }
 				],
 		summary: {
@@ -393,5 +449,69 @@
 	        }
 	    }
 	});
+	
+	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
+	rscLotGrid.on("checked", (rscEv) => {
+		rscLotGrid.setSelectionRange({
+		    start: [rscEv.rowKey, 0],
+		    end: [rscEv.rowKey, rscLotGrid.getColumns().length-1]
+		});
+		
+	
+	})
+	
+	//소요 자재 목록 히든그리드
+	let hiddenRscGrid = new tui.Grid({
+		el: document.getElementById('hiddenRscGrid'),
+		data: {
+			  api: {
+			    	readData: {
+						url: '${pageContext.request.contextPath}/grid/rscGrid.do', 
+						method: 'GET',
+						initParams : { prdtCd: 'prdtCd'}
+			    				}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
+		scrollX: false,
+		scrollY: true,
+		rowHeaders : [ 'rowNum' ],
+		bodyHeight: 250,
+		columns: [
+					 {
+					    header: '생산지시상세번호',
+					    name: 'indicaDetaNo',
+					   // hidden: true
+					  },
+					  {
+					 	header: '제품코드',
+					    name: 'prdtCd',
+					    //hidden: true
+					  },
+					  {
+					    header: '자재코드',
+					    name: 'rscCd'
+					  },
+					  {
+					    header: '자재LOT_NO',
+					    name: 'rscLot'
+					  },
+					  {
+					    header: '소요량',
+					    name: 'rscUseQty'
+					  }
+				]
+	});
+ 	
+	rscGrid.on('onGridUpdated', function() {
+		rscGrid.refreshLayout(); 
+		indicaDgrid.refreshLayout();
+	});
+	
+	
+ 	
+	//제품코드 입력시 제품명 입력 함수
+	 
 </script>
 </html>

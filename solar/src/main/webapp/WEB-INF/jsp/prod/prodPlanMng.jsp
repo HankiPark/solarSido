@@ -13,35 +13,31 @@
 	<hr />
 	
 	<!-- 모달 -->
-	<div id="prodPlanModal" title="생산계획서 목록"></div>
-	<div id="orderModal" title="주문서 목록"></div>
+	<div id="prodPlanModal" title="미지시 계획 목록"></div>
+	<div id="orderModal" title="미계획 주문서 목록"></div>
+	<div id="planDetailModal" title="생산계획서 조회"></div>
 	
 	<!-- 생산계획 테이블 -->
-	<div>
-		<form action="planMngFrm" name="planMngFrm">
-			<input type="text" id="planNo" name="planNo"> <!-- 나중에 hidden으로-->
-			<table>
-				<tr>
-					<th>계획기간</th>
-					<td colspan="3">
-						<input type="date" id="planStartDt" name="planStartDt"> 
-						~<input type="date" id="planEndDt" name="planEndDt">
-						<button type="button" id="btnSearch">🔍</button>
-					</td>
-				</tr>
-				<tr>
-					<th>계획일자<span style="color: red">*</span></th>
-					<td><input type="date" id="planDt" name="planDt" required></td>
-					<th>생산계획명<span style="color: red">*</span></th>
-					<td><input type="text" id="planNm" name="planNm" required></td>
-				</tr>
-			</table>
-			<div align="center">
-				<button type="button" id="btnReset">초기화</button>
-				<button type="button" id="btnSave">저장</button>
-				<button type="button" id="btnDel">삭제</button>
-			</div>
-		</form>
+	<div  class="row">
+		<div class="col-9">
+			<form action="planMngFrm" name="planMngFrm">
+				<div>
+					<label>계획일자<span style="color: red">*</span></label>
+					<input type="date" id="planDt" name="planDt" required>
+					<label>생산계획명<span style="color: red">*</span></label>
+					<input type="text" id="planNm" name="planNm" required>
+				</div>
+				<div>
+					<button type="button" id="btnReset">초기화</button>
+					<button type="button" id="btnSave">저장</button>
+					<!--  <button type="button" id="btnDel">삭제</button> -->
+				</div>
+			</form>
+		</div>
+		<div class="col-3">
+			<label>생산계획서 조회</label>
+			<button type="button" id="btnFind">🔍</button>
+		</div>
 	</div>
 	<hr />
 
@@ -49,11 +45,12 @@
 	<div class="row">
 		<div id="planDgrid" class="col-9">
 			<div class="row">
-				<div class="col-10">
+				<div class="col-8">
 					<label>계획번호</label>
-					<input type="text" id="selPlanNo" name="selPlanNo" readonly> 
+					<input type="text" id="planNo" name="planNo" readonly> 
 				</div>
-				<div class="col-2">
+				<div id="btnMng" class="col-4">
+					<button type="button" id="planSearch">계획🔍</button>
 					<button type="button" id="rowAdd">추가</button>
 					<button type="button" id="rowDel">삭제</button>
 				</div>
@@ -62,7 +59,9 @@
 		<!-- 제품 재고체크 그리드-->
 		<div id="pStcGrid" class="col-3" >
 			<label>주문번호</label>
-			<input type="text" id="orderNo" name="orderNo" readonly> 
+			<input type="text" id="orderNo" name="orderNo" readonly> <br/>
+			<label>제품코드</label>
+			<input type="text" id="prdtCd" name="prdtCd" readonly> 
 		</div>
 	</div>
 	<hr />
@@ -76,16 +75,13 @@
 			<button type="button" id="rscDmnd">발주요청</button>
 		</div>
 	</div>
+	
+	
+	
 </body>
 
 <!-- 스크립트 -->
 <script type="text/javascript">
-	//계획일자 Default: sysdate
-	let pEndDt = new Date();
-	let pSrtDt = new Date(pEndDt.getFullYear(), pEndDt.getMonth(), pEndDt.getDate() - 7);
-	document.getElementById('planStartDt').value = pSrtDt.toISOString().substring(0, 10);
-	document.getElementById('planEndDt').value = pEndDt.toISOString().substring(0, 10);
-	
 	let pDt = new Date();
 	document.getElementById('planDt').value = pDt.toISOString().substring(0, 10);
 
@@ -118,6 +114,16 @@
 			    name: 'planNo',
 			    hidden: true
 			  },
+		 	 {
+			    header: '계획명',
+			    name: 'planNm',
+			    hidden: true
+			  },
+			  {
+			    header: '계획일자',
+			    name: 'planDt',
+			    hidden: true
+			  },
 			  {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
@@ -133,7 +139,7 @@
 			  },
 			  { header: '접수일자',
 			    name: 'recvDt',
-			   	hidden: true
+			   	//hidden: true
 			  },
 			  {
 			    header: '제품코드',
@@ -171,6 +177,8 @@
 	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
 	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
 	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
+	    			rStcGrid.setValue(e.rowKey, 'ndStc',
+	    					e.value * rStcGrid.getValue(e.rowKey, 'rscUseQty'));
 	    	    }    	
 			  },
 			  {
@@ -242,7 +250,7 @@
 			},
 		scrollX: false,
 		scrollY: true,
-		bodyHeight: 250,
+		bodyHeight: 200,
 		columns: [
 					 {
 					    header: '제품코드',
@@ -253,6 +261,7 @@
 					    header: '주문량',
 					    name: 'orderQty',
 					    align: 'center',
+					    hidden: true
 					  },
 					  {
 					    header: '제품재고',
@@ -267,8 +276,7 @@
 					  {
 					    header: '추천작업량',
 					    name: 'rcomQty',
-					    align: 'center',
-					  
+					    align: 'center'
 					  }
 				]
 	});
@@ -277,16 +285,13 @@
 	  	console.log(ev.xhr)
 	  	planDgrid.refreshLayout();
      	pStcGrid.refreshLayout(); 
-		  
-	  	console.log(pStcGrid.getValue(1, 'prdtStc'));
-
+     	console.log(pStcGrid.getValue(1, 'prdtStc'));
    	});
 	
  	
 	pStcGrid.on('onGridUpdated', function() {
 		pStcGrid.refreshLayout(); 
 		planDgrid.refreshLayout();
-		
 	});
 	
 	//자재재고 체크 그리드
@@ -318,6 +323,10 @@
 					  {
 					    header: '자재코드',
 					    name: 'rscCd'
+					  },
+					  {
+					    header: '소요량',
+					    name: 'rscUseQty'
 					  },
 					  {
 					    header: '재고량',
@@ -358,7 +367,7 @@
 		 }
 	});
 	
-	//주문번호 클릭: 주문서 조회 모달
+	//주문서 조회 모달
 	let orderDialog = $("#orderModal").dialog({
 			autoOpen : false,
 			modal : true,
@@ -366,14 +375,14 @@
 			height : 600
 		});
 	
-	planDgrid.on('click', function(ev) {
+	/* planDgrid.on('click', function(ev) {
 		console.log(planDgrid.getValue(ev["rowKey"], "orderNo"));
 		if ( ev["columnName"] == "orderNo" ) {
 			orderDialog.dialog("open");
 			$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
 									function() { orderList() })
 		} 
-	}); 
+	});  */
 	
 	
 	planDgrid.on('onGridUpdated', function() {
@@ -386,7 +395,7 @@
 
 	// 성공 실패와 관계 없이 응답을 받았을 경우
 	planDgrid.on('response', function(ev) { 
-		console.log(ev);
+		console.log("응답");
 		let res = JSON.parse(ev.xhr.response);
 		console.log(res);
 		if (res.mod =='upd'){
@@ -396,11 +405,10 @@
 	
 	//그리드 행추가 버튼
 	rowAdd.addEventListener("click", function(){
-		planDgrid.appendRow({
-			extendPrevRowSpan : true,
-			focus : true,
-			at : 0
-		});
+		//$("#rowAdd").hide();
+		orderDialog.dialog("open");
+		$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
+								function() { orderList() })
 	});
 	
 	//그리드 행삭제 버튼 
@@ -408,7 +416,7 @@
 		planDgrid.removeCheckedRows(true); //false면 확인 안하고 삭제함
 	});
 	
-	//조회 버튼: 계획서 모달
+	//조회 버튼: 미지시 계획서 모달
 	let prodPlanDialog = $("#prodPlanModal").dialog({
 		autoOpen : false,
 		modal : true,
@@ -416,7 +424,7 @@
 		height : 600
 	});
   
- 	$('#btnSearch').on('click', function(){
+ 	$('#planSearch').on('click', function(){
  		console.log("생산계획서 검색")
 		prodPlanDialog.dialog("open");
 		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", 
@@ -434,28 +442,29 @@
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
 		planNm = $('#planNm').val();
+		planDt = $('#planDt').val();
+		
 		if (planNm == null || planNm == ""){
 			$('#planNm').focus();
 		} else {
-			console.log(planDgrid.getData());
-			for (let i = 0; i <planDgrid.getRowCount(); i++){
-				console.log(planDgrid.getRowAt(i).prdtCd);
-				if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
-					alert("필수입력칸이 비어있습니다.");
+			for ( i =0 ; i <= planDgrid.getRowCount(); i++) {
+				planDgrid.setValue(i,'planNm',planNm);
+				planDgrid.setValue(i,'planDt',planDt);
+			}
+			if(gridCheck()){
+				if (confirm("계획을 저장하시겠습니까?")) { 
+					//planDgrid.blur();
+					planDgrid.request('modifyData'); // modifyData의 url 호출
 				}
 			}
-			var result = confirm("계획을 저장하시겠습니까?");
-			if (result) { 
-				planDgrid.blur();
-				planDgrid.request('modifyData'); // modifyData의 url 호출
-			}
-			 alert("계획이 저장되었습니다.")
 		} 
 	})
 	
 	//삭제 버튼: 계획 + 계획상세그리드 삭제
 	$('#btnDel').click(function(){
 		planNo = $('#planNo').val();
+		planDt = $('#planDt').val();
+		planNm = $('#planNm').val();
 		console.log(planNo);
 		if (planNo == null || planNo == '') {
 			alert("삭제할 데이터가 없습니다.")
@@ -482,6 +491,24 @@
 		}
 	})
 	
+	//그리드 필수입력칸 함수
+	function gridCheck(){
+		/* for (let i = 0; i <planDgrid.getRowCount(); i++){
+			console.log(planDgrid.getRowAt(i).prdtCd);
+			if(planDgrid.getRowAt(i).orderNo == null || planDgrid.getRowAt(i).orderNo == ""){
+				alert("주문번호가 비어있습니다.");
+				return false;
+			} else if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
+				alert("제품코드가 지정되지 않았습니다.");
+				return false;
+			} else if(planDgrid.getRowAt(i).planQty == null || planDgrid.getRowAt(i).planQty == ""){
+				alert("작업량이 지정되지 않았습니다.");
+				return false;
+			} else { */
+				return true;
+			//}
+		//}
+	}
 	/* planDgrid.on('editingFinish', (ev) => {
 		calProdDay( ev.rowKey, "planQty", "dayOutput" ); 
 	})
@@ -492,7 +519,7 @@
 		b = Number(planDgrid.getValue( rowKey, b ));
 		result = Number(a) / Number(b);
 		planDgrid.setValue( rowKey, "prodDay" , result);
-	} */
+	} 
 	
 	pStcGrid.on('editingFinish', (ev) => {
 		calRcomQty( ev.rowKey, "orderQty", "prdtStc", "pSafStc" ); 
@@ -508,7 +535,29 @@
 		pStcGrid.setValue( rowKey, "rcomQty" , result);
 	} 
 
+	*/
 	
+	
+	
+	//생산계획서 조회 버튼: 기간별 생산계획 조회
+	let planDetailDialog = $("#planDetailModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 600,
+		buttons : {
+			'확인': function(){
+				planDetailDialog.dialog("close");
+			}
+		}
+	});
+  
+ 	$('#btnFind').on('click', function(){
+ 		console.log("생산계획서 조회")
+		planDetailDialog.dialog("open");
+		$("#planDetailModal").load("${pageContext.request.contextPath}/modal/findPlanDetail", 
+									function() { planDetailList() })
+	});
 </script>
 
 </html>

@@ -38,7 +38,7 @@ public class ProdPlanController {
 	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
 		List<?> list = ppService.selectPlan(ppVo);
 		Map<String,Object> map = new HashMap<>();
-		map.put("contents", list);
+		map.put("contents", list);	
 		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
@@ -77,18 +77,18 @@ public class ProdPlanController {
 	public String modifyPlan(Model model, ProdPlanVO ppVo, 
 							@RequestBody ModifyVO<ProdPlanVO> mvo) throws Exception {
 		ppService.modifyData(mvo);
-		System.out.println("mvo:" + ppService.modifyData(mvo));
+//		System.out.println("mvo:" + ppService.modifyData(mvo)); //절대 실행하지 말 것 변수에 담아서 할것
 		model.addAttribute("mode", "upd");
 		return "jsonView";
 	}
 	
-	//생산계획서검색 모달
+	//미생산계획서검색 모달
 	@RequestMapping("/modal/findProdPlan")
 	public String findProdPlan() {
 		return "modal/findProdPlan";
 	}
 		
-	//생산계획서검색 모달그리드
+	//미생산계획서검색 모달그리드
 	@GetMapping("/grid/findProdPlan.do")
 	public String findProdPlanGrid(Model model, ProdPlanVO ppVo) throws Exception {
 		List<?> list = ppService.findProdPlan(ppVo);
@@ -168,6 +168,12 @@ public class ProdPlanController {
 		model.addAttribute("data", map);
 		System.out.println("map:" + map);
 		return "jsonView";
+	}
+	
+	//생산계획서검색 모달
+	@RequestMapping("/modal/findPlanDetail")
+	public String findPlanDetail() {
+		return "modal/findPlanDetail";
 	}
 	
 }

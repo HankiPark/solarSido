@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,22 +70,17 @@ public class RscinfoController {
 		return data;
 	}
 	
-	@RequestMapping("/rscinfoUpdate.do")
-	@ResponseBody
-	public int rscinfoUpdate(RscinfoVO rscinfoVO) {
-		return rscinfoService.rscinfoUpdate(rscinfoVO);
+	@PostMapping("/rscinfoUpdate.do")
+	public String rscinfoUpdate( RscinfoVO rscinfoVO) {
+		rscinfoService.rscinfoUpdate(rscinfoVO);
+		return "common/rscinfo";
 	}
 	
-	@RequestMapping("/rscinfoInsert.do")
-	@ResponseBody
-	public int rscinfoInsert(RscinfoVO rscinfoVO) {
-		return rscinfoService.rscinfoInsert(rscinfoVO);
-	}
-	
-	@RequestMapping("/rscinfoDelete.do")
-	@ResponseBody
-	public int rscinfoDelete(RscinfoVO rscinfoVO) {
-		return rscinfoService.rscinfoUpdate(rscinfoVO);
+	@PostMapping("/rscinfoInsert.do")
+	public String rscinfoInsert(RscinfoVO rscinfoVO) {
+		System.out.println(rscinfoVO);
+		rscinfoService.rscinfoInsert(rscinfoVO);
+		return "common/rscinfo";
 	}
 	
 	@RequestMapping("/grid/rscinfoUpdateIn.do")

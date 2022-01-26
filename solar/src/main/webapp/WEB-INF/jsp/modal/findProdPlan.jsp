@@ -20,6 +20,10 @@ function planList(){
 						readData : {
 							url : '${pageContext.request.contextPath}/grid/findProdPlan.do',
 							method : 'GET',
+							initParams : { 
+								startT: 'startT',
+								endT: 'endT'
+							}
 						}
 					},
 					contentType : 'application/json'
@@ -36,9 +40,10 @@ function planList(){
 					name : 'planNm'
 				}]
 			});
-
+	
 	//그리드 내부 더블클릭
 	prodPlanGrid.on('dblclick', function(ev) {
+		
 		$('#planNo').val(prodPlanGrid.getValue(ev["rowKey"], "planNo"));
  		$('#planDt').val(prodPlanGrid.getValue(ev["rowKey"], "planDt"));
 		$('#planNm').val(prodPlanGrid.getValue(ev["rowKey"], "planNm")); 

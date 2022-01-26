@@ -11,7 +11,8 @@
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
-	<button type="button" id="btnSave">저장</button>
+	<button type="button" id="btnSave">저장</button><br>
+	<label>비가동명 입력</label>
 	<input type = "text" id="uoprNminfo">
 	<div><button type="button" id="btnfind">검색</button></div>
 </div>
@@ -53,8 +54,7 @@ var grid = new tui.Grid({
 		  [
 			{
 				header : '비가동코드',
-				name : 'uoprCd',
-				editor : 'text'
+				name : 'uoprCd'
 			},
 			{
 				header : '발생공정코드',

@@ -12,7 +12,8 @@
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
-	<button type="button" id="btnSave">저장</button>
+	<button type="button" id="btnSave">저장</button><br>
+	<label>사원명 입력</label>
 	<input type = "text" id="empNminfo">
 	<div><button type="button" id="btnfind">검색</button></div>
 </div>
@@ -127,7 +128,7 @@ $('#btnfind').on('click', function(){
 			'empNm' : empNm
 	}
 	$.ajax({
-		url : '${pageContext.request.contextPath}/grid/rscinferdataFind',
+		url : '${pageContext.request.contextPath}/grid/empdataFind',
 		data : parameter,
 		contentType: 'application/json; charset=utf-8'
 	}).done(function(res){

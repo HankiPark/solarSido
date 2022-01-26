@@ -40,7 +40,7 @@ a {
 
 .tab_menu .list li.is_on .btn {
 	font-weight: bold;
-	color: #5f76e8;
+	color: #e37c6b;
 }
 
 .tab_menu .list li.is_on .cont {
@@ -53,7 +53,7 @@ a {
 </style>
 </head>
 <body>
-	<h2>제품 입/출고관리</h2>
+	<h1>제품 입/출고관리</h1>
 	<div class="wrap">
 		<div class="tab_menu">
 			<ul class="list">
@@ -67,17 +67,19 @@ a {
 		<div class="card card-pricing card-primary card-white">
 			<div class="card-body" id="grid">
 				<div class="row">
-					<div data-role="fieldcontain" class="col-3">
+					<div data-role="fieldcontain" >
 						<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
 							id="startT" type="text" data-role="datebox"
 							data-options='{"mode": "calbox"}'> 
 					</div>
+				</div>
+				<div class="row">	
 					<div data-role="fieldcontain" class="col-5">
 						<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px"> 🔍 </button>
 					</div>
 				</div>
-		<div>
-			<button type="button" id="findgrid">조회</button>
+		<div >
+			<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
 		</div>
 
 				<div align="right">
@@ -100,12 +102,12 @@ a {
 				<div class="card card-pricing card-primary card-white">
 			<div class="card-body" >
 
-		<div>
-			<button type="button" id="findgrid2">조회</button>
+		
+			<label for="slipNm">부여될 전표번호</label> <input id="slipNm"
+				type="text" readonly><br>
+<div>
+			<button type="button" id="findgrid2"  style="margin-left:-10px">조회</button>
 		</div>
-			<label for="slipNm">부여될 전표번호</label><br> <input id="slipNm"
-				type="text" readonly>
-
 	
 					<div align="right">
 						<button type="button" id="insertBtn2"
@@ -125,12 +127,12 @@ a {
 		<div id="noC" style="display: none">
 		<div class="card card-pricing card-primary card-white">
 			<div class="card-body" >
-			<div>
-			<button type="button" id="findgrid3">조회</button>
-		</div>
+			
 			<label for="slipNm2">조회중인 전표번호</label><br> <input id="slipNm2"
 				type="text" readonly>
-
+<div>
+			<button type="button" id="findgrid3"  style="margin-left:-10px">조회</button>
+		</div>
 	
 					<div align="right">
 						<button type="button" id="excelBtn"
@@ -351,10 +353,12 @@ $(function() {
 				      }
 				}, {
 					header : '제품코드',
-					name : 'prdtCd'
+					name : 'prdtCd',
+					
 				}, {
 					header : '제품명',
 					name : 'prdtNm',
+					
 				}, {
 					header : '규격',
 					name : 'prdtSpec'
@@ -412,7 +416,10 @@ $(function() {
 			focus : true,
 			at : 0
 		});
+
+	
 	});
+
 	$('#updateBtn').on('click', function appendRow(index) {
 		for(let i=inGrid.getRowCount();i>=0;i--){
 			if(inGrid.getValue(i,"prdtLot")=='' ||inGrid.getValue(i,"prdtLot")==null ||inGrid.getValue(i,"prdtDt")==null || inGrid.getValue(i,"prdtDt")==''){

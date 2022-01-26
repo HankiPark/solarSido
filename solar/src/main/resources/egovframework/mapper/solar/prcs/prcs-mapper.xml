@@ -100,11 +100,15 @@
 	        e.lf,
 	        e.temp,
 	        e.uph,
-	        trunc((1/((e.uph/60)/60))*100,2) AS pTime,
+	        trunc((1/((e.uph/60)/60))*1000,3) AS pTime,
 	        e.eqm_img,
 	        e.prcs_cd
 	from prcs p, eqm e
 	where p.prcs_cd = e.prcs_cd
+	
+	<if test="prcsCd != null">
+	AND e.prcs_cd = #{prcsCd}
+	</if>
 	
 
 </select>
@@ -116,6 +120,8 @@
 							prod_fg,
 							prdt_cd,
 							ist_qty,
+							wk_qty,
+							infer_qty,
 							expc_tm,
 							real_tm,
 							prcs_cd,
@@ -123,20 +129,27 @@
 							indica_no,
 							indica_dt
 					)
-					values ((select nvl(max(wk_no),0)+1 from prcs_pr_m),
-							trunc(sysdate),
+					values (#{wkNo},
+							#{wkDt},
 							#{prodFg},
 							#{prodCd},
 							#{istQty},
+							0,
+							0,
 							#{expcTm},
-							#{realTm},
+							0,
 							#{prcsCd},
 							#{indicaDetaNo},
 							#{indicaNo},
 							#{IndicaDt}
 					)
-					
-
+	<selectKey keyColumn="wk_no,wk_dt" keyProperty="wk_no,wk_dt"										
+							 resultType="solar.prcs.prcs.service.PrcsPrMVO" order="AFTER">
+						
+						select (select nvl(max(wk_no),0)+1 from prcs_pr_m), trunc(sysdate) from DUAL
+							 
+							 </selectKey>				
+		
 
 
 
