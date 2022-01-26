@@ -53,6 +53,8 @@
 
      <!-- login -->
       <li class="nav-item">
+      <a href="${pageContext.request.contextPath}/uat/uia/actionLogout.do">
+              로그아웃</a>
         <a class="nav-link" href="${pageContext.request.contextPath}/uat/uia/egovLoginUsr.do">
           <i class="fas fa-sign-in-alt"></i>
           <span >login</span>

@@ -21,6 +21,10 @@
 
 
 
+	<definition name="egovframework/com/sec/accessDenied" extends="layouts-tiles">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/error.jsp" />
+	</definition>
 	<definition name="*/*/*" extends="layouts-tiles">
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />

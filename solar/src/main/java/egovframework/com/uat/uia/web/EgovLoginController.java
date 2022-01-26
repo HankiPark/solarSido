@@ -292,7 +292,7 @@ public class EgovLoginController {
 		LOGGER.debug("main_page > {}", main_page);
 
 		if (main_page.startsWith("/")) {
-			return "forward:" + main_page;
+			return "forward:"+main_page;
 		} else {
 			return main_page;
 		}
@@ -334,7 +334,7 @@ public class EgovLoginController {
 		request.getSession().setAttribute("accessUser", null);
 
 		//return "redirect:/egovDevIndex.jsp";
-		return "redirect:/EgovContent.do";
+		return "redirect:/";
 	}
 
 	/**
