@@ -22,13 +22,13 @@ public class IndicaController {
 	//생산지시관리 페이지이동
 	 @RequestMapping("/prod/indicaMng")
 		public String indMng() {
-			return "prod/indicaMng";
+			return "prod/mng/indicaMng";
 		}
 	 
 	//생산지시조회 페이지이동
 	 @RequestMapping("/prod/indicaList")
 		public String indList() {
-			return "prod/indicaList";
+			return "prod/ref/indicaList";
 		}
 	
 	//생산지시상세 조회그리드

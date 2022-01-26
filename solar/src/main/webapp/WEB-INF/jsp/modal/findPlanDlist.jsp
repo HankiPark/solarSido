@@ -7,12 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div id="planDgrid">
+	<div id="planDgrid"></div>
 </body>
 
 <script type="text/javascript">
 function planDList(){
-
 	//미지시 생산계획 상세 그리드
 	let planDgrid = new tui.Grid({
 		el: document.getElementById('planDgrid'),
@@ -103,9 +102,21 @@ function planDList(){
 	planDgrid.on('check', (ev) => {
 		console.log(ev);
 		console.log(planDgrid.getCheckedRows());
-		let chkPlan = planDgrid.getCheckedRows()
+		indicaDgrid.resetData(planDgrid.getCheckedRows());
+		//indicaDgrid.resetData([]);
+		//indicaDgrid.appendRows(planDgrid.getCheckedRows());
 	});
 	
+	planDgrid.on('uncheck', (ev) => {
+		console.log(ev);
+		console.log(ev.rowKey);
+		indicaDgrid.removeRow(ev.rowKey);
+	});
+	
+	planDgrid.on('onGridUpdated', (ev) => {
+		indicaDgrid.refreshLayout();
+		planDgrid.refreshLayout();
+	});
 }
 	</script>
 </html>
