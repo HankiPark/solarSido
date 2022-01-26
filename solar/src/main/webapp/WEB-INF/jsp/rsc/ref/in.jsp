@@ -68,7 +68,7 @@ $(function() {
 
 	let ordrDataSource = {
 			  api: {
-				    readData: { url: 'inData', method: 'GET'}
+				    readData: { url: '${pageContext.request.contextPath}/rsc/inData', method: 'GET'}
 				  },
 				  contentType : 'application/json',
 				  initialRequest: false,

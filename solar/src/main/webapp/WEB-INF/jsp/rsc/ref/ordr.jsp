@@ -65,8 +65,8 @@ let ordrDtStt = date.toISOString().substr(0,10);
 	   });
 	let ordrDataSource = {
 			  api: {
-				    readData: { url: 'ordrData', method: 'GET'},
-					modifyData: {url: 'ordrData',method: 'PUT'}
+				    readData: { url: '${pageContext.request.contextPath}/rsc/ordrData', method: 'GET'},
+					modifyData: {url: '${pageContext.request.contextPath}/rsc/ordrData',method: 'PUT'}
 				  },
 				  contentType : 'application/json',
 				  initialRequest: false
@@ -74,7 +74,7 @@ let ordrDtStt = date.toISOString().substr(0,10);
 	
 	//공통코드 가져옴
 	$.ajax({
-	 url: '../cmmn/codes',
+	 url: '${pageContext.request.contextPath}/cmmn/codes',
 	 dataType: 'JSON',
 	 async: false,
 	}).done(function(data){

@@ -46,19 +46,19 @@ public class RscController {
 	RscRtService rscRtService;
 	
 	//발주참조 페이지 요청
-	@GetMapping("rsc/ref/ordr")
+	@GetMapping("/rsc/ref/ordr")
 	public String rscOrdr() {
 		return "rsc/ref/ordr";
 	}
 	
 	//발주관리 페이지 요청
-	@GetMapping("rsc/mng/ordradmin")
+	@GetMapping("/rsc/mng/ordradmin")
 	public String rscOrdrAdmin() {
 		return "rsc/mng/ordradmin";
 	}
 	
 	//발주데이터
-	@GetMapping("rsc/ordrData")
+	@GetMapping("/rsc/ordrData")
 	public String rscOrdrData(@RequestParam Map<String,String> map, Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
@@ -77,39 +77,39 @@ public class RscController {
 	}
 
 	//자재목록 모달
-	@GetMapping("rsc")
+	@GetMapping("/rsc")
 	public String rsc() {
 		return "modal/searchRsc";
 	}
 	
 	//자재목록 데이터요청
-	@GetMapping("rsc/rscData")
+	@GetMapping("/rsc/rscData")
 	public String rscData(@RequestParam Map map, Model model) {
 		model.addAttribute("rsc",rscService.search(map));
 		return "jsonView";
 	}
 	
 	//공통코드 목록 요청
-	@GetMapping("cmmn/codes")
+	@GetMapping("/cmmn/codes")
 	public String cmmnCodes(Model model) {
 		model.addAttribute("codes", cmmnCdService.select(Arrays.asList("rscst","rscinfer","rsc")));
 		return "jsonView";
 	}
 	
 	//검수조회페이지 이동
-	@GetMapping("rsc/ref/insp")
+	@GetMapping("/rsc/ref/insp")
 	public String rscInsp() {
 		return "rsc/ref/insp";
 	}
 	
 	//검수관리페이지 이동
-	@GetMapping("rsc/mng/inspadmin")
+	@GetMapping("/rsc/mng/inspadmin")
 	public String rscInspAdmin() {
 		return "rsc/mng/inspadmin";
 	}
 	
 	//검수 목록 요청
-	@GetMapping("rsc/inspData")
+	@GetMapping("/rsc/inspData")
 	public String rscInspData(/*@RequestParam Map<String,String> map, */Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
@@ -128,33 +128,33 @@ public class RscController {
 	}
 	
 	//검수 모달
-	@GetMapping("rsc/inspModal")
+	@GetMapping("/rsc/inspModal")
 	public String rscInspModal() {
 		return "modal/searchInsp";
 	}
 	
 	//발주데이터 dataSource modify
 	@ResponseBody
-	@PutMapping("rsc/ordrData")
+	@PutMapping("/rsc/ordrData")
 	public int rscOrdrData(@RequestBody ModifyVO<RscOrdr> mvo) {
 		rscOrdrService.modify(mvo);
 		return 201;
 	}
 	
 	//입고관리페이지
-	@GetMapping("rsc/mng/inadmin")
+	@GetMapping("/rsc/mng/inadmin")
 	public String rscInAdmin() {
 		return "rsc/mng/inadmin";
 	}
 	
 	//입고조회페이지
-	@GetMapping("rsc/ref/in")
+	@GetMapping("/rsc/ref/in")
 	public String rscIn() {
 		return "rsc/ref/in";
 	}
 	
 	//입고조회페이지 데이터
-	@GetMapping("rsc/inData")
+	@GetMapping("/rsc/inData")
 	public String rscInData(@RequestParam Map map, Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
@@ -174,7 +174,7 @@ public class RscController {
 	
 	//입고 처리 요청
 	@ResponseBody
-	@PostMapping("rsc/in/rscin")
+	@PostMapping("/rsc/in/rscin")
 	public int rscIn(@RequestBody RscInOut rscInOut, Model model) {
 		rscInOutService.insert(rscInOut);
 		rscInOutService.stcInc(rscInOut);
@@ -182,19 +182,19 @@ public class RscController {
 	}
 	
 	//출고페이지
-	@GetMapping("rsc/ref/out")
+	@GetMapping("/rsc/ref/out")
 	public String rscOut() {
 		return "rsc/ref/out";
 	}
 	
 	//자재재고페이지
-	@GetMapping("rsc/ref/stc")
+	@GetMapping("/rsc/ref/stc")
 	public String rscStc() {
 		return "rsc/ref/stc";
 	}
 	
 	//재고데이터 요청
-	@GetMapping("rsc/stcData")
+	@GetMapping("/rsc/stcData")
 	public String rscStcData(@RequestParam Map map, Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
@@ -213,13 +213,13 @@ public class RscController {
 	}
 	
 	//자재반품페이지 요청
-	@GetMapping("rsc/ref/rt")
+	@GetMapping("/rsc/ref/rt")
 	public String rscRt() {
 		return "rsc/ref/rt";
 	}
 	
 	//자재반품데이터요청
-	@GetMapping("rsc/rtData")
+	@GetMapping("/rsc/rtData")
 	public String rscRtData(@RequestParam Map map, Model model) {
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
@@ -238,13 +238,13 @@ public class RscController {
 	}
 	
 	//불량률그래프
-	@GetMapping("rsc/ref/inferGraph")
+	@GetMapping("/rsc/ref/inferGraph")
 	public String rscInferGraph() {
 		return "rsc/ref/infergraph";
 	}
 	
 	//불량률그래프 데이터
-	@PostMapping("rsc/inferGraphData")
+	@PostMapping("/rsc/inferGraphData")
 	public String rscInferGraphData(@RequestBody Map map, Model model) {
 		System.out.println(map);
 		List<RscInferRate> list = rscInferService.getQuarteredInferRate(map);

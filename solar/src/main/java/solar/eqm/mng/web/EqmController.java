@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.eqm.mng.service.EqmService;
 import solar.eqm.mng.service.EqmVO;
@@ -44,9 +43,14 @@ public class EqmController {
 	}
 	
 	//설비 추가
-	@ResponseBody
 	@PutMapping("/eqm/eqmPut")
-	public String rscOrdrData(@RequestBody ModifyVO<EqmVO> mvo) {
-		return eqmService.modifyData(mvo);
+	public String rscOrdrData(@RequestBody ModifyVO<EqmVO> mvo, Model model) {
+		String queryResult = eqmService.modifyData(mvo);
+		if(!queryResult.equals("true")) {
+			model.addAttribute("queryResult",queryResult);
+		} else {
+			model.addAttribute("queryResult","true");
+		}
+		return "jsonView";
 	}
 }

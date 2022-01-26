@@ -30,7 +30,7 @@
 <script>
 	let ordrDataSource = {
 			  api: {
-				    readData: { url: 'stcData', method: 'GET'}
+				    readData: { url: '${pageContext.request.contextPath}/rsc/stcData', method: 'GET'}
 				  },
 				  contentType : 'application/json',
 				};
