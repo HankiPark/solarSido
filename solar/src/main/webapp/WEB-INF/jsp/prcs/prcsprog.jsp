@@ -72,7 +72,7 @@
 	
 	let time = 0;
 	let timerFlag = true;
-	
+	unitPTime = [];
 		 
 	
 	// 지시상세 모달 선언
@@ -415,11 +415,11 @@
 				console.log("susususususu");
 				console.log(su2);
 				console.log(su3);
-				console.log(su4);
+				
 				console.log("susususususu");
 				console.log(!!su2);
 				console.log(!!su3);
-				console.log(!!su4);
+				
 				
 				console.log(tAmount);
 				
