@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.eqm.mng.service.EqmService;
 import solar.eqm.mng.service.EqmVO;
-import solar.rsc.ordr.service.RscOrdr;
 import solar.sales.order.dao.ModifyVO;
 
 @Controller
@@ -27,7 +26,7 @@ public class EqmController {
 	//설비관리페이지 이동
 	@RequestMapping("/eqm/eqmMng")
 	public String eqmList(Model model, EqmVO vo) {
-		return "eqm/eqmMng";
+		return "eqm/mng/eqmMng";
 	}
 	
 	//설비목록
