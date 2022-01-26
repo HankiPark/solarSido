@@ -1,10 +1,11 @@
 package solar.eqm.mng.service;
 
 import java.util.List;
+import java.util.Map;
+
+import solar.sales.order.dao.ModifyVO;
  
 public interface EqmService {
-	List<EqmVO> eqmList(EqmVO vo); 		//조회
-	int eqmInsert(EqmVO vo);			//등록
-	int eqmDelete(EqmVO vo);			//삭제
-	int eqmUpdate(EqmVO vo); 			//수정
+	List<EqmVO> eqmList(Map map); 		//조회
+	String modifyData(ModifyVO<EqmVO> mvo);			//등록
 }

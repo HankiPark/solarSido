@@ -13,7 +13,7 @@
 	
 	<!-- 모달 -->
 	<div id="planModal" title="미지시계획 조회">
-		<div id="planDgrid"></div>
+		<!-- <div id="planDgrid"></div> -->
 	</div>
 	<div id="indicaModal" title="생산지시서 목록"></div>
 	<div id="indicaDetailModal" title="생산지시서 조회"></div>
@@ -166,6 +166,8 @@
 				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    	    	indicaDgrid.setValue(e.rowKey, 'prodDay',
 				    	    					e.value / indicaDgrid.getValue(e.rowKey, 'dayOutput'));
+				    	    	rscGrid.setValue(e.rowKey, 'rscUseQty',
+		    	    					e.value * rscGrid.getValue(e.rowKey, 'rscUseQty'));
 				    	    }    	
 					  },
 					  {
@@ -266,8 +268,6 @@
 		buttons : {
 			"확인" : function(){
 				console.log('확인');
-				console.log(chkPlan);
-				indicaDgrid.appendRows(chkPlan);
 				planDetailDialog.dialog("close");
 			},
 			'취소': function(){
@@ -291,7 +291,7 @@
 		height : 400,
 		buttons : {
 			'취소': function(){
-				planDetailDialog.dialog("close");
+				indicaDialog.dialog("close");
 			}
 		}
 	});

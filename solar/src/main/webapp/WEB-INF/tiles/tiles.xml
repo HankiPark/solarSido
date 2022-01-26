@@ -21,9 +21,9 @@
 
 
 
-	<definition name="*/*" extends="layouts-tiles">
+	<definition name="*/*/*" extends="layouts-tiles">
 		<put-attribute name="body"
-			value="/WEB-INF/jsp/{1}/{2}.jsp" />
+			value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
 
 
