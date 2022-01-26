@@ -19,5 +19,6 @@ public class EqmVO {
 	String temp;
 	String uph;
 	String eqmImg;
-	String prcsCd;	
+	String prcsCd;
+	String eqmYn;
 }

@@ -54,7 +54,7 @@ public class RscController {
 	//발주관리 페이지 요청
 	@GetMapping("rsc/ordradmin")
 	public String rscOrdrAdmin() {
-		return "rsc/ordradmin";
+		return "rsc/mng/ordradmin";
 	}
 	
 	//발주데이터
@@ -105,7 +105,7 @@ public class RscController {
 	//검수관리페이지 이동
 	@GetMapping("rsc/inspadmin")
 	public String rscInspAdmin() {
-		return "rsc/inspadmin";
+		return "rsc/mng/inspadmin";
 	}
 	
 	//검수 목록 요청
@@ -144,7 +144,7 @@ public class RscController {
 	//입고관리페이지
 	@GetMapping("rsc/inadmin")
 	public String rscInAdmin() {
-		return "rsc/inadmin";
+		return "rsc/mng/inadmin";
 	}
 	
 	//입고조회페이지
