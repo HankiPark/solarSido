@@ -54,8 +54,7 @@ var grid = new tui.Grid({
 		  [
 			{
 				header : '비가동코드',
-				name : 'uoprCd',
-				editor : 'text'
+				name : 'uoprCd'
 			},
 			{
 				header : '발생공정코드',

@@ -68,8 +68,7 @@ var grid = new tui.Grid({
 	  columns : [
 			{
 				header : '공정코드',
-				name : 'prcsCd',
-				editor : 'text'
+				name : 'prcsCd'
 			},
 			{
 				header : '공정구분',
