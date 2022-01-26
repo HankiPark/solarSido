@@ -45,6 +45,12 @@
 	</update>
 
 	<insert id="fairInsert">
+		<selectKey keyProperty="uoprCd" resultType="String" order="BEFORE">
+			SELECT 'pr'||
+			LPAD(MAX(TO_NUMBER(SUBSTR(PRCS_CD, -3))) +1, 3, 0)
+			AS PRCS_CD
+			FROM PRCS_CD
+		</selectKey>
 		INSERT INTO PRCS(PRCS_CD, PRCS_FG, PRCS_NM, PRCS_DESCT, PRCS_UNIT, PROD_PD) 
 		VALUES (#{prcsCd}, #{prcsFg}, #{prcsNm}, #{prcsDesct}, #{prcsUnit}, #{prodPd})
 	</insert>
