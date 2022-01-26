@@ -76,7 +76,7 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: 'ordrData?inspCls=rs003',
+				url: '${pageContext.request.contextPath}/rsc/ordrData?inspCls=rs003',
 				method: 'GET'
 			}
 		},
@@ -86,7 +86,7 @@
 
 	//공통코드 가져옴
 	$.ajax({
-		url: '../cmmn/codes',
+		url: '${pageContext.request.contextPath}/cmmn/codes',
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {

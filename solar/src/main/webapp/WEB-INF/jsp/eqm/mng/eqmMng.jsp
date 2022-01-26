@@ -172,6 +172,8 @@
                 </div>
                 <button type="button" id="btnSub" style="width:60px">추가</button>
                 <button type="button" id="btnPut" class="btn btn-default btn-simple btn-sm">저장</button>
+                <br>
+                <button type="button" id="removeRow" style="width:60px">행 삭제</button>
             </div>
         </div>
         <div id="inputGrid"></div>
@@ -208,7 +210,6 @@
                         $("#iG").css("display", "block");
 
                         grid.refreshLayout();
-                        //grid.clear();
 
                     } else {
                         $("#iG").css("display", "none");
@@ -303,9 +304,10 @@
             const inputDataSource = {
                     api: {
                         readData: {url: '',method: 'GET'},
-    					modifyData: {url: 'eqmPut',method: 'PUT'}
+    					modifyData: {url: '${pageContext.request.contextPath}/eqm/eqmPut',method: 'PUT'}
                     },
-                    contentType: 'application/json'
+  				  contentType : 'application/json',
+				  initialRequest: false
                 };
 
             const grid = new Grid({
@@ -516,19 +518,42 @@
             let btnPut = document.getElementById('btnPut');
             btnPut.addEventListener('click',function(){
             	inputGrid.request('modifyData');
-            	inputGrid.clear();
             });
             
             inputGrid.on('response',function(ev){
-            	console.log(ev.xhr);
-            	console.log(ev.xhr.response);
-            	if(ev.xhr.response.substr(0,3)){
-	            	if(ev.xhr.response.substr(4,4) != 'true'){
-	            		alert('이미 존재하는 설비코드: ['+ev.xhr.response+']');
+            	let result = JSON.parse(ev.xhr.response);
+            	result = result.queryResult;
+            	//console.log(result);
+            	if(result.length!=0){
+	            	if(result != 'true'){
+	            		alert('설비코드가 중복된 데이터를 제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
+	            		
+	            		let duplRows = result.split(',');
+	            		console.log(duplRows);
+	            		
+	            		for(let i = 0; i<inputGrid.getRowCount(); i++) {
+	            			if(duplRows.includes(inputGrid.getValue(i,'eqmCd'))){
+	            				console.log('include', i)
+	            			} else{
+	            				console.log('not include', i)
+	            				console.log(i, inputGrid.getValue(i,'eqmCd'));
+	            				inputGrid.removeRow(i);
+	            			}
+	            		}
+	            		
 	            	} else {
-	            		alert('저장되었습니다.');
+	            		alert('모두 저장되었습니다.');
             	}
             	}
+            });
+            
+            
+            let removeRow = document.getElementById("removeRow");
+            removeRow.addEventListener("click",function(){
+          	  let checkedRowKeys = inputGrid.getCheckedRowKeys();
+          	  for(let rowkey of checkedRowKeys){
+          	  inputGrid.removeRow(rowkey);
+          	  }
             });
         </script>
 </body>

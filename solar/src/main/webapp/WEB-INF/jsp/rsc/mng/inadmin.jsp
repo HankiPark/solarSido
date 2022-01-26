@@ -92,12 +92,12 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: 'ordrData?inspCls=rs002',
+				url: '/rsc/ordrData?inspCls=rs002',
 				method: 'GET',
 				initialRequest: false,
 			},
 			modifyData: {
-				url: 'ordrData',
+				url: '/rsc/ordrData',
 				method: 'PUT'
 			}
 		},
@@ -106,7 +106,7 @@
 
 	//공통코드 가져옴
 	$.ajax({
-		url: '../cmmn/codes',
+		url: '/cmmn/codes',
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {

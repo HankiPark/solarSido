@@ -64,7 +64,7 @@
         let year = document.getElementById('year').value;
         let coCds = document.getElementById('coCds').value;
 
-        fetch('inferGraphData', {
+        fetch('${pageContext.request.contextPath}/rsc/inferGraphData', {
                 method: 'POST',
                 body: JSON.stringify({
                     coCds: coCds,
