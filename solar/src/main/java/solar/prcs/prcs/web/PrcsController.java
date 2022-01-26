@@ -24,7 +24,7 @@ public class PrcsController {
 	
 	@RequestMapping("/prcs/prcsprog")									// 공정관리 페이지 이동
 	public String go() {
-		return "prcs/prcsprog";
+		return "prcs/mng/prcsprog";
 	}
 	
 	/*------------------------------------------------------------------------------------------------ */
