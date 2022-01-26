@@ -82,13 +82,13 @@ public class ProdPlanController {
 		return "jsonView";
 	}
 	
-	//생산계획서검색 모달
+	//미생산계획서검색 모달
 	@RequestMapping("/modal/findProdPlan")
 	public String findProdPlan() {
 		return "modal/findProdPlan";
 	}
 		
-	//생산계획서검색 모달그리드
+	//미생산계획서검색 모달그리드
 	@GetMapping("/grid/findProdPlan.do")
 	public String findProdPlanGrid(Model model, ProdPlanVO ppVo) throws Exception {
 		List<?> list = ppService.findProdPlan(ppVo);
@@ -168,6 +168,12 @@ public class ProdPlanController {
 		model.addAttribute("data", map);
 		System.out.println("map:" + map);
 		return "jsonView";
+	}
+	
+	//생산계획서검색 모달
+	@RequestMapping("/modal/findPlanDetail")
+	public String findPlanDetail() {
+		return "modal/findPlanDetail";
 	}
 	
 }
