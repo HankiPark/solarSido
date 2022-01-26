@@ -27,12 +27,12 @@ public class PrdtController {
 	public String prdtPage(Model model) {
 		model.addAttribute("num", pservice.makeNum());
 		/* model.addAttribute("coList", (pservice.findCo())); */
-		return "sales/prdt_inout_mng";
+		return "sales/mng/prdt_inout_mng";
 	}
 	@RequestMapping("/sales/prdt_inout_ref")
 	public String prdtPageRef(Model model) {
 		/* model.addAttribute("coList", (pservice.findCo())); */
-		return "sales/prdt_inout_ref";
+		return "sales/ref/prdt_inout_ref";
 	}
 
 	// 입출고 조회

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.cmm.rscinfer.service.RscinferService;
 import solar.cmm.rscinfer.service.impl.RscinferMapper;
@@ -27,7 +26,7 @@ public class RscinferController {
 	
 	@RequestMapping("common/rscinfer")
 	public String rscinferList() {
-		return "common/rscinfer";
+		return "common/mng/rscinfer";
 	}
 	
 	@GetMapping("grid/rscinferList.do")

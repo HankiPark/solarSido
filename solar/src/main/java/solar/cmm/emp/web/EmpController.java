@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.emp.service.EmpService;
 import solar.cmm.emp.service.impl.EmpMapper;
@@ -26,7 +25,7 @@ public class EmpController {
 	
 	@RequestMapping("common/emp")
 	public String empList() {
-		return "common/emp";
+		return "common/mng/emp";
 	}
 	
 	@GetMapping("/grid/empList.do")

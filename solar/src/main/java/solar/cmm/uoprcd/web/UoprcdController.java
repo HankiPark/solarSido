@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
-import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.cmm.uoprcd.dao.UoprcdVO;
 import solar.cmm.uoprcd.service.UoprcdService;
 import solar.cmm.uoprcd.service.impl.UoprcdMapper;
@@ -29,7 +28,7 @@ public class UoprcdController {
 	
 	@RequestMapping("common/uoprcd")
 	public String uoprcdList() {
-		return "common/uoprcd";
+		return "common/mng/uoprcd";
 	}
 	@RequestMapping("modal/prcsinfoList")
 	public String prcsinfoList(Model model, UoprcdVO uoprcdVO) throws Exception{

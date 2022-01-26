@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.cmmndata.service.CmmndataService;
 import solar.sales.order.dao.Order;
 import solar.sales.order.service.OrderService;
@@ -34,7 +33,7 @@ public class OrderController {
 		 * oservice.inStcUpdate(n) ; }
 		 */
 		  
-		return "sales/order";
+		return "sales/ref/order";
 	}
 
 	@GetMapping("/grid/orderList.do")

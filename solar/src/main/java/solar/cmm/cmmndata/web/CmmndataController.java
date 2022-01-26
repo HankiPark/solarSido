@@ -22,7 +22,7 @@ public class CmmndataController {
 	
 	@RequestMapping("common/cmmndata")
 	public String cmmndataList() {
-		return "common/cmmndata";
+		return "common/mng/cmmndata";
 	}
 	
 	@GetMapping("/grid/cmmndataList.do")

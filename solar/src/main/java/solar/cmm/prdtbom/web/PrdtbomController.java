@@ -27,7 +27,7 @@ public class PrdtbomController {
 	
 	@RequestMapping("common/prdtbom")
 	public String prdtbomList() {
-		return "common/prdtbom";
+		return "common/mng/prdtbom";
 	}
 	
 	@RequestMapping("modal/prdtlistbom")

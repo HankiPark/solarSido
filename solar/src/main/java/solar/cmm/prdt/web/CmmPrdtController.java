@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.prdt.dao.PrdtInferVO;
 import solar.cmm.prdt.service.CmmPrdtService;
 import solar.cmm.prdt.service.impl.CmmPrdtMapper;
@@ -26,7 +25,7 @@ public class CmmPrdtController {
 	
 	@RequestMapping("common/prdtinfer")
 	public String prdtList() {
-		return "common/prdtinfer";
+		return "common/mng/prdtinfer";
 	}
 	
 	@GetMapping("/grid/prdtList.do")

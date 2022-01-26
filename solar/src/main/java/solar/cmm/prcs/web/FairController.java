@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.Data;
-import solar.cmm.emp.dao.EmpVO;
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
 import solar.cmm.prcs.service.impl.FairMapper;
@@ -34,7 +33,7 @@ public class FairController {
 	
 	@RequestMapping("common/fair")
 	public String fairList() {
-		return "common/fair";
+		return "common/mng/fair";
 	}
 	
 	@GetMapping("/grid/fairList.do")

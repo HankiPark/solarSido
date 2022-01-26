@@ -27,7 +27,7 @@ public class RscinfoController {
 	
 	@RequestMapping("common/rscinfo")
 	public String rscinfoList() {
-		return "common/rscinfo";
+		return "common/mng/rscinfo";
 	}
 	
 	@GetMapping("/grid/rscinfoList.do")
@@ -73,14 +73,14 @@ public class RscinfoController {
 	@PostMapping("/rscinfoUpdate.do")
 	public String rscinfoUpdate( RscinfoVO rscinfoVO) {
 		rscinfoService.rscinfoUpdate(rscinfoVO);
-		return "common/rscinfo";
+		return "common/mng/rscinfo";
 	}
 	
 	@PostMapping("/rscinfoInsert.do")
 	public String rscinfoInsert(RscinfoVO rscinfoVO) {
 		System.out.println(rscinfoVO);
 		rscinfoService.rscinfoInsert(rscinfoVO);
-		return "common/rscinfo";
+		return "common/mng/rscinfo";
 	}
 	
 	@RequestMapping("/grid/rscinfoUpdateIn.do")
