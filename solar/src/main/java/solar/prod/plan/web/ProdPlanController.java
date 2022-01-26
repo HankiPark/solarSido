@@ -24,13 +24,13 @@ public class ProdPlanController {
 	 //생산계획관리 페이지이동
 	 @RequestMapping("/prod/prodPlanMng")
 		public String planMng() {
-			return "prod/prodPlanMng";
+			return "prod/mng/prodPlanMng";
 		}
 	 
 	//생산계획조회 페이지이동
 	 @RequestMapping("/prod/prodPlanList")
 		public String planList() {
-			return "prod/prodPlanList";
+			return "prod/ref/prodPlanList";
 		}
 	 
 	//생산계획상세 조회 그리드
