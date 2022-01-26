@@ -13,7 +13,8 @@
 	<label>제품명</label>
 	<input type="text" id="prdtNmFind">
 	<button type="button" id="btnfind">검색</button>
-
+	<button type="button" id="btnReset">초기화</button>
+	
 	<div id="prdtCdGrid"></div>
 </body>
 

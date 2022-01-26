@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
+import solar.prod.plan.service.ProdPlanVO;
 
 @Service
 public class IndicaServiceImpl implements IndicaService {
@@ -31,5 +32,10 @@ public class IndicaServiceImpl implements IndicaService {
 	@Override
 	public List<?> selectRscLot(IndicaVO idcVo) {
 		return idcMapper.selectRscLot(idcVo);
+	}
+
+	@Override
+	public List<?> noIndicaPlan(ProdPlanVO ppVo) {
+		return idcMapper.noIndicaPlan(ppVo);
 	}
 }
