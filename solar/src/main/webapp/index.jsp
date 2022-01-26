@@ -106,6 +106,54 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-info-circle"></i>
               <p>
+               egov
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/sec/ram/EgovAuthorList.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>권한 관리</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/sec/rgm/EgovAuthorGroupList.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>권한 그룹관리</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/sec/rmt/EgovRoleList.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>롤 관리</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/sym/mnu/mpm/EgovMenuListSelect.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>메뉴리스트관리</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/sym/mnu/mpm/EgovMenuManageSelect.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>메뉴관리리스트</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/sym/mnu/mcm/EgovMenuCreatManageSelect.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>메뉴생성관리</p>
+                </a>
+              </li>
+           
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-info-circle"></i>
+              <p>
                기준정보관리
                 <i class="fas fa-angle-left right"></i>
               </p>

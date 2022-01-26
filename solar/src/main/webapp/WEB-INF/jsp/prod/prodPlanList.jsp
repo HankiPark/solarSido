@@ -39,8 +39,10 @@
 				</td>
 			</tr>
 		</table>
-		<div align="center">
-			<button type="button" id="btnSearch">조회</button>
+		<div >
+			<button type="button" id="btnSearch" >조회</button>
+			</div>
+			<div align="right">
 			<button type="button" id="btnReset">초기화</button>
 			<button type="button" id="btnExcel">Excel</button>
 		</div>

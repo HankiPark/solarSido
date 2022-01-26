@@ -16,7 +16,7 @@
    <div><label>연도</label>
 <!--     <input type="text" id="year" value="2022"> -->
     <select id="year" value="${curYear }"></select></div>
-   <label> 발주업체:</label> <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
+   <div><label> 발주업체:</label> <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button></div>
     <button id="sendRequest" onclick="inferRequest()" style="margin-left:-10px">조회</button>
     </div>
     </div>
