@@ -14,7 +14,7 @@
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
 	
-
+    <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
 <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <link
@@ -53,9 +53,10 @@
 
      <!-- login -->
       <li class="nav-item">
-      <a href="${pageContext.request.contextPath}/uat/uia/actionLogout.do">
-              로그아웃</a>
-        <a class="nav-link" href="${pageContext.request.contextPath}/uat/uia/egovLoginUsr.do">
+      <a href="#" id="logoutWd" class="nav-link">
+      <i class="fas fa-sign-out-alt"></i>
+             <span >logout</span></a>
+        <a class="nav-link" href="#" id="loginWd" >
           <i class="fas fa-sign-in-alt"></i>
           <span >login</span>
         </a>
@@ -104,7 +105,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
+       <%--    <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-info-circle"></i>
               <p>
@@ -151,7 +152,7 @@
               </li>
            
             </ul>
-          </li>
+          </li> 
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-info-circle"></i>
@@ -432,7 +433,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>--%>
          
         </ul>
       </nav>
@@ -460,6 +461,7 @@
     <div class="tab-content">
       <div class="tab-empty">
         <h2 class="display-4">No tab selected!</h2>
+        	<div id="dialog-login" title="로그인"></div>
       </div>
       <div class="tab-loading">
         <div>
@@ -483,9 +485,54 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
-
 <script type="text/javascript">
 var socket  = null;
+
+
+$(function(){
+	if("${loginVO.uniqId}"==""){
+		$("#logoutWd").css("display","none");
+		$("#loginWd").css("display","block");
+	}else{
+		$("#loginWd").css("display","none");
+		$("#logoutWd").css("display","block");
+		$.ajax({
+			url:"${pageContext.request.contextPath}/ajax/MenuList",
+			method:"get",
+			data: {"uniqId": "${loginVO.uniqId}" },
+			contentType: 'application/json; charset=utf-8',
+			async: false,
+			dataType:'json'
+		}).done((res)=>{
+			
+			for(let g of res.menu){
+				if(g.upperMenuNo==0){
+					$(".nav-sidebar").append(`<li class="nav-item">
+				            <a href="#" class="nav-link">
+				              <i class="nav-icon `+g.relateImagePath+`"></i>
+				              <p>`+g.menuNm+`
+				                <i class="fas fa-angle-left right"></i>
+				              </p>
+				            </a>
+				            <ul class="nav nav-treeview `+g.menuNo+`">`);
+				}else{
+					$("."+g.upperMenuNo).append(`
+							<li class="nav-item">
+			                <a href="${pageContext.request.contextPath}`+g.chkUrl+`" class="nav-link">
+			                  <i class="`+g.relateImagePath+` nav-icon"></i>
+			                  <p>`+g.menuNm+`</p>
+			                </a>
+			              </li>
+							`)
+				}
+			}
+		})
+	}
+	
+
+
+
+})
 
 
 // toast생성 및 추가
@@ -526,6 +573,30 @@ $('#notifySendBtn').click(function(e){
     });
     modal.find('.modal-body textarea').val('');	// textarea 초기화
 });
+let dialog00 = $("#dialog-login").dialog({
+	autoOpen : false,
+	modal : false,
+	width : 700,
+	height : 700
+});
+
+$("#loginWd").on("click",function(){
+
+	dialog00.dialog("open");
+	$("#dialog-login").load("${pageContext.request.contextPath}/uat/uia/egovLoginUsr.do",function() {
+				})
+		
+})
+$("#logoutWd").on("click",function(){
+
+	$.ajax({
+		url:'${pageContext.request.contextPath}/uat/uia/actionLogout.do',
+	}).done(()=>{
+		window.location.assign("${pageContext.request.contextPath}");
+	})
+		
+})
+
 
 </script>
 

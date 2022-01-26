@@ -2,7 +2,12 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
+
+
+
+
 	<!-- 메뉴 탭 타일즈 -->
+
 	<definition name="empty"
 		template="/WEB-INF/jsp/tiles/modal.jsp">
 	</definition>
@@ -10,7 +15,10 @@
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/modal/{1}.jsp" />
 	</definition>
-
+	<definition name="egovframework/com/uat/uia/EgovLoginUsr" extends="empty">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/egovframework/com/uat/uia/EgovLoginUsr.jsp" />
+	</definition>
 
 	<definition name="layouts-tiles"
 		template="/WEB-INF/jsp/tiles/layout.jsp">
@@ -21,6 +29,7 @@
 
 
 
+	
 	<definition name="egovframework/com/sec/accessDenied" extends="layouts-tiles">
 		<put-attribute name="body"
 			value="/WEB-INF/jsp/error.jsp" />

@@ -21,6 +21,7 @@
 		<typeAlias alias="EqmVO"		type="solar.eqm.mng.service.EqmVO" />
 		<typeAlias alias="ProdPlanVO"		type="solar.prod.plan.service.ProdPlanVO" />
 		<typeAlias alias="IndicaVO"		type="solar.prod.indica.service.IndicaVO" />
+		<typeAlias alias="Menu"		type="solar.menu.dao.Menu" />
 	</typeAliases>
     
 </configuration>
