@@ -31,7 +31,7 @@ public class FairController {
 	@Autowired FairMapper fairMapper;
 
 	
-	@RequestMapping("common/fair")
+	@RequestMapping("common/mng/fair")
 	public String fairList() {
 		return "common/mng/fair";
 	}

@@ -20,7 +20,7 @@ public class CmmndataController {
 	@Autowired CmmndataService cmmndataService;
 	@Autowired CmmndataMapper cmmndataMapper;
 	
-	@RequestMapping("common/cmmndata")
+	@RequestMapping("common/mng/cmmndata")
 	public String cmmndataList() {
 		return "common/mng/cmmndata";
 	}

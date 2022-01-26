@@ -46,13 +46,13 @@ public class RscController {
 	RscRtService rscRtService;
 	
 	//발주참조 페이지 요청
-	@GetMapping("rsc/ordr")
+	@GetMapping("rsc/ref/ordr")
 	public String rscOrdr() {
 		return "rsc/ref/ordr";
 	}
 	
 	//발주관리 페이지 요청
-	@GetMapping("rsc/ordradmin")
+	@GetMapping("rsc/mng/ordradmin")
 	public String rscOrdrAdmin() {
 		return "rsc/mng/ordradmin";
 	}
@@ -97,13 +97,13 @@ public class RscController {
 	}
 	
 	//검수조회페이지 이동
-	@GetMapping("rsc/insp")
+	@GetMapping("rsc/ref/insp")
 	public String rscInsp() {
 		return "rsc/ref/insp";
 	}
 	
 	//검수관리페이지 이동
-	@GetMapping("rsc/inspadmin")
+	@GetMapping("rsc/mng/inspadmin")
 	public String rscInspAdmin() {
 		return "rsc/mng/inspadmin";
 	}
@@ -142,13 +142,13 @@ public class RscController {
 	}
 	
 	//입고관리페이지
-	@GetMapping("rsc/inadmin")
+	@GetMapping("rsc/mng/inadmin")
 	public String rscInAdmin() {
 		return "rsc/mng/inadmin";
 	}
 	
 	//입고조회페이지
-	@GetMapping("rsc/in")
+	@GetMapping("rsc/ref/in")
 	public String rscIn() {
 		return "rsc/ref/in";
 	}
@@ -182,13 +182,13 @@ public class RscController {
 	}
 	
 	//출고페이지
-	@GetMapping("rsc/out")
+	@GetMapping("rsc/ref/out")
 	public String rscOut() {
 		return "rsc/ref/out";
 	}
 	
 	//자재재고페이지
-	@GetMapping("rsc/stc")
+	@GetMapping("rsc/ref/stc")
 	public String rscStc() {
 		return "rsc/ref/stc";
 	}
@@ -213,7 +213,7 @@ public class RscController {
 	}
 	
 	//자재반품페이지 요청
-	@GetMapping("rsc/rt")
+	@GetMapping("rsc/ref/rt")
 	public String rscRt() {
 		return "rsc/ref/rt";
 	}
@@ -238,7 +238,7 @@ public class RscController {
 	}
 	
 	//불량률그래프
-	@GetMapping("rsc/inferGraph")
+	@GetMapping("rsc/ref/inferGraph")
 	public String rscInferGraph() {
 		return "rsc/ref/infergraph";
 	}

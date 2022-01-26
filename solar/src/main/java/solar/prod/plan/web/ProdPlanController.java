@@ -22,13 +22,13 @@ public class ProdPlanController {
 	 @Autowired ProdPlanService ppService;
 	 
 	 //생산계획관리 페이지이동
-	 @RequestMapping("/prod/prodPlanMng")
+	 @RequestMapping("/prod/mng/prodPlanMng")
 		public String planMng() {
 			return "prod/mng/prodPlanMng";
 		}
 	 
 	//생산계획조회 페이지이동
-	 @RequestMapping("/prod/prodPlanList")
+	 @RequestMapping("/prod/ref/prodPlanList")
 		public String planList() {
 			return "prod/ref/prodPlanList";
 		}

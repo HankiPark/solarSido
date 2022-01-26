@@ -20,13 +20,13 @@ public class IndicaController {
 	@Autowired IndicaService idcService;
 
 	//생산지시관리 페이지이동
-	 @RequestMapping("/prod/indicaMng")
+	 @RequestMapping("/prod/mng/indicaMng")
 		public String indMng() {
 			return "prod/mng/indicaMng";
 		}
 	 
 	//생산지시조회 페이지이동
-	 @RequestMapping("/prod/indicaList")
+	 @RequestMapping("/prod/ref/indicaList")
 		public String indList() {
 			return "prod/ref/indicaList";
 		}

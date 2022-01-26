@@ -21,7 +21,7 @@ public class OrderController {
 	OrderService oservice;
 	@Autowired CmmndataService cmmndataService;
 	
-	@RequestMapping("/sales/order")
+	@RequestMapping("/sales/ref/order")
 	public String orderList(Model model, Order order) {
 
 		/*
