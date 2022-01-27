@@ -123,7 +123,7 @@
 
     $("#coSearchBtn").on("click", function () {
         coDialog.dialog("open");
-        $("#coModal").load("../comul");
+        $("#coModal").load("${pageContext.request.contextPath}/modal/comul");
     });
 
     function temp(val) {

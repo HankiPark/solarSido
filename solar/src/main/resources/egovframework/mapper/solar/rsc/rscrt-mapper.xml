@@ -14,7 +14,7 @@
 	</insert>
 
 	<select id="search" parameterType="map" resultType="solar.rsc.rt.service.RscRt">
-		select rr.*, o.co_cd, o.rsc_ist_qty, o.rsc_infer_qty, r.rsc_nm, r.co_cd
+		select rr.ordr_cd, rr.rsc_cd, to_char(rr.ordr_dt,'yyyy/MM/dd') "ordr_dt", rr.rtngd_resn_cd, to_char(rr.rtngd_dt,'yyyy/MM/dd') "rtngd_dt", o.co_cd, o.rsc_ist_qty, o.rsc_infer_qty, r.rsc_nm, r.co_cd
 		from rsc_rt rr
 		join rsc_or o
 		on rr.ordr_cd = o.ordr_cd

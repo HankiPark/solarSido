@@ -17,13 +17,13 @@ public class CoController {
 	CoService coService;
 	
 	//업체목록 모달
-	@GetMapping("co")
+	@GetMapping("/modal/co")
 	public String getCo() {
 		return "modal/searchCo";
 	}
 	
 	//업체 다중선택 모달
-	@GetMapping("comul")
+	@GetMapping("/modal/comul")
 	public String getCoMul() {
 		return "modal/searchCoMul";
 	}

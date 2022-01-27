@@ -143,7 +143,7 @@ $(function() {
       if(ev.columnName =='rscNm' || ev.columnName == 'rscCd' || ev.columnName == 'coNm'){
     	  evVar = ev;
     	  rscDialog.dialog("open");
-	   	  $("#rscModal").load("../rsc");
+	   	  $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
       }
       /* if(ev.columnName == 'inspCls'){
     	  return false;
@@ -207,7 +207,7 @@ $(function() {
 
   $("#coSearchBtn").on("click", function () {
     coDialog.dialog("open");
-    $("#coModal").load("../co");
+    $("#coModal").load("${pageContext.request.contextPath}/modal/co");
   });
 
 //
@@ -221,7 +221,7 @@ $(function() {
 
   $("#rscSearchBtn").on("click", function () {
     rscDialog.dialog("open");
-    $("#rscModal").load("../rsc");
+    $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
   });
 </script>
 
