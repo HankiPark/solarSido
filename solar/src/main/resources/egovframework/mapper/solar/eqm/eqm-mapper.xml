@@ -22,7 +22,7 @@
 </select> -->
 
 	<select id="eqmList" resultType="EqmVO" parameterType="map">
-		select e.*
+		select e.eqm_cd, e.eqm_fg, e.eqm_nm, e.eqm_mdl, e.eqm_spec, e.eqm_co, to_char(e.purc_dt,'yyyy/MM/dd') "purc_dt", e.purc_amt, e.li_no, e.emp_id, e.energy, e.lf, e.temp, e.uph, e.eqm_img, e.prcs_cd, e.eqm_yn
 		from eqm e
 <!-- 		join prcs p -->
 <!-- 			on e.prcs_cd = p.prcs_cd -->

@@ -200,7 +200,7 @@
 
   $("#coSearchBtn").on("click", function () {
     coDialog.dialog("open");
-    $("#coModal").load("../co");
+    $("#coModal").load("${pageContext.request.contextPath}/modal/co");
   });
 
 //
@@ -214,7 +214,7 @@
 
   $("#rscSearchBtn").on("click", function () {
     rscDialog.dialog("open");
-    $("#rscModal").load("../rsc");
+    $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
   });
 
 </script>

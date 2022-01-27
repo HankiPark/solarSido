@@ -77,7 +77,7 @@ public class RscController {
 	}
 
 	//자재목록 모달
-	@GetMapping("/rsc")
+	@GetMapping("/modal/rsc")
 	public String rsc() {
 		return "modal/searchRsc";
 	}
@@ -128,7 +128,7 @@ public class RscController {
 	}
 	
 	//검수 모달
-	@GetMapping("/rsc/inspModal")
+	@GetMapping("/modal/rsc/inspModal")
 	public String rscInspModal() {
 		return "modal/searchInsp";
 	}
