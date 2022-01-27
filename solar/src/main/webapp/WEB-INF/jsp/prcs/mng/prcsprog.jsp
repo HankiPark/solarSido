@@ -11,6 +11,7 @@
 
 	<div id="indicaDialog-form" title="작업지시번호"></div>
 	<div id="prcsEqmDialog-form" title="설비검색"></div>
+	<div id="empDialog-form" title="사원검색"></div>
 
 
 	<div>
@@ -21,7 +22,7 @@
 				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchEqm">🔍</button><br><br>
 				라인번호 : <input type="text" id="liNm"><br><br>
 				<br>
-				작업자 : <input type="text" id="empId"><button type="button" id="searchIndic">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
+				작업자 : <input type="text" id="empNm"><button type="button" id="searchEmp">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
 				<input type="text" id="frTm"><button id="btnStart">시작</button><input type="text" id="toTm"><button id="btnEnd" disabled="disabled">종료</button><br>
 				<button id="btnAddPerf">실적등록</button>
 				<button id="btnTest1">테스트용1</button>
@@ -103,6 +104,14 @@
 		modal:true,
 		width:1000	
 	});
+	
+	// 사원 모달 선언
+	let empDialog = $("#empDialog-form").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 700,
+		height : 700
+	})
 
 	// 지시상세 모달 호출 이벤트	
  	$("#searchIndica").on("click", function(){
@@ -115,6 +124,14 @@
  		prcsEqmDialog.dialog("open");
 		$("#prcsEqmDialog-form").load("${pageContext.request.contextPath}/modal/searchPrcsEqm", function(){})
 	});
+	
+	// 사원 모달 호출 이벤트
+ 	$("#searchEmp").on("click",function() {
+ 		empDialog.dialog("open");
+ 		$("#empDialog-form").load(
+ 		"${pageContext.request.contextPath}/modal/empinfoList"
+ 		);
+ 	});
 	
 	// 공정 시작 버튼 호출 이벤트
 	$("#btnStart").on("click", function(ev){
