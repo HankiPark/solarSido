@@ -123,7 +123,7 @@
 				header : '납기일자',
 				name : 'paprdDt',
 			}, {
-				header : '상세주문',
+				header : '주문제품명',
 				name : 'deNum'
 			}, {
 				header : '진행상황',

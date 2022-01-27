@@ -103,7 +103,7 @@ a {
 			<div class="card-body" >
 
 		
-			<label for="slipNm">부여될 전표번호</label> <input id="slipNm"
+			<label for="slipNm">부여될 전표번호</label><br> <input id="slipNm"
 				type="text" readonly><br>
 <div>
 			<button type="button" id="findgrid2"  style="margin-left:-10px">조회</button>
@@ -218,6 +218,12 @@ $(function() {
 
 						inGrid.refreshLayout();
 						inGrid.clear();
+						setTimeout(()=>{
+							var a = inGrid.getRowCount();
+							console.log(a);
+							inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
+						
+							},1000);
 
 					} else {
 						$("#iG").css("display", "none");
@@ -244,6 +250,7 @@ $(function() {
 							}
 						});
 					}
+	var d = new Date();
 /* 	//날짜 설정(입고/출고)
 	var d = new Date();
 	var nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
@@ -322,8 +329,8 @@ $(function() {
 					initialRequest : false,
 					contentType : 'application/json'
 				},
-
-				bodyHeight : 700,
+				
+				bodyHeight : 400,
 				rowHeaders : [ {
 					type : 'rowNum',
 					width : 100,
@@ -339,10 +346,7 @@ $(function() {
 				}, {
 					header : '입고일자',
 					name : 'prdtDt',
-					editor : 'datePicker',
-					 validation: {
-					        required: true
-					      }
+					rowSpan: true
 				}, {
 					header : '제품LOT',
 					name : 'prdtLot',
@@ -368,7 +372,12 @@ $(function() {
 				}
 
 				],
-				
+				summary:{
+					 position: 'bottom',
+					    height: 100,  // by pixel
+					    columnContent: {
+					    	'indicaNo': null
+				}},
 
 			});
 	//그리드 값 변하면 다시 뿌려주게끔
@@ -380,6 +389,12 @@ $(function() {
 		let res = JSON.parse(ev.xhr.response);
 		if (res.mode == 'upd') {
 			inGrid.resetOriginData();
+			setTimeout(()=>{
+				var a = inGrid.getRowCount();
+				console.log(a);
+				inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
+			
+				},1000);
 		}
 	});
 
@@ -389,6 +404,12 @@ $(function() {
 			$("#dialog-lot").load("${pageContext.request.contextPath}/modal/prdtInWaitList",function() {
 				prdtInWait(ev["rowKey"]);
 				inGrid.refreshLayout();
+				setTimeout(()=>{
+					var a = inGrid.getRowCount();
+					console.log(a);
+					inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
+				
+					},1000);
 				})
 				}
 			});
@@ -406,41 +427,57 @@ $(function() {
 		}
 		/* inGrid.enable(); */
 		inGrid.readData(1,params,true);
-	})
-
-	//행추가버튼
+		setTimeout(()=>{
+		var a = inGrid.getRowCount();
+		console.log(a);
+		inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
+	
+		},1000);
+	});
+	
 	$('#insertBtn').on('click', function appendRow(index) {
 
-		inGrid.appendRow({}, {
+		inGrid.appendRow({'prdtDt':d.toISOString().slice(0, 10)}, {
 			extendPrevRowSpan : true,
 			focus : true,
 			at : 0
 		});
-
-	
 	});
-
 	$('#updateBtn').on('click', function appendRow(index) {
+		inGrid.blur();
 		for(let i=inGrid.getRowCount();i>=0;i--){
 			if(inGrid.getValue(i,"prdtLot")=='' ||inGrid.getValue(i,"prdtLot")==null ||inGrid.getValue(i,"prdtDt")==null || inGrid.getValue(i,"prdtDt")==''){
 				inGrid.removeRow(i);
 			}
 		}
 		console.log(inGrid.validate())
-		inGrid.blur(); 
 	
 		if(inGrid.validate().length!=0 ){
 			toastr.error("제품lot은 중복될수 없습니다");
 			
 		}else{
-			inGrid.request('modifyData');
+			 inGrid.request('modifyData',{'showConfirm' : false});
+			 setTimeout(()=>{
+					var startT = $("#startT").val().substring(0,10);
+					var endT = $("#startT").val().substring(13,23);
+					var prdNm = $("#prdNm").val();
+					var params = {
+						'startT' : startT,
+						'endT' : endT,
+						'prdNm' : prdNm
+					}
+					
+					inGrid.readData(1,params,true);
+				
+				},1000) 
+			
 			
 		}
 
 	});
 	$('#deleteBtn').on('click', function appendRow(index) {
 		inGrid.blur();
-		inGrid.removeCheckedRows(true);
+		inGrid.removeCheckedRows(false);
 
 	});
 
@@ -692,9 +729,6 @@ $(function() {
 				}, {
 					header : '출고량',
 					name : 'oustQty'
-				}, {
-					header : '제품 재고',
-					name : 'prdtStc'
 				}, {
 					header : '금액',
 					name : 'prdtUntprc'
