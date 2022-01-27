@@ -49,8 +49,8 @@
 			<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
 		</div>
 		<div id="btnMng" class="col-4">
-			<button type="button" id="planSearch">계획🔍</button>
-			<button type="button" id="indicaSearch">지시🔍</button>
+			<button type="button" id="planSearch">미지시계획</button>
+			<button type="button" id="indicaSearch">지시수정</button>
 			<button type="button" id="rowAdd">추가</button>
 			<button type="button" id="rowDel">삭제</button>
 		</div>
@@ -61,27 +61,30 @@
 		<!-- 소요자재 그리드 -->
 		<div id="rscGrid" class="col-4" >
 			<label>제품코드</label>
-			<input type="text" id="prdtCd" name="prdtCd" readonly> 
+			<input type="text" id="prdtCd" name="prdtCd" readonly> <br>
 			<label>제품명</label>
 			<input type="text" id="prdtNm" name="prdtNm" readonly> 
 		</div>
 		<div id="rscLotGrid" class="col-7">
 			<label>자재코드</label>
-			<input type="text" id="rscCd" name="rscCd" readonly> 
+			<input type="text" id="rscCd" name="rscCd" readonly> <br> 
 			<label>자재명</label>
 			<input type="text" id="rscNm" name="rscNm" readonly> 
 		</div>
 	</div>
 	
+	<br><br><br>
 	<!-- 소요자재 히든그리드 -->
-	<div id="hiddenRscGrid"></div>
+	<div id="hiddenRscGrid">
+		<button type="button" id="rscReset">초기화</button>
+	</div>
 </body>
 
 <!-- 스크립트 -->
 <script type="text/javascript">
 	let iDt = new Date();
 	document.getElementById('indicaDt').value = iDt.toISOString().substring(0, 10);
-	let list = [];
+	let a;
 	//지시 조회 그리드
 	let indicaDgrid = new tui.Grid({
 		el: document.getElementById('indicaDgrid'),
@@ -114,7 +117,12 @@
 					  {
 					    header: '지시번호',
 					    name: 'indicaNo',
-					    sortingType: 'desc',
+					    /* hidden: true */
+					  },
+					  {
+					    header: '주문번호',
+					    name: 'orderNo',
+				    	sortingType: 'desc',
 				        sortable: true
 					  },
 					  {
@@ -136,12 +144,6 @@
 					  {
 					    header: '제품명',
 					    name: 'prdtNm'
-					  },
-					  {
-					    header: '주문번호',
-					    name: 'orderNo',
-				    	sortingType: 'desc',
-				        sortable: true
 					  },
 					  {
 					    header: '납기일자',
@@ -166,8 +168,11 @@
 				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    	    	indicaDgrid.setValue(e.rowKey, 'prodDay',
 				    	    					e.value / indicaDgrid.getValue(e.rowKey, 'dayOutput'));
-				    	    	rscGrid.setValue(e.rowKey, 'rscUseQty',
-		    	    					e.value * rscGrid.getValue(e.rowKey, 'rscUseQty'));
+				    	    	a = e.value;
+				    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
+				    	    		rscGrid.setValue(i, 'rscUseQty',
+		    	    					a * rscGrid.getValue(i, 'rscUseQty'));
+				    	    	}
 				    	    }    	
 					  },
 					  {
@@ -216,18 +221,18 @@
 	
 	indicaDgrid.on('onGridUpdated', function() {
 		indicaDgrid.refreshLayout();
-	});
-	
-	indicaDgrid.on('click', (ev) => {
-		console.log(ev);
+		rscGrid.refreshLayout();
+		rscLotGrid.refreshLayout();
 	});
 	
 	//지시상세 그리드 내부 클릭 이벤트
 	indicaDgrid.on('click', function(ev){
+		
+		rscGrid.refreshLayout();
 		let prdtCd = indicaDgrid.getValue(ev["rowKey"], "prdtCd")
 		let prdtNm = indicaDgrid.getValue(ev["rowKey"], "prdtNm")
 		
-		console.log(prdtCd);
+		console.log(prdtCd + "&" + prdtNm);
 		$('#prdtCd').val(prdtCd);
 		$('#prdtNm').val(prdtNm);
 		
@@ -271,6 +276,7 @@
 				planDetailDialog.dialog("close");
 			},
 			'취소': function(){
+				indicaDgrid.resetData([]);
 				planDetailDialog.dialog("close");
 			}
 		}
@@ -363,12 +369,29 @@
 					    header: '소요량',
 					    name: 'rscUseQty'
 					  }
-				]
+				],
+		summary: {
+	        position: 'bottom',
+	        height: 50,
+	        columnContent: {
+	        	rscNm: {
+	        		template: function(valueMap) {
+	        			return '합계';
+	        			},
+	        		align:'center'
+	        	},
+	        	rscUseQty: {
+					template: function(valueMap) {
+						return valueMap.sum;
+						}
+				}
+			}
+	    }
 	});
  	
 	rscGrid.on('onGridUpdated', function() {
 		rscGrid.refreshLayout(); 
-		indicaDgrid.refreshLayout();
+		rscLotGrid.refreshLayout(); 
 	});
 	
 	//자재목록 그리드 내부 클릭 이벤트
@@ -405,7 +428,7 @@
 		scrollX: false,
 		scrollY: true,
 		rowHeaders : [ 'checkbox', 'rowNum' ],
-		bodyHeight: 200,
+		bodyHeight: 250,
 		columns: [
 					 {
 					    header: '자재코드',
@@ -423,8 +446,12 @@
 					  {
 					    header: '투입량',
 					    name: 'rscQty',
-					    editor: 'text'
-					  }
+					    editor: 'text',
+					    onAfterChange(e) {
+			    	    	rscLotGrid.setValue(e.rowKey, 'rscStc',
+			    	    					rscLotGrid.getValue(e.rowKey, 'rscStc') - e.value);
+			    	    	}
+			    	    }    
 				],
 		summary: {
 	        position: 'bottom',
@@ -440,25 +467,24 @@
 					template: function(valueMap) {
 						return valueMap.sum;
 						}
-				},
-				rscQty: {
-					template: function(valueMap) {
-						return valueMap.sum;
-						}
 				}
 	        }
 	    }
 	});
 	
 	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
-	rscLotGrid.on("checked", (rscEv) => {
+	rscLotGrid.on("check", (rscEv) => {
 		rscLotGrid.setSelectionRange({
 		    start: [rscEv.rowKey, 0],
 		    end: [rscEv.rowKey, rscLotGrid.getColumns().length-1]
 		});
-		
-	
+		hiddenRscGrid.appendRows(rscLotGrid.getCheckedRows(rscEv));
 	})
+	
+	rscLotGrid.on('onGridUpdated', function() {
+		rscGrid.refreshLayout(); 
+		rscLotGrid.refreshLayout(); 
+	});
 	
 	//소요 자재 목록 히든그리드
 	let hiddenRscGrid = new tui.Grid({
@@ -501,16 +527,35 @@
 					    header: '소요량',
 					    name: 'rscUseQty'
 					  }
-				]
+				],
+			summary: {
+		        position: 'bottom',
+		        height: 50,
+		        columnContent: {
+		        	rscLot: {
+		        		template: function(valueMap) {
+		        			return '합계';
+		        			},
+		        		align:'center'
+		        	},
+		        	rscUseQty: {
+						template: function(valueMap) {
+							return valueMap.sum;
+							}
+					}
+				}
+		    }
 	});
+	$('#rscReset').on('click', function(){
+		hiddenRscGrid.resetData([]);
+		rscLotGrid.resetData([]);
+	})
  	
-	rscGrid.on('onGridUpdated', function() {
+	hiddenRscGrid.on('onGridUpdated', function() {
 		rscGrid.refreshLayout(); 
 		indicaDgrid.refreshLayout();
 	});
 	
-	
- 	
 	//제품코드 입력시 제품명 입력 함수
 	 
 </script>
