@@ -22,7 +22,7 @@ public class PrcsController {
 
 	@Autowired PrcsService prcsservice;
 	
-	@RequestMapping("/prcs/mng/prcsprog")									// 공정관리 페이지 이동
+	@RequestMapping("/prcs/mng/prcsprog")						// 공정관리 페이지 이동
 	public String go() {
 		return "prcs/mng/prcsprog";
 	}
@@ -102,12 +102,22 @@ public class PrcsController {
 	  // 공정 진입시 호출될 명령
 	  
 	  // 시작버튼 누를시 작업번호 일시 생
-	  @PostMapping("prcs/insertPrcsPrM")
+	  @RequestMapping("prcs/insertPrcsPrM")
 	  public String insertPrcsPrM(PrcsPrMVO vo, Model model) {
 		  Map<String, Object> map = new HashMap();
+		  
+		  System.out.println(vo.getIndicaDetaNo());
+		  System.out.println(vo.getIndicaDt());
+		  System.out.println(vo.getIndicaNo());
+		  System.out.println(vo.getIstQty());
+		  System.out.println(vo.getPrdtCd());
+		  System.out.println(vo.getProdFg());
+		  System.out.println(vo.getPrcsCd());
+		  
 		  map.put("contents", prcsservice.insertPrcsPrM(vo));
 		  model.addAttribute("result", true);
 		  model.addAttribute("data", map);
+		  
 		  return "jsonView";
 		  
 	  }
