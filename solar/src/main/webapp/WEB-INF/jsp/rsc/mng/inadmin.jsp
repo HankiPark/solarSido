@@ -92,12 +92,12 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: '${pageContext.request.contextPath}/rsc/ordrData?inspCls=rs002',
+				url: '${pageContext.request.contextPath}/grid/rsc/ordrData?inspCls=rs002',
 				method: 'GET',
 				initialRequest: false,
 			},
 			modifyData: {
-				url: '${pageContext.request.contextPath}/rsc/ordrData',
+				url: '${pageContext.request.contextPath}/grid/rsc/ordrData',
 				method: 'PUT'
 			}
 		},
@@ -106,7 +106,7 @@
 
 	//공통코드 가져옴
 	$.ajax({
-		url: '${pageContext.request.contextPath}/cmmn/codes',
+		url: '${pageContext.request.contextPath}/ajax/cmmn/codes',
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {
@@ -192,13 +192,13 @@
 	});
 
 	grid.on('click', function (ev) {
-		if (ev.columnName == "inspCls") {
+		//if (ev.columnName == "inspCls") {
 			curRowKey = ev.rowKey;
 			let ordrQty = document.getElementById("ordrQty");
 			let rscPassedQty = document.getElementById("rscPassedQty");
 			ordrQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
 			rscPassedQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
-		}
+		//}
 	});
 	grid.on('onGridMounted',function(){
 		grid.readData(1,{
@@ -263,13 +263,13 @@
 		let date = new Date();
  		let confirmedQty = document.getElementById('confirmedQty');
 		if (grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty') != confirmedQty.value) {
-			alert("수량확인하세요 ㅋㅋ");
+			alert("정확한 입고량을 입력하십시오.");
 			return false;
 		}
-		grid.setValue(grid.getFocusedCell().rowKey, grid.getFocusedCell().columnName, "rs003");
+		grid.setValue(grid.getFocusedCell().rowKey, 'inspCls', "rs003");
 		grid.request('modifyData');
 		
- 		fetch("../rsc/in/rscin", {
+ 		fetch("${pageContext.request.contextPath}/grid/rsc/in/rscin", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -279,7 +279,6 @@
 				rscCd: grid.getValue(grid.getFocusedCell().rowKey, 'rscCd'),
 				rscQty: grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty'),
 				rscFg: 1,
-				rscAmt: 12300
 			})
 		});
 	});

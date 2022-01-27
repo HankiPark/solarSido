@@ -44,13 +44,13 @@
     let rtngdResnCd;
 	let inferDataSource = {
 		api: {
-			readData: { url: '${pageContext.request.contextPath}/rsc/inspData', method: 'GET'}
+			readData: { url: '${pageContext.request.contextPath}/grid/rsc/inspData', method: 'GET'}
 			}
 	};
 	let ordrDataSource = {
 		api: {
-				readData: { url: '${pageContext.request.contextPath}/rsc/ordrData', method: 'GET'},
-				modifyData: {url: '${pageContext.request.contextPath}/rsc/ordrData',method: 'PUT'}
+				readData: { url: '${pageContext.request.contextPath}/grid/rsc/ordrData', method: 'GET'},
+				modifyData: {url: '${pageContext.request.contextPath}/grid/rsc/ordrData',method: 'PUT'}
 			},
 			contentType : 'application/json',
 			initialRequest: false,
@@ -88,7 +88,7 @@
 
 //공통코드 가져옴
 	$.ajax({
-	 url: '${pageContext.request.contextPath}/cmmn/codes',
+	 url: '${pageContext.request.contextPath}/ajax/cmmn/codes',
 	 dataType: 'JSON',
 	 async: false,
 	}).done(function(data){

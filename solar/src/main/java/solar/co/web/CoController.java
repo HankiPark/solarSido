@@ -29,7 +29,7 @@ public class CoController {
 	}
 	
 	//업체목록 모달 데이터
-	@GetMapping("co/coData")
+	@GetMapping("/grid/co/coData")
 	public String getCoData(@RequestParam Map map, Model model) {
 		model.addAttribute("co", coService.search(map));
 		return "jsonView";

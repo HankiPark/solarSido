@@ -12,11 +12,11 @@
 		join co c
 		on r.co_cd = c.co_cd
 		where 1=1
-		<if test='rscCd != null and rscCd != ""'>
-			and co_cd like '%'||#{coCd}||'%'
+		<if test='rscNm != null and rscNm != ""'>
+			and r.rsc_nm like '%'||#{rscNm}||'%'
 		</if>
 		<if test='coNm != null and coNm != ""'>
-			and co_Nm like '%'||#{coNm}||'%'
+			and c.co_Nm like '%'||#{coNm}||'%'
 		</if>
 		order by r.rsc_cd
 	</select>

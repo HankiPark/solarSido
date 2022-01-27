@@ -17,4 +17,5 @@ public class RscOrdr {
 	String rtngdResnCd;
 	String rtngdDt;
 	String coCd;
+	String whereParam;
 }

@@ -25,6 +25,9 @@
 			<if test='inspCls == "rs002"'>
 				AND o.ordr_qty != o.rsc_infer_qty
 			</if>
+<!-- 			<if test='whereParam == "inadmin"'> -->
+<!-- 				AND o.ordr_qty != o.rsc_infer_qty -->
+<!-- 			</if> -->
 		</if>
 		<if test='ordrDtStt != null and ordrDtStt != ""'>
 			AND trunc(o.ordr_dt) <![CDATA[>= #{ordrDtStt}]]>
