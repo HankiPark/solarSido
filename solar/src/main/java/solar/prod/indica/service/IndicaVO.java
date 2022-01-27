@@ -54,5 +54,5 @@ public class IndicaVO {
 	String rscNm;		//자재명
 	String rscUseQty;	//소요량
 	String rsc_qty;		//수량
-	
+	String rscStc;		//자재재고
 }

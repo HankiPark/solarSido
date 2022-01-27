@@ -68,10 +68,10 @@
 	
 	<!-- 자재 재고체크 그리드 -->
 	<div id="rStcGrid" class="row">
-		<div class="col-11">
+		<div class="col-10">
 			<label>필요자재 재고 체크</label>
 		</div>
-		<div class="col-1">
+		<div class="col-2">
 			<button type="button" id="rscDmnd">발주요청</button>
 		</div>
 	</div>

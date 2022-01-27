@@ -100,16 +100,26 @@ function planDList(){
 	
 	//선택버튼 : 체크된 계획 가져오기
 	planDgrid.on('check', (ev) => {
-		console.log(ev);
-		console.log(planDgrid.getCheckedRows());
-		indicaDgrid.resetData(planDgrid.getCheckedRows());
+		let pick = planDgrid.getValue(ev["rowKey"], "prdtCd")
+		console.log(pick);
+		for ( i=0; i<planDgrid.getRowCount(); i++){
+			if(planDgrid.getValue(i, "prdtCd") != pick) {
+				planDgrid.disableRow(i, true);
+			} 
+		}
+		//indicaDgrid.resetData(planDgrid.getCheckedRows());
 		//indicaDgrid.resetData([]);
 		//indicaDgrid.appendRows(planDgrid.getCheckedRows());
 	});
 	
 	planDgrid.on('uncheck', (ev) => {
 		console.log(ev);
-		console.log(ev.rowKey);
+		let unpick = planDgrid.getValue(ev["rowKey"], "prdtCd")
+		for ( i=0; i<planDgrid.getRowCount(); i++){
+			if(planDgrid.getValue(i, "prdtCd") != unpick) {
+				planDgrid.enableRow(i, true);
+			} 
+		}
 		indicaDgrid.removeRow(ev.rowKey);
 	});
 	
