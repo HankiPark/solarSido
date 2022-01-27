@@ -48,7 +48,7 @@ var coGrid = new tui.Grid({
 
   function request(coNm='', coCd=''){
 	  $.ajax({
-		    url: "../co/coData?coNm="+coNm+"&coCd="+coCd,
+		    url: "${pageContext.request.contextPath}/grid/co/coData?coNm="+coNm+"&coCd="+coCd,
 		    method: "GET",
 		    dataType: "JSON"
 		  }).done(function (result) {

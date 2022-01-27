@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<label>자재명</label>
+	<input type="text" id="rscNm">
 	<label>업체명</label>
 	<input type="text" id="coNm">
-	<label>자재코드</label>
-	<input type="text" id="rscCd">
 	<button type="button" id="btnfindCo">조회</button>
 	<div id="rscGrid"></div>
 </body>
@@ -55,13 +55,13 @@ var rscGrid = new tui.Grid({
 	var btnfindCo = document.getElementById("btnfindCo");
 	btnfindCo.addEventListener('click',function(){
 		  let coNm = document.getElementById('coNm').value;
-		  let rscCd = document.getElementById('rscCd').value;
-		  request(coNm, rscCd);
+		  let rscNm = document.getElementById('rscNm').value;
+		  request(coNm, rscNm);
 	});
 	
-	function request(coNm='', rscCd=''){
+	function request(coNm='', rscNm=''){
 		  $.ajax({
-			    url: "../rsc/rscData?coNm="+coNm+"&rscCd="+rscCd,
+			    url: "${pageContext.request.contextPath}/grid/rsc/rscData?coNm="+coNm+"&rscNm="+rscNm,
 			    method: "GET",
 			    dataType: "JSON"
 			  }).done(function (result) {
