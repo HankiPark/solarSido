@@ -71,7 +71,7 @@
 	let ordrDataSource = {
 		api: {
 			readData: {
-				url: '${pageContext.request.contextPath}/rsc/rtData',
+				url: '${pageContext.request.contextPath}/grid/rsc/rtData',
 				method: 'GET',
 			}
 		},
@@ -81,7 +81,7 @@
 
 	//공통코드 가져옴
 	$.ajax({
-		url: '${pageContext.request.contextPath}/cmmn/codes',
+		url: '${pageContext.request.contextPath}/ajax/cmmn/codes',
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {

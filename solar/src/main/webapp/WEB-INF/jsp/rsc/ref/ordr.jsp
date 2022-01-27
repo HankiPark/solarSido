@@ -65,8 +65,8 @@ let ordrDtStt = date.toISOString().substr(0,10);
 	   });
 	let ordrDataSource = {
 			  api: {
-				    readData: { url: '${pageContext.request.contextPath}/rsc/ordrData', method: 'GET'},
-					modifyData: {url: '${pageContext.request.contextPath}/rsc/ordrData',method: 'PUT'}
+				    readData: { url: '${pageContext.request.contextPath}/grid/rsc/ordrData', method: 'GET'},
+					modifyData: {url: '${pageContext.request.contextPath}/grid/rsc/ordrData',method: 'PUT'}
 				  },
 				  contentType : 'application/json',
 				  initialRequest: false
@@ -74,7 +74,7 @@ let ordrDtStt = date.toISOString().substr(0,10);
 	
 	//공통코드 가져옴
 	$.ajax({
-	 url: '${pageContext.request.contextPath}/cmmn/codes',
+	 url: '${pageContext.request.contextPath}/ajax/cmmn/codes',
 	 dataType: 'JSON',
 	 async: false,
 	}).done(function(data){
@@ -108,10 +108,6 @@ let ordrDtStt = date.toISOString().substr(0,10);
       {
         header: '받은 수량',
         name: 'rscIstQty'
-      },
-      {
-        header: '불량량',
-        name: 'rscInferQty'
       },
       {
         header: '발주번호',

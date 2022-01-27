@@ -72,8 +72,8 @@ $(function() {
    
 	let ordrDataSource = {
 			  api: {
-				    readData: { url: '${pageContext.request.contextPath}/rsc/ordrData?inspCls=rs001', method: 'GET'},
-					modifyData: {url: '${pageContext.request.contextPath}/rsc/ordrData',method: 'PUT'}
+				    readData: { url: '${pageContext.request.contextPath}/grid/rsc/ordrData?inspCls=rs001', method: 'GET'},
+					modifyData: {url: '${pageContext.request.contextPath}/grid/rsc/ordrData',method: 'PUT'}
 				  },
 				  contentType : 'application/json',
 				  initialRequest: false
@@ -81,7 +81,7 @@ $(function() {
 	
 	//공통코드 가져옴
 	$.ajax({
-	 url: '${pageContext.request.contextPath}/cmmn/codes',
+	 url: '${pageContext.request.contextPath}/ajax/cmmn/codes',
 	 dataType: 'JSON',
 	 async: false,
 	}).done(function(data){
