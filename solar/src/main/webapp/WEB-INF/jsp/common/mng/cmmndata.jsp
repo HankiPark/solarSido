@@ -20,6 +20,7 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<div align="right">
+				<button type="button" id="btnAdd">추가</button>
 				<button type="button" id="btnDel">삭제</button>
 				<button type="button" id="btnSave">저장</button>
 			</div>
@@ -158,7 +159,13 @@
 				detailgrid.refreshLayout()
 			}
 		});
-
+		$('#btnAdd').on('click', function appendRow(index) {
+			grid.appendRow({}, {
+				extendPrevRowSpan : true,
+				focus : true,
+				at : 0
+			});
+		});
 		$('#btnSave').on('click', function appendRow(index) {
 			detailgrid.blur();
 			detailgrid.request('modifyData');

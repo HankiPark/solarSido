@@ -8,9 +8,9 @@
 </head>
 
 <body>
-	<label>업체코드</label>
+	<label>제품코드</label>
 	<input type="text" id="prdtCdFind">
-	<label>업체명</label>
+	<label>제품명</label>
 	<input type="text" id="prdtNmFind">
 
 	<button type="button" id="btnfind">조회</button>

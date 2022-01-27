@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제품 불량내역 관리</title>
+<title>제품 불량코드 관리</title>
 
 </head>
 <body>
-<h3>제품 불량내역 관리</h3>
+<h3>제품 불량코드 관리</h3>
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>

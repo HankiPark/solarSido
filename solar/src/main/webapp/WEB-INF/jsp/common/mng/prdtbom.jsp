@@ -69,26 +69,32 @@
 			scrollX : true,
 			scrollY : true,
 			rowHeaders : [ 'rowNum', 'checkbox' ],
-			columns : [ {
-				header : '자재코드',
-				name : 'rscCd',
-
-			}, {
-				header : '자재명',
-				name : 'rscNm',
-			}, {
+			columns : 
+			[ 
+				{
 				header : '제품코드',
 				name : 'prdtCd',
 				editor : 'text'
-			}, {
+				},
+				{
+				header : '자재코드',
+				name : 'rscCd',
+				}, 
+				{
+				header : '자재명',
+				name : 'rscNm',
+				},  
+				{
 				header : '사용량',
 				name : 'rscUseQty',
 				editor : 'text'
-			}, {
+				}, 
+				{
 				header : '규격',
 				name : 'prdtSpec',
 				editor : 'text'
-			} ]
+				} 
+			]
 		});
 
 		grid.on('onGridUpdate', function() {
