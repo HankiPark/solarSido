@@ -51,7 +51,7 @@ public class PrcsServiceImpl implements PrcsService {
 
 
 	@Override
-	public List<PrcsPrMVO> insertPrcsPrM(PrcsPrMVO vo) {
+	public int insertPrcsPrM(PrcsPrMVO vo) {
 		return prcsmapper.insertPrcsPrM(vo);
 	}
 
