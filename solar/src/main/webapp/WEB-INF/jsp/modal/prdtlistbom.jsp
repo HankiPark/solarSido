@@ -26,7 +26,7 @@
 				data : {
 					api : {
 						readData : {
-							url : '${pageContext.request.contextPath}/grid/prdtmodalList.do',
+					 		url : '${pageContext.request.contextPath}/grid/prdtmodalList.do',
 							method : 'GET'
 						}
 					},

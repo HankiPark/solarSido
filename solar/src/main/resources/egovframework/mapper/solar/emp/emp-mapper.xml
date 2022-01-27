@@ -8,9 +8,17 @@
     <select id="empdataFind" resultType="solar.cmm.emp.dao.EmpVO">
 	SELECT * FROM EMP
 	<where>
-		<if test="empNm != null and empNm != ''">
-			AND EMP_NM LIKE '%' || #{empNm} || '%'
-		</if>
+		<choose>
+			<when test="empNo !=null and empNo!= '' and empNm!= null and empNm!=''">
+			EMP_NO LIKE '%' || #{empNo} || '%' AND EMP_NM LIKE '%' || #{empNm} || '%'
+			</when>
+			<when test="empNo !=null and empNo!=''">
+			EMP_NO LIKE '%' || #{empNo} || '%'
+			</when>
+			<when test="empNm !=null and empNm!=''">
+			EMP_NM LIKE '%' || #{empNm} || '%'
+			</when>
+		</choose>
 	</where>
 	order by EMP_ID asc
 	</select>

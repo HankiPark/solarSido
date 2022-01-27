@@ -5,57 +5,74 @@
 <head>
 <meta charset="UTF-8">
 <title>자재정보관리</title>
-
+<style>
+#btnRight {
+	float: right;
+	margin: 15px;
+}
+</style>
 </head>
 <body>
+	<h2>자재정보관리</h2>
 	<form name="rscfrm" id="rscfrm" method="post">
-	<label>자재명 검색</label>
-	<input type="text" id="rscNmFind">
-	<button type="button" id="btnFind">검색</button><br>
-	<div id="grid"></div>	
-	<br>
-	<button type="button" id="btnInsert">저장</button>
-	<button type="button" id="btnUpdate">수정</button>
-	<button type="button" id="btnReset">초기화</button>
-	<div class = "tableDetail">
-	<table id = table>
-	<tbody>
-		<tr>
-		 	<th scope="row">자재코드 *</th>
-		 	<td><input type="text" name="rscCd" id="rscCd" readonly = "readonly"></td>
-		</tr>
-		<tr>
-			<th scope="row">자재명 *</th>
-			<td><input type="text" name="rscNm" id="rscNm"></td>
-		</tr>
-		<tr>
-			<th scope="row">규격</th>	
-			<td><input type="text" name="rscSpec" id="rscSpec" ></td>
-		</tr>
-		<tr>
-			<th scope="row">관리단위</th>
-			<td><input type="text" name="rscUnit" id="rscUnit"></td>
-		</tr>
-		<tr>
-			<th scope="row">업체코드</th>
-			<td><input type="text" name="coCd" id="coCd" readonly = "readonly"><button type="button" id="coCdFind">조회</button></td>
-		</tr>
-		<tr>
-			<th scope="row">업체명</th>
-			<td><input type="text" name="coNm" id="coNm" readonly = "readonly"></td>
-		</tr>
-		<tr>
-			<th scope="row">단가</th>
-			<td><input type="text" name="rscUntprc" id="rscUntprc"></td>
-		</tr>
-		<tr>
-			<th scope="row">안전재고</th>
-			<td><input type="text" name="safStc" id="safStc"></td>
-		</tr>
-	</tbody>
-	</table>
+
+		<div id="btnleft">
+			<label>자재명 검색</label> <input type="text" id="rscNmFind">
+			<button type="button" id="btnFind">검색</button>
+		</div>
+		<div id="btnRight">
+			<button type="button" id="btnInsert">등록</button>
+			<button type="button" id="btnUpdate">수정</button>
+			<button type="button" id="btnReset">초기화</button>
+		</div>
+	<div class ="row">	
+			<div class="col-4">
+				<div id="grid"></div>
+			</div>
+		<div class="col-8 table">
+			<table id=table>
+				<tbody>
+					<tr>
+						<th scope="row">자재코드 *</th>
+						<td><input type="text" name="rscCd" id="rscCd"
+							readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th scope="row">자재명 *</th>
+						<td><input type="text" name="rscNm" id="rscNm"></td>
+					</tr>
+					<tr>
+						<th scope="row">규격</th>
+						<td><input type="text" name="rscSpec" id="rscSpec"></td>
+					</tr>
+					<tr>
+						<th scope="row">관리단위</th>
+						<td><input type="text" name="rscUnit" id="rscUnit"></td>
+					</tr>
+					<tr>
+						<th scope="row">업체코드</th>
+						<td><input type="text" name="coCd" id="coCd"
+							readonly="readonly">
+							<button type="button" id="coCdFind">조회</button></td>
+					</tr>
+					<tr>
+						<th scope="row">업체명</th>
+						<td><input type="text" name="coNm" id="coNm"
+							readonly="readonly"></td>
+					</tr>
+					<tr>
+						<th scope="row">단가</th>
+						<td><input type="text" name="rscUntprc" id="rscUntprc"></td>
+					</tr>
+					<tr>
+						<th scope="row">안전재고</th>
+						<td><input type="text" name="safStc" id="safStc"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<div id="coCdModal" title="업체명단"></div>
+		<div id="coCdModal" title="업체명단"></div>
 	</form>
 	<script>
 	//업체검색 모달
@@ -76,7 +93,7 @@
 			  "onclick": null,
 			  "showDuration": "100",
 			  "hideDuration": "1000",
-			  "timeOut": "1500",
+			  "timeOut": "2000",
 			  "extendedTimeOut": "1000",
 			  "showEasing": "swing",
 			  "hideEasing": "linear",
@@ -86,25 +103,33 @@
 	
 	function SaveComplete(){
 		toastr.success('저장완료');
-	}
-	
+	}	
 	function SaveFail(){
-		toastr.warning('저장실패');
+		toastr.error('저장실패');
 	}
 	function DeleteComplete(){
 		toastr.success('삭제완료');
 	}
 	function DeleteFail(){
-		toastr.warning('삭제실패');
+		toastr.error('삭제실패');
 	}
 	function ResetComplete(){
-		toastr.info('상세 데이터 리셋 완료');
+		toastr.info('상세 데이터 리셋 완료 데이터를 입력해주세요');
 	}
 	function insertComplete(){
 		toastr.success('등록완료');
 	}
 	function insertFail(){
-		toastr.warning('등록실패');
+		toastr.error('등록실패 빈 값이 있는지 확인해주세요.');
+	}
+	function updateFail(){
+		toastr.error('수정실패, 값을 확인해주세요.');
+	}
+	function updateComplete(){
+		toastr.success('수정완료');
+	}
+	function datawarning(){
+		toastr.warning('데이터 입력오류 정확한 값을 입력해주세요');
 	}
 	
 	var dataSource = {
@@ -120,7 +145,7 @@
 		var grid = new tui.Grid({
 			el : document.getElementById('grid'),
 			data : dataSource,
-			scrollY : true,
+			scrollY : false,
 			rowHeaders : ['rowNum'],
 			bodyHeight : 500,
 			columns : 
@@ -225,7 +250,7 @@
 			coCdDialog.dialog("open");
 			$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
 		});
-		
+		 
 	$("#btnInsert").on("click", function(){
 
 		$.ajax({
@@ -235,9 +260,13 @@
 			success:function(res){
 				grid.readData(1,{},true)
 				console.log(res);
+				insertComplete();
+			},
+			error:function(){
+				insertFail();
 			}
 		})
-
+			
 	});
 	
 	$("#btnUpdate").on("click", function(){		
@@ -248,8 +277,14 @@
 			success:function(res){
 				grid.readData(1,{},true)
 				console.log(res);
+				updateComplete();
+			},
+			error : function(){
+				updateFail();
 			}
 		})
+		
+		
 	});
 		
 		$('#btnReset').on('click', function(){
