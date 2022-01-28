@@ -22,6 +22,7 @@
 		<typeAlias alias="ProdPlanVO"		type="solar.prod.plan.service.ProdPlanVO" />
 		<typeAlias alias="IndicaVO"		type="solar.prod.indica.service.IndicaVO" />
 		<typeAlias alias="Menu"		type="solar.menu.dao.Menu" />
+		<typeAlias alias="PrdtChase"		type="solar.prdt.dao.PrdtChase" />
 	</typeAliases>
     
 </configuration>

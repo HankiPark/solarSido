@@ -2,7 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="solar.prdt.service.impl.PrdtChaseMapper">
 
-
+	<select id="findLotList" resultType="PrdtChase">
+	select p.prdt_lot from prdt_stc p 
+		<where>
+			<if test="prdtLot !=null and prdtLot !=''">
+				and 	prdt_lot like '%'||#{prdtLot}||'%' 
+			</if>
+			<if test="prdtCd !=null and prdtCd !=''">
+			 	and	prdt_cd like '%'||#{prdtCd}||'%' 
+			</if>
+			<if test="prdtFg !=null and prdtFg !=''">
+			 	and	prdt_fg = #{prdtFg}
+			</if>
+			<if test="wkNo !=null and wkNo !=''">
+				and prdt_lot in (select prdt_lot from rsc_clot where wk_no like '%'||#{wkNo}||'%'  )
+			</if>
+			<if test="indicaNo !=null and indicaNo !=''">
+				and prdt_lot in (select prdt_lot from indica_d where indica_no like '%'||#{indicaNo}||'%'  )
+			</if>
+			<if test="slipNo !=null and slipNo !=''">
+				and prdt_lot in (select prdt_lot from oust_d where slip_no like '%'||#{slipNo}||'%'  )
+			</if>
+			<if test="orderNo !=null and orderNo !=''">
+				and prdt_lot in (select prdt_lot from oust_d where order_no like '%'||#{orderNo}||'%'  )
+			</if>
+			<if test="rscLot !=null and rscLot !=''">
+				and prdt_lot in (select i.prdt_lot from indica_d i join rsc_con r on r.indica_deta_no = i.indica_deta_no where i.order_no like '%'||#{rscLot}||'%'  )
+			</if>
+			<if test="startTOut !=null ">
+				and prdt_lot in (select prdt_lot from oust where 
+				<![CDATA[	
+					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startTOut},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endTOut},'yyyyMMdd')
+				]]>
+				)
+			</if>
+			<if test="startTIn !=null">
+				and prdt_lot in (select prdt_lot from prdt_stc where 
+				<![CDATA[	
+					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startTIn},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endTIn},'yyyyMMdd')
+				]]> and prdt_fg='I'
+				)			</if>
+			<if test="startTIndica !=null">
+				and prdt_lot in (select prdt_lot from indica where 
+				<![CDATA[	
+					TO_CHAR(INDICA_DT,'yyyyMMdd')>= TO_CHAR(#{startTIndica},'yyyyMMdd') and TO_CHAR(INDICA_DT,'yyyyMMdd')<= TO_CHAR( #{endTIndica},'yyyyMMdd')
+				]]>
+				)			</if>
+		
+		</where>
+	
+	</select>
 
 
 
