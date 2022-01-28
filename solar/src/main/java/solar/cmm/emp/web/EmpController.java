@@ -28,6 +28,11 @@ public class EmpController {
 		return "common/mng/emp";
 	}
 	
+	@RequestMapping("modal/empinfoList")
+	public String empmodalList() {
+		return "modal/empinfoList";
+	}
+	
 	@GetMapping("/grid/empList.do")
 	public String empList(Model model, EmpVO empVO) {
 		List<?> empList = empService.empList(empVO);		

@@ -4,22 +4,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비가동코드 관리</title>
 </head>
 <body>
 <h3>비가동코드 관리</h3>
+<br>
+<br>
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
 	<button type="button" id="btnSave">저장</button><br>
+</div>
 	<label>비가동명 입력</label>
 	<input type = "text" id="uoprNminfo">
 	<div><button type="button" id="btnfind">검색</button></div>
-</div>
-	<div id="grid">
-		
-	</div>
+	
+	<div id="grid"></div>
+	
 	<div id="dialog-form" title="공정명단"></div>
+
 <script>
 let dialog = $("#dialog-form").dialog({
 	autoOpen : false,

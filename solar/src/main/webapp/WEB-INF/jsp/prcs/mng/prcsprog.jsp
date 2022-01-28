@@ -11,6 +11,7 @@
 
 	<div id="indicaDialog-form" title="작업지시번호"></div>
 	<div id="prcsEqmDialog-form" title="설비검색"></div>
+	<div id="empDialog-form" title="사원검색"></div>
 
 
 	<div>
@@ -21,7 +22,7 @@
 				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchEqm">🔍</button><br><br>
 				라인번호 : <input type="text" id="liNm"><br><br>
 				<br>
-				작업자 : <input type="text" id="empId"><button type="button" id="searchIndic">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
+				작업자 : <input type="text" id="empNm"><button type="button" id="searchEmp">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
 				<input type="text" id="frTm"><button id="btnStart">시작</button><input type="text" id="toTm"><button id="btnEnd" disabled="disabled">종료</button><br>
 				<button id="btnAddPerf">실적등록</button>
 				<button id="btnTest1">테스트용1</button>
@@ -73,6 +74,17 @@
 	let time = 0;
 	let timerFlag = true;
 	unitPTime = [];
+	
+	// 공정진행 관리 insert에서 사용될 변수
+	let pIndicaDetaNo;
+	let pIndicaNo;
+	let pIndicaDt;
+	let pIstQty;
+	let pPrdtCd;
+	let pProdFg;
+	let pPrcsCd;
+	
+	let prcsPrM;
 		 
 	
 	// 지시상세 모달 선언
@@ -92,6 +104,14 @@
 		modal:true,
 		width:1000	
 	});
+	
+	// 사원 모달 선언
+	let empDialog = $("#empDialog-form").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 700,
+		height : 700
+	})
 
 	// 지시상세 모달 호출 이벤트	
  	$("#searchIndica").on("click", function(){
@@ -104,6 +124,14 @@
  		prcsEqmDialog.dialog("open");
 		$("#prcsEqmDialog-form").load("${pageContext.request.contextPath}/modal/searchPrcsEqm", function(){})
 	});
+	
+	// 사원 모달 호출 이벤트
+ 	$("#searchEmp").on("click",function() {
+ 		empDialog.dialog("open");
+ 		$("#empDialog-form").load(
+ 		"${pageContext.request.contextPath}/modal/empinfoList"
+ 		);
+ 	});
 	
 	// 공정 시작 버튼 호출 이벤트
 	$("#btnStart").on("click", function(ev){
@@ -196,15 +224,31 @@
 	});
  		
 	// 지시상세 페이지에서 정보를 넘겨받아 지시에 종속된 자재 리스트를 불러오는함수
-	function innIndica(inddd, prd, indicaDetaNo, indicaQty){
-		
+	function innIndica(inddd,
+						prd,
+						prdf,
+						indicaDetaNo,
+						indicaNo,
+						indicaDt,
+						indicaQty){
 		tAmount = indicaQty;
+		
+		pIndicaDetaNo = indicaDetaNo;
+		pIndicaNo = indicaNo; 
+		pIndicaDt = indicaDt;
+		
+		pIstQty = tAmount;
+		pPrdtCd = prd;
+		pProdFg = prdf;
+		
 		$("#indicaDetaNo").val(inddd);
 		$("#prdtCd").val(prd);
 		document.getElementById("wkQty").placeholder = "목표량 : "+tAmount;
-		
+
 		indicaDialog.dialog("close");
-		 			
+		
+		
+		
 		var readParams = {
 				'indicaDetaNo':indicaDetaNo
 		}
@@ -243,6 +287,8 @@
 		$("#prcsNm").val(prcsNm);
 		$("#liNm").val(liNm);
 		
+		pPrcsCd = prcsCd;
+		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
 			data : {
@@ -273,6 +319,8 @@
 		prcsEqmDialog.dialog("close");
 	}
  	
+ 		
+ 	// 타이머 펑션 실행
 	$(document).ready(function(){
 			PrcsTimer();
 		});
@@ -281,7 +329,7 @@
 		document.getElementById("prcsTimer").innerHTML = "00-00-00"
 	}
  		
-	// 타이머 
+	// 공정타이머 함수 시작
 	function PrcsTimer(){
 		var timer;
 		var sec = "0";
@@ -317,9 +365,42 @@
  				console.log(tAmount);
  				console.log("----------------------------------------- prcsGrid 테스트")
  				
+ 				// 공정진행관리 첫번째 insert
+ 				console.log("----------------------------------------- PRCS_PR_M 테스트")
+ 				console.log(pIndicaDetaNo);
+ 				console.log(pIndicaDt);
+ 				console.log(pIndicaNo);
+ 				console.log(pIstQty);
+ 				console.log(pPrdtCd);
+ 				console.log(pProdFg);
+ 				console.log(pPrcsCd);
+ 		
+ 				console.log("----------------------------------------- PRCS_PR_M 테스트")
+ 				
+ 				$.ajax({
+ 					url:"${pageContext.request.contextPath}/prcs/insertPrcsPrM",
+ 					data : {
+ 						'indicaDetaNo':pIndicaDetaNo,
+ 						'indicaDt':pIndicaDt,
+ 						'indicaNo':pIndicaNo,
+ 						'istQty':pIstQty,
+ 						'prdtCd':pPrdtCd,
+ 						'prodFg':pProdFg,
+ 						'prcsCd':pPrcsCd,	
+ 					},
+ 					dataType: 'JSON',
+ 					async: false,
+ 					contentType: 'application/json',
+ 					success : function(result){
+ 						console.log('공정진행관리 데이터 입력완료');	
+ 					},
+ 					error : function(result){
+ 						console.log("공정진행관리 데이터 입력실패");
+ 					}
+ 				});
  				
  				
- 				
+
  			// ******************************************************* 타이머 함수
  				
 				timerFlag = false;
@@ -529,7 +610,7 @@
 				// 구현 함수 끝
 				/* ---------------------------------------------------------------------------------- */
  			});
-	 			
+	
 
  				// 종료버튼 이벤트 시작
  				$("#btnEnd").on("click", function(){
@@ -539,8 +620,11 @@
  					btnEnd.disabled = true;
  					
  					clearTimeout(unit1);
+ 					
  					clearTimeout(unit2);
+ 					
  					clearTimeout(unit3);
+ 					
  					clearTimeout(unit4);
  					
  					// 종료버튼 시간 이벤트
@@ -557,6 +641,11 @@
  					$("#toTm").val(eTime);
  					// 종료버튼 시간 이벤트 끝
  					
+ 					for(var i = 0; i<prcsGrid.getRowCount(); i++){
+ 						if(prcsGrid.getValue(i,'lowSt')==="P"){
+ 							prcsGrid.setValue(i,'lowSt','W',false);
+ 						}
+ 					}
  					
 
 	 				// 타이머 종료 기능
@@ -573,23 +662,9 @@
 	 	 			}
  					// 종료버튼 끝
 				});
-		}
- 		
- 			
- 			
- 		
- 		
- 		
- 		
- 		
- 		
- 		
+
+	}	// 공정타이머 함수 끝	
+	
  		
 	</script>
-	
-
-
-
-
-
 </html>

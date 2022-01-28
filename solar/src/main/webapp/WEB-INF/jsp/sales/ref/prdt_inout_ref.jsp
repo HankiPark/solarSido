@@ -126,8 +126,9 @@ position: absolute;
 					<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px" > 🔍 </button>
 				</div>
 				<div id="coo" data-role="fieldcontain" class="col-7" style="display: none">
-					<label>회사명</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" id="static">제품출고 통계</button>
+				<button type="button" id="static">제품출고 통계</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>회사명</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> 
+					
 		</div>
 	</div>
 	<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
@@ -240,7 +241,7 @@ position: absolute;
 					contentType : 'application/json'
 				},
 
-				bodyHeight : 700,
+				minBodyHeight : 700,
 				rowHeaders : [ {
 					type : 'rowNum',
 					width : 100,
@@ -289,6 +290,8 @@ position: absolute;
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
 		if($("input:checkbox[name=ref]:checked").length==2){
+			console.log(startT);
+			console.log(endT);
 			var chk = null;
 			var co =  $("#coNm").val();
 		}else if($('input:checkbox[name=ref]:checked').val()=='O'){
@@ -307,11 +310,53 @@ position: absolute;
 				'coNm' : co
 				
 			}
-		console.log(params)
+		$('td').css('backgroundColor','');
+		$('td').css('color','');
+		$('td').css('fontSize',);
 			/* inGrid.enable(); */
 			Grid.readData(1,params,true);
 		
+			
 		}})
+		
+		Grid.on('onGridUpdated', function() {
+		$('td').css('backgroundColor','');
+		Grid.refreshLayout();
+		var a = Grid.getRowCount();
+		var save =Grid.getRowCount();
+		var day = Grid.getValue(0,'prdtDt');
+		var cnt=1;
+		var up=1;
+		for(let i = 0 ; i<a;i++){
+			if(Grid.getValue(i+1,'prdtDt')==day){
+				cnt++;
+			}else if(Grid.getValue(i+1,'prdtDt')!=day){
+				
+				Grid.appendRow({'prdtCd':day, 'prdtNm':'소계','prdtSpec':cnt}, {
+					
+					at : i+up
+				});
+				a++;up++;
+				day=Grid.getValue(i+1,'prdtDt');
+				cnt=1;
+				
+			}
+
+			
+		}
+		setTimeout(function(){
+			for(let i=save;i<=a;i++){
+				console.log(i);
+				$('td[data-row-key$="'+i+'"]').css('backgroundColor','#fff');
+				$('td[data-row-key$="'+i+'"]').css('color','#e37c6b');
+				$('td[data-row-key$="'+i+'"]').css('fontSize',15);
+			}
+		},300);
+		
+	});
+		
+		
+		
 		
 		$("#outref").change(function(ev){
 			$("#coo").toggle();
