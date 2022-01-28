@@ -42,11 +42,6 @@
 	let rsc;
 	let inspCls;
     let rtngdResnCd;
-	let inferDataSource = {
-		api: {
-			readData: { url: '${pageContext.request.contextPath}/grid/rsc/inspData', method: 'GET'}
-			}
-	};
 	let ordrDataSource = {
 		api: {
 				readData: { url: '${pageContext.request.contextPath}/grid/rsc/ordrData', method: 'GET'},
@@ -170,7 +165,8 @@
 			'ordrDtEnd':ordrDtEnd,
 			'co':co,
 			'rsc':rsc,
-			'inspCls':'rs002'
+			'inspCls':'rs002',
+			'whereParam':'insp',
 		});
 	});
 
@@ -185,7 +181,8 @@
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
 		'rsc':rsc,
-		'inspCls':'rs002'
+		'inspCls':'rs002',
+		'whereParam':'insp',
 	});
   });
 

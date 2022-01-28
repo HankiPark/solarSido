@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>불량</h1>
+    <h1>자재 불량률</h1>
     <div id="coModal" title="업체 목록"></div>
     <div class="card card-pricing card-primary card-white">
 		<div class="card-body" >
@@ -109,6 +109,7 @@
                 });
 
                 chart.on('selectSeries', (ev) => {
+                	console.log(ev);
                     temp(ev.bar[0].data);
                 });
             });
@@ -171,7 +172,7 @@
                   ],
                 };
                 const options = {
-                  chart: { title: '불량량', width: 600, height: 400 },
+                  chart: { title: '불량량: '+val.category, width: 600, height: 400 },
                 };
 
                 const chart = toastui.Chart.pieChart({ el, data, options });

@@ -60,6 +60,7 @@ public class RscController {
 	//발주데이터
 	@GetMapping("/grid/rsc/ordrData")
 	public String rscOrdrData(@RequestParam Map<String,String> map, Model model) {
+		System.out.println(map);
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
 		List<?> list = rscOrdrService.search(map);
