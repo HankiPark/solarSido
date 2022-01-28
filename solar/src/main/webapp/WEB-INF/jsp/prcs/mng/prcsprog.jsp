@@ -73,7 +73,12 @@
 	
 	let time = 0;
 	let timerFlag = true;
-	unitPTime = [];
+	let unitPTime = [];
+	
+	//공정중 각 설비가 가동해서 생산이 시작되고 끝난 시간을 구하는 함수에 사용
+/* 	let eqmSTime;
+	let eqmETime; */
+	
 	
 	// 공정진행 관리 insert에서 사용될 변수
 	let pIndicaDetaNo;
@@ -319,6 +324,30 @@
 		prcsEqmDialog.dialog("close");
 	}
  	
+ 	// Millisecond 변환해서 현재날짜 yyyy/MM/dd HH:MM:SS 문자열로 치환해주는 함수
+ 	function msToHMS(cTime) {
+
+	     var milliseconds = parseInt((cTime % 1000) / 100);
+	     var seconds = parseInt((cTime / 1000) % 60);
+	     var minutes = parseInt((cTime / (1000 * 60)) % 60);
+	     var hours = parseInt(((cTime / (1000 * 60 * 60)) % 24)+9);
+	
+	     var hours = (hours < 10) ? "0" + hours : hours;
+	     var minutes = (minutes < 10) ? "0" + minutes : minutes;
+	     var seconds = (seconds < 10) ? "0" + seconds : seconds;
+	
+	     const presentTime = new Date()
+	     var years = presentTime.getFullYear();
+	     var month = presentTime.getMonth()+1;
+	     var days = presentTime.getDate();
+	     
+	     var month = (month < 10) ? "0" + month : month;
+	     var days = (days < 10) ? "0" + days : days;
+	      
+	     return years+"-"+month+"-"+days+" "+hours + ":" + minutes + ":" + seconds;
+	     
+	}
+ 		
  		
  	// 타이머 펑션 실행
 	$(document).ready(function(){
@@ -383,8 +412,7 @@
  						'indicaDetaNo':pIndicaDetaNo,
  						'indicaDt':pIndicaDt,
  						'indicaNo':pIndicaNo,
- 						'istQty':pIstQty,
- 						'prdtCd':pPrdtCd,
+  						'prdtCd':pPrdtCd,
  						'prodFg':pProdFg,
  						'prcsCd':pPrcsCd,	
  					},
@@ -451,14 +479,10 @@
 				console.log(prcsEqmList.PRCS[0].ptime);
 				console.log("-------------------------ptime")
 				console.log(unitPTime);
- 				
- 				
-
- 				
  					
- 					
-
- 					
+				
+				
+				
 				/* ---------------------------------------------------------------------------------- */
 				// 공정 정보를 조건으로 실제 함수를 구현할 몸체
 				console.log("--------------------------------설비 선택 유무 조건");
@@ -512,6 +536,15 @@
 						
 						console.log("1번 유닛 완료 7.2초 단위");
 						
+						const endTm = new Date(); 
+						console.log("-----------------완료시점")
+						console.log((endTm-u1));
+						console.log(endTm);
+						var eqmETime = msToHMS(endTm);
+						var eqmSTime = msToHMS(endTm-u1);
+						console.log(eqmSTime+"공정시작시간");
+						console.log(eqmETime+"공정끝난시간");
+						console.log("-----------------완료시점")
 						/* $.ajax({
 							
 						}) */
@@ -529,7 +562,15 @@
 							clearTimeout(unit2);
 						}
 						console.log("2번 유닛 완료 10초 단위");
-							
+						const endTm = new Date(); 
+						console.log("-----------------완료시점")
+						console.log((endTm-u2));
+						console.log(endTm);
+						var eqmETime = msToHMS(endTm);
+						var eqmStime = msToHMS(endTm-u2);
+						console.log(eqmSTime+"공정시작시간");
+						console.log(eqmETime+"공정끝난시간");
+						console.log("-----------------완료시점")
 						/* $.ajax({
 								
 						}) */
@@ -546,7 +587,16 @@
 							clearTimeout(unit3);
 						}
 						console.log("3번 유닛 완료 5초 단위");
-							
+
+						const endTm = new Date(); 
+						console.log("-----------------완료시점")
+						console.log((endTm-u3));
+						console.log(endTm);
+						var eqmETime = msToHMS(endTm);
+						var eqmSTime = msToHMS(endTm-u3);
+						console.log(eqmSTime+"공정시작시간");
+						console.log(eqmETime+"공정끝난시간");
+						console.log("-----------------완료시점")			
 						/* $.ajax({
 							
 						}) */
@@ -564,7 +614,16 @@
 						}
 						
 						console.log("4번 유닛 완료 7.2초 단위");
-						
+						const endTm = new Date();
+					
+						console.log("-----------------완료시점")
+						console.log((endTm-u4));
+						console.log(endTm);
+						var eqmETime = msToHMS(endTm);
+						var eqmSTime = msToHMS(endTm-u4);
+						console.log(eqmSTime+"공정시작시간");
+						console.log(eqmETime+"공정끝난시간");
+						console.log("-----------------완료시점")	
 						/* $.ajax({
 							
 						}) */
