@@ -16,4 +16,7 @@ public interface IndicaMapper {
 	List<?> selectRscLot(IndicaVO idcVo);
 	
 	List<?> noIndicaPlan(ProdPlanVO ppVo);
+
+	String makeDno();
+
 }

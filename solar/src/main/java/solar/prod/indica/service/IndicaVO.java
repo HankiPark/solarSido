@@ -55,4 +55,5 @@ public class IndicaVO {
 	String rscUseQty;	//소요량
 	String rsc_qty;		//수량
 	String rscStc;		//자재재고
+	String totalUseQty; //총소요량
 }
