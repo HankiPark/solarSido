@@ -187,6 +187,7 @@ $(function() {
 		  }
 	  }
 	  grid.request('modifyData');
+	  grid.readData();
   });
   let deleteBtn = document.getElementById("deleteBtn");
   deleteBtn.addEventListener("click",function(){

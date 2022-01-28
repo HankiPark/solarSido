@@ -85,8 +85,7 @@
 	  for(let i = 0; i<rowCnt; i++){
 		  let rscStc = grid.getValue(i, 'rscStc');
 		  let safStc = grid.getValue(i, 'safStc');
-		  
-		  if(rscStc<safStc){
+		  if(parseInt(rscStc)<parseInt(safStc)){
 			  grid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
 		  }
 	  }
