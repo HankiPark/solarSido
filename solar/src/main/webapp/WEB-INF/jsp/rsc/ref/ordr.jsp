@@ -106,10 +106,6 @@ let ordrDtStt = date.toISOString().substr(0,10);
         name: 'ordrQty'
       },
       {
-        header: '받은 수량',
-        name: 'rscIstQty'
-      },
-      {
         header: '발주번호',
         name: 'ordrCd'
       },
@@ -153,7 +149,7 @@ let ordrDtStt = date.toISOString().substr(0,10);
 		'ordrDtStt':ordrDtStt,
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
-		'rsc':rsc
+		'rsc':rsc,
 	});
   });
 
