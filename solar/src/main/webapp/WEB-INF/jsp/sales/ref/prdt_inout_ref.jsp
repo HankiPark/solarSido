@@ -126,8 +126,9 @@ position: absolute;
 					<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px" > 🔍 </button>
 				</div>
 				<div id="coo" data-role="fieldcontain" class="col-7" style="display: none">
-					<label>회사명</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> &nbsp;&nbsp;&nbsp;&nbsp;
-					<button type="button" id="static">제품출고 통계</button>
+				<button type="button" id="static">제품출고 통계</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<label>회사명</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> 
+					
 		</div>
 	</div>
 	<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
@@ -307,11 +308,49 @@ position: absolute;
 				'coNm' : co
 				
 			}
-		console.log(params)
+
 			/* inGrid.enable(); */
 			Grid.readData(1,params,true);
 		
+			
 		}})
+		
+		Grid.on('onGridUpdated', function() {
+		Grid.refreshLayout();
+		let a = Grid.getRowCount();
+		let day = Grid.getValue(0,'prdtDt');
+		let cnt=1;
+		let up=1;
+		for(let i = 0 ; i<a;i++){
+			if(Grid.getValue(i+1,'prdtDt')==day){
+				cnt++;
+			}else if(Grid.getValue(i+1,'prdtDt')!=day){
+				
+				Grid.appendRow({'prdtCd':day, 'prdtNm':'소계','prdtSpec':cnt}, {
+					extendPrevRowSpan : true,
+					focus : true,
+					at : i+up
+				});
+				a++;up++;
+				day=Grid.getValue(i+1,'prdtDt');
+				cnt=1;
+			}
+			if(i==a-1){
+				Grid.appendRow({'prdtCd':day, 'prdtNm':'소계','prdtSpec':cnt}, {
+					extendPrevRowSpan : true,
+					focus : true,
+					at : i+up
+				});
+			}
+			console.log("a는"+a);
+			console.log("i는"+i);
+			console.log("day는"+day);
+			console.log("cnt는"+cnt);
+		}
+	});
+		
+		
+		
 		
 		$("#outref").change(function(ev){
 			$("#coo").toggle();

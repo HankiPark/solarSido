@@ -61,6 +61,7 @@
 	    from cmmn_data_d where cmmn_cd_deta_id=(select distinct prdt_cd from prdt_stc where prdt_lot=r.prdt_lot)) AS prdt_nm
 	from rsc_clot r
 	where prdt_lot in (select prdt_lot from prdt_stc where indica_deta_no = #{indicaDetaNo})
+	order by prdt_lot
 
 </select>
 
@@ -114,45 +115,36 @@
 </select>
 
 
-<insert id="insertPrcsPrM">
-	insert prcs_pr_m into (wk_no,
+<insert id="insertPrcsPrM" parameterType="solar.prcs.prcs.service.PrcsPrMVO" useGeneratedKeys="true">
+	<selectKey keyColumn="wkNo" keyProperty="wkNo" order="BEFORE" resultType="solar.prcs.prcs.service.PrcsPrMVO" >
+		
+		(select nvl(max(wk_no),0)+1 as wkNo from prcs_pr_m)
+	
+	</selectKey>
+	
+	insert into prcs_pr_m (wk_no,
 							wk_dt,
 							prod_fg,
 							prdt_cd,
 							ist_qty,
-							wk_qty,
-							infer_qty,
-							expc_tm,
-							real_tm,
 							prcs_cd,
 							indica_deta_no,
 							indica_no,
 							indica_dt
 					)
-					values (#{wkNo},
-							#{wkDt},
+				 	values(	#{wkNo},
+							sysdate,
 							#{prodFg},
-							#{prodCd},
+							#{prdtCd},
 							#{istQty},
-							0,
-							0,
-							#{expcTm},
-							0,
 							#{prcsCd},
 							#{indicaDetaNo},
 							#{indicaNo},
-							#{IndicaDt}
-					)
-	<selectKey keyColumn="wk_no,wk_dt" keyProperty="wk_no,wk_dt"										
-							 resultType="solar.prcs.prcs.service.PrcsPrMVO" order="AFTER">
-						
-						select (select nvl(max(wk_no),0)+1 from prcs_pr_m), trunc(sysdate) from DUAL
-							 
-							 </selectKey>				
-		
+							#{indicaDt}
+							)
 
-
-
+					 		
+					
 
 </insert>
 

@@ -26,7 +26,8 @@
 		,o.prog_info
 		,o.paprd_dt
 		,c.co_nm
-		,dcnt('order_tb',o.order_no) as deNum
+		,nvl((select REGEXP_REPLACE(listagg(prdt_cd,',') within group(order by prdt_cd),'([^,]+)(,\1)*(,|$)', '\1\3')
+		 from order_d where order_no =o.order_no),'없음') as deNum
 		from order_tb o join co c on o.co_cd=c.co_cd
 		where 
 		<if test="startT!=null or endT!=null">

@@ -304,7 +304,7 @@
 			<if test="prdNm != '' and prdNm !=null">
 				and (select d.prdt_nm from prdt d where d.prdt_cd=p.prdt_cd)=#{prdNm}
 			</if>
-			order by p.prdt_inx
+			order by p.prdt_fg,p.prdt_dt
 		
 		
 		</where>

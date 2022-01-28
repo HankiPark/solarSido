@@ -101,7 +101,7 @@
 	//그리드 내부 더블클릭
 	empGrid.on('dblclick', function(ev) {
 		$('#empNm').val(empGrid.getValue(ev["rowKey"], "empNm"));
-		dialog.dialog("close");
+		empDialog.dialog("close");
 	});
 
 	empGrid.on('onGridUpdated', function() {
