@@ -36,10 +36,7 @@ public class PrdtServiceImpl implements PrdtService {
 	public int modifyData(ModifyVO<Prdt> mvo) {
 		if(mvo.getCreatedRows()!=null) {
 		for(Prdt vo : mvo.getCreatedRows()) {
-<<<<<<< HEAD
-=======
-			pmapper.inStcUpdate(vo);
->>>>>>> branch 'main' of https://github.com/HankiPark/solarSido.git
+
 			pmapper.insertInPrdt(vo);
 			pmapper.inStcUpdate(vo);
 			}

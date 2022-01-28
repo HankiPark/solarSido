@@ -218,12 +218,10 @@ $(function() {
 
 						inGrid.refreshLayout();
 						inGrid.clear();
-						setTimeout(()=>{
-							var a = inGrid.getRowCount();
-							console.log(a);
-							inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
 						
-							},1000);
+							
+						
+							
 
 					} else {
 						$("#iG").css("display", "none");
@@ -383,18 +381,16 @@ $(function() {
 	//그리드 값 변하면 다시 뿌려주게끔
 	inGrid.on('onGridUpdated', function() {
 		inGrid.refreshLayout();
+		var a = inGrid.getRowCount();
+
+		inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
 	});
 	inGrid.on('response', function(ev) {
 
 		let res = JSON.parse(ev.xhr.response);
 		if (res.mode == 'upd') {
 			inGrid.resetOriginData();
-			setTimeout(()=>{
-				var a = inGrid.getRowCount();
-				console.log(a);
-				inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
-			
-				},1000);
+
 		}
 	});
 
@@ -404,12 +400,7 @@ $(function() {
 			$("#dialog-lot").load("${pageContext.request.contextPath}/modal/prdtInWaitList",function() {
 				prdtInWait(ev["rowKey"]);
 				inGrid.refreshLayout();
-				setTimeout(()=>{
-					var a = inGrid.getRowCount();
-					console.log(a);
-					inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
-				
-					},1000);
+
 				})
 				}
 			});
@@ -427,12 +418,7 @@ $(function() {
 		}
 		/* inGrid.enable(); */
 		inGrid.readData(1,params,true);
-		setTimeout(()=>{
-		var a = inGrid.getRowCount();
-		console.log(a);
-		inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
-	
-		},1000);
+
 	});
 	
 	$('#insertBtn').on('click', function appendRow(index) {

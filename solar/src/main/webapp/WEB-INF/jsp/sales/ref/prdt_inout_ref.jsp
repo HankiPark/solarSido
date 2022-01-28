@@ -241,7 +241,7 @@ position: absolute;
 					contentType : 'application/json'
 				},
 
-				bodyHeight : 700,
+				minBodyHeight : 700,
 				rowHeaders : [ {
 					type : 'rowNum',
 					width : 100,
@@ -290,6 +290,8 @@ position: absolute;
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
 		if($("input:checkbox[name=ref]:checked").length==2){
+			console.log(startT);
+			console.log(endT);
 			var chk = null;
 			var co =  $("#coNm").val();
 		}else if($('input:checkbox[name=ref]:checked').val()=='O'){
@@ -308,7 +310,9 @@ position: absolute;
 				'coNm' : co
 				
 			}
-
+		$('td').css('backgroundColor','');
+		$('td').css('color','');
+		$('td').css('fontSize',);
 			/* inGrid.enable(); */
 			Grid.readData(1,params,true);
 		
@@ -316,37 +320,39 @@ position: absolute;
 		}})
 		
 		Grid.on('onGridUpdated', function() {
+		$('td').css('backgroundColor','');
 		Grid.refreshLayout();
-		let a = Grid.getRowCount();
-		let day = Grid.getValue(0,'prdtDt');
-		let cnt=1;
-		let up=1;
+		var a = Grid.getRowCount();
+		var save =Grid.getRowCount();
+		var day = Grid.getValue(0,'prdtDt');
+		var cnt=1;
+		var up=1;
 		for(let i = 0 ; i<a;i++){
 			if(Grid.getValue(i+1,'prdtDt')==day){
 				cnt++;
 			}else if(Grid.getValue(i+1,'prdtDt')!=day){
 				
 				Grid.appendRow({'prdtCd':day, 'prdtNm':'소계','prdtSpec':cnt}, {
-					extendPrevRowSpan : true,
-					focus : true,
+					
 					at : i+up
 				});
 				a++;up++;
 				day=Grid.getValue(i+1,'prdtDt');
 				cnt=1;
+				
 			}
-			if(i==a-1){
-				Grid.appendRow({'prdtCd':day, 'prdtNm':'소계','prdtSpec':cnt}, {
-					extendPrevRowSpan : true,
-					focus : true,
-					at : i+up
-				});
-			}
-			console.log("a는"+a);
-			console.log("i는"+i);
-			console.log("day는"+day);
-			console.log("cnt는"+cnt);
+
+			
 		}
+		setTimeout(function(){
+			for(let i=save;i<=a;i++){
+				console.log(i);
+				$('td[data-row-key$="'+i+'"]').css('backgroundColor','#fff');
+				$('td[data-row-key$="'+i+'"]').css('color','#e37c6b');
+				$('td[data-row-key$="'+i+'"]').css('fontSize',15);
+			}
+		},300);
+		
 	});
 		
 		

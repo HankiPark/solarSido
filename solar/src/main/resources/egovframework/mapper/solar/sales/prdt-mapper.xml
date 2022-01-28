@@ -295,7 +295,7 @@
 						and p.prdt_fg= #{prdSt}
 					</when>
 					<otherwise>
-						and p.prdt_fg= 'I' or p.prdt_fg='O'
+						and p.prdt_fg in ('I','O')
 					</otherwise>
 				</choose>
 			<if test='prdSt == "O" and coNm !=null and coNm !=""'>
