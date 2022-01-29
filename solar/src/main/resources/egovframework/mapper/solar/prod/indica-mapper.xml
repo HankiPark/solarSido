@@ -92,12 +92,12 @@
 		A.plan_dt,
 		A.plan_nm,
 		'10' as day_output,
-		(B.plan_qty/10) as prod_day
+		(B.plan_qty/10) as prod_day,
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
     AND (SELECT order_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd) > (SELECT indica_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd)
-    ORDER BY paprd_dt, order_qty desc
+    ORDER BY prdt_cd, paprd_dt, order_qty desc
 </select>
 
 <select id="makeDno" resultType="String">
