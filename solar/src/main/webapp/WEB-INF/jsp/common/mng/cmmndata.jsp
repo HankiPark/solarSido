@@ -23,6 +23,7 @@
 				<button type="button" id="btnAdd">추가</button>
 				<button type="button" id="btnDel">삭제</button>
 				<button type="button" id="btnSave">저장</button>
+				<button type="butoon" id="btnReset">초기화</button>
 			</div>
 		</div>
 	</div>
@@ -53,9 +54,11 @@
 			scrollY : true,
 			rowHeaders : ['rowNum'],
 			bodyHeight : 400,
+			
 			columns : [ {
 				header : '공통코드ID',
-				name : 'cmmnCdId'
+				name : 'cmmnCdId',
+			    sortable: true
 			}, {
 				header : '공통코드ID명',
 				name : 'cmmnCdNm',
@@ -77,11 +80,12 @@
 		});
 
 		grid.on('click', function(ev) {
+			$('td').css('backgroundColor','')
 			let JsonData = grid.getRowAt(ev.rowKey);
 			let key1 = Object.values(JsonData);
-
+			$('div#grid').find('td[data-row-key$="'+ev.rowKey+'"]').css('backgroundColor','#81BEF7')
 			$('cmmnCdId').val(key1[0]);
-
+			
 			var GridParams = {
 				'cmmnCdId' : key1[0]
 			};
@@ -160,7 +164,7 @@
 			}
 		});
 		$('#btnAdd').on('click', function appendRow(index) {
-			grid.appendRow({}, {
+			detailgrid.appendRow({}, {
 				extendPrevRowSpan : true,
 				focus : true,
 				at : 0
@@ -173,6 +177,12 @@
 		$('#btnDel').on('click', function appendRow(index) {
 			detailgrid.blur();
 			detailgrid.removeCheckedRows(true);
+		});
+		
+		$('#btnReset').on('click', function appendRow(index) {
+			$('#prdtCd').val();
+			$('td').css('backgroundColor','')
+			detailgrid.clear();
 		});
 	</script>
 </body>

@@ -152,7 +152,9 @@
 			[ 
 				{
 					header : '자재코드',
-					name : 'rscCd'
+					name : 'rscCd',
+					sortable: true,
+					sortingType: 'desc'
 				}, 
 				{
 					header : '자재명',
@@ -228,6 +230,11 @@
 					}
 				})
 		})
+		
+		grid.on('click', function(ev) {
+			$('td').css('backgroundColor','')
+			$('div#grid').find('td[data-row-key$="'+ev.rowKey+'"]').css('backgroundColor','#81BEF7');
+		});
 
 		$('#btnFind').on('click', function(){
 			var rscNm = $("#rscNmFind").val();

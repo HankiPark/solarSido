@@ -39,21 +39,23 @@
 					PRDT_CD,
 					RSC_NM,
 					RSC_USE_QTY,
-					PRDT_SPEC)
+					PRDT_SPEC,
+					PRCS_NM)
 			VALUES(#{rscCd},
 					#{prdtCd},
 					#{rscNm},
 					#{rscUseQty},
-					#{prdtSpec})
+					#{prdtSpec},
+					#{prcsNm})
 	</insert>
 	
 	<update id="prdtbomUpdate">
 		UPDATE PRDT_BOM
-		SET RSC_CD = #{rscCd}
-			PRDT_CD = #{prdtCd}
-			RSC_NM = #{rscNm}
-			RSC_USE_QTY = #{rscUseQty}
-			PRDT_SPEC = #{prdtSpec}
+		SET PRDT_CD = #{prdtCd}
+		,RSC_NM = #{rscNm}
+		,RSC_USE_QTY = #{rscUseQty}
+		,PRDT_SPEC = #{prdtSpec}
+		,PRCS_NM = #{prcsNm}
 		WHERE RSC_CD = #{rscCd}
 	</update>
 	

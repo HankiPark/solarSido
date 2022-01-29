@@ -9,7 +9,7 @@ public class PrdtbomVO {
 	String rscNm;
 	String rscUseQty;
 	String prdtSpec;
-	
+	String prcsNm;
 	String prdtNm;
 	String prdtUnit;
 	String prdtAmt;

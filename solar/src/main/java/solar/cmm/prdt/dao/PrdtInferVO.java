@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class PrdtInferVO {
 	String prdtInferCd;
-	String prcsInferCd;
 	String prdtInferNm;
+	String prcsCd;
+	String prcsNm;
 	String prdtInferDesct;
 }
