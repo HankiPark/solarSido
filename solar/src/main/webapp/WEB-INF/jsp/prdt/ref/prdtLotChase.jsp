@@ -64,7 +64,7 @@ position: absolute;
 	<h1>제품 LOT 추적</h1>
 	<div class="row">
 	
-			<div class="card card-pricing card-primary card-white col-9">
+			<div class="card card-pricing card-primary card-white col-8">
 				<div class="card-body">
 					<label> 조회중인 제품 LOT</label><br> <input id="prdtLot" type="text"
 						readonly><br><br>
@@ -112,12 +112,14 @@ position: absolute;
 							</div>
 							
 						</div>
+						<div>
+								<button id="search" type="button">조회</button>
+								<button id="reset" type="button">초기화</button>
+						</div>
 					</div>
-				<button id="search" type="button">조회</button>
-				<button id="reset" type="button">초기화</button>
-		
+					
 		</div>
-		<div id="grid" class="col-3"></div>
+		<div id="grid" class="col-3" style="display:none"></div>
 	</div>
 
 
@@ -130,8 +132,7 @@ position: absolute;
 		  $('input[name="startTOut"]').daterangepicker({
 			  showDropdowns: true,
 		    opens: 'right',
-		    startDate: moment().startOf('hour').add(-7, 'day'),
-			  endDate: moment().startOf('hour'),
+	
 			  minYear: 1990,
 			    maxYear: 2025,
 			  autoApply: true,
@@ -152,8 +153,7 @@ position: absolute;
 		  $('input[name="startTIn"]').daterangepicker({
 			  showDropdowns: true,
 		    opens: 'right',
-		    startDate: moment().startOf('hour').add(-7, 'day'),
-			  endDate: moment().startOf('hour'),
+
 			  minYear: 1990,
 			    maxYear: 2025,
 			  autoApply: true,
@@ -174,8 +174,7 @@ position: absolute;
 		  $('input[name="startTIndica"]').daterangepicker({
 			  showDropdowns: true,
 		    opens: 'right',
-		    startDate: moment().startOf('hour').add(-7, 'day'),
-			  endDate: moment().startOf('hour'),
+	
 			  minYear: 1990,
 			    maxYear: 2025,
 			  autoApply: true,
@@ -193,6 +192,9 @@ position: absolute;
 			    }
 		  }		  
 		  );
+		  $('input[name="startTOut"]').val(null);
+		  $('input[name="startTIndica"]').val(null);
+		  $('input[name="startTIn"]').val(null);
 		});
 	
 	
@@ -202,38 +204,30 @@ position: absolute;
 		function oen() {
 			if (plain.style.display == 'none') {
 				plain.style.display = 'block';
-				test.innerText = '➤ 상세 검색 열기';
+				test.innerText = '➤ 상세 검색 닫기';
 				$("#det").val("Y");
 			} else {
 				plain.style.display = 'none';
-				test.innerText = '➤ 상세 검색 끄기';
+				test.innerText = '➤ 상세 검색 열기';
 				$("#det").val("N");
 			}
 		}
-		
+		//초기화 버튼
+		$("#reset").on("click",function(){
+			$('input').val('');
+			$("#det").val("N");
+			plain.style.display = 'none';
+
+			$("#grid").css("display","none");
+			
+		})
 		//검색조건에 맞는 제품lot 검색
 		$("#search").on("click",function(){
-			var startTOut=null;
-			var startTIn=null;
-			var startTIndica=null;
-			var endTOut=null;
-			var endTIn=null;
-			var endTIndica=null;
-			var chk =null;
-			if($("#startTOut")!=null){
-				startTOut = $("#startTOut").val().substring(0,10);
-				endTOut = $("#startTOut").val().substring(13,23);
-			}
-			if($("#startTIn")!=null){
-				startTIn = $("#startTIn").val().substring(0,10);
-				endTIn = $("#startTIn").val().substring(13,23);
-			}
-			if($("#startTIndica")!=null){
-				startTIndica = $("#startTIndica").val().substring(0,10);
-				endTIndica = $("#startTIndica").val().substring(13,23);
-			}
+			
+			var chk ='';
+			
 			if($("input:checkbox[name=ref]:checked").length==2){
-				chk = null;
+				chk = '';
 			}else if($('input:checkbox[name=ref]:checked').val()=='O'){
 				chk = $('input:checkbox[name=ref]:checked').val();
 			}else{
@@ -250,14 +244,30 @@ position: absolute;
 					'slipNo' : $("#prdtOust").val(),
 					'orderNo' : $("#prdtOrder").val(),
 					'rscLot' : $("#prdtRsc").val(),
-					'startTOut' : startTOut,
-					'endTOut' : endTOut,
-					'startTIn' : startTIn,
-					'endTIn' : endTIn,
-					'startTIndica' : startTIndica,
-					'endTIndica' : endTIndica
+					'det' : $("#det").val()
 			};
-			
+			if($("#startTOut").val()!=''){
+				var startTOut = $("#startTOut").val().substring(0,10);
+				var endTOut = $("#startTOut").val().substring(13,23);
+				params.startTOut = startTOut;
+				params.endTOut = endTOut;
+				
+			}
+			if($("#startTIn").val()!=''){
+				var startTIn = $("#startTIn").val().substring(0,10);
+				var endTIn = $("#startTIn").val().substring(13,23);
+				params.startTIn = startTIn;
+				params.endTIn = endTIn;
+			}
+			if($("#startTIndica").val()!=''){
+				var startTIndica = $("#startTIndica").val().substring(0,10);
+				var endTIndica = $("#startTIndica").val().substring(13,23);
+				params.startTIndica = startTIndica;
+				params.endTIndica = endTIndica;
+			}		
+			$("#grid").css("display","block");
+			console.log(params);
+
 			grid.readData(1,params,true);
 			
 		})
@@ -291,6 +301,10 @@ position: absolute;
 				
 
 			});
+		grid.on('onGridUpdated', function() {
+
+			grid.refreshLayout();
+		});
 		
 	</script>
 </body>

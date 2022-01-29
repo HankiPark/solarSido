@@ -3,7 +3,7 @@
 <mapper namespace="solar.prdt.service.impl.PrdtChaseMapper">
 
 	<select id="findLotList" resultType="PrdtChase">
-	select p.prdt_lot from prdt_stc p 
+	select distinct p.prdt_lot from prdt_stc p 
 		<where>
 			<if test="prdtLot !=null and prdtLot !=''">
 				and 	prdt_lot like '%'||#{prdtLot}||'%' 
@@ -12,42 +12,51 @@
 			 	and	prdt_cd like '%'||#{prdtCd}||'%' 
 			</if>
 			<if test="prdtFg !=null and prdtFg !=''">
-			 	and	prdt_fg = #{prdtFg}
+				<choose>
+				<when test='prdtFg =="I"'>
+				and prdt_fg = 'I' and prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg= 'O')
+				</when>
+				<otherwise>
+				and	prdt_fg = #{prdtFg} 
+				</otherwise>
+				</choose>
 			</if>
+			<if test='det == "Y"'>
 			<if test="wkNo !=null and wkNo !=''">
 				and prdt_lot in (select prdt_lot from rsc_clot where wk_no like '%'||#{wkNo}||'%'  )
 			</if>
 			<if test="indicaNo !=null and indicaNo !=''">
-				and prdt_lot in (select prdt_lot from indica_d where indica_no like '%'||#{indicaNo}||'%'  )
+				and indica_deta_no in (select indica_deta_no from indica_d where indica_no like '%'||#{indicaNo}||'%'  )
 			</if>
 			<if test="slipNo !=null and slipNo !=''">
-				and prdt_lot in (select prdt_lot from oust_d where slip_no like '%'||#{slipNo}||'%'  )
+				and indica_deta_no in (select slip_deta_no from oust_d where slip_no like '%'||#{slipNo}||'%'  )
 			</if>
 			<if test="orderNo !=null and orderNo !=''">
-				and prdt_lot in (select prdt_lot from oust_d where order_no like '%'||#{orderNo}||'%'  )
+				and indica_deta_no in (select slip_deta_no from oust_d where order_no like '%'||#{orderNo}||'%'  )
 			</if>
 			<if test="rscLot !=null and rscLot !=''">
-				and prdt_lot in (select i.prdt_lot from indica_d i join rsc_con r on r.indica_deta_no = i.indica_deta_no where i.order_no like '%'||#{rscLot}||'%'  )
+				and indica_deta_no in (select indica_deta_no from rsc_con where rsc_lot like '%'||#{rscLot}||'%'  )
 			</if>
 			<if test="startTOut !=null ">
-				and prdt_lot in (select prdt_lot from oust where 
+				and 
 				<![CDATA[	
 					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startTOut},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endTOut},'yyyyMMdd')
-				]]>
-				)
+				]]> and prdt_fg='O'
+				
 			</if>
 			<if test="startTIn !=null">
-				and prdt_lot in (select prdt_lot from prdt_stc where 
+				and
 				<![CDATA[	
 					TO_CHAR(prdt_dt,'yyyyMMdd')>= TO_CHAR(#{startTIn},'yyyyMMdd') and TO_CHAR(prdt_dt,'yyyyMMdd')<= TO_CHAR( #{endTIn},'yyyyMMdd')
-				]]> and prdt_fg='I'
-				)			</if>
+				]]> and prdt_fg = 'I' and prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg= 'O')
+							</if>
 			<if test="startTIndica !=null">
-				and prdt_lot in (select prdt_lot from indica where 
+				
 				<![CDATA[	
 					TO_CHAR(INDICA_DT,'yyyyMMdd')>= TO_CHAR(#{startTIndica},'yyyyMMdd') and TO_CHAR(INDICA_DT,'yyyyMMdd')<= TO_CHAR( #{endTIndica},'yyyyMMdd')
-				]]>
-				)			</if>
+				]]> and prdt_fg = 'P' and prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg= 'C')
+							</if>
+		</if>
 		
 		</where>
 	
