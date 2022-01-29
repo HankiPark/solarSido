@@ -50,8 +50,8 @@
 					<input type="text" id="planNo" name="planNo" readonly> 
 				</div>
 				<div id="btnMng" class="col-4">
-					<button type="button" id="planSearch">계획🔍</button>
-					<button type="button" id="rowAdd">추가</button>
+					<button type="button" id="rowAdd">추가</button> <!-- 계획등록시 주문서 불러오기 -->
+					<button type="button" id="planSearch">계획수정</button> <!-- 계획수정, 삭제시 -->
 					<button type="button" id="rowDel">삭제</button>
 				</div>
 			</div>
