@@ -17,10 +17,17 @@
 	<input type = "text" id="prdtinferNminfo">
 	<div><button type="button" id="btnfind">검색</button></div>
 </div>
-	<div id="grid">
-		
-	</div>
+	<div id="grid">	</div>
+	<div id="dialog-form" title="공정명단"></div>
 <script>
+let dialog = $("#dialog-form").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 700,
+	height : 700
+});
+
+
 var dataSource = {
 		  api: {
 		    	readData: { url: '${pageContext.request.contextPath}/grid/prdtList.do', 
@@ -45,17 +52,21 @@ var grid = new tui.Grid({
 			{
 				header : '불량코드',
 				name : 'prdtInferCd',
-				editor : 'text'
-			},
-			{
-				header : '공정코드',
-				name : 'prcsInferCd',
-				editor : 'text'
+				editor : 'text',
+			    sortable: true
 			},
 			{
 				header : '불량명',
 				name : 'prdtInferNm',
 				editor : 'text'
+			},
+			{
+				header : '공정코드',
+				name : 'prcsCd'
+			},
+			{
+				header : '공정명',
+				name : 'prcsNm'
 			},
 			{
 				header : '불량내역',
@@ -79,6 +90,19 @@ grid.on('response', function(ev) {
 			grid.refreshLayout()
 			}
 	});
+	
+grid.on('click', function(ev){
+
+	if(ev["columnName"] == "prcsCd") {
+		dialog.dialog("open");
+		$("#dialog-form").load(
+				"${pageContext.request.contextPath}/modal/prcsinfoList",
+							function(){
+								prcsinfoList(ev["rowKey"]);
+								grid.refreshLayout();
+		})
+	}
+});		
 	
 $('#btnAdd').on('click', function appendRow(index){
 	grid.appendRow( {}, {

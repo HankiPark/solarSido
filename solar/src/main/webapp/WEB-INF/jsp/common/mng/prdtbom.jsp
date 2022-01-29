@@ -31,6 +31,7 @@
 
 	<div id="dialog-form2"></div>
 
+	<div id="dialog-form3"></div>
 	<script>
 		let prdtGrid;
 
@@ -42,6 +43,13 @@
 		});
 
 		let dialog2 = $("#dialog-form2").dialog({
+			autoOpen : false,
+			modal : true,
+			width : 700,
+			height : 700
+		});
+		
+		let dialog3 = $("#dialog-form3").dialog({
 			autoOpen : false,
 			modal : true,
 			width : 700,
@@ -88,6 +96,10 @@
 				header : '사용량',
 				name : 'rscUseQty',
 				editor : 'text'
+				}, 
+				{
+				header : '사용공정명',
+				name : 'prcsNm'
 				}, 
 				{
 				header : '규격',
@@ -153,16 +165,23 @@
 						})
 			}
 		});
+		
+		grid.on('click', function(ev){
+			if(ev["columnName"] == "prcsNm") {
+				dialog3.dialog("open");
+				$("#dialog-form3").load(
+						"${pageContext.request.contextPath}/modal/prcsinfoList",
+									function(){
+										prcsinfoList(ev["rowKey"]);
+										grid.refreshLayout();
+				})
+			}
+		});	
 
-		$('#prdtCd')
-				.on(
-						'click',
-						function() {
-							dialog.dialog("open");
-							$("#dialog-form")
-									.load(
-											"${pageContext.request.contextPath}/modal/prdtlistbom");
-						});
+		$('#prdtCd').on('click',function() {
+					dialog.dialog("open");
+					$("#dialog-form").load("${pageContext.request.contextPath}/modal/prdtlistbom");
+				});
 	</script>
 </body>
 </html>
