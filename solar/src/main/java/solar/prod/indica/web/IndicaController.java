@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
+import solar.sales.inout.dao.Prdt;
+import solar.sales.order.dao.ModifyVO;
 
 @Controller
 public class IndicaController {
@@ -120,5 +124,21 @@ public class IndicaController {
 	public String findIndicaDetail() {
 		System.out.println("생산지시서 조회");
 		return "modal/findIndicaDetail";
+	}
+	
+	//지시상세번호 부여
+	@GetMapping("/ajax/makeDno.do")
+	public String makeDno(Model model, IndicaVO idcVo) {
+		model.addAttribute("num2", idcService.makeDno());
+		return "jsonView";
+	}
+	
+	//modifyData
+	@PostMapping("/grid/indicaModify.do")
+	public String modifyPlan(Model model, IndicaVO idcVo, 
+							@RequestBody ModifyVO<IndicaVO> mvo) throws Exception {
+		idcService.modifyData(mvo);
+		model.addAttribute("mode", "upd");
+		return "jsonView";
 	}
 }
