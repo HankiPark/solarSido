@@ -40,7 +40,6 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
-    rowHeaders: ['checkbox'],
     sortable: true,
     columns: [
       {
