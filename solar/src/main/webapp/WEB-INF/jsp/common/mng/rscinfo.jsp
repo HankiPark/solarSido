@@ -264,7 +264,7 @@
 		$("#coCdFind").on("click", function(){	
 			console.log("업체검색")
 			coCdDialog.dialog("open");
-			$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
+			$("#coCdModal").load("${pageContext.request.contextPath}/modal/selectRcoCd", function(){ coCdList() })
 		});
 		 
 	$("#btnInsert").on("click", function(){
