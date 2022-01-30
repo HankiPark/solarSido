@@ -9,4 +9,6 @@ import solar.sales.order.dao.ModifyVO;
 public interface EqmMapper { 
 	List<EqmVO> eqmList(Map map); 		//조회
 	int insert(EqmVO eqmVo);			//등록
+	int delete(EqmVO eqmVo);
+	int update(EqmVO eqmVo);
 }

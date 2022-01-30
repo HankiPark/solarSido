@@ -97,34 +97,41 @@ $(function() {
     sortable: true,
     columns: [{
         header: '발주일',
-        name: 'ordrDt'
+        name: 'ordrDt',
+        sortable: true,
       },
       {
         header: '발주번호',
-        name: 'ordrCd'
+        name: 'ordrCd',
+        sortable: true,
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
+        sortable: true,
       },
       {
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+        sortable: true,
       },
       {
         header: '발주량',
         name: 'ordrQty',
-        editor: 'text'
+        editor: 'text',
+        sortable: true,
       },
       {
         header: '업체',
-        name: 'coNm'
+        name: 'coNm',
+        sortable: true,
       },
       {
           header: '상태',
           name: 'inspCls',
           formatter: 'listItemText',
+          sortable: true,
           editor: {
               type: 'select',
               options: {
@@ -140,7 +147,7 @@ $(function() {
       grid.refreshLayout();
     });
   grid.on('click',function(ev){
-      if(ev.columnName =='rscNm' || ev.columnName == 'rscCd' || ev.columnName == 'coNm'){
+      if((ev.columnName =='rscNm' || ev.columnName == 'rscCd' || ev.columnName == 'coNm')&&ev.targetType!='columnHeader'){
     	  evVar = ev;
     	  rscDialog.dialog("open");
 	   	  $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
