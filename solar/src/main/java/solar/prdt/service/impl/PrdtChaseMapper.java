@@ -7,4 +7,5 @@ import solar.prdt.dao.PrdtChase;
 public interface PrdtChaseMapper {
 
 	List<PrdtChase> findLotList(PrdtChase vo);
+	List<PrdtChase> prdtLotChase(PrdtChase vo);
 }

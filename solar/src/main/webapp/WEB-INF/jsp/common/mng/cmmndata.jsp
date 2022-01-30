@@ -10,22 +10,29 @@
 <body>
 	<h2>공통자료관리</h2>
 	<div class="row">
-		<div class="col-sm-6">
-			<div align="left">
-				<label>공통코드ID 검색</label><input type="text" id="cmmnNminfo">
-				<button type="button" id="btnfind">검색</button>
+	<div class="card card-pricing card-primary card-white col-11">
+		<div class="card-body">
+			<div class="row">
+
+				<div class="col-sm-6">
+					<div align="left">
+						<label>공통코드ID </label><input type="text" id="cmmnNminfo">
+						<div>
+							<button type="button" id="btnfind">조회</button>
+						</div>
+					</div>
+				</div>
 			</div>
+
+					<div align="right">
+						<button type="button" id="btnAdd">추가</button>
+						<button type="button" id="btnDel">삭제</button>
+						<button type="button" id="btnSave">저장</button>
+						<button type="butoon" id="btnReset">초기화</button>
+					</div>
+
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-sm-11">
-			<div align="right">
-				<button type="button" id="btnAdd">추가</button>
-				<button type="button" id="btnDel">삭제</button>
-				<button type="button" id="btnSave">저장</button>
-				<button type="butoon" id="btnReset">초기화</button>
-			</div>
-		</div>
 	</div>
 	<div class=row>
 		<div class=col-4>
@@ -52,13 +59,13 @@
 			el : document.getElementById('grid'),
 			data : dataSource,
 			scrollY : true,
-			rowHeaders : ['rowNum'],
+			rowHeaders : [ 'rowNum' ],
 			bodyHeight : 400,
-			
+
 			columns : [ {
 				header : '공통코드ID',
 				name : 'cmmnCdId',
-			    sortable: true
+				sortable : true
 			}, {
 				header : '공통코드ID명',
 				name : 'cmmnCdNm',
@@ -80,12 +87,13 @@
 		});
 
 		grid.on('click', function(ev) {
-			$('td').css('backgroundColor','')
+			$('td').css('backgroundColor', '')
 			let JsonData = grid.getRowAt(ev.rowKey);
 			let key1 = Object.values(JsonData);
-			$('div#grid').find('td[data-row-key$="'+ev.rowKey+'"]').css('backgroundColor','#81BEF7')
+			$('div#grid').find('td[data-row-key$="' + ev.rowKey + '"]').css(
+					'backgroundColor', '#81BEF7')
 			$('cmmnCdId').val(key1[0]);
-			
+
 			var GridParams = {
 				'cmmnCdId' : key1[0]
 			};
@@ -178,10 +186,10 @@
 			detailgrid.blur();
 			detailgrid.removeCheckedRows(true);
 		});
-		
+
 		$('#btnReset').on('click', function appendRow(index) {
 			$('#prdtCd').val();
-			$('td').css('backgroundColor','')
+			$('td').css('backgroundColor', '')
 			detailgrid.clear();
 		});
 	</script>

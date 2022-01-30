@@ -25,6 +25,19 @@ public class PrdtChaseController {
 	public String prdtLotListGrid(Model model, PrdtChase vo) {
 		List<?> list = pservice.findLotList(vo);
 		Map<String, Object> map = new HashMap();
+		Map<String, Object> map2 = new HashMap();
+		map.put("contents", list);
+		map2.put("page", 1);
+		map2.put("totalCount", list.size());
+		map.put("pagination", map2);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		return "jsonView";
+	}
+	@RequestMapping("/grid/prdtLotChase.do")
+	public String prdtLotGrid(Model model, PrdtChase vo) {
+		List<?> list = pservice.prdtLotChase(vo);
+		Map<String, Object> map = new HashMap();
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);

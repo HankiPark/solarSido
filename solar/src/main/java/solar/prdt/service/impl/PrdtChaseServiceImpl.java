@@ -17,5 +17,10 @@ public class PrdtChaseServiceImpl implements PrdtChaseService{
 		
 		return pmapper.findLotList(vo);
 	}
+	@Override
+	public List<PrdtChase> prdtLotChase(PrdtChase vo) {
+		// TODO Auto-generated method stub
+		return pmapper.prdtLotChase(vo);
+	}
 
 }

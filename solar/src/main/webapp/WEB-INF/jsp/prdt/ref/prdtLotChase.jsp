@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +67,7 @@ position: absolute;
 	
 			<div class="card card-pricing card-primary card-white col-8">
 				<div class="card-body">
-					<label> 조회중인 제품 LOT</label><br> <input id="prdtLot" type="text"
+					<label> 조회중인 제품 LOT</label><br> <input id="prdtEndLot" type="text"
 						readonly><br><br>
 						<div class="row">
 						<div class="col-1"><label> 제품 LOT</label></div><div class="col-3"> <input type="text" id="prdtLot" name="prdtLot" style="width:90%" ></div>
@@ -122,11 +123,11 @@ position: absolute;
 		<div id="grid" class="col-3" style="display:none"></div>
 	</div>
 
-
+<div id="grid2" style="display:none"></div>
 	
 
-	<div id="dialog-prdtLot" title="제품 LOT 조회"></div>
 	<script type="text/javascript">
+	
 	$(function() {
 		
 		  $('input[name="startTOut"]').daterangepicker({
@@ -217,8 +218,9 @@ position: absolute;
 			$('input').val('');
 			$("#det").val("N");
 			plain.style.display = 'none';
-
+			test.innerText = '➤ 상세 검색 열기';
 			$("#grid").css("display","none");
+			$("#grid2").css("display","none");
 			
 		})
 		//검색조건에 맞는 제품lot 검색
@@ -284,7 +286,12 @@ position: absolute;
 					initialRequest : false,
 					contentType : 'application/json'
 				},
-
+				minRowHeight : 40,
+				rowHeight : 40,
+				pageOptions : {
+					useClient : true,
+					perPage : 9
+				},
 				bodyHeight : 400,
 				rowHeaders : [ {
 					type : 'rowNum',
@@ -302,8 +309,70 @@ position: absolute;
 
 			});
 		grid.on('onGridUpdated', function() {
-
+			$('td').css('backgroundColor','');
 			grid.refreshLayout();
+		});
+	
+		
+		$(document).on('click','.tui-page-btn',function(){
+			$('td').css('backgroundColor','');
+		})
+		
+		grid.on('click',function(ev){
+			if(grid.getValue(ev.rowKey,'prdtLot')!=null){
+			$('td').css('backgroundColor','');
+
+			$('td[data-row-key$="'+ev.rowKey+'"][data-column-name$="prdtLot"]').css('backgroundColor','#e37c6b');
+			$('#prdtEndLot').val( grid.getValue(ev.rowKey,'prdtLot'));
+			$("#grid2").css("display","block");
+			grid2.readData(1,{'prdtLot' : grid.getValue(ev.rowKey,'prdtLot')},true);
+			}
+		})
+		
+		
+		const grid2 = new tui.Grid(
+			{
+				el : document.getElementById('grid2'), // 컨테이너 엘리먼트
+				data : {
+					api : {
+						readData : {
+							url : '${pageContext.request.contextPath}/grid/prdtLotChase.do',
+							method : 'GET'
+						}
+					},
+					initialRequest : false,
+					contentType : 'application/json'
+				},
+
+				rowHeaders : [ {
+					type : 'rowNum',
+					width : 100,
+					align : 'left',
+					valign : 'bottom'
+				}],
+				columns : [{
+					header : '생산지시번호',
+					name : 'indicaNo'
+				},{
+					header : '전표번호',
+					name : 'slipNo'
+				},{
+					header : '주문서번호',
+					name : 'orderNo'
+				},{
+					header : '소모자재 LOT',
+					name : 'rscLot'
+				}
+
+				],
+				
+
+			});
+		
+		grid2.on('onGridUpdated', function() {
+			$('td[data-column-name$="rscLot"]').css('backgroundColor','#ECC9AB');
+			
+			grid2.refreshLayout();
 		});
 		
 	</script>
