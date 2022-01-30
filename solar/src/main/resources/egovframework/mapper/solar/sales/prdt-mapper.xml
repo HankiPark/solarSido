@@ -292,7 +292,12 @@
 				]]>
 				<choose>
 					<when test="prdSt !=null and prdSt !=''">
-						and p.prdt_fg= #{prdSt}
+						<if test='prdSt =="I"'>
+							and p.prdt_fg = 'I' and p.prdt_lot not in (select prdt_lot from prdt_stc where prdt_fg= 'O')
+						</if>
+						<if test='prdSt =="O"'>
+							and p.prdt_fg = 'O'
+						</if>
 					</when>
 					<otherwise>
 						and p.prdt_fg in ('I','O')

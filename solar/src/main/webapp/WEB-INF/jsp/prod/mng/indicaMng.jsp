@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,22 +10,22 @@
 <body>
 	<h2>생산지시 관리</h2>
 	<hr />
-	
+
 	<!-- 모달 -->
 	<div id="planModal" title="미지시계획 조회">
 		<!-- <div id="planDgrid"></div> -->
 	</div>
 	<div id="indicaModal" title="생산지시서 목록"></div>
 	<div id="indicaDetailModal" title="생산지시서 조회"></div>
-	
+
 	<!-- 생산지시 테이블 -->
-	<div  class="row">
+	<div class="row">
 		<div class="col-9">
-			<form action="indicaMngFrm" name="indicaMngFrm">
+			<form name="indicaMngFrm">
 				<div>
-					<label>지시일자<span style="color: red">*</span></label>
-					<input type="date" id="indicaDt" name="indicaDt" required>
-					<label>생산지시명<span style="color: red">*</span></label>
+					<label>지시일자<span style="color: red">*</span></label> 
+					<input type="date" id="indicaDt" name="indicaDt" required> 
+					<label>생산지시명<span	style="color: red">*</span></label> 
 					<input type="text" id="indicaNm" name="indicaNm" required>
 				</div>
 				<div>
@@ -42,11 +42,11 @@
 	</div>
 	<hr />
 
-	<!-- 생산지시 상세 그리드--> 
+	<!-- 생산지시 상세 그리드-->
 	<div id="indicaDgrid" class="row">
 		<div class="col-8">
-			<label>지시번호</label>
-			<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
+			<label>지시번호</label> 
+			<input type="text" id="indicaNo" name="indicaNo" readonly>
 		</div>
 		<div id="btnMng" class="col-4">
 			<button type="button" id="planSearch">미지시계획</button>
@@ -59,21 +59,31 @@
 
 	<div class="row">
 		<!-- 소요자재 그리드 -->
-		<div id="rscGrid" class="col-4" >
-			<label>제품코드</label>
-			<input type="text" id="prdtCd" name="prdtCd" readonly> <br>
-			<label>제품명</label>
-			<input type="text" id="prdtNm" name="prdtNm" readonly> 
+		<div id="rscGrid" class="col-5">
+			<form name="rscFrm">
+				<label>지시상세번호</label> 
+				<input type="text" id="idcDno" name="idcDno" readonly> <br>
+				<label>제품코드</label> 
+				<input type="text" id="prdtCd" name="prdtCd" readonly> 
+				<label>제품명</label> 
+				<input type="text" id="prdtNm" name="prdtNm" readonly>
+			</form>
 		</div>
 		<div id="rscLotGrid" class="col-7">
-			<label>자재코드</label>
-			<input type="text" id="rscCd" name="rscCd" readonly> <br> 
-			<label>자재명</label>
-			<input type="text" id="rscNm" name="rscNm" readonly> 
+			<form name="rscLotFrm">
+				<label>자재코드</label> 
+				<input type="text" id="rscCd" name="rscCd" readonly> 
+				<label>자재명</label> 
+				<input type="text" id="rscNm" name="rscNm" readonly> <br>
+				<label>총 소요량</label> 
+				<input type="text" id="totalUseQty" name="totalUseQty" readonly>
+			</form>
 		</div>
 	</div>
-	
-	<br><br><br>
+
+	<br>
+	<br>
+	<br>
 	<!-- 소요자재 히든그리드 -->
 	<div id="hiddenRscGrid">
 		<button type="button" id="rscReset">초기화</button>
@@ -84,7 +94,14 @@
 <script type="text/javascript">
 	let iDt = new Date();
 	document.getElementById('indicaDt').value = iDt.toISOString().substring(0, 10);
-	let a;
+	
+	let idcQty;
+	let totalQty;
+	let idcNo;
+	let orderNo;
+	let totalUse;
+	
+	//------------------------------그리드생성------------------------------------------------
 	//지시 조회 그리드
 	let indicaDgrid = new tui.Grid({
 		el: document.getElementById('indicaDgrid'),
@@ -112,12 +129,17 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-				        hidden: true
+				        //hidden: true
 					  },
 					  {
 					    header: '지시번호',
 					    name: 'indicaNo',
-					    /* hidden: true */
+					    hidden: true
+					  },
+					  {
+					    header: '지시명',
+					    name: 'indicaNm',
+					    hidden: true
 					  },
 					  {
 					    header: '주문번호',
@@ -164,14 +186,14 @@
 					    validation: {
 			    	        required: true
 			    	      },
-			    	      onAfterChange(e) {
+			    	       onAfterChange(e) {
 				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    	    	indicaDgrid.setValue(e.rowKey, 'prodDay',
 				    	    					e.value / indicaDgrid.getValue(e.rowKey, 'dayOutput'));
-				    	    	a = e.value;
+				    	    	b = e.value;
 				    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
-				    	    		rscGrid.setValue(i, 'rscUseQty',
-		    	    					a * rscGrid.getValue(i, 'rscUseQty'));
+				    	    		rscGrid.setValue(i, 'totalUseQty',
+		    	    					b * rscGrid.getValue(i, 'rscUseQty'));
 				    	    	}
 				    	    }    	
 					  },
@@ -219,119 +241,6 @@
 			 		 ]
 			});
 	
-	indicaDgrid.on('onGridUpdated', function() {
-		indicaDgrid.refreshLayout();
-		rscGrid.refreshLayout();
-		rscLotGrid.refreshLayout();
-	});
-	
-	//지시상세 그리드 내부 클릭 이벤트
-	indicaDgrid.on('click', function(ev){
-		
-		rscGrid.refreshLayout();
-		let prdtCd = indicaDgrid.getValue(ev["rowKey"], "prdtCd")
-		let prdtNm = indicaDgrid.getValue(ev["rowKey"], "prdtNm")
-		
-		console.log(prdtCd + "&" + prdtNm);
-		$('#prdtCd').val(prdtCd);
-		$('#prdtNm').val(prdtNm);
-		
-		var rscGridParams = {
-				'prdtCd' : prdtCd,
-				'prdtNm' : prdtNm
-		};
-		
-		rscGrid.readData(1, rscGridParams, true);
-	});
-	
-	//생산지시서 조회 버튼: 기간별 생산계획 조회
-	let indicaDetailDialog = $("#indicaDetailModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 900,
-		height : 600,
-		buttons : {
-			'확인': function(){
-				indicaDetailDialog.dialog("close");
-			}
-		}
-	});
-  
- 	$('#btnFind').on('click', function(){
- 		console.log("생산지시서 조회")
-		indicaDetailDialog.dialog("open");
-		$("#indicaDetailModal").load("${pageContext.request.contextPath}/modal/findIndicaDetail", 
-									function() { indicaDetailList() })
-	});
- 	
- 	//계획조회 버튼: 미지시 계획상세 모달
-	let planDetailDialog = $("#planModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 900,
-		height : 400,
-		buttons : {
-			"확인" : function(){
-				console.log('확인');
-				planDetailDialog.dialog("close");
-			},
-			'취소': function(){
-				indicaDgrid.resetData([]);
-				planDetailDialog.dialog("close");
-			}
-		}
-	});
-	
- 	$('#planSearch').on('click', function(){
- 		console.log("미지시 계획 검색")
-		planDetailDialog.dialog("open");
-		$("#planModal").load("${pageContext.request.contextPath}/modal/findPlanDlist", 
-									function() { planDList() })
-	});
- 	
-	//지시조회 버튼: 미공정 지시서 모달
-	let indicaDialog = $("#indicaModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 900,
-		height : 400,
-		buttons : {
-			'취소': function(){
-				indicaDialog.dialog("close");
-			}
-		}
-	});
-	
- 	$('#indicaSearch').on('click', function(){
- 		console.log("작업지시서 검색")
-		indicaDialog.dialog("open");
-		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
-									function() { indicaList() })
-	});
- 	
-	//그리드 추가 버튼: 계획 없는 지시 등록
-	rowAdd.addEventListener("click", function(){
-		indicaDgrid.appendRow({
-			extendPrevRowSpan : true,
-			focus : true,
-			at : 0
-		});
-	});
-	
-	//그리드 삭제 버튼
-	//false면 확인 안하고 삭제함
-	rowDel.addEventListener("click", function(){
-		indicaDgrid.removeCheckedRows(true);
-	});
-	
- 	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
-	$('#btnReset').click(function() {
-		indicaMngFrm.reset();
-		indicaDgrid.resetData([]);
-		rscGrid.resetData([]);
-		rscLotGrid.resetData([]);
-	})
-	
 	//제품별 소요 자재 목록 그리드
 	let rscGrid = new tui.Grid({
 		el: document.getElementById('rscGrid'),
@@ -358,6 +267,11 @@
 					    hidden: true
 					  },
 					  {
+					    header: '주문번호',
+					    name: 'orderNo',
+					    hidden: true
+					  },
+					  {
 					    header: '자재코드',
 					    name: 'rscCd'
 					  },
@@ -368,47 +282,29 @@
 					  {
 					    header: '소요량',
 					    name: 'rscUseQty'
+					  },
+					  {
+					    header: '총 소요량',
+					    name: 'totalUseQty'
 					  }
 				],
 		summary: {
 	        position: 'bottom',
 	        height: 50,
 	        columnContent: {
-	        	rscNm: {
+	        	rscUseQty: {
 	        		template: function(valueMap) {
 	        			return '합계';
 	        			},
 	        		align:'center'
 	        	},
-	        	rscUseQty: {
+	        	totalUseQty: {
 					template: function(valueMap) {
 						return valueMap.sum;
 						}
 				}
 			}
 	    }
-	});
- 	
-	rscGrid.on('onGridUpdated', function() {
-		rscGrid.refreshLayout(); 
-		rscLotGrid.refreshLayout(); 
-	});
-	
-	//자재목록 그리드 내부 클릭 이벤트
-	rscGrid.on('click', function(ev){
-		let rscCd = rscGrid.getValue(ev["rowKey"], "rscCd")
-		let rscNm = rscGrid.getValue(ev["rowKey"], "rscNm")
-		
-		console.log(rscCd);
-		$('#rscCd').val(rscCd);
-		$('#rscNm').val(rscNm);
-		
-		var lotGridParams = {
-				'rscCd' : rscCd,
-				'rscNm' : rscNm
-		};
-		
-		rscLotGrid.readData(1, lotGridParams, true);
 	});
 	
 	//소요 자재 Lot 그리드
@@ -433,7 +329,14 @@
 					 {
 					    header: '자재코드',
 					    name: 'rscCd',
-					    hidden: true
+					  },
+					  {
+					    header: '주문번호',
+					    name: 'orderNo',
+					  },
+					  {
+					    header: '생산지시상세번호',
+					    name: 'indicaDetaNo',
 					  },
 					  {
 					    header: '자재LOT_NO',
@@ -457,7 +360,7 @@
 	        position: 'bottom',
 	        height: 50,
 	        columnContent: {
-	        	rscLot: {
+	        	rscStc: {
 	        		template: function(valueMap) {
 	        			return '합계';
 	        			},
@@ -472,20 +375,6 @@
 	    }
 	});
 	
-	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
-	rscLotGrid.on("check", (rscEv) => {
-		rscLotGrid.setSelectionRange({
-		    start: [rscEv.rowKey, 0],
-		    end: [rscEv.rowKey, rscLotGrid.getColumns().length-1]
-		});
-		hiddenRscGrid.appendRows(rscLotGrid.getCheckedRows(rscEv));
-	})
-	
-	rscLotGrid.on('onGridUpdated', function() {
-		rscGrid.refreshLayout(); 
-		rscLotGrid.refreshLayout(); 
-	});
-	
 	//소요 자재 목록 히든그리드
 	let hiddenRscGrid = new tui.Grid({
 		el: document.getElementById('hiddenRscGrid'),
@@ -495,7 +384,11 @@
 						url: '${pageContext.request.contextPath}/grid/rscGrid.do', 
 						method: 'GET',
 						initParams : { prdtCd: 'prdtCd'}
-			    				}
+			    				},
+    				modifyData: {
+			    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
+						method: 'POST'
+								}
 			  },
 				contentType: 'application/json',
 				initialRequest: false //초기에 안보이게 함
@@ -511,9 +404,8 @@
 					   // hidden: true
 					  },
 					  {
-					 	header: '제품코드',
-					    name: 'prdtCd',
-					    //hidden: true
+					 	header: '주문번호',
+					    name: 'orderNo',
 					  },
 					  {
 					    header: '자재코드',
@@ -546,15 +438,258 @@
 				}
 		    }
 	});
+	
+	//------------------------------그리드이벤트------------------------------------------------
+	//지시상세 그리드 이벤트
+	indicaDgrid.on('onGridUpdated', function() {
+		indicaDgrid.refreshLayout();
+		rscGrid.refreshLayout();
+		rscLotGrid.refreshLayout();
+		rscLotGrid.clear();
+	});
+	 
+	indicaDgrid.on('click', function() {
+		//지시상세번호 부여
+		$.ajax({
+				url:'${pageContext.request.contextPath}/ajax/makeDno.do',
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+				async: false,
+			}).done((res)=>{
+				console.log(res.num2)
+				let idx = 0;
+				for(i=0; i<indicaDgrid.getRowCount(); i++){
+					if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
+						console.log(idx)
+					} else {
+						indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
+						idx = Number(idx) +1
+					}
+				}
+			})
+		
+	});	
+	 
+	indicaDgrid.on('dblclick', function(ev){
+		//rscGrid.refreshLayout();
+		idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
+		idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
+		orderNo = indicaDgrid.getValue(ev.rowKey, "orderNo")
+		let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
+		let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
+		
+		console.log(idcNo + "&" + prdtCd);
+		$('#prdtCd').val(prdtCd);
+		$('#prdtNm').val(prdtNm);
+		$('#idcDno').val(idcNo);
+		
+		var rscGridParams = {
+				'prdtCd' : prdtCd,
+				'prdtNm' : prdtNm
+		};
+		rscGrid.readData(1, rscGridParams, true);
+	});
+
+	//자재목록 그리드 이벤트
+	rscGrid.on('onGridUpdated', function() {
+		rscGrid.refreshLayout(); 
+		rscLotGrid.refreshLayout();
+		for ( i=0; i< rscGrid.getRowCount(); i++){
+			rscGrid.setValue(i, 'totalUseQty',  1* idcQty * rscGrid.getValue(i, 'rscUseQty'));
+		}
+	});
+	
+	rscGrid.on('click', function(ev){
+		let rscCd = rscGrid.getValue(ev.rowKey, "rscCd")
+		let rscNm = rscGrid.getValue(ev.rowKey, "rscNm")
+		let totalUseQty = rscGrid.getValue(ev.rowKey, "totalUseQty")
+		
+		console.log(rscCd);
+		$('#rscCd').val(rscCd);
+		$('#rscNm').val(rscNm);
+		$('#totalUseQty').val(totalUseQty);
+		
+		var lotGridParams = {
+				'rscCd' : rscCd,
+				'rscNm' : rscNm,
+				'totalUseQty' : totalUseQty
+		};
+		rscLotGrid.readData(1, lotGridParams, true);
+	});
+	
+	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
+	rscLotGrid.on("editingFinish", (rscEv) => {
+		totalUse = rscLotGrid.getValue(rscEv.rowKey, 'rscQty')
+		rscLotGrid.check(rscEv.rowKey)
+		totalQty = $('#totalUseQty').val();
+		if ( totalQty <= rscLotGrid.getSummaryValues('rscQty').sum ) {
+			for ( i=rscEv.rowKey+1 ; i<rscLotGrid.getRowCount(); i++){
+				rscLotGrid.disableRow(i, true)
+			}
+		}
+	})
+	
+	rscLotGrid.on("check", (rscEv) => {
+		if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
+			hiddenRscGrid.appendRow(rscLotGrid.getRow(rscEv.rowKey),{
+				extendPrevRowSpan : true,
+				focus : true,
+				at : 0
+			});
+		}
+		hiddenRscGrid.setValue(rscEv.rowKey, 'rscUseQty', totalUse);
+	})
+	
+	rscLotGrid.on("click", (rscEv) => {
+		for ( i=0 ; i<rscLotGrid.getRowCount(); i++){
+			rscLotGrid.setValue(i, 'indicaDetaNo', idcNo)
+			rscLotGrid.setValue(i, 'orderNo', orderNo)
+		}
+	})
+	
+	rscLotGrid.on("uncheck", (rscEv) => {
+		hiddenRscGrid.removeRow(rscEv.rowKey);
+		rscLotGrid.setValue(rscEv.rowKey, 'rscQty', '');
+		if ( totalQty >= rscLotGrid.getSummaryValues('rscQty').sum ) {
+			for ( i=rscEv.rowKey+1 ; i<rscLotGrid.getRowCount(); i++){
+				rscLotGrid.enableRow(i, true)
+			}
+		}
+	})
+	
+	rscLotGrid.on('onGridUpdated', function() {
+		rscGrid.refreshLayout(); 
+		rscLotGrid.refreshLayout(); 
+	});
+	
+	//히든 그리드 이벤트
+	hiddenRscGrid.on('onGridUpdated', function() {
+		rscGrid.refreshLayout(); 
+		rscLotGrid.refreshLayout();
+		indicaDgrid.refreshLayout();
+	});
+	
+	//------------------------------버튼------------------------------------------------
+	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
+	$('#btnReset').click(function() {
+		indicaMngFrm.reset();
+		rscFrm.reset();
+		rscLotFrm.reset();
+		indicaDgrid.resetData([]);
+		rscGrid.resetData([]);
+		rscLotGrid.resetData([]);
+		hiddenRscGrid.resetData([]);
+	})
+
+	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
+	$('#btnSave').on("click", function(){
+		indicaNm = $('#indicaNm').val();
+		indicaDt = $('#indicaDt').val();
+		
+		if (indicaNm == null || indicaNm == ""){
+			alert('필수입력칸이 비어있습니다.');
+			$('#indicaNm').focus();
+		} else {
+			for ( i =0 ; i <= indicaDgrid.getRowCount(); i++) {
+				indicaDgrid.setValue(i,'indicaNm',planNm);
+				indicaDgrid.setValue(i,'indicaDt',planDt);
+			}
+			if(gridCheck()){
+				if (confirm("지시를 저장하시겠습니까?")) { 
+					//planDgrid.blur();
+					planDgrid.request('modifyData'); // modifyData의 url 호출
+					
+					$.ajax
+				}
+			}
+		} 
+	})
+	
+	//생산지시서 조회 버튼: 기간별 생산계획 조회 모달
+	let indicaDetailDialog = $("#indicaDetailModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 600,
+		buttons : {
+			'확인': function(){
+				indicaDetailDialog.dialog("close");
+			}
+		}
+	});
+  
+ 	$('#btnFind').on('click', function(){
+ 		console.log("생산지시서 조회")
+		indicaDetailDialog.dialog("open");
+		$("#indicaDetailModal").load("${pageContext.request.contextPath}/modal/findIndicaDetail", 
+									function() { indicaDetailList() })
+	});
+ 	
+ 	//미지시계획 버튼: 미지시 계획상세 모달
+	let planDetailDialog = $("#planModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 400,
+		buttons : {
+			"확인" : function(){
+				console.log('확인');
+				planDetailDialog.dialog("close");
+			},
+			'취소': function(){
+				planDetailDialog.dialog("close");
+			}
+		}
+	});
+ 	
+ 	$('#planSearch').on('click', function(){
+ 		console.log("미지시 계획 검색")
+		planDetailDialog.dialog("open");
+		$("#planModal").load("${pageContext.request.contextPath}/modal/findPlanDlist", 
+									function() { planDList() })
+	});
+ 	
+	//지시수정 버튼: 미공정 지시서 모달
+	let indicaDialog = $("#indicaModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 400,
+		buttons : {
+			'취소': function(){
+				indicaDgrid.resetData([]);
+				indicaDialog.dialog("close");
+			}
+		}
+	});
+	
+ 	$('#indicaSearch').on('click', function(){
+ 		console.log("작업지시서 검색")
+		indicaDialog.dialog("open");
+		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
+									function() { indicaList() })
+	});
+ 	
+	//그리드 추가 버튼: 계획 없는 지시 등록
+	rowAdd.addEventListener("click", function(idx){
+		indicaDgrid.appendRow({},{
+			extendPrevRowSpan : true,
+			focus : true,
+			at : 0
+		});
+	});
+	
+	//그리드 삭제 버튼
+	//false면 확인 안하고 삭제함
+	rowDel.addEventListener("click", function(){
+		indicaDgrid.removeCheckedRows(true);
+	});
+	
+	//히든 그리드 초기화버튼
 	$('#rscReset').on('click', function(){
 		hiddenRscGrid.resetData([]);
 		rscLotGrid.resetData([]);
 	})
- 	
-	hiddenRscGrid.on('onGridUpdated', function() {
-		rscGrid.refreshLayout(); 
-		indicaDgrid.refreshLayout();
-	});
 	
 	//제품코드 입력시 제품명 입력 함수
 	 

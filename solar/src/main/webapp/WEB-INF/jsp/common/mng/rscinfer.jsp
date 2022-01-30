@@ -44,9 +44,10 @@ var grid = new tui.Grid({
 	  columns : 
 		  [
 			{
-				header : '반품사유코드',
+				header : '자재불량코드',
 				name : 'rtngdResnCd',
-				editor : 'text'
+				editor : 'text',
+			    sortable: true
 			},
 			{
 				header : '불량명',

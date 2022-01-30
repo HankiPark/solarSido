@@ -321,6 +321,8 @@ position: absolute;
 		
 		Grid.on('onGridUpdated', function() {
 		$('td').css('backgroundColor','');
+		$('td').css('color','');
+		$('td').css('fontSize',);
 		Grid.refreshLayout();
 		var a = Grid.getRowCount();
 		var save =Grid.getRowCount();
@@ -346,7 +348,6 @@ position: absolute;
 		}
 		setTimeout(function(){
 			for(let i=save;i<=a;i++){
-				console.log(i);
 				$('td[data-row-key$="'+i+'"]').css('backgroundColor','#fff');
 				$('td[data-row-key$="'+i+'"]').css('color','#e37c6b');
 				$('td[data-row-key$="'+i+'"]').css('fontSize',15);

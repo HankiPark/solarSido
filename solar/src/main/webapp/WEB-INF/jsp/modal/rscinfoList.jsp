@@ -37,7 +37,8 @@ function rscinfoList(key){
 			  columns : [
 					{
 						header : '자재코드',
-						name : 'rscCd'
+						name : 'rscCd',
+					    sortable: true,
 					},
 					{
 						header : '자재명',
@@ -73,7 +74,7 @@ function rscinfoList(key){
 						name : 'rscUntprc',
 						hidden : true
 					}
-				]  
+				]
 			  });
 
 	gridRsc.on('onGridUpdate', function(){

@@ -98,6 +98,7 @@ function planDList(){
 	 		 ]
 	});	
 	
+	let list;
 	//선택버튼 : 체크된 계획 가져오기
 	planDgrid.on('check', (ev) => {
 		let pick = planDgrid.getValue(ev["rowKey"], "prdtCd")
@@ -107,14 +108,15 @@ function planDList(){
 				planDgrid.disableRow(i, true);
 			} 
 		}
+		indicaDgrid.resetData([]);
 		//indicaDgrid.resetData(planDgrid.getCheckedRows());
-		//indicaDgrid.resetData([]);
-		//indicaDgrid.appendRows(planDgrid.getCheckedRows());
+		indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
 	});
 	
 	planDgrid.on('uncheck', (ev) => {
 		console.log(ev);
 		let unpick = planDgrid.getValue(ev["rowKey"], "prdtCd")
+		console.log(planDgrid.getCheckedRows())
 		for ( i=0; i<planDgrid.getRowCount(); i++){
 			if(planDgrid.getValue(i, "prdtCd") != unpick) {
 				planDgrid.enableRow(i, true);

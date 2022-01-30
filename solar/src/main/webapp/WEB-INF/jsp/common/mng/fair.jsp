@@ -79,11 +79,34 @@
 			}, {
 				header : '공정구분',
 				name : 'prcsFg',
-				editor : 'text'
+				editor : {
+					type:'select',
+					options:{
+						listItems : [
+							{
+								text:'제조 공정',
+								value: '1'
+							},
+							{
+								text:'가공 공정',
+								value: '2'
+							},
+							{
+								text:'접착 공정',
+								value: '3'
+							},
+							{
+								text:'검사 공정',
+								value: '4'
+							}
+						]
+					}
+				}
 			}, {
 				header : '공정명',
 				name : 'prcsNm',
 				editor : 'text'
+				
 			}, {
 				header : '작업설명',
 				name : 'prcsDesct',
@@ -93,7 +116,7 @@
 				name : 'prcsUnit',
 				editor : 'text'
 			}, {
-				header : '생산일수',
+				header : '작업일수',
 				name : 'prodPd',
 				editor : 'text'
 			} ]
@@ -108,9 +131,9 @@
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				grid.resetOriginData();
-			} else {
-				grid.refreshLayout()
-			}
+				grid.refreshLayout();
+				grid.readData(1,{},true);
+			} 
 		});
 
 		$('#btnAdd').on('click', function appendRow(index) {
