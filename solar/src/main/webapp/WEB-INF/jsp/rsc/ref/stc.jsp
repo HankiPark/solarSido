@@ -40,24 +40,27 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
-    sortable: true,
     columns: [
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
+        sortable: true,
       },
       {
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+        sortable: true,
       },
       {
         header: '재고',
-        name: 'rscStc'
+        name: 'rscStc',
+        sortable: true,
       },
       {
         header: '안전재고',
-        name: 'safStc'
+        name: 'safStc',
+        sortable: true,
       },
       {
         header: '규격',
@@ -69,7 +72,8 @@
       },
       {
         header: '단가',
-        name: 'rscUntprc'
+        name: 'rscUntprc',
+        sortable: true,
       }
     ]
   });
