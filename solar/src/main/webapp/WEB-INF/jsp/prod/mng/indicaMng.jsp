@@ -12,11 +12,10 @@
 	<hr />
 
 	<!-- 모달 -->
-	<div id="planModal" title="미지시계획 조회">
-		<!-- <div id="planDgrid"></div> -->
-	</div>
-	<div id="indicaModal" title="생산지시서 목록"></div>
+	<div id="planModal" title="미지시 계획 조회"></div>
+	<div id="indicaModal" title="미공정 생산지시서 목록"></div>
 	<div id="indicaDetailModal" title="생산지시서 조회"></div>
+	<div id="eqmUoModal" title="설비현황 조회"</div>
 
 	<!-- 생산지시 테이블 -->
 	<div class="row">
@@ -44,11 +43,12 @@
 
 	<!-- 생산지시 상세 그리드-->
 	<div id="indicaDgrid" class="row">
-		<div class="col-8">
+		<div class="col-6">
 			<label>지시번호</label> 
 			<input type="text" id="indicaNo" name="indicaNo" readonly>
 		</div>
-		<div id="btnMng" class="col-4">
+		<div id="btnMng" class="col-6">
+			<button type="button" id="eqmSearch">설비조회</button>
 			<button type="button" id="planSearch">미지시계획</button>
 			<button type="button" id="indicaSearch">지시수정</button>
 			<button type="button" id="rowAdd">추가</button>
@@ -65,10 +65,11 @@
 				<input type="text" id="idcDno" name="idcDno" readonly> <br>
 				<label>제품코드</label> 
 				<input type="text" id="prdtCd" name="prdtCd" readonly> 
-				<label>제품명</label> 
-				<input type="text" id="prdtNm" name="prdtNm" readonly>
+				<!-- <label>제품명</label>  -->
+				<input type="hidden" id="prdtNm" name="prdtNm" readonly>
 			</form>
 		</div>
+		<!-- 자재별 lot 선택 그리드 -->
 		<div id="rscLotGrid" class="col-7">
 			<form name="rscLotFrm">
 				<label>자재코드</label> 
@@ -82,12 +83,14 @@
 	</div>
 
 	<br>
-	<br>
-	<br>
 	<!-- 소요자재 히든그리드 -->
 	<div id="hiddenRscGrid">
 		<button type="button" id="rscReset">초기화</button>
 	</div>
+	<!-- 제품lot별 자재lot 부여 히든그리드 -->
+	<!-- <div id="hiddenLotGrid">
+		<button type="button" id="rscReset">초기화</button>
+	</div> -->
 </body>
 
 <!-- 스크립트 -->
@@ -156,12 +159,22 @@
 					  {
 					    header: '제품코드',
 					    name: 'prdtCd',    
-					    editor: 'text',
+					    formatter: 'listItemText',
+				    	editor: {
+				    		type:'select',
+				    		options: {
+				    			listItems: [
+				    				{text:'p001', value:'p001'},
+				    				{text:'p002', value:'p002'},
+				    				{text:'p003', value:'p003'},
+				    				]
+					    		}
+					  		},
 				    	sortingType: 'desc',
 				        sortable: true,
 				        validation: {
 			    	        required: true
-			    	      }
+		    	      }
 					  },		  
 					  {
 					    header: '제품명',
@@ -176,6 +189,12 @@
 					  {
 					    header: '주문량',
 					    name: 'orderQty',
+					    sortingType: 'desc',
+				        sortable: true
+					  },
+					  {
+					    header: '계획량',
+					    name: 'planQty',
 					    sortingType: 'desc',
 				        sortable: true
 					  },
@@ -235,7 +254,7 @@
 					    editor: 'text'
 					  },
 					  {
-					    header: '제품LOT_NO 생성',
+					    header: '제품LOT_NO',
 					    name: 'prdt_lot'
 					  }
 			 		 ]
@@ -329,6 +348,7 @@
 					 {
 					    header: '자재코드',
 					    name: 'rscCd',
+					    hidden: true
 					  },
 					  {
 					    header: '주문번호',
@@ -399,7 +419,7 @@
 		bodyHeight: 250,
 		columns: [
 					 {
-					    header: '생산지시상세번호',
+					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
 					   // hidden: true
 					  },
@@ -439,6 +459,70 @@
 		    }
 	});
 	
+	//제품lot별 자재lot 연결 히든그리드
+	/* let hiddenLotGrid = new tui.Grid({
+		el: document.getElementById('hiddenLotGrid'),
+		data: {
+			  api: {
+			    	readData: {
+						url: '${pageContext.request.contextPath}/grid/lotGrid.do', 
+						method: 'GET',
+						initParams : { prdtCd: 'prdtCd'}
+			    				},
+    				modifyData: {
+			    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
+						method: 'POST'
+								}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
+		scrollX: false,
+		scrollY: true,
+		rowHeaders : [ 'rowNum' ],
+		bodyHeight: 250,
+		columns: [
+					 {
+					    header: '지시상세번호',
+					    name: 'indicaDetaNo',
+					   // hidden: true
+					  },
+					  {
+					 	header: '제품코드',
+					    name: 'prdtCd',
+					  },
+					  {
+					 	header: '제품LOT_NO',
+					    name: 'prdtLot',
+					  },
+					  {
+					    header: '자재코드',
+					    name: 'rscCd'
+					  },
+					  {
+					    header: '자재LOT_NO',
+					    name: 'rscLot'
+					  }
+				],
+			summary: {
+		        position: 'bottom',
+		        height: 50,
+		        columnContent: {
+		        	rscLot: {
+		        		template: function(valueMap) {
+		        			return '합계';
+		        			},
+		        		align:'center'
+		        	},
+		        	rscUseQty: {
+						template: function(valueMap) {
+							return valueMap.sum;
+							}
+					}
+				}
+		    }
+	});
+		 */
 	//------------------------------그리드이벤트------------------------------------------------
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('onGridUpdated', function() {
@@ -448,7 +532,12 @@
 		rscLotGrid.clear();
 	});
 	 
-	indicaDgrid.on('click', function() {
+	indicaDgrid.on('click', function(ev) {
+		if ( ev["columnName"] == "prdtCd" ) {
+			prdtCdDialog.dialog("open");
+			$("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", 
+					function(){ prdtCdList() })
+		}  else {
 		//지시상세번호 부여
 		$.ajax({
 				url:'${pageContext.request.contextPath}/ajax/makeDno.do',
@@ -467,9 +556,9 @@
 					}
 				}
 			})
-		
+		}
 	});	
-	 
+	
 	indicaDgrid.on('dblclick', function(ev){
 		//rscGrid.refreshLayout();
 		idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
@@ -669,8 +758,29 @@
 		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
 									function() { indicaList() })
 	});
- 	
-	//그리드 추가 버튼: 계획 없는 지시 등록
+
+ 	//설비조회 버튼: 설비 비가동현황 모달
+ /* 	let eqmUoDialog = $("#eqmUoModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 400,
+		buttons : {
+			"확인": function(){
+				eqmUoDialog.dialog("close");
+			}
+		}
+	});
+	 */
+	
+ 	$('#eqmSearch').on('click', function(){
+ 		console.log("설비 비가동현황 검색")
+		eqmUoDialog.dialog("open");
+		$("#eqmUoModal").load("${pageContext.request.contextPath}/modal/findEqmUo", 
+									function() { eqmUoList() })
+	});
+
+ 	//그리드 추가 버튼: 계획 없는 지시 등록
 	rowAdd.addEventListener("click", function(idx){
 		indicaDgrid.appendRow({},{
 			extendPrevRowSpan : true,
@@ -691,7 +801,7 @@
 		rscLotGrid.resetData([]);
 	})
 	
-	//제품코드 입력시 제품명 입력 함수
+	//------------------------------함수------------------------------------------------
 	 
 </script>
 </html>

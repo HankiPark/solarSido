@@ -58,4 +58,9 @@ public class IndicaServiceImpl implements IndicaService {
 		}
 		return 1;
 	}
+
+	@Override
+	public List<?> findEqmUo(IndicaVO idcVo) {
+		return idcMapper.findEqmUo(idcVo);
+	}
 }
