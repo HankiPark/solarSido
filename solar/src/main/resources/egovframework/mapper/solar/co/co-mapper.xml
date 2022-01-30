@@ -5,7 +5,12 @@
 	<select id="selectAll" resultType="solar.co.cmmn.service.Co">
 		select * from co
 	</select>
-
+	
+	<select id="selectR" resultType="solar.co.cmmn.service.Co">
+		SELECT * FROM CO
+		WHERE CO_FG = 'R'
+	</select>
+	
 	<select id="search" resultType="solar.co.cmmn.service.Co">
 		select * from co
 		where 1=1

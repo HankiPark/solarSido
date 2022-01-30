@@ -25,4 +25,10 @@ public class CoServiceImpl implements CoService{
 		return coMapper.search(map);
 	}
 
+	@Override
+	public List<Co> selectR(Co covo) {
+		// TODO Auto-generated method stub
+		return coMapper.selectR(covo);
+	}
+
 }
