@@ -55,6 +55,7 @@
 </head>
 
 <body>
+	<h1>설비정보 관리</h1>
     <div class="wrap">
         <div class="tab_menu">
             <ul class="list">
@@ -71,7 +72,7 @@
                     <div data-role="fieldcontain" class="col-3">
                         <div>
                             <label>설비</label>
-                            <input type="text" id="eqmParam" name="eqmParam">
+                            <input type="text" id="eqmParam" name="eqmParam" placeholder="설비코드 또는 설비명">
                         </div>
                     </div>
                     <label for="defandroid">구매일</label>
@@ -170,12 +171,15 @@
                         <input type="hidden" id="eqmYn" name="eqmUn" style="width:90%" value="Y">
                     </div>
                 </div>
-                <button type="button" id="btnSub" style="width:60px">추가</button>
-                <button type="button" id="btnPut" class="btn btn-default btn-simple btn-sm">저장</button>
+                <div align="center">
+	                <button type="button" id="btnSub" class="btn btn-default btn-simple btn-sm">추가</button>
+                </div>
                 <br>
-                <button type="button" id="removeRow" style="width:60px">행 삭제</button>
             </div>
         </div>
+        <h3>추가될 데이터</h3>
+		<button type="button" id="removeRow" class="btn btn-default btn-simple btn-sm">삭제</button>
+		<button type="button" id="btnPut" class="btn btn-default btn-simple btn-sm">저장</button>
         <div id="inputGrid"></div>
 
 
@@ -294,10 +298,8 @@
 
             const dataSource = {
                 api: {
-                    readData: {
-                        url: '${pageContext.request.contextPath}/grid/eqmList.do',
-                        method: 'GET'
-                    },
+                    readData: {url: '${pageContext.request.contextPath}/grid/eqmList.do',method: 'GET'},
+                    modifyData: {url: '${pageContext.request.contextPath}/eqm/eqmPut',method: 'PUT'} 
                 },
                 contentType: 'application/json'
             };
@@ -339,7 +341,7 @@
                         editor: 'text',
                     },
                     {
-                        header: '라인번호',
+                        header: '모델',
                         name: 'eqmMdl',
                         editor:{
                         	type: 'select',
@@ -595,6 +597,44 @@
             		}
             }
             
+            grid.on('click',function(ev){
+            	console.log(ev);
+            	$('#insertBtn').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    opens: 'right',
+                    startDate: moment().startOf('hour').add(-7, 'day'),
+                    endDate: moment().startOf('hour'),
+                    minYear: 1990,
+                    maxYear: 2025,
+                    autoApply: true,
+                    locale: {
+                        format: 'YYYY-MM-DD',
+                        separator: " ~ ",
+                        applyLabel: "적용",
+                        cancelLabel: "닫기",
+                        prevText: '이전 달',
+                        nextText: '다음 달',
+                        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월',
+                            '12월'
+                        ],
+                        daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+                        showMonthAfterYear: true,
+                        yearSuffix: '년'
+                    }
+                }, function (start, end, label) {
+                    console.log(start, end, label);
+                    console.log(start.format('YYYY-MM-DD'));
+                },
+
+            );
+            });
+            
+            
+            let updateBtn = document.getElementById('updateBtn');
+            updateBtn.addEventListener('click',function(){
+            	grid.request('modifyData');
+            });
         </script>
 </body>
 

@@ -39,11 +39,13 @@
 			<div class="card card-pricing card-primary card-white">
 				<div class="card-body" >
 					<ul>
-						<li>발주량: <span id="ordrQty"></span></li>
-						<li>검수합격량: <span id="rscPassedQty"></span></li>
-						<li>수량확인<input id="confirmedQty"></li>
-						<li><button type="button" id="btnIn">입고</button></li>
+						<li>발주량:<br><input id="ordrQty" disabled></li><br>
+						<li>검수합격량:<br><input id="rscPassedQty" disabled></li><br>
+						<li>수량확인<br><input id="confirmedQty"></li>
 					</ul>
+					<div align="center">
+						<button type="button" id="btnIn">입고</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -204,8 +206,8 @@
 			curRowKey = ev.rowKey;
 			let ordrQty = document.getElementById("ordrQty");
 			let rscPassedQty = document.getElementById("rscPassedQty");
-			ordrQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
-			rscPassedQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
+			ordrQty.value = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
+			rscPassedQty.value = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
 		//}
 	});
 	grid.on('onGridMounted',function(){

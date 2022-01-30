@@ -147,7 +147,7 @@ $(function() {
       grid.refreshLayout();
     });
   grid.on('click',function(ev){
-      if(ev.columnName =='rscNm' || ev.columnName == 'rscCd' || ev.columnName == 'coNm'){
+      if((ev.columnName =='rscNm' || ev.columnName == 'rscCd' || ev.columnName == 'coNm')&&ev.targetType!='columnHeader'){
     	  evVar = ev;
     	  rscDialog.dialog("open");
 	   	  $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");

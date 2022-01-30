@@ -2,24 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="solar.eqm.mng.service.impl.EqmMapper">
-	 
-<!-- 설비 조회 -->
-<!--<select id="eqmList" resultType="EqmVO" parameterType="EqmVO">
-    SELECT 
-    	 EQM_CD
-		  , EQM_FG
-		  , EQM_NM
-		  , EQM_MDL
-		  , LI_NO
-		  , EMP_ID
-		  , ENERGY
-		  , LF
-		  , TEMP
-		  , UPH
-		  , PRCS_CD
-    FROM EQM
-    ORDER BY 1
-</select> -->
 
 	<select id="eqmList" resultType="EqmVO" parameterType="map">
 		select e.eqm_cd, e.eqm_fg, e.eqm_nm, e.eqm_mdl, e.eqm_spec, e.eqm_co, to_char(e.purc_dt,'yyyy/MM/dd') "purc_dt", e.purc_amt, e.li_no, e.emp_id, e.energy, e.lf, e.temp, e.uph, e.eqm_img, e.prcs_cd, e.eqm_yn
@@ -64,5 +46,34 @@
 			#{eqmYn}
 		)
 	</insert>
+	
+	<delete id="delete">
+		delete from eqm
+		where eqm_cd = #{eqmCd}
+	</delete>
+	
+	<update id="update">
+		update
+			eqm
+		set
+			eqm_fg = #{eqmFg},
+			eqm_nm = #{eqmNm},
+			eqm_mdl = #{eqmMdl},
+			eqm_spec = #{eqmSpec},
+			eqm_co = #{eqmCo},
+			purc_dt = #{purcDt},
+			purc_amt = #{purcAmt},
+			li_no = #{liNo},
+			emp_id = #{empId},
+			energy = #{energy},
+			lf = #{lf},
+			temp = #{temp},
+			uph = #{uph},
+			eqm_img = #{eqmImg},
+			prcs_cd = #{prcsCd},
+			eqm_yn = #{eqmYn}
+		where
+			eqm_cd = #{eqmCd}
+	</update>
 
 </mapper>
