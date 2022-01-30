@@ -21,4 +21,6 @@ public interface IndicaService {
 
 	int modifyData(ModifyVO<IndicaVO> mvo);
 
+	List<?> findEqmUo(IndicaVO idcVo);
+
 }

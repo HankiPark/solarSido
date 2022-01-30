@@ -177,8 +177,11 @@
 	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
 	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
 	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
-	    			rStcGrid.setValue(e.rowKey, 'ndStc',
-	    					e.value * rStcGrid.getValue(e.rowKey, 'rscUseQty'));
+	    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
+	    	    		console.log(e.value)
+	    	    		rscGrid.setValue(i, 'ndStc',
+	    	    				e.value * rscGrid.getValue(i, 'rscUseQty'));
+	    	    	}
 	    	    }    	
 			  },
 			  {
@@ -285,7 +288,7 @@
 	  	console.log(ev.xhr)
 	  	planDgrid.refreshLayout();
      	pStcGrid.refreshLayout(); 
-     	console.log(pStcGrid.getValue(1, 'prdtStc'));
+     	console.log(pStcGrid.getValue(0, 'prdtStc'));
    	});
 	
  	
@@ -342,26 +345,22 @@
 					  },
 					  {
 					    header: '부족량',
-					    name: 'shtgStc'
+					    name: 'lackStc'
 					  }
 					  
 				]
 	});
  	
 	rStcGrid.on('response',function(ev){
-	  	console.log(ev.xhr)
      	rStcGrid.refreshLayout(); 
-		  
-	  	console.log(rStcGrid.getValue(1, 'rscStc'));
-
    	});
 	 
-	rStcGrid.on('onGridUpdated', function() {
+	rStcGrid.on('onGridUpdated', function(ev) {
 		let rowCnt = rStcGrid.getRowCount();
 		for(let i = 0; i<rowCnt; i++){
 			  let rscStc = rStcGrid.getValue(i, 'rscStc');
-			  let safStc = rStcGrid.getValue(i, 'safStc');
-			  if(rscStc < safStc){
+			  let ndStc = rStcGrid.getValue(i, 'ndStc');
+			  if(parseInt(rscStc) < parseInt(ndStc)){
 				  rStcGrid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
 			  }
 		 }
