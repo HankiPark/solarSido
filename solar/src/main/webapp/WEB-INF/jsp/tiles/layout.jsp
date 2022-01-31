@@ -17,6 +17,7 @@
  <link
 	href="${pageContext.request.contextPath}/resources/dist/css/style.min.css"
 	rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
       <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
@@ -55,10 +56,59 @@
 
 
 <script type="text/javascript">
-$(function(){
+var UID=null;
+function receiveMsgFromParent( e ) {
+    // e.data가 전달받은 메시지
+    console.log('부모로 부터 받은 메시지 ', e.data );
+    UID = e.data;
+}
+var sock  = null;
+function connectWs(){
 	
+	sock = new SockJS(getContextPath()+'/ajax/myHandler');
+	
+   	sock.onopen = function() {
 
+        
+     console.log('open');
 
+	 };
+
+ 	sock.onmessage = function(e) {
+   	  console.log('message', e.data);
+   	  toastr.success(e.data);
+ //  	  sock.close();
+	 };
+
+ 	sock.onclose = function() {
+ 	    console.log('close');
+	 };
+ 
+  };
+
+	function getContextPath() {
+	    var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	    return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+	}; 
+	function sendMsgToParent( msg,ct ) {
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/ajax/webinsert",
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			data : {userId : UID,
+					msTitle : msg,
+					msContent : ct}
+		}).done((ev)=>{
+			console.log(ev);
+			sock.send(UID+","+msg);
+			window.parent.postMessage(ev.count, '*' );
+		})
+	    
+	}
+$(function(){
+	window.addEventListener('message',receiveMsgFromParent);
+ 	connectWs();
 
 	$("button:contains('🔍')").html("<i class='fas fa-search-plus'> </i>");
 	$("button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>");

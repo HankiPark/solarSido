@@ -406,8 +406,8 @@ $(function() {
 			});
 
 	//조회버튼
-	$('#findgrid').on('click', function() {
-
+	$('#findgrid').on('click', function() {		
+		sendMsgToParent('조회','/sales/mng/prdt_inout_mng');
 		var startT = $("#startT").val().substring(0,10);
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
@@ -443,6 +443,7 @@ $(function() {
 			
 		}else{
 			 inGrid.request('modifyData',{'showConfirm' : false});
+			 
 			 setTimeout(()=>{
 					var startT = $("#startT").val().substring(0,10);
 					var endT = $("#startT").val().substring(13,23);
@@ -464,7 +465,7 @@ $(function() {
 	$('#deleteBtn').on('click', function appendRow(index) {
 		inGrid.blur();
 		inGrid.removeCheckedRows(false);
-
+		inGrid.request('modifyData',{'showConfirm' : false});
 	});
 
 	//업체명단 input 클릭시

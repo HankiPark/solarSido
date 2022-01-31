@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.wsk.msg.service.impl.MessageMapper">
+	<select id="countMsg" resultType="String">
+		select count(*) from message_tb where user_id = #{userId} and read_yn='NY'
+	</select>
+
+
+	<insert id="insertMsg">
+		insert into message_tb(user_id,ms_dt,ms_title,read_yn,ms_content) values(#{userId},sysdate,#{msTitle},'NY',#{msContent})
+	</insert>
+	
+	<select id="findMsg" resultType="MessageVO">
+		select * from message_tb where user_id = #{userId} order by read_yn,ms_dt
+	</select>
+	
+	<update id="updateMsg">
+		update message_tb set read_yn='R' where user_id = #{userId}
+	</update>
+	
+	<delete id="deleteMsg">
+		delete from message_tb where user_id=#{userId}
+	</delete>
+	
+</mapper>

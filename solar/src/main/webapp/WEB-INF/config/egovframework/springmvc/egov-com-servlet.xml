@@ -135,13 +135,11 @@
 
 	
     <websocket:handlers>
-        <websocket:mapping path="/myHandler" handler="myHandler"/>
-        <websocket:handshake-interceptors>
-            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
-        </websocket:handshake-interceptors>
+        <websocket:mapping path="/ajax/myHandler" handler="WebSocketHandler "/>
+
     </websocket:handlers>
  
-    <bean id="myHandler" class="solar.wsk.msg.web.SocketHandlerController"/>	<!-- Facebook 설정 -->
+    <bean id="WebSocketHandler " class="solar.wsk.msg.web.SocketHandlerController"/>	<!-- Facebook 설정 -->
 	<mvc:default-servlet-handler />
 	<!-- <bean class="org.springframework.social.connect.web.ProviderSignInController"> 
 		<constructor-arg ref="connectionFactoryLocator" /> <constructor-arg ref="usersConnectionRepository" 

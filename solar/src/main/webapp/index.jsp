@@ -13,7 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
 <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -63,20 +63,11 @@
       </li>
        <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <a class="nav-link" data-toggle="dropdown" href="#" id ="noticeNav">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">0 Notifications</span>
-          <div class="dropdown-divider" ></div>
-       <!--    <a href="#" class="dropdown-item" name="ddd">
-            <i class="fas fa-envelope mr-2"></i><span class="float-left text-muted text-sm" name="abc"></span> 
-             <span class="float-right text-muted text-sm">0 mins</span> 
-          </a>
-          -->
-       <div id="msgStack"></div>
-
         </div>
       </li>
 
@@ -84,7 +75,7 @@
    
   </nav>
   <!-- /.navbar -->
-
+   <div id="msgStack"></div>
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -485,11 +476,14 @@
   </aside>
   <!-- /.control-sidebar -->
 </div>
+
 <script type="text/javascript">
-var socket  = null;
+
+
 
 
 $(function(){
+
 	if("${loginVO.uniqId}"==""){
 		$("#logoutWd").css("display","none");
 		$("#loginWd").css("display","block");
@@ -504,7 +498,6 @@ $(function(){
 			async: false,
 			dataType:'json'
 		}).done((res)=>{
-			
 			for(let g of res.menu){
 				if(g.upperMenuNo==0){
 					$(".nav-sidebar").append(`<li class="nav-item">
@@ -526,14 +519,38 @@ $(function(){
 							`)
 				}
 			}
+		});
+		$.ajax({
+			url : "${pageContext.request.contextPath}/ajax/webcount",
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			data : {userId : "${loginVO.id}"}
+		}).done((ev)=>{
+			if(ev.count=='0'){
+				 $(".navbar-badge").html('');
+			}else{
+			 $(".navbar-badge").html(ev.count);
+			}
 		})
 	}
 	
-
-
-
+ $(document).on('click','.nav-treeview',function(){
+		$("iframe").attr("name","child");
+		setTimeout(()=>{
+		for(var i =0; i <document.getElementsByName("child").length;i++){
+			document.getElementsByName("child")[i].contentWindow.postMessage("${loginVO.id}",'*');	
+		}
+		},2000);
+ })
+ 
 })
+window.addEventListener( 'message', receiveMsgFromChild );
 
+// 자식으로부터 메시지 수신
+function receiveMsgFromChild( e ) {
+    console.log( '자식으로부터 받은 메시지 ', e.data );
+    $(".navbar-badge").html(e.data);
+}
 
 // toast생성 및 추가
 function onMessage(evt){
@@ -548,31 +565,7 @@ function onMessage(evt){
     $(".toast").toast({"animation": true, "autohide": false});
     $('.toast').toast('show');
 };	
-$('#notifySendBtn').click(function(e){
-    let modal = $('.modal-content').has(e.target);
-    let type = '70';
-    let target = modal.find('.modal-body input').val();
-    let content = modal.find('.modal-body textarea').val();
-    let url = '${contextPath}/member/notify.do';
-    // 전송한 정보를 db에 저장	
-    $.ajax({
-        type: 'post',
-        url: '${contextPath}/member/saveNotify.do',
-        dataType: 'text',
-        data: {
-            target: target,
-            content: content,
-            type: type,
-            url: url
-        },
-        success: function(){    // db전송 성공시 실시간 알림 전송
-            // 소켓에 전달되는 메시지
-            // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
-            socket.send("관리자,"+target+","+content+","+url);	
-        }
-    });
-    modal.find('.modal-body textarea').val('');	// textarea 초기화
-});
+
 let dialog00 = $("#dialog-login").dialog({
 	autoOpen : false,
 	modal : false,
@@ -584,6 +577,8 @@ $("#loginWd").on("click",function(){
 
 	dialog00.dialog("open");
 	$("#dialog-login").load("${pageContext.request.contextPath}/uat/uia/egovLoginUsr.do",function() {
+		
+
 				})
 		
 })
@@ -596,6 +591,57 @@ $("#logoutWd").on("click",function(){
 	})
 		
 })
+
+$("#noticeNav").on("click",function(){
+	
+	$.ajax({
+		url : '${pageContext.request.contextPath}/ajax/webcontent',
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+		data : {userId : "${loginVO.id}"
+				}
+	}).done((ev)=>{
+		$('.dropdown-header').remove();
+		$('.appendmenu').remove();
+		$(".dropdown-menu").append(
+		` <span class="dropdown-item dropdown-header">`+ev.main.length+` 건의 알림</span>
+         <div class="dropdown-divider" ></div> `
+         );
+		for(var con of ev.main){
+			if(con.readYn=='NY'){
+			$(".dropdown-menu").append(
+					`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
+            <i class="fas fa-envelope mr-2"></i>`+ con.msTitle+`
+            <span class="float-right text-muted text-sm">`+con.msDt+`</span>
+          </a>`)}
+			else{
+				$(".dropdown-menu").append(
+						`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
+						<i class="fas fa-envelope-open mr-2"></i>`+ con.msTitle+`
+	            <span class="float-right text-muted text-sm">`+con.msDt+`</span>
+	          </a>`)
+			}
+		}
+			
+	})
+		
+		
+		
+		
+		
+		
+		
+		 $(".navbar-badge").html('');
+	})
+	
+
+
+function findHref(link){
+	console.log(link)
+	$("a[href$='"+link+"']").trigger("click");
+}
+
+
 
 
 </script>
@@ -628,6 +674,10 @@ $("#logoutWd").on("click",function(){
 			iframe.contentWindow.location.reload();
 		}
 	}
+	
+
+	        
+	
 </script>
 </html>
 

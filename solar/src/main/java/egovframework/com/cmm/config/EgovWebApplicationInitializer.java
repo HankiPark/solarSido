@@ -91,7 +91,7 @@ public class EgovWebApplicationInitializer implements WebApplicationInitializer 
 		//dispatcher.addMapping("*.do");
 		dispatcher.addMapping("/"); // Facebook OAuth 사용시 변경
 		dispatcher.setLoadOnStartup(1);
-		
+		dispatcher.setAsyncSupported(true);
 		if("security".equals(EgovProperties.getProperty("Globals.Auth").trim())) {
 			
 			//-------------------------------------------------------------
