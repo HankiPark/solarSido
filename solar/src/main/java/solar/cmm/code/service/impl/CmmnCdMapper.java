@@ -5,4 +5,5 @@ import java.util.Map;
 
 public interface CmmnCdMapper {
 	List<Map> select(String cd);
+	List<Map> selectCd(String cd);
 }

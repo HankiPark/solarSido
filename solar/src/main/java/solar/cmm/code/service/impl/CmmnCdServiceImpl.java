@@ -22,5 +22,14 @@ public class CmmnCdServiceImpl implements CmmnCdService {
 		}
 		return map;
 	}
+	
+	@Override
+	public Map<String, List<Map>> selectCd(List<String> cds) {
+		Map<String, List<Map>> map = new HashMap<String, List<Map>>();
+		for(String cd:cds) {
+			map.put(cd,cmmnCdMapper.selectCd(cd));
+		}
+		return map;
+	}
 
 }

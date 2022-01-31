@@ -64,5 +64,5 @@ public class IndicaVO {
 	String prcsOrd;		//공정순서
 	String prcsCd; 		//공정코드
 	String eqmCd; 		//설비코드
-	String eqmUo;		//설비비가동코드
+	String eqmYn;		//설비비가동코드
 }
