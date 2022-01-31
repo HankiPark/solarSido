@@ -43,7 +43,7 @@ public class EqmController {
 	}
 	
 	//설비 추가
-	@PutMapping("/eqm/eqmPut")
+	@PutMapping("/eqm/grid/eqmPut")
 	public String rscOrdrData(@RequestBody ModifyVO<EqmVO> mvo, Model model) {
 		String queryResult = eqmService.modifyData(mvo);
 		if(!queryResult.equals("true")) {
@@ -53,4 +53,14 @@ public class EqmController {
 		}
 		return "jsonView";
 	}
+	
+	//비가동
+	@GetMapping("/eqm/mng/noop")
+	public String noop() {
+		return "eqm/mng/noop";
+	}
+	
+	//
+	
+	
 }

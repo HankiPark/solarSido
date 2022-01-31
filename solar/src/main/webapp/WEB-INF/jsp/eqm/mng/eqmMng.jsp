@@ -64,7 +64,7 @@
             </ul>
         </div>
     </div>
-
+	<hr>
     <div id="iG">
         <div class="card card-pricing card-primary card-white">
             <div class="card-body">
@@ -90,7 +90,7 @@
             </div>
 
             <div align="right">
-                <button type="button" id="insertBtn" class="btn btn-default btn-simple btn-sm">추가</button>
+<!--                 <button type="button" id="insertBtn" class="btn btn-default btn-simple btn-sm">추가</button> -->
                 <button type="button" id="updateBtn" class="btn btn-default btn-simple btn-sm">저장</button>
                 <button type="button" id="deleteBtn" class="btn btn-default btn-simple btn-sm">삭제</button>
             </div>
@@ -299,14 +299,14 @@
             const dataSource = {
                 api: {
                     readData: {url: '${pageContext.request.contextPath}/grid/eqmList.do',method: 'GET'},
-                    modifyData: {url: '${pageContext.request.contextPath}/eqm/eqmPut',method: 'PUT'} 
+                    modifyData: {url: '${pageContext.request.contextPath}/eqm/grid/eqmPut',method: 'PUT'} 
                 },
                 contentType: 'application/json'
             };
             const inputDataSource = {
                     api: {
                         readData: {url: '',method: 'GET'},
-    					modifyData: {url: '${pageContext.request.contextPath}/eqm/eqmPut',method: 'PUT'}
+    					modifyData: {url: '${pageContext.request.contextPath}/eqm/grid/eqmPut',method: 'PUT'}
                     },
   				  contentType : 'application/json',
 				  initialRequest: false

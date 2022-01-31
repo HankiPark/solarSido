@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>자재 불량률</h1>
+    <h1>자재 불량률</h1><hr>
     <div id="coModal" title="업체 목록"></div>
     <div class="card card-pricing card-primary card-white">
 		<div class="card-body" >
