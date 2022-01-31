@@ -1,5 +1,6 @@
 package solar.prod.indica.web;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.cmm.code.service.CmmnCdService;
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
@@ -21,7 +23,8 @@ import solar.sales.order.dao.ModifyVO;
 public class IndicaController {
 	
 	@Autowired IndicaService idcService;
-
+	@Autowired CmmnCdService cmmnCdService;
+	
 	//생산지시관리 페이지이동
 	 @RequestMapping("/prod/mng/indicaMng")
 		public String indMng() {
@@ -158,6 +161,13 @@ public class IndicaController {
 							@RequestBody ModifyVO<IndicaVO> mvo) throws Exception {
 		idcService.modifyData(mvo);
 		model.addAttribute("mode", "upd");
+		return "jsonView";
+	}
+	
+	//공통-제품코드 목록 요청
+	@GetMapping("/ajax/cmmn/code")
+	public String cmmnCodes(Model model) {
+		model.addAttribute("codes", cmmnCdService.selectCd(Arrays.asList("prod")));
 		return "jsonView";
 	}
 }

@@ -107,9 +107,9 @@
 </select>
 
 <select id="findEqmUo" resultType="indicaVO">
-	SELECT  p.prdt_cd, p.prcs_ord, p.prcs_cd, p.eqm_cd, e.uopr_cd
+	SELECT  p.prdt_cd, p.prcs_ord, p.prcs_cd, p.eqm_cd, e.eqm_yn
 	FROM prcs_pr p
-	LEFT JOIN eqm_uo e ON p.eqm_cd = e.eqm_cd
+	LEFT JOIN eqm e ON p.eqm_cd = e.eqm_cd
 	WHERE 1=1
 	<if test="prdtCd !=null and prdtCd !=''">
 		AND prdt_cd like '%'||#{prdtCd}||'%'
