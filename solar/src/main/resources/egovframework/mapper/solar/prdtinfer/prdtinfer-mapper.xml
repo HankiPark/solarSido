@@ -3,6 +3,7 @@
 <mapper namespace="solar.cmm.prdt.service.impl.CmmPrdtMapper">
 	<select id="prdtList" resultType="solar.cmm.prdt.dao.PrdtInferVO">
 		SELECT * FROM PRDT_INFER_CD 
+		ORDER BY PRDT_INFER_CD
     </select>
     
    <select id="prdtinferdataFind" resultType="solar.cmm.prdt.dao.PrdtInferVO">

@@ -4,6 +4,7 @@
 
 <select id="rscinfoList" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
 	SELECT * FROM RSC
+	ORDER BY RSC_CD
 </select>
 
 <select id="rscinfofind" resultType="solar.cmm.rscinfo.dao.RscinfoVO">

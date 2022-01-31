@@ -3,6 +3,7 @@
 <mapper namespace="solar.cmm.rscinfer.service.impl.RscinferMapper">
 	<select id="rscinferList" resultType="solar.cmm.rscinfer.dao.RscinferVO">
 		SELECT * FROM RSC_INFER_CD
+		ORDER BY RTNGD_RESN_CD
     </select>
     
    <select id="rscinferdataFind" resultType="solar.cmm.rscinfer.dao.RscinferVO">

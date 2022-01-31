@@ -4,6 +4,7 @@
 
 	<select id="fairList" resultType="solar.cmm.prcs.dao.FairVO">
 	SELECT * FROM PRCS
+	ORDER BY PRCS_CD
 	</select>
 	
 	<select id="prcsdataFind" resultType="solar.cmm.prcs.dao.FairVO">
