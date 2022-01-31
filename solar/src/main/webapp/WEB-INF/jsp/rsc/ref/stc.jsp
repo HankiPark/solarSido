@@ -14,6 +14,7 @@
 
 <body>
   <h1>자재 재고 조회</h1>
+  <hr>
   <div id="coModal" title="업체 목록"></div>
   <div id="rscModal" title="자재 목록"></div>
    <div class="card card-pricing card-primary card-white">

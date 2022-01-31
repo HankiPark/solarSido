@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<h1>자재 출고 조회</h1>
+	<h1>자재 출고 조회</h1><hr>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
