@@ -68,6 +68,7 @@
  select 
  	r.rsc_cd, 
  	r.rsc_lot,
+ 	(select rsc_use_qty from prdt_bom where prdt_cd = #{prdtCd} and rsc_cd = #{rscCd}) as rsc_use_qty,
     sum(nvl((select rsc_qty from rsc_inout where r.rsc_fg=1 and rsc_lot=r.rsc_lot),0)
      -nvl((select rsc_qty from rsc_inout where r.rsc_fg=0 and rsc_lot=r.rsc_lot),0) ) as rsc_stc
  from rsc_inout r 
