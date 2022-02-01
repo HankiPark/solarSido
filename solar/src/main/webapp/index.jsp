@@ -451,12 +451,12 @@
     </div>
     <div class="tab-content">
       <div class="tab-empty">
-        <h2 class="display-4">No tab selected!</h2>
+        <h2 class="display-4"> <img src="${pageContext.request.contextPath}/resources/mainScreen.png" style="width:2000px; height: 880px;"></h2>
         	<div id="dialog-login" title="로그인"></div>
       </div>
       <div class="tab-loading">
         <div>
-          <h2 class="display-4">Tab is loading <i class="fa fa-sync fa-spin"></i></h2>
+          <h2 class="display-4">로딩중입니다 <i class="fa fa-sync fa-spin"></i></h2>
         </div>
       </div>
     </div>
@@ -609,19 +609,40 @@ $("#noticeNav").on("click",function(){
          );
 		for(var con of ev.main){
 			if(con.readYn=='NY'){
+				if((new Date().getTime()-new Date(con.msDt).getTime())/(1000*60*60*24)>=1){
 			$(".dropdown-menu").append(
 					`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
             <i class="fas fa-envelope mr-2"></i>`+ con.msTitle+`
             <span class="float-right text-muted text-sm">`+con.msDt+`</span>
           </a>`)}
+				else{
+					$(".dropdown-menu").append(
+							`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
+		            <i class="fas fa-envelope mr-2"></i>`+ con.msTitle+`
+		            <span class="float-right text-muted text-sm"> 오늘 </span>
+		          </a>`)
+				}
+			}
 			else{
+				if((new Date().getTime()-new Date(con.msDt).getTime())/(1000*60*60*24)>=1){
 				$(".dropdown-menu").append(
 						`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
 						<i class="fas fa-envelope-open mr-2"></i>`+ con.msTitle+`
 	            <span class="float-right text-muted text-sm">`+con.msDt+`</span>
 	          </a>`)
+			}else{
+				$(".dropdown-menu").append(
+						`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
+						<i class="fas fa-envelope-open mr-2"></i>`+ con.msTitle+`
+	            <span class="float-right text-muted text-sm"> 오늘 </span>
+	          </a>`)
 			}
+			}
+			
 		}
+		$(".dropdown-menu").append(
+		`<a href="#" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
+		)
 			
 	})
 		

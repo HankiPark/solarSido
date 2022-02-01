@@ -407,7 +407,7 @@ $(function() {
 
 	//조회버튼
 	$('#findgrid').on('click', function() {		
-		sendMsgToParent('조회','/sales/mng/prdt_inout_mng');
+		
 		var startT = $("#startT").val().substring(0,10);
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
@@ -436,14 +436,13 @@ $(function() {
 				inGrid.removeRow(i);
 			}
 		}
-		console.log(inGrid.validate())
 	
 		if(inGrid.validate().length!=0 ){
 			toastr.error("제품lot은 중복될수 없습니다");
 			
 		}else{
 			 inGrid.request('modifyData',{'showConfirm' : false});
-			 
+			 sendMsgToParent('입고처리','/sales/mng/prdt_inout_mng');
 			 setTimeout(()=>{
 					var startT = $("#startT").val().substring(0,10);
 					var endT = $("#startT").val().substring(13,23);
@@ -616,6 +615,7 @@ $(function() {
 				//버튼누르면 전표번호 값 업데이트
 				outGrid.blur();
 				outGrid.request('modifyData');
+				sendMsgToParent('출고전표발행','/sales/mng/prdt_inout_mng');
 			});
 	
 	$('#deleteBtn2').on('click', function appendRow(index) {
