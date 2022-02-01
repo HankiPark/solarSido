@@ -40,11 +40,45 @@
 			<br>
 		</div>
 		<div class=col-7>
-			<div id="detailgrid"></div>
+			<div id ="tabs">
+				<div class="card card-pricing card-primary card-white">	
+					<ul>
+						<li>
+							<a href="#detailTabs1">상세 코드</a>
+						</li>
+						<li>
+							<a href="#detailTabs2">코드 정보</a>
+						</li>
+					</ul>
+					<div id="detailTabs1">
+						<div id="detailgrid" >
+						</div>
+					</div>
+					<form id ="codefrm" name="codefrm" method="post">
+						<div id="detailTabs2">
+							<table class="table">
+								<tr>
+									<th>코드ID</th>
+									<td><input id="cmmnCdId" name="cmmnCdId" type="text" readonly="readonly"</td>
+								</tr>
+								<tr>
+									<th>공통코드ID명</th>
+									<td><input id="cmmnCdNm" name="cmmnCdNm" type="text"></td>
+								</tr>
+							</table>
+						</div>
+					</form>
+				</div>
+			
+			</div>
 		</div>
 	</div>
 
 	<script>
+	 $( function() {
+		    $( "#tabs" ).tabs();
+		  } );
+	
 		var dataSource = {
 			api : {
 				readData : {
