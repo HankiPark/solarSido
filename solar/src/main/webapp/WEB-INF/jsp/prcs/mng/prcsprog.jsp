@@ -388,8 +388,6 @@
  				// 시작버튼 시간 이벤트끝
  				
  				console.log("----------------------------------------- prcsGrid 테스트")
- 				console.log(prcsGrid.getColumns());
- 				console.log(prcsGrid.getData());
  				console.log(prcsGrid.getRowCount());
  				console.log(tAmount);
  				console.log("----------------------------------------- prcsGrid 테스트")
@@ -403,7 +401,6 @@
  				console.log(pPrdtCd);
  				console.log(pProdFg);
  				console.log(pPrcsCd);
- 		
  				console.log("----------------------------------------- PRCS_PR_M 테스트")
  				
  				$.ajax({
@@ -429,7 +426,7 @@
  				
  				
 
- 			// ******************************************************* 타이머 함수
+ 			// ******************************************************* setInterval 타이머 함수
  				
 				timerFlag = false;
  				
@@ -460,11 +457,9 @@
  				
  				}, 1000);
  				
- 			// ******************************************************* 타이머 함수
+ 			// ******************************************************* setInterval 타이머 함수
 
- 			
- 			
- 				
+ 				// 받아온 설비 리스트의 길이와 uph를 받아와 저장
  				for(let i =0; i< prcsEqmList.PRCS.length;i++){
 						unitPTime.push(prcsEqmList.PRCS[i].ptime);
 					}  
@@ -479,9 +474,9 @@
 				console.log(prcsEqmList.PRCS[0].ptime);
 				console.log("-------------------------ptime")
 				console.log(unitPTime);
- 					
-				
-				
+
+ 				
+
 				
 				/* ---------------------------------------------------------------------------------- */
 				// 공정 정보를 조건으로 실제 함수를 구현할 몸체
@@ -516,18 +511,11 @@
 				let su2 = Number(u1)+Number(u2);
 				let su3 = Number(su2)+Number(u3);
 				let su4 = Number(su3)+Number(u4);
-				
-				console.log("susususususu");
-				console.log(su2);
-				console.log(su3);
-				
-				console.log("susususususu");
-				console.log(!!su2);
-				console.log(!!su3);
-				
-				
+
 				console.log(tAmount);
 				
+				
+				// 유닛1 공정진행 타이머
 				if(!!u1){
 					unit1 = setTimeout(function tick() {
 						if(timerFlag===true){
@@ -553,7 +541,8 @@
 						unit1 = setTimeout(tick, u1); // (*)
 						}, u1);
 					}
-		
+				
+				// 유닛2 공정진행 함수 타이머
 				function startUnit2(u2){
 					console.log(u2);
 					console.log(u1+"딜레이 끝두번째 유닛 시작합니다")
@@ -579,6 +568,7 @@
 						}, u2);
 				}
 				
+				// 유닛3 공정진행 함수 타이머
 				function startUnit3(u3){
 					console.log(u3);
 					console.log(su2+" 딜레이 끝 세번째 유닛 시작합니다")
@@ -605,6 +595,7 @@
 						}, u3);
 				}
 				
+				// 유닛4 공정진행 함수 타이머
 				function startUnit4(u4){
 					console.log(u4);
 					console.log(su3+" 딜레이 끝 네번째 유닛 시작합니다")
@@ -633,7 +624,7 @@
 				}
 		
 				
-				
+				// 유닛2 공정진행 타이머
 				if(!!u2){
 					console.log("u2 존재");
 					var sUnit2 = setTimeout(function tick() {
@@ -644,6 +635,7 @@
 					
 				}
 				
+				// 유닛3 공정진행 타이머
 				if(!!u3){
 				console.log("u3 존재");
 					var sUnit3 = setTimeout(function tick(){
@@ -652,7 +644,8 @@
 								clearTimeout(sUnit3);
 						}, su2);
 				}
-				 
+				
+				// 유닛4 공정진행 타이머
 				if(!!u4){
 					console.log("u4 존재");
 					var sUnit4 = setTimeout(function tick(){
@@ -679,11 +672,8 @@
  					btnEnd.disabled = true;
  					
  					clearTimeout(unit1);
- 					
  					clearTimeout(unit2);
- 					
  					clearTimeout(unit3);
- 					
  					clearTimeout(unit4);
  					
  					// 종료버튼 시간 이벤트
