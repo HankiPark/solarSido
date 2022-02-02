@@ -143,7 +143,10 @@ $(function() {
   });
   
   grid.disableColumn('inspCls');
-  grid.on('response',function(){
+  grid.on('response',function(ev){
+		if (ev.xhr.responseText == "201") {
+			grid.readData();
+		}
       grid.refreshLayout();
     });
   grid.on('click',function(ev){
@@ -194,7 +197,6 @@ $(function() {
 		  }
 	  }
 	  grid.request('modifyData');
-	  grid.readData();
   });
   let deleteBtn = document.getElementById("deleteBtn");
   deleteBtn.addEventListener("click",function(){
