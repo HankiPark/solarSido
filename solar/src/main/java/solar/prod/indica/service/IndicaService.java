@@ -23,4 +23,6 @@ public interface IndicaService {
 
 	List<?> findEqmUo(IndicaVO idcVo);
 
+	String makePrdtNo();
+
 }

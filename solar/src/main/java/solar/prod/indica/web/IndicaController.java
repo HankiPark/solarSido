@@ -155,6 +155,13 @@ public class IndicaController {
 		return "jsonView";
 	}
 	
+	//제품lot 시퀀스
+	@GetMapping("/ajax/makePrdtNo.do")
+	public String makePrdtNo(Model model, IndicaVO idcVo) {
+		model.addAttribute("num", idcService.makePrdtNo());
+		return "jsonView";
+	}
+		
 	//modifyData
 	@PostMapping("/grid/indicaModify.do")
 	public String modifyPlan(Model model, IndicaVO idcVo, 
