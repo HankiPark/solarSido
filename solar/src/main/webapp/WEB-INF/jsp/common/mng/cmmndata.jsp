@@ -134,6 +134,15 @@
 
 			detailgrid.readData(1, GridParams, true);
 		});
+		
+		grid.on('click', (evnt) => {	
+			
+			var JsonData = grid.getRowAt(evnt.rowKey);
+			var GTcode = Object.values(JsonData);
+			
+			$('#cmmnCdId').val(GTcode[0]);
+			$('#cmmnCdNm').val(GTcode[1]);
+		});		
 
 		$('#btnfind').on('click', function() {
 			var cmmnCdNm = $("#cmmnNminfo").val();
@@ -223,7 +232,11 @@
 
 		$('#btnReset').on('click', function appendRow(index) {
 			$('#prdtCd').val();
-			$('td').css('backgroundColor', '')
+			$('td').css('backgroundColor', '');
+			$('#cmmnCdId').val();
+			$('#cmmnCdNm').val();
+			
+			
 			detailgrid.clear();
 		});
 	</script>

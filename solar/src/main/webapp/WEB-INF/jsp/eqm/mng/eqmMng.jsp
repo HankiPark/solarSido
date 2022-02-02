@@ -491,6 +491,10 @@
                         header: '공정코드',
                         name: 'prcsCd',
                     },
+                    {
+                        header: '가동여부',
+                        name: 'eqmYn',
+                    },
                 ]
             });
             
@@ -550,6 +554,7 @@
             		'temp': params[12].value,
             		'uph': params[13].value,
             		'prcsCd': params[14].value,
+            		'eqmYn': 'Y'
             	});
             });
             

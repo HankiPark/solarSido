@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="solar.eqm.unop.service.impl.UnopMapper">
+	
+	<select id="selectUnopCdAll" resultType="solar.eqm.unop.service.UnopCdVO">
+		select*from uopr_cd
+		order by uopr_cd
+	</select>
+
+
+	<update id="updateEqmYn" parameterType="map">
+		update
+			eqm
+		set
+			eqm_yn = #{eqmYn}
+		where
+			eqm_cd = #{eqmCd}
+	</update>
+	
+	<insert id="eqmuoInsert" parameterType="map">
+		insert into
+			eqm_uo(
+				eqm_uo_no,
+				fr_tm,
+				eqm_cd
+			)
+		values(
+			eqmuoseq.nextval,
+			sysdate,
+			#{eqmCd}
+		)
+	</insert>
+	
+	<select id="selectUnopList" resultType="solar.eqm.unop.service.UnopVO">
+		select
+			eu.*, e.eqm_nm, uc.uopr_nm
+		from
+			eqm_uo eu
+		join eqm e
+			on eu.eqm_cd = e.eqm_cd
+		join uopr_cd uc
+			on uc.uopr_cd = eu.uopr_cd
+		where 1=1
+<!-- 		<if test=""> -->
+<!-- 			and -->
+<!-- 		</if> -->
+	</select>
+</mapper>
