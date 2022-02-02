@@ -31,4 +31,9 @@ public class MessageController {
 		mservice.updateMsg(mes);
 		return "jsonView";
 	}
+	@RequestMapping("/ajax/webdelete")
+	public String webDelete(Model model,MessageVO mes) {
+		mservice.deleteMsg(mes);
+		return "jsonView";
+	}
 }

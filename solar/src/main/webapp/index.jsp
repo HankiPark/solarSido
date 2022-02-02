@@ -112,6 +112,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/uss/umt/EgovMberManage.do" class="nav-link">
+                  <i class="fas fa-file-signature nav-icon"></i>
+                  <p>멤버추가</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/sec/rgm/EgovAuthorGroupList.do" class="nav-link">
                   <i class="fas fa-file-signature nav-icon"></i>
                   <p>권한 그룹관리</p>
@@ -451,7 +457,8 @@
     </div>
     <div class="tab-content">
       <div class="tab-empty">
-        <h2 class="display-4"> <img src="${pageContext.request.contextPath}/resources/mainScreen.png" style="width:2000px; height: 880px;"></h2>
+        <h2 class="display-4" id="needLog"> 로그인 해주세요</h2>
+        <img id="afterLog" src="${pageContext.request.contextPath}/resources/mainScreen.png" style="width:2000px; height: 880px;">
         	<div id="dialog-login" title="로그인"></div>
       </div>
       <div class="tab-loading">
@@ -487,9 +494,15 @@ $(function(){
 	if("${loginVO.uniqId}"==""){
 		$("#logoutWd").css("display","none");
 		$("#loginWd").css("display","block");
+		$("#needLog").css("display","block");
+		$("#afterLog").css("display","none");
+		$("#usna").remove();
 	}else{
 		$("#loginWd").css("display","none");
 		$("#logoutWd").css("display","block");
+		$("#needLog").css("display","none");
+		$("#afterLog").css("display","block");
+		$(".ml-auto").prepend(`<span id="usna" style="padding-top:8px; padding-right:10px;">${loginVO.id}</span>`);
 		$.ajax({
 			url:"${pageContext.request.contextPath}/ajax/MenuList",
 			method:"get",
@@ -641,7 +654,7 @@ $("#noticeNav").on("click",function(){
 			
 		}
 		$(".dropdown-menu").append(
-		`<a href="#" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
+		`<a href="#" onclick="removeMessage(`+ev.main[0].userId+`)" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
 		)
 			
 	})
@@ -658,10 +671,20 @@ $("#noticeNav").on("click",function(){
 
 
 function findHref(link){
-	console.log(link)
 	$("a[href$='"+link+"']").trigger("click");
 }
 
+function removeMessage(id){
+	$.ajax({
+		url : '${pageContext.request.contextPath}/ajax/webdelete',
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+		data : {userId : id
+				}
+	}).done((ev)=>{
+		$("#noticeNav").trigger("click");
+	});
+}
 
 
 
