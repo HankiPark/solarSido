@@ -55,6 +55,7 @@
 </head>
 
 <body>
+	<h1>설비정보 관리</h1>
     <div class="wrap">
         <div class="tab_menu">
             <ul class="list">
@@ -63,7 +64,7 @@
             </ul>
         </div>
     </div>
-
+	<hr>
     <div id="iG">
         <div class="card card-pricing card-primary card-white">
             <div class="card-body">
@@ -71,7 +72,7 @@
                     <div data-role="fieldcontain" class="col-3">
                         <div>
                             <label>설비</label>
-                            <input type="text" id="eqmParam" name="eqmParam">
+                            <input type="text" id="eqmParam" name="eqmParam" placeholder="설비코드 또는 설비명">
                         </div>
                     </div>
                     <label for="defandroid">구매일</label>
@@ -89,7 +90,7 @@
             </div>
 
             <div align="right">
-                <button type="button" id="insertBtn" class="btn btn-default btn-simple btn-sm">추가</button>
+<!--                 <button type="button" id="insertBtn" class="btn btn-default btn-simple btn-sm">추가</button> -->
                 <button type="button" id="updateBtn" class="btn btn-default btn-simple btn-sm">저장</button>
                 <button type="button" id="deleteBtn" class="btn btn-default btn-simple btn-sm">삭제</button>
             </div>
@@ -170,12 +171,15 @@
                         <input type="hidden" id="eqmYn" name="eqmUn" style="width:90%" value="Y">
                     </div>
                 </div>
-                <button type="button" id="btnSub" style="width:60px">추가</button>
-                <button type="button" id="btnPut" class="btn btn-default btn-simple btn-sm">저장</button>
+                <div align="center">
+	                <button type="button" id="btnSub" class="btn btn-default btn-simple btn-sm">추가</button>
+                </div>
                 <br>
-                <button type="button" id="removeRow" style="width:60px">행 삭제</button>
             </div>
         </div>
+        <h3>추가될 데이터</h3>
+		<button type="button" id="removeRow" class="btn btn-default btn-simple btn-sm">삭제</button>
+		<button type="button" id="btnPut" class="btn btn-default btn-simple btn-sm">저장</button>
         <div id="inputGrid"></div>
 
 
@@ -294,17 +298,15 @@
 
             const dataSource = {
                 api: {
-                    readData: {
-                        url: '${pageContext.request.contextPath}/grid/eqmList.do',
-                        method: 'GET'
-                    },
+                    readData: {url: '${pageContext.request.contextPath}/grid/eqmList.do',method: 'GET'},
+                    modifyData: {url: '${pageContext.request.contextPath}/eqm/grid/eqmPut',method: 'PUT'} 
                 },
                 contentType: 'application/json'
             };
             const inputDataSource = {
                     api: {
                         readData: {url: '',method: 'GET'},
-    					modifyData: {url: '${pageContext.request.contextPath}/eqm/eqmPut',method: 'PUT'}
+    					modifyData: {url: '${pageContext.request.contextPath}/eqm/grid/eqmPut',method: 'PUT'}
                     },
   				  contentType : 'application/json',
 				  initialRequest: false
@@ -313,65 +315,110 @@
             const grid = new Grid({
                 el: document.getElementById('grid'),
                 data: dataSource,
+                rowHeaders: ['checkbox'],
                 columns: [{
                         header: '설비코드',
                         name: 'eqmCd'
                     },
                     {
                         header: '설비구분',
-                        name: 'eqmFg'
+                        name: 'eqmFg',
+                        editor:{
+                        	type: 'select',
+                        	options: {
+                        		listItems: [
+                        			{text: '제조기',value: '제조기'},
+                        			{text: '레이저',value: '레이저'},
+                        			{text: '검사기',value: '검사기'},
+                        			{text: '세정기',value: '세정기'},
+                        			]
+                        	}
+                        },
                     },
                     {
                         header: '설비명',
-                        name: 'eqmNm'
+                        name: 'eqmNm',
+                        editor: 'text',
                     },
                     {
-                        header: '라인번호',
-                        name: 'eqmMdl'
+                        header: '모델',
+                        name: 'eqmMdl',
+                        editor:{
+                        	type: 'select',
+                        	options: {
+                        		listItems: [
+                        			{text: 'MEL-01',value: 'MEL-01'},
+                        			{text: 'MEL-02',value: 'MEL-02'},
+                        			{text: 'MEL-03',value: 'MEL-03'},
+                        			{text: 'MEL-04',value: 'MEL-04'},
+                        			]
+                        	}
+                        },
                     },
                     {
                         header: '용량/규격',
-                        name: 'eqmSpec'
+                        name: 'eqmSpec',
+                        editor:{
+                        	type: 'select',
+                        	options: {
+                        		listItems: [
+                        			{text: '1000*1000',value: '1000*1000'},
+                        			{text: '1000*2000',value: '1000*2000'},
+                        			{text: '2000*1000',value: '2000*1000'},
+                        			{text: '3000*2000',value: '3000*2000'},
+                        			]
+                        	}
+                        },
                     },
                     {
                         header: '제작업체',
-                        name: 'eqmCo'
+                        name: 'eqmCo',
+                        editor: 'text',
                     },
                     {
                         header: '구매일자',
-                        name: 'purcDt'
+                        name: 'purcDt',
+                        editor: 'text',
                     },
                     {
                         header: '구매금액',
-                        name: 'purcAmt'
+                        name: 'purcAmt',
+                        editor: 'text',
                     },
                     {
                         header: '라인번호',
-                        name: 'liNo'
+                        name: 'liNo',
+                        editor: 'text',
                     },
                     {
                         header: '작업자',
-                        name: 'empId'
+                        name: 'empId',
+                        editor: 'text',
                     },
                     {
                         header: '사용에너지',
-                        name: 'energy'
+                        name: 'energy',
+                        editor: 'text',
                     },
                     {
                         header: '부하율',
                         name: 'lf',
+                        editor: 'text',
                     },
                     {
                         header: '기준온도',
-                        name: 'temp'
+                        name: 'temp',
+                        editor: 'text',
                     },
                     {
                         header: 'UPH',
                         name: 'uph',
+                        editor: 'text',
                     },
                     {
                         header: '공정코드',
                         name: 'prcsCd',
+                        editor: 'text',
                     },
                     {
                         header: '가동여부',
@@ -444,20 +491,15 @@
                         header: '공정코드',
                         name: 'prcsCd',
                     },
+                    {
+                        header: '가동여부',
+                        name: 'eqmYn',
+                    },
                 ]
             });
             
             grid.on('onGridUpdated', function () {
                 grid.refreshLayout();
-            });
-
-            grid.on('click', (ev) => {
-                console.log(ev);
-                console.log('clicked!!');
-            });
-
-            grid.on('response', function (ev) {
-                console.log(ev);
             });
 
             let prdtCdDialog = $("#prdtCdModal").dialog({
@@ -512,6 +554,7 @@
             		'temp': params[12].value,
             		'uph': params[13].value,
             		'prcsCd': params[14].value,
+            		'eqmYn': 'Y'
             	});
             });
             
@@ -547,13 +590,55 @@
             	}
             });
             
-            
+            let deleteBtn = document.getElementById('deleteBtn');
             let removeRow = document.getElementById("removeRow");
-            removeRow.addEventListener("click",function(){
-          	  let checkedRowKeys = inputGrid.getCheckedRowKeys();
-          	  for(let rowkey of checkedRowKeys){
-          	  inputGrid.removeRow(rowkey);
-          	  }
+            deleteBtn.addEventListener('click',function(){ deleteRows(grid); });
+            removeRow.addEventListener("click",function(){ deleteRows(inputGrid); });
+            
+            function deleteRows(thisGrid) {
+            	let checkedRowKeys = thisGrid.getCheckedRowKeys();
+            	for(let rowkey of checkedRowKeys){
+            		thisGrid.removeRow(rowkey);
+            		}
+            }
+            
+            grid.on('click',function(ev){
+            	console.log(ev);
+            	$('#insertBtn').daterangepicker({
+                    singleDatePicker: true,
+                    showDropdowns: true,
+                    opens: 'right',
+                    startDate: moment().startOf('hour').add(-7, 'day'),
+                    endDate: moment().startOf('hour'),
+                    minYear: 1990,
+                    maxYear: 2025,
+                    autoApply: true,
+                    locale: {
+                        format: 'YYYY-MM-DD',
+                        separator: " ~ ",
+                        applyLabel: "적용",
+                        cancelLabel: "닫기",
+                        prevText: '이전 달',
+                        nextText: '다음 달',
+                        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월',
+                            '12월'
+                        ],
+                        daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+                        showMonthAfterYear: true,
+                        yearSuffix: '년'
+                    }
+                }, function (start, end, label) {
+                    console.log(start, end, label);
+                    console.log(start.format('YYYY-MM-DD'));
+                },
+
+            );
+            });
+            
+            
+            let updateBtn = document.getElementById('updateBtn');
+            updateBtn.addEventListener('click',function(){
+            	grid.request('modifyData');
             });
         </script>
 </body>

@@ -15,63 +15,72 @@
 <body>
 	<h2>자재정보관리</h2>
 	<form name="rscfrm" id="rscfrm" method="post">
-
-		<div id="btnleft">
-			<label>자재명 검색</label> <input type="text" id="rscNmFind">
-			<button type="button" id="btnFind">검색</button>
+		<div class="row">
+			<div class="card card-pricing card-primary card-white col-3">
+				<div class="card-body">
+					<div>
+						<label>자재명</label> <input type="text" id="rscNmFind">
+						<button type="button" id="btnFind">검색</button>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div id="btnRight">
-			<button type="button" id="btnInsert">등록</button>
-			<button type="button" id="btnUpdate">수정</button>
-			<button type="button" id="btnReset">초기화</button>
-		</div>
-	<div class ="row">	
+		<div class="row">
 			<div class="col-4">
 				<div id="grid"></div>
 			</div>
-		<div class="col-8 table">
-			<table id=table>
-				<tbody>
-					<tr>
-						<th scope="row">자재코드 *</th>
-						<td><input type="text" name="rscCd" id="rscCd"
-							readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th scope="row">자재명 *</th>
-						<td><input type="text" name="rscNm" id="rscNm"></td>
-					</tr>
-					<tr>
-						<th scope="row">규격</th>
-						<td><input type="text" name="rscSpec" id="rscSpec"></td>
-					</tr>
-					<tr>
-						<th scope="row">관리단위</th>
-						<td><input type="text" name="rscUnit" id="rscUnit"></td>
-					</tr>
-					<tr>
-						<th scope="row">업체코드</th>
-						<td><input type="text" name="coCd" id="coCd"
-							readonly="readonly">
-							<button type="button" id="coCdFind">조회</button></td>
-					</tr>
-					<tr>
-						<th scope="row">업체명</th>
-						<td><input type="text" name="coNm" id="coNm"
-							readonly="readonly"></td>
-					</tr>
-					<tr>
-						<th scope="row">단가</th>
-						<td><input type="text" name="rscUntprc" id="rscUntprc"></td>
-					</tr>
-					<tr>
-						<th scope="row">안전재고</th>
-						<td><input type="text" name="safStc" id="safStc"></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="card card-pricing card-primary card-white col-4">
+				<div class="card-body">
+					<div class=" table">
+						<table id=table>
+							<tbody>
+								<tr>
+									<th scope="row">자재코드 *</th>
+									<td><input type="text" name="rscCd" id="rscCd"
+										readonly="readonly"></td>
+								</tr>
+								<tr>
+									<th scope="row">자재명 *</th>
+									<td><input type="text" name="rscNm" id="rscNm"></td>
+								</tr>
+								<tr>
+									<th scope="row">규격</th>
+									<td><input type="text" name="rscSpec" id="rscSpec"></td>
+								</tr>
+								<tr>
+									<th scope="row">관리단위</th>
+									<td><input type="text" name="rscUnit" id="rscUnit"></td>
+								</tr>
+								<tr>
+									<th scope="row">업체코드</th>
+									<td><input type="text" name="coCd" id="coCd"
+										readonly="readonly">
+										<button type="button" id="coCdFind">🔍</button></td>
+								</tr>
+								<tr>
+									<th scope="row">업체명</th>
+									<td><input type="text" name="coNm" id="coNm"
+										readonly="readonly"></td>
+								</tr>
+								<tr>
+									<th scope="row">단가</th>
+									<td><input type="text" name="rscUntprc" id="rscUntprc"></td>
+								</tr>
+								<tr>
+									<th scope="row">안전재고</th>
+									<td><input type="text" name="safStc" id="safStc"></td>
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							<button type="button" id="btnInsert">저장</button>
+							<button type="button" id="btnUpdate">변경</button>
+							<button type="button" id="btnReset">초기화</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
 		<div id="coCdModal" title="업체명단"></div>
 	</form>
 	<script>
@@ -152,7 +161,9 @@
 			[ 
 				{
 					header : '자재코드',
-					name : 'rscCd'
+					name : 'rscCd',
+					sortable: true,
+					sortingType: 'desc'
 				}, 
 				{
 					header : '자재명',
@@ -228,6 +239,11 @@
 					}
 				})
 		})
+		
+		grid.on('click', function(ev) {
+			$('td').css('backgroundColor','')
+			$('div#grid').find('td[data-row-key$="'+ev.rowKey+'"]').css('backgroundColor','#81BEF7');
+		});
 
 		$('#btnFind').on('click', function(){
 			var rscNm = $("#rscNmFind").val();
@@ -248,7 +264,7 @@
 		$("#coCdFind").on("click", function(){	
 			console.log("업체검색")
 			coCdDialog.dialog("open");
-			$("#coCdModal").load("${pageContext.request.contextPath}/modal/findCoCd", function(){ coCdList() })
+			$("#coCdModal").load("${pageContext.request.contextPath}/modal/selectRcoCd", function(){ coCdList() })
 		});
 		 
 	$("#btnInsert").on("click", function(){

@@ -10,7 +10,7 @@
 <body>
 <div>
 	<form id="prscIndicaSearch" name="prscIndicaSearch">
-	지시일 검색<input type="date" id="sDate" name="sDate">
+	지시일<input type="date" id="sDate" name="sDate">
 	<button type="button" id="sDateSearchBtn">🔍</button><br />
 	</form>
 	<div id="indicaGrid" style="width: 900px"></div>

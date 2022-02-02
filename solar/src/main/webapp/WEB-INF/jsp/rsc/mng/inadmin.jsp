@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<h1>자재 입고 관리</h1>
+	<h1>자재 입고 관리</h1><hr>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
@@ -39,11 +39,13 @@
 			<div class="card card-pricing card-primary card-white">
 				<div class="card-body" >
 					<ul>
-						<li>발주량: <span id="ordrQty"></span></li>
-						<li>검수합격량: <span id="rscPassedQty"></span></li>
-						<li>수량확인<input id="confirmedQty"></li>
-						<li><button type="button" id="btnIn">입고</button></li>
+						<li>발주량:<br><input id="ordrQty" disabled></li><br>
+						<li>검수합격량:<br><input id="rscPassedQty" disabled></li><br>
+						<li>수량확인<br><input id="confirmedQty"></li>
 					</ul>
+					<div align="center">
+						<button type="button" id="btnIn">입고</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -143,37 +145,45 @@
 		sortable: true,
 		columns: [{
 				header: '발주일',
-				name: 'ordrDt'
+				name: 'ordrDt',
+				sortable: true,
 			},
 			{
 				header: '자재명',
 				name: 'rscNm',
 				width: 220,
+				sortable: true,
 			},
 			{
 				header: '자재코드',
-				name: 'rscCd'
+				name: 'rscCd',
+				sortable: true,
 			},
 			{
 				header: '발주량',
-				name: 'ordrQty'
+				name: 'ordrQty',
+				sortable: true,
 			},
 			{
 				header: '합격량',
 				name: 'rscPassedQty',
+				sortable: true,
 			},
 			{
 				header: '발주번호',
-				name: 'ordrCd'
+				name: 'ordrCd',
+				sortable: true,
 			},
 			{
 				header: '업체',
-				name: 'coNm'
+				name: 'coNm',
+				sortable: true,
 			},
 			{
 				header: '상태',
 				name: 'inspCls',
 				formatter: 'listItemText',
+				sortable: true,
 				editor: {
 					type: 'select',
 					options: {
@@ -196,8 +206,8 @@
 			curRowKey = ev.rowKey;
 			let ordrQty = document.getElementById("ordrQty");
 			let rscPassedQty = document.getElementById("rscPassedQty");
-			ordrQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
-			rscPassedQty.innerText = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
+			ordrQty.value = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
+			rscPassedQty.value = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
 		//}
 	});
 	grid.on('onGridMounted',function(){

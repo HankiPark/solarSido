@@ -55,4 +55,14 @@ public class IndicaVO {
 	String rscUseQty;	//소요량
 	String rsc_qty;		//수량
 	String rscStc;		//자재재고
+	String totalUseQty; //총소요량
+	
+	//계획
+	String planQty;		//계획량
+	
+	//공정
+	String prcsOrd;		//공정순서
+	String prcsCd; 		//공정코드
+	String eqmCd; 		//설비코드
+	String eqmYn;		//설비비가동코드
 }

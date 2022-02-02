@@ -1,5 +1,6 @@
 package solar.prod.indica.web;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,17 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.cmm.code.service.CmmnCdService;
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
+import solar.sales.order.dao.ModifyVO;
 
 @Controller
 public class IndicaController {
 	
 	@Autowired IndicaService idcService;
-
+	@Autowired CmmnCdService cmmnCdService;
+	
 	//생산지시관리 페이지이동
 	 @RequestMapping("/prod/mng/indicaMng")
 		public String indMng() {
@@ -120,5 +126,55 @@ public class IndicaController {
 	public String findIndicaDetail() {
 		System.out.println("생산지시서 조회");
 		return "modal/findIndicaDetail";
+	}
+	
+	//설비현황 조회 모달
+	@RequestMapping("/modal/findEqmUo")
+	public String findEqmUo() {
+		System.out.println("생산지시서 조회");
+		return "modal/findEqmUo";
+	}
+	
+	//설비현황 조회 모달 조회 그리드
+	@GetMapping("/grid/eqmUoMoniter.do")
+	public String eqmUoMoniter(Model model, IndicaVO idcVo) throws Exception {
+		System.out.println("설비현황 호출");
+		List<?> list = idcService.findEqmUo(idcVo);
+		Map<String,Object> map = new HashMap<>();
+		map.put("contents", list);	
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
+		
+	//지시상세번호 부여
+	@GetMapping("/ajax/makeDno.do")
+	public String makeDno(Model model, IndicaVO idcVo) {
+		model.addAttribute("num2", idcService.makeDno());
+		return "jsonView";
+	}
+	
+	//제품lot 시퀀스
+	@GetMapping("/ajax/makePrdtNo.do")
+	public String makePrdtNo(Model model, IndicaVO idcVo) {
+		model.addAttribute("num", idcService.makePrdtNo());
+		return "jsonView";
+	}
+		
+	//modifyData
+	@PostMapping("/grid/indicaModify.do")
+	public String modifyPlan(Model model, IndicaVO idcVo, 
+							@RequestBody ModifyVO<IndicaVO> mvo) throws Exception {
+		idcService.modifyData(mvo);
+		model.addAttribute("mode", "upd");
+		return "jsonView";
+	}
+	
+	//공통-제품코드 목록 요청
+	@GetMapping("/ajax/cmmn/code")
+	public String cmmnCodes(Model model) {
+		model.addAttribute("codes", cmmnCdService.selectCd(Arrays.asList("prod")));
+		return "jsonView";
 	}
 }

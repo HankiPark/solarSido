@@ -42,5 +42,36 @@ var inferGrid = new tui.Grid({
     	}
     }
   });
+  
+  inferGrid.on('editingFinish',function(ev){
+	  let rowCnt = inferGrid.getRowCount();
+	  let fullQty = parseInt(grid.getValue(curRowKey,'rscIstQty'));
+	  let inferSum = 0;
+	  let rest = fullQty;
+	  
+	  
+	  for(let i = 0; i<rowCnt; i++){
+		  let curVal = parseInt(inferGrid.getValue(i,'rscInferQty'));
+		  if(curVal+''!='NaN'){
+			  inferSum += curVal;
+		  }
+	  }
+
+	  
+	  if(inferSum>fullQty){
+		  for(let i = 0; i<rowCnt; i++){
+              let curVal = parseInt(inferGrid.getValue(i,'rscInferQty'));
+			  if(i!=ev.rowKey && curVal+'' != 'NaN'){
+				  rest -= curVal; 
+			  }
+		  }
+		  alert('총량보다 많은 불량량을 입력할 수 없습니다.\n초과된 수량: '+(inferSum-fullQty));
+		  inferGrid.setValue(ev.rowKey,'rscInferQty',rest);
+	  }
+	  
+	  console.log(fullQty);
+	  console.log(inferSum);
+	  console.log(rest);
+  });
 </script>
 </html>

@@ -101,18 +101,10 @@ public class PrcsController {
 	  /*------------------------------------------------------------------------------------------------ */
 	  // 공정 진입시 호출될 명령
 	  
-	  // 시작버튼 누를시 작업번호 일시 생
+	  // 시작버튼 누를시 기본정보를 포함한 진행관리작업등록
 	  @RequestMapping("prcs/insertPrcsPrM")
 	  public String insertPrcsPrM(PrcsPrMVO vo, Model model) {
 		  Map<String, Object> map = new HashMap();
-		  
-		  System.out.println(vo.getIndicaDetaNo());
-		  System.out.println(vo.getIndicaDt());
-		  System.out.println(vo.getIndicaNo());
-		  System.out.println(vo.getIstQty());
-		  System.out.println(vo.getPrdtCd());
-		  System.out.println(vo.getProdFg());
-		  System.out.println(vo.getPrcsCd());
 		  
 		  map.put("contents", prcsservice.insertPrcsPrM(vo));
 		  model.addAttribute("result", true);

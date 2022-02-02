@@ -7,4 +7,8 @@
 		where cmmn_cd_id = #{cd}
 	</select>
 
+	<select id="selectCd" resultType="map" parameterType="string">
+		select cmmn_cd_deta_id "value", cmmn_cd_deta_id "text" from cmmn_data_d
+		where cmmn_cd_id = #{cd}
+	</select>
 </mapper>

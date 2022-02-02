@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<h1>자재 반품 조회</h1>
+	<h1>자재 반품 조회</h1><hr>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
@@ -93,24 +93,27 @@
 		scrollX: false,
 		scrollY: false,
 		data: ordrDataSource,
-		rowHeaders: ['checkbox'],
 		sortable: true,
 		columns: [{
 				header: '발주번호',
-				name: 'ordrCd'
+				name: 'ordrCd',
+				sortable: true,
 			},
 			{
 				header: '자재명',
 				name: 'rscNm',
 		        width: 220,
+		        sortable: true,
 			},
 			{
 				header: '자재코드',
-				name: 'rscCd'
+				name: 'rscCd',
+				sortable: true,
 			},
 			{
 				header: '반품량',
-				name: 'rscInferQty'
+				name: 'rscInferQty',
+				sortable: true,
 			},
 			{
 				header: '반품사유',
@@ -118,11 +121,13 @@
 			},
 			{
 				header: '발주일',
-				name: 'ordrDt'
+				name: 'ordrDt',
+				sortable: true,
 			},
 			{
 				header: '반품일',
-				name: 'rtngdDt'
+				name: 'rtngdDt',
+				sortable: true,
 			}
 		]
 	});

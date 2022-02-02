@@ -13,7 +13,7 @@
 
 
 <body>
-	<h1>자재 검수 관리</h1>
+	<h1>자재 검수 관리</h1><hr>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="검수"></div>
@@ -36,7 +36,7 @@
 <script>
 	let cmmnCodes;
 	let curRowKey;
-	let sum;
+	//let sum = 0;
 	let date = new Date();
 	let ordrDtEnd = date.toISOString().substr(0,10);
 	date.setDate(date.getDate() - 7);
@@ -107,41 +107,50 @@
     sortable: true,
     columns: [{
         header: '발주일',
-        name: 'ordrDt'
+        name: 'ordrDt',
+        sortable: true,
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
+        sortable: true,
       },
       {
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+        sortable: true,
       },
       {
         header: '발주량',
-        name: 'ordrQty'
+        name: 'ordrQty',
+        sortable: true,
       },
       {
         header: '받은 수량',
-        name: 'rscIstQty'
+        name: 'rscIstQty',
+        sortable: true,
       },
       {
         header: '불량량',
-        name: 'rscInferQty'
+        name: 'rscInferQty',
+        sortable: true,
       },
       {
         header: '발주번호',
-        name: 'ordrCd'
+        name: 'ordrCd',
+        sortable: true,
       },
       {
         header: '업체',
-        name: 'coNm'
+        name: 'coNm',
+        sortable: true,
       },
       {
         header: '검수여부',
         name: 'inspCls',
         formatter: 'listItemText',
+        sortable: true,
         editor: {
             type: 'select',
             options: {
@@ -181,7 +190,8 @@
 			'ordrDtEnd':ordrDtEnd,
 			'co':co,
 			'rsc':rsc,
-			'inspCls':inspCls
+			'inspCls':inspCls,
+			'whereParam':'inspadmin',
 		});
 	});
 
@@ -191,7 +201,8 @@
 		width : 600,
 		height : 600,
 		buttons: {"입력":function(){
-			if(sum > grid.getValue(curRowKey,'rscIstQty')){
+			let qty = grid.getValue(curRowKey,'rscIstQty');
+			if(sum > qty){
 			  alert('총량보다 많은 불량량을 입력할 수 없습니다.');
 			  return false;
 			}
@@ -214,6 +225,9 @@
 			inspDialog.dialog("close");
 		},
 		"닫기":function(){inspDialog.dialog("close");}
+		},
+		close: function(){
+			sum = 0;
 		}
 	});
 	
@@ -237,7 +251,8 @@
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
 		'rsc':rsc,
-		'inspCls':inspCls
+		'inspCls':inspCls,
+		'whereParam':'inspadmin',
 	});
   });
 

@@ -13,7 +13,7 @@
 
 
 <body>
-  <h1>자재 입고 조회</h1>
+  <h1>자재 입고 조회</h1><hr>
   <div id="coModal" title="업체 목록"></div>
   <div id="rscModal" title="자재 목록"></div>
   <div class="card card-pricing card-primary card-white">
@@ -83,31 +83,38 @@ $(function() {
     sortable: true,
     columns: [{
         header: '입고일',
-        name: 'rscDt'
+        name: 'rscDt',
+        sortable: true,
       },
       {
         header: '자재명',
-        name: 'rscNm'
+        name: 'rscNm',
+        sortable: true,
       },
       {
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+        sortable: true,
       },
       {
         header: '입고량',
-        name: 'rscQty'
+        name: 'rscQty',
+        sortable: true,
       },
       {
         header: '전표번호',
-        name: 'rscSlipNo'
+        name: 'rscSlipNo',
+        sortable: true,
       },
       {
         header: 'LOT번호',
-        name: 'rscLot'
+        name: 'rscLot',
+        sortable: true,
       },
       {
         header: '금액',
-        name: 'rscAmt'
+        name: 'rscAmt',
+        sortable: true,
       }
     ]
   });

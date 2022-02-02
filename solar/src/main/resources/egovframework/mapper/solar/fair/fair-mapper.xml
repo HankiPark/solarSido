@@ -4,6 +4,7 @@
 
 	<select id="fairList" resultType="solar.cmm.prcs.dao.FairVO">
 	SELECT * FROM PRCS
+	ORDER BY PRCS_CD
 	</select>
 	
 	<select id="prcsdataFind" resultType="solar.cmm.prcs.dao.FairVO">
@@ -45,11 +46,11 @@
 	</update>
 
 	<insert id="fairInsert">
-		<selectKey keyProperty="uoprCd" resultType="String" order="BEFORE">
+		<selectKey keyProperty="prcsCd" resultType="String" order="BEFORE">
 			SELECT 'pr'||
 			LPAD(MAX(TO_NUMBER(SUBSTR(PRCS_CD, -3))) +1, 3, 0)
 			AS PRCS_CD
-			FROM PRCS_CD
+			FROM PRCS
 		</selectKey>
 		INSERT INTO PRCS(PRCS_CD, PRCS_FG, PRCS_NM, PRCS_DESCT, PRCS_UNIT, PROD_PD) 
 		VALUES (#{prcsCd}, #{prcsFg}, #{prcsNm}, #{prcsDesct}, #{prcsUnit}, #{prodPd})

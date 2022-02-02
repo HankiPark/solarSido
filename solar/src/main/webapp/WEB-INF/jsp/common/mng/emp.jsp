@@ -19,15 +19,18 @@
 	<div><button type="button" id="btnfind">검색</button></div>
 </div>
 	<div id="grid"></div>
-	<div id="dialog-form" title="사원명단"></div>
+	
+	<!-- <div id="dialog-form" title="사원명단"></div>  -->
+
 <script>
+/*
 let dialog = $("#dialog-form").dialog({
 	autoOpen : false,
 	modal : true,
 	width : 700,
 	height : 700
 });
-
+*/
 
 var dataSource = {
 		  api: {
@@ -53,7 +56,8 @@ var grid = new tui.Grid({
 			{
 				header : '아이디',
 				name : 'empId',
-				editor : 'text'
+				editor : 'text',
+			    sortable: true
 			},
 			{
 				header : '비밀번호',
@@ -145,14 +149,14 @@ $('#btnfind').on('click', function(){
 	})
 	
 });
-
+/*
 $('#btnTest').on('click',function() {
 	dialog.dialog("open");
 	$("#dialog-form").load(
 	"${pageContext.request.contextPath}/modal/empinfoList"
 	);
 });
-
+EMP모달 테스트로만듬 지워도됨 */
 </script>
 </body>
 </html>

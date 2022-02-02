@@ -23,11 +23,13 @@
 		<if test='inspCls != null and inspCls != ""'>
 			AND o.insp_cls = #{inspCls}
 			<if test='inspCls == "rs002"'>
-				AND o.ordr_qty != o.rsc_infer_qty
+				<if test="whereParam != 'insp'">
+					AND o.ordr_qty != o.rsc_infer_qty
+				</if>
 			</if>
-<!-- 			<if test='whereParam == "inadmin"'> -->
-<!-- 				AND o.ordr_qty != o.rsc_infer_qty -->
-<!-- 			</if> -->
+		</if>
+		<if test="whereParam == 'inspadmin'">
+			AND o.insp_cls in ('rs001','rs002')
 		</if>
 		<if test='ordrDtStt != null and ordrDtStt != ""'>
 			AND trunc(o.ordr_dt) <![CDATA[>= #{ordrDtStt}]]>
@@ -49,6 +51,8 @@
 	<update id="update" parameterType="solar.rsc.ordr.service.RscOrdr">
 		update rsc_or
 		set
+			rsc_cd = #{rscCd},
+			ordr_qty = #{ordrQty},
 		    rsc_infer_qty = #{rscInferQty},
 		    insp_cls = #{inspCls}
 		where ordr_cd = #{ordrCd}

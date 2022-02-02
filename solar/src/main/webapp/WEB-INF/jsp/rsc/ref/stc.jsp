@@ -14,6 +14,7 @@
 
 <body>
   <h1>자재 재고 조회</h1>
+  <hr>
   <div id="coModal" title="업체 목록"></div>
   <div id="rscModal" title="자재 목록"></div>
    <div class="card card-pricing card-primary card-white">
@@ -40,25 +41,27 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
-    rowHeaders: ['checkbox'],
-    sortable: true,
     columns: [
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
+        sortable: true,
       },
       {
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+        sortable: true,
       },
       {
         header: '재고',
-        name: 'rscStc'
+        name: 'rscStc',
+        sortable: true,
       },
       {
         header: '안전재고',
-        name: 'safStc'
+        name: 'safStc',
+        sortable: true,
       },
       {
         header: '규격',
@@ -70,7 +73,8 @@
       },
       {
         header: '단가',
-        name: 'rscUntprc'
+        name: 'rscUntprc',
+        sortable: true,
       }
     ]
   });
@@ -85,8 +89,7 @@
 	  for(let i = 0; i<rowCnt; i++){
 		  let rscStc = grid.getValue(i, 'rscStc');
 		  let safStc = grid.getValue(i, 'safStc');
-		  
-		  if(rscStc<safStc){
+		  if(parseInt(rscStc)<parseInt(safStc)){
 			  grid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
 		  }
 	  }

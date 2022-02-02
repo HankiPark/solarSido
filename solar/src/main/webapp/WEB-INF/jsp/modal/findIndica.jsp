@@ -43,7 +43,7 @@ function indicaList(){
 	
 	//그리드 내부 더블클릭
 	indicaGrid.on('dblclick', function(ev) {
-
+		$('#indicaNo').val(indicaGrid.getValue(ev["rowKey"], "indicaNo"));
 		$('#indicaDt').val(indicaGrid.getValue(ev["rowKey"], "indicaDt"));
 		$('#indicaNm').val(indicaGrid.getValue(ev["rowKey"], "indicaNm"));
 		console.log("indicaDt:" + indicaDt + "&indicaNm:" + indicaNm);

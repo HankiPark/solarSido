@@ -17,6 +17,7 @@
  <link
 	href="${pageContext.request.contextPath}/resources/dist/css/style.min.css"
 	rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
       <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/extra-libs/taskboard/js/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/assets/libs/popper.js/dist/umd/popper.min.js"></script>
@@ -29,7 +30,8 @@
 		src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+	<link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+<script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/v3.4.0/tui-pagination.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <link rel="stylesheet"
@@ -42,6 +44,7 @@
 <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" />
 <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 
 
@@ -53,31 +56,92 @@
 
 
 <script type="text/javascript">
-$(function(){
+var UID=null;
+function receiveMsgFromParent( e ) {
+    // e.data가 전달받은 메시지
+    console.log('부모로 부터 받은 메시지 ', e.data );
+    UID = e.data;
+}
+var sock  = null;
+function connectWs(){
 	
+	sock = new SockJS(getContextPath()+'/ajax/myHandler');
+	
+   	sock.onopen = function() {
 
-	$("button:contains('조회')").html("🔍 조회");
-	 	$("button:contains('조회')").css("width","66");
-		$("button:contains('조회')").css("height","30");
-		$("button:contains('조회')").css("width","80");
-		$("button:contains('조회')").css("fontSize",16);
+        
+     console.log('open');
+
+	 };
+
+ 	sock.onmessage = function(e) {
+   	  console.log('message', e.data);
+   	  toastr.success(e.data);
+ //  	  sock.close();
+	 };
+
+ 	sock.onclose = function() {
+ 	    console.log('close');
+	 };
+ 
+  };
+
+	function getContextPath() {
+	    var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+	    return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+	}; 
+	function sendMsgToParent( msg,ct ) {
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/ajax/webinsert",
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			data : {userId : UID,
+					msTitle : msg,
+					msContent : ct}
+		}).done((ev)=>{
+			console.log(ev);
+			sock.send(UID+","+msg);
+			window.parent.postMessage(ev.count, '*' );
+		})
+	    
+	}
+$(function(){
+	window.addEventListener('message',receiveMsgFromParent);
+ 	connectWs();
+
+	$("button:contains('🔍')").html("<i class='fas fa-search-plus'> </i>");
+	$("button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>");
+	 	$("button:contains('조회')").css("width","100");
+		$("button:contains('조회')").css("height","40");
+		$("button:contains('조회')").css("fontSize",20);
+		$("button:contains('조회')").css("borderRadius",20);
 		$("button:contains('조회')").css("padding","6 1 6 3"); 
 	$("button:contains('삭제')").prepend("<i class='far fa-trash-alt'> </i>  ");
-	$("button:contains('삭제')").css("height","30");
-	$("button:contains('삭제')").css("width","80");
-	$("button:contains('삭제')").css("fontSize",16);
+	$("button:contains('삭제')").css("height","40");
+	$("button:contains('삭제')").css("width","100");
+	$("button:contains('삭제')").css("fontSize",20);
+	$("button:contains('삭제')").css("borderRadius",20);
 	$("button:contains('삭제')").css("padding","6 1 6 3"); 
 	
 	$("button:contains('저장')").prepend("<i class='far fa-save'> </i> ");
-	$("button:contains('저장')").css("height","30");
-	$("button:contains('저장')").css("width","80");
-	$("button:contains('저장')").css("fontSize",16);
+	$("button:contains('저장')").css("height","40");
+	$("button:contains('저장')").css("width","100");
+	$("button:contains('저장')").css("fontSize",20);
+	$("button:contains('저장')").css("borderRadius",20);
 	$("button:contains('저장')").css("padding","6 1 6 3"); 
 	$("button:contains('추가')").prepend("<i class='far fa-plus-square'> </i> ");
-	$("button:contains('추가')").css("height","30");
-	$("button:contains('추가')").css("width","80");
-	$("button:contains('추가')").css("fontSize",16);
-	$("button:contains('추가')").css("padding","6 1 6 3"); 
+	$("button:contains('추가')").css("height","40");
+	$("button:contains('추가')").css("width","100");
+	$("button:contains('추가')").css("fontSize",20);
+	$("button:contains('추가')").css("borderRadius",20);
+	$("button:contains('추가')").css("padding","6 1 6 3");  
+	$("button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i> ");
+	$("button:contains('초기화')").css("height","40");
+	$("button:contains('초기화')").css("width","100");
+	$("button:contains('초기화')").css("fontSize",20);
+	$("button:contains('초기화')").css("borderRadius",20);
+	$("button:contains('초기화')").css("padding","6 1 6 3"); 
 	
 	}
 )

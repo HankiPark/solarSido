@@ -16,6 +16,9 @@
 </body>
 
 <script type="text/javascript">
+window.onload = function(){
+}
+
 function planDetailList(){
 	$('input[name="startT"]').daterangepicker({
 		showDropdowns: true,

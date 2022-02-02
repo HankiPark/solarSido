@@ -165,8 +165,7 @@ public class EgovLoginController {
 			request.getSession().setAttribute("loginVO", resultVO);
 			// 2019.10.01 로그인 인증세션 추가
 			request.getSession().setAttribute("accessUser", resultVO.getUserSe().concat(resultVO.getId()));
-			
-			
+
 			return "redirect:/uat/uia/actionMain.do";
 
 		} else {

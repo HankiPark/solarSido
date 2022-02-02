@@ -36,8 +36,9 @@ public class PrdtServiceImpl implements PrdtService {
 	public int modifyData(ModifyVO<Prdt> mvo) {
 		if(mvo.getCreatedRows()!=null) {
 		for(Prdt vo : mvo.getCreatedRows()) {
-			pmapper.inStcUpdate(vo);
+
 			pmapper.insertInPrdt(vo);
+			pmapper.inStcUpdate(vo);
 			}
 		}
 		if(mvo.getDeletedRows()!=null) {

@@ -10,18 +10,24 @@
 	<h2>제품 BOM 관리</h2>
 
 	<div class="row">
-		<div class="col-12" align="left">
-			<label>제품코드</label><input type="text" id="prdtCd"> 
-			<label>제품명</label><input type="text" id="prdtNm" readonly="readonly"> 
-			<label>규격</label><input type="text" id="prdtSpec" readonly="readonly">
-			<button type="button" id="btnfindinfo">조회</button>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-12" align="right">
-			<button type="button" id="btnAdd">추가</button>
-			<button type="button" id="btnDel">삭제</button>
-			<button type="button" id="btnSave">저장</button>
+		<div class="card card-pricing card-primary card-white col-11">
+			<div class="card-body">
+				<div class="col-12" align="left">
+					<label>제품코드</label><input type="text" id="prdtCd"> <label>제품명</label><input
+						type="text" id="prdtNm" readonly="readonly"> <label>규격</label><input
+						type="text" id="prdtSpec" readonly="readonly">
+					<div>
+						<button type="button" id="btnfindinfo">조회</button>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12" align="right">
+					<button type="button" id="btnAdd">추가</button>
+					<button type="button" id="btnDel">삭제</button>
+					<button type="button" id="btnSave">저장</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -31,6 +37,7 @@
 
 	<div id="dialog-form2"></div>
 
+	<div id="dialog-form3"></div>
 	<script>
 		let prdtGrid;
 
@@ -42,6 +49,13 @@
 		});
 
 		let dialog2 = $("#dialog-form2").dialog({
+			autoOpen : false,
+			modal : true,
+			width : 700,
+			height : 700
+		});
+
+		let dialog3 = $("#dialog-form3").dialog({
 			autoOpen : false,
 			modal : true,
 			width : 700,
@@ -69,32 +83,28 @@
 			scrollX : true,
 			scrollY : true,
 			rowHeaders : [ 'rowNum', 'checkbox' ],
-			columns : 
-			[ 
-				{
+			columns : [ {
 				header : '제품코드',
 				name : 'prdtCd',
 				editor : 'text'
-				},
-				{
+			}, {
 				header : '자재코드',
 				name : 'rscCd',
-				}, 
-				{
+			}, {
 				header : '자재명',
 				name : 'rscNm',
-				},  
-				{
+			}, {
 				header : '사용량',
 				name : 'rscUseQty',
 				editor : 'text'
-				}, 
-				{
+			}, {
+				header : '사용공정명',
+				name : 'prcsNm'
+			}, {
 				header : '규격',
 				name : 'prdtSpec',
 				editor : 'text'
-				} 
-			]
+			} ]
 		});
 
 		grid.on('onGridUpdate', function() {
@@ -153,6 +163,22 @@
 						})
 			}
 		});
+
+		grid
+				.on(
+						'click',
+						function(ev) {
+							if (ev["columnName"] == "prcsNm") {
+								dialog3.dialog("open");
+								$("#dialog-form3")
+										.load(
+												"${pageContext.request.contextPath}/modal/prcsinfoList",
+												function() {
+													prcsinfoList(ev["rowKey"]);
+													grid.refreshLayout();
+												})
+							}
+						});
 
 		$('#prdtCd')
 				.on(

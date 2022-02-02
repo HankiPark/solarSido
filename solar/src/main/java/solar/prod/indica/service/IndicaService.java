@@ -3,6 +3,7 @@ package solar.prod.indica.service;
 import java.util.List;
 
 import solar.prod.plan.service.ProdPlanVO;
+import solar.sales.order.dao.ModifyVO;
 
 public interface IndicaService {
 
@@ -15,5 +16,13 @@ public interface IndicaService {
 	List<?> selectRscLot(IndicaVO idcVo);
 
 	List<?> noIndicaPlan(ProdPlanVO ppVo);
+
+	String makeDno();
+
+	int modifyData(ModifyVO<IndicaVO> mvo);
+
+	List<?> findEqmUo(IndicaVO idcVo);
+
+	String makePrdtNo();
 
 }

@@ -3,6 +3,7 @@
 <mapper namespace="solar.cmm.prdt.service.impl.CmmPrdtMapper">
 	<select id="prdtList" resultType="solar.cmm.prdt.dao.PrdtInferVO">
 		SELECT * FROM PRDT_INFER_CD 
+		ORDER BY PRDT_INFER_CD
     </select>
     
    <select id="prdtinferdataFind" resultType="solar.cmm.prdt.dao.PrdtInferVO">
@@ -16,15 +17,17 @@
 	</select>
 
     <insert id="prdtInsert">
-		INSERT INTO PRDT_INFER_CD(PRDT_INFER_CD, PRCS_INFER_CD, PRDT_INFER_NM, PRDT_INFER_DESCT) 
-				VALUES (#{prdtInferCd }, #{prcsInferCd}, #{prdtInferNm}, #{prdtInferDesct})
+		INSERT INTO PRDT_INFER_CD(PRDT_INFER_CD, PRCS_CD, PRDT_INFER_NM, PRDT_INFER_DESCT, PRCS_NM) 
+				VALUES (#{prdtInferCd }, #{prcsCd}, #{prdtInferNm}, #{prdtInferDesct}, #{prcsNm})
 	</insert>
 
     <update id="prdtUpdate">
 		UPDATE	PRDT_INFER_CD
-		SET PRCS_INFER_CD = #{prcsInferCd}
+		SET PRDT_INFER_CD = #{prdtInferCd}
 			, PRDT_INFER_NM = #{prdtInferNm}
             , PRDT_INFER_DESCT = #{prdtInferDesct}
+			, PRCS_CD = #{prcsCd}
+			, PRCS_NM = #{prcsNm}
 		WHERE PRDT_INFER_CD = #{prdtInferCd}
 	</update>
 

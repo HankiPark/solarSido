@@ -16,7 +16,12 @@
 </body>
 
 <script type="text/javascript">
+window.onload = function(){
+
+}
+
 function indicaDetailList(){
+	
 	$('input[name="startT"]').daterangepicker({
 		showDropdowns: true,
 		opens: 'right',
@@ -51,7 +56,8 @@ const indicaListGrid = new tui.Grid({
 					    	method: 'GET'
 		    				},
 				}, 
-			contentType: 'application/json'
+			contentType: 'application/json',
+			initialRequest: false //초기에 안보이게 함
 		},
 	scrollX: false,
 	scrollY: true,

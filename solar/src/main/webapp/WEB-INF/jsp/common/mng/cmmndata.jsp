@@ -10,21 +10,29 @@
 <body>
 	<h2>공통자료관리</h2>
 	<div class="row">
-		<div class="col-sm-6">
-			<div align="left">
-				<label>공통코드ID 검색</label><input type="text" id="cmmnNminfo">
-				<button type="button" id="btnfind">검색</button>
+	<div class="card card-pricing card-primary card-white col-11">
+		<div class="card-body">
+			<div class="row">
+
+				<div class="col-sm-6">
+					<div align="left">
+						<label>공통코드ID </label><input type="text" id="cmmnNminfo">
+						<div>
+							<button type="button" id="btnfind">조회</button>
+						</div>
+					</div>
+				</div>
 			</div>
+
+					<div align="right">
+						<button type="button" id="btnAdd">추가</button>
+						<button type="button" id="btnDel">삭제</button>
+						<button type="button" id="btnSave">저장</button>
+						<button type="butoon" id="btnReset">초기화</button>
+					</div>
+
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-sm-11">
-			<div align="right">
-				<button type="button" id="btnAdd">추가</button>
-				<button type="button" id="btnDel">삭제</button>
-				<button type="button" id="btnSave">저장</button>
-			</div>
-		</div>
 	</div>
 	<div class=row>
 		<div class=col-4>
@@ -32,11 +40,45 @@
 			<br>
 		</div>
 		<div class=col-7>
-			<div id="detailgrid"></div>
+			<div id ="tabs">
+				<div class="card card-pricing card-primary card-white">	
+					<ul>
+						<li>
+							<a href="#detailTabs1">상세 코드</a>
+						</li>
+						<li>
+							<a href="#detailTabs2">코드 정보</a>
+						</li>
+					</ul>
+					<div id="detailTabs1">
+						<div id="detailgrid" >
+						</div>
+					</div>
+					<form id ="codefrm" name="codefrm" method="post">
+						<div id="detailTabs2">
+							<table class="table">
+								<tr>
+									<th>코드ID</th>
+									<td><input id="cmmnCdId" name="cmmnCdId" type="text" readonly="readonly"</td>
+								</tr>
+								<tr>
+									<th>공통코드ID명</th>
+									<td><input id="cmmnCdNm" name="cmmnCdNm" type="text"></td>
+								</tr>
+							</table>
+						</div>
+					</form>
+				</div>
+			
+			</div>
 		</div>
 	</div>
 
 	<script>
+	 $( function() {
+		    $( "#tabs" ).tabs();
+		  } );
+	
 		var dataSource = {
 			api : {
 				readData : {
@@ -51,11 +93,13 @@
 			el : document.getElementById('grid'),
 			data : dataSource,
 			scrollY : true,
-			rowHeaders : ['rowNum'],
+			rowHeaders : [ 'rowNum' ],
 			bodyHeight : 400,
+
 			columns : [ {
 				header : '공통코드ID',
-				name : 'cmmnCdId'
+				name : 'cmmnCdId',
+				sortable : true
 			}, {
 				header : '공통코드ID명',
 				name : 'cmmnCdNm',
@@ -77,9 +121,11 @@
 		});
 
 		grid.on('click', function(ev) {
+			$('td').css('backgroundColor', '')
 			let JsonData = grid.getRowAt(ev.rowKey);
 			let key1 = Object.values(JsonData);
-
+			$('div#grid').find('td[data-row-key$="' + ev.rowKey + '"]').css(
+					'backgroundColor', '#81BEF7')
 			$('cmmnCdId').val(key1[0]);
 
 			var GridParams = {
@@ -88,6 +134,15 @@
 
 			detailgrid.readData(1, GridParams, true);
 		});
+		
+		grid.on('click', (evnt) => {	
+			
+			var JsonData = grid.getRowAt(evnt.rowKey);
+			var GTcode = Object.values(JsonData);
+			
+			$('#cmmnCdId').val(GTcode[0]);
+			$('#cmmnCdNm').val(GTcode[1]);
+		});		
 
 		$('#btnfind').on('click', function() {
 			var cmmnCdNm = $("#cmmnNminfo").val();
@@ -160,7 +215,7 @@
 			}
 		});
 		$('#btnAdd').on('click', function appendRow(index) {
-			grid.appendRow({}, {
+			detailgrid.appendRow({}, {
 				extendPrevRowSpan : true,
 				focus : true,
 				at : 0
@@ -173,6 +228,16 @@
 		$('#btnDel').on('click', function appendRow(index) {
 			detailgrid.blur();
 			detailgrid.removeCheckedRows(true);
+		});
+
+		$('#btnReset').on('click', function appendRow(index) {
+			$('#prdtCd').val();
+			$('td').css('backgroundColor', '');
+			$('#cmmnCdId').val();
+			$('#cmmnCdNm').val();
+			
+			
+			detailgrid.clear();
 		});
 	</script>
 </body>

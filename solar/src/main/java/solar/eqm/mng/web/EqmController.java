@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import solar.eqm.mng.service.EqmService;
 import solar.eqm.mng.service.EqmVO;
+import solar.eqm.unop.service.impl.UnopMapper;
 import solar.sales.order.dao.ModifyVO;
 
 @Controller
 public class EqmController {
 	
 	@Autowired EqmService eqmService;
+	@Autowired UnopMapper unopMapper;
 	
 	//설비관리페이지 이동
 	@RequestMapping("/eqm/mng/eqmMng")
@@ -43,14 +45,50 @@ public class EqmController {
 	}
 	
 	//설비 추가
-	@PutMapping("/eqm/eqmPut")
+	@PutMapping("/eqm/grid/eqmPut")
 	public String rscOrdrData(@RequestBody ModifyVO<EqmVO> mvo, Model model) {
+		System.out.println(mvo);
 		String queryResult = eqmService.modifyData(mvo);
 		if(!queryResult.equals("true")) {
 			model.addAttribute("queryResult",queryResult);
 		} else {
 			model.addAttribute("queryResult","true");
 		}
+		return "jsonView";
+	}
+	
+	//비가동
+	@GetMapping("/eqm/mng/unop")
+	public String unop() {
+		return "eqm/mng/unop";
+	}
+	
+	//비가동코드 전체 ajax
+	@GetMapping("/ajax/unopcd")
+	public String unopCdsAll(Model model){
+		model.addAttribute("unopCds", unopMapper.selectUnopCdAll());
+		return "jsonView";
+	}
+	
+	//비가동YN
+	@GetMapping("/ajax/eqmtoggle")
+	public String eqmtoggle(@RequestParam Map map, Model model) {
+		System.out.println(map);
+		unopMapper.updateEqmYn(map);
+		unopMapper.eqmuoInsert(map);
+		return "jsonView";
+	}
+	
+	//비가동목록 data
+	@GetMapping("/grid/eqm/uoList")
+	public String uoList(@RequestParam Map map, Model model) {
+		List<?> uoList = unopMapper.selectUnopList(map);
+    	
+    	Map<String,Object> data = new HashMap<>();
+		data.put("contents", uoList);
+		model.addAttribute("result", true);
+		model.addAttribute("data", data);
+		
 		return "jsonView";
 	}
 }

@@ -57,7 +57,8 @@ var grid = new tui.Grid({
 		  [
 			{
 				header : '비가동코드',
-				name : 'uoprCd'
+				name : 'uoprCd',
+			    sortable: true
 			},
 			{
 				header : '발생공정코드',
@@ -82,7 +83,9 @@ var grid = new tui.Grid({
 	  
 	
 grid.on('onGridUpdated', function() {
+	
 	grid.refreshLayout(); //변경된 데이터로 확정
+	
 	});
 	
 grid.on('response', function(ev) {  // 성공/실패와 관계 없이 응답을 받았을 경우
@@ -90,10 +93,9 @@ grid.on('response', function(ev) {  // 성공/실패와 관계 없이 응답을 
 		let res = JSON.parse(ev.xhr.response);
 		if(res.mode=='upd'){
 			grid.resetOriginData();
+			grid.refreshLayout();
+			grid.readData(1,{},true);
 		}
-		else {
-			grid.refreshLayout()
-			}
 	});
 	
 

@@ -20,7 +20,7 @@
 
 <script type="text/javascript">
 function prdtCdList(){
- prdtCdGrid = new tui.Grid(
+	const prdtCdGrid = new tui.Grid(
 			{
 				el : document.getElementById('prdtCdGrid'),
 				data : {

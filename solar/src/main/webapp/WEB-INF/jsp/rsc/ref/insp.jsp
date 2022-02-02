@@ -13,7 +13,7 @@
 
 
 <body>
-	<h1>자재 검수 조회</h1>
+	<h1>자재 검수 조회</h1><hr>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="검수"></div>
@@ -42,11 +42,6 @@
 	let rsc;
 	let inspCls;
     let rtngdResnCd;
-	let inferDataSource = {
-		api: {
-			readData: { url: '${pageContext.request.contextPath}/grid/rsc/inspData', method: 'GET'}
-			}
-	};
 	let ordrDataSource = {
 		api: {
 				readData: { url: '${pageContext.request.contextPath}/grid/rsc/ordrData', method: 'GET'},
@@ -104,41 +99,50 @@
     sortable: true,
     columns: [{
         header: '발주일',
-        name: 'ordrDt'
+        name: 'ordrDt',
+        sortable: true,
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
+        sortable: true,
       },
       {
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+        sortable: true,
       },
       {
         header: '발주량',
-        name: 'ordrQty'
+        name: 'ordrQty',
+        sortable: true,
       },
       {
         header: '받은 수량',
-        name: 'rscIstQty'
+        name: 'rscIstQty',
+        sortable: true,
       },
       {
         header: '불량량',
-        name: 'rscInferQty'
+        name: 'rscInferQty',
+        sortable: true,
       },
       {
         header: '발주번호',
-        name: 'ordrCd'
+        name: 'ordrCd',
+        sortable: true,
       },
       {
         header: '업체',
-        name: 'coNm'
+        name: 'coNm',
+        sortable: true,
       },
       {
         header: '검수여부',
         name: 'inspCls',
         formatter: 'listItemText',
+        sortable: true,
         editor: {
             type: 'select',
             options: {
@@ -170,7 +174,8 @@
 			'ordrDtEnd':ordrDtEnd,
 			'co':co,
 			'rsc':rsc,
-			'inspCls':'rs002'
+			'inspCls':'rs002',
+			'whereParam':'insp',
 		});
 	});
 
@@ -185,7 +190,8 @@
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
 		'rsc':rsc,
-		'inspCls':'rs002'
+		'inspCls':'rs002',
+		'whereParam':'insp',
 	});
   });
 

@@ -218,12 +218,10 @@ $(function() {
 
 						inGrid.refreshLayout();
 						inGrid.clear();
-						setTimeout(()=>{
-							var a = inGrid.getRowCount();
-							console.log(a);
-							inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
 						
-							},1000);
+							
+						
+							
 
 					} else {
 						$("#iG").css("display", "none");
@@ -383,18 +381,16 @@ $(function() {
 	//그리드 값 변하면 다시 뿌려주게끔
 	inGrid.on('onGridUpdated', function() {
 		inGrid.refreshLayout();
+		var a = inGrid.getRowCount();
+
+		inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
 	});
 	inGrid.on('response', function(ev) {
 
 		let res = JSON.parse(ev.xhr.response);
 		if (res.mode == 'upd') {
 			inGrid.resetOriginData();
-			setTimeout(()=>{
-				var a = inGrid.getRowCount();
-				console.log(a);
-				inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
-			
-				},1000);
+
 		}
 	});
 
@@ -404,19 +400,14 @@ $(function() {
 			$("#dialog-lot").load("${pageContext.request.contextPath}/modal/prdtInWaitList",function() {
 				prdtInWait(ev["rowKey"]);
 				inGrid.refreshLayout();
-				setTimeout(()=>{
-					var a = inGrid.getRowCount();
-					console.log(a);
-					inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
-				
-					},1000);
+
 				})
 				}
 			});
 
 	//조회버튼
-	$('#findgrid').on('click', function() {
-
+	$('#findgrid').on('click', function() {		
+		
 		var startT = $("#startT").val().substring(0,10);
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
@@ -427,12 +418,7 @@ $(function() {
 		}
 		/* inGrid.enable(); */
 		inGrid.readData(1,params,true);
-		setTimeout(()=>{
-		var a = inGrid.getRowCount();
-		console.log(a);
-		inGrid.setSummaryColumnContent('indicaNo','합계:'+a);
-	
-		},1000);
+
 	});
 	
 	$('#insertBtn').on('click', function appendRow(index) {
@@ -450,13 +436,13 @@ $(function() {
 				inGrid.removeRow(i);
 			}
 		}
-		console.log(inGrid.validate())
 	
 		if(inGrid.validate().length!=0 ){
 			toastr.error("제품lot은 중복될수 없습니다");
 			
 		}else{
 			 inGrid.request('modifyData',{'showConfirm' : false});
+			 sendMsgToParent('입고처리','/sales/mng/prdt_inout_mng');
 			 setTimeout(()=>{
 					var startT = $("#startT").val().substring(0,10);
 					var endT = $("#startT").val().substring(13,23);
@@ -478,7 +464,7 @@ $(function() {
 	$('#deleteBtn').on('click', function appendRow(index) {
 		inGrid.blur();
 		inGrid.removeCheckedRows(false);
-
+		inGrid.request('modifyData',{'showConfirm' : false});
 	});
 
 	//업체명단 input 클릭시
@@ -629,6 +615,7 @@ $(function() {
 				//버튼누르면 전표번호 값 업데이트
 				outGrid.blur();
 				outGrid.request('modifyData');
+				sendMsgToParent('출고전표발행','/sales/mng/prdt_inout_mng');
 			});
 	
 	$('#deleteBtn2').on('click', function appendRow(index) {
