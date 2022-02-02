@@ -95,7 +95,6 @@
 	let iDt = new Date();
 	let idcDt = iDt.toISOString().substring(0, 10);
 	document.getElementById('indicaDt').value = idcDt;
-	
 	let idt = idcDt.replaceAll("-","");
 	
 	let idcQty;
@@ -103,6 +102,11 @@
 	let idcNo;
 	let orderNo;
 	let totalUse;
+	
+	let arr=[];
+	let obj={};
+	let prdtaa=0;
+	let prdtnooo;
 	
 	//공통 - 제품코드 가져옴
 	$.ajax({
@@ -498,12 +502,11 @@
 	});
 	
 	//------------------------------그리드이벤트------------------------------------------------
+	
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('onGridUpdated', function() {
 		indicaDgrid.refreshLayout();
-		//rscGrid.refreshLayout();
 		rscGrid.clear();
-		//rscLotGrid.refreshLayout();
 		rscLotGrid.clear();
 	});
 	 
@@ -529,7 +532,6 @@
 	});	
 	
 	indicaDgrid.on('dblclick', function(ev){
-		//rscGrid.refreshLayout();
 		idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
 		idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
 		orderNo = indicaDgrid.getValue(ev.rowKey, "orderNo")
@@ -548,6 +550,35 @@
 		rscGrid.readData(1, rscGridParams, true);
 	});
 
+	
+	indicaDgrid.on('editingFinish', function(ev) {
+		if (ev.columnName == 'indicaQty') {
+			//제품lot생성
+			$.ajax({
+				url:'${pageContext.request.contextPath}/ajax/makePrdtNo.do',
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+				async: false,
+			}).done((res)=>{
+				console.log(res)
+				prdtnooo = res.num
+			})
+			
+		//제품수 * 해당 자재수만큼 obj 생성 -> arr
+			arr.length = 0; // arr 초기화
+			for (i=0; i<indicaDgrid.getValue(ev.rowKey, "indicaQty") * rscGrid.getRowCount() ; i++){
+				obj= {	'indiaDetaNo': idcNo,
+						'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
+						'prdtLot':'',
+						'rscCd':'',
+						'rscLot':'',
+						'rscUseQty':''
+						} 
+				arr.push(obj);
+			}
+		}
+	});
+		
 	//자재목록 그리드 이벤트
 	rscGrid.on('onGridUpdated', function() {
 		rscGrid.refreshLayout(); 
@@ -559,20 +590,52 @@
 		console.log("3333")
 	});
 	
-	let arr1;
+	/* let arr1;
 	let arr2;
 	let arr3;
 	let arr4;
 	let arr5;
-	let arr6;
+	let arr6; */
+	
 	// 자재별 lot 사용 갯수: arr(i).length
 	//let chkLot; //체크된 행 담기
-	let udLot;
+	//let udLot;
+	
+	
+	//자재코드 눌렀을때 자재정보->arr
+	function rsc(){
+		let a = rscLotGrid.getModifiedRows().updatedRows;
+		console.log(a)
+		console.log(a[0].rscQty)
+		console.log(a[0].rscUseQty)
+		console.log(a[0].rscLot)
+		//a.length -> 로트종류
+		let c = 0; //자재 수
+	 	for (i=0; i<a.length; i++ ){ 
+			for ( k=0; k<(a[i].rscQty*1); k=k+(1*a[i].rscUseQty)){
+					console.log("k:"+k)
+					arr[prdtaa].rscLot = a[i].rscLot
+					arr[prdtaa].rscUseQty = a[i].rscUseQty
+					arr[prdtaa].rscCd = a[i].rscCd
+					arr[prdtaa].prdtLot = 'PRD'+ idt + lpad((+1).toString(), 3,'0')
+					prdtaa++ // 다음 lot 시작 인덱스
+				console.log("prdtaa:"+prdtaa)
+			}
+		} 
+	}
+	
 	rscGrid.on('dblclick', function(ev){
+		if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
+			rsc();
+		}
+		console.log(arr)
 		//console.log(rscLotGrid.getCheckedRows())
 		//chkLot = rscLotGrid.getCheckedRows();
 		//console.log(rscLotGrid.getModifiedRows().updatedRows)
-		udLot = rscLotGrid.getModifiedRows().updatedRows;
+	/* 			if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
+			obj= rscLotGrid.getModifiedRows().updatedRows;
+		} */
+		/* udLot = rscLotGrid.getModifiedRows().updatedRows;
 		console.log(udLot)
 		if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
 			//console.log(udLot[0].rscCd)
@@ -597,7 +660,9 @@
 					arr6 = udLot;
 					break;
 			}
-		}
+		} */
+		
+		
 		let rscCd = rscGrid.getValue(ev.rowKey, "rscCd")
 		let rscNm = rscGrid.getValue(ev.rowKey, "rscNm")
 		let prdtCd = rscGrid.getValue(ev.rowKey, "prdtCd")
@@ -627,18 +692,28 @@
 				rscLotGrid.disableRow(i, true)
 			}
 		}
+		rscLotGrid.blur()
 	})
 	
 	rscLotGrid.on("check", (rscEv) => {
-		if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
-			hdRscConGrid.appendRow(rscLotGrid.getRow(rscEv.rowKey),{
-				extendPrevRowSpan : false,
-				focus : true,
-				at : 0
-			});
-		}
-		hdRscConGrid.setValue(rscEv.rowKey, 'rscQty', totalUse);
-	})
+      
+      if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
+         if(hdRscConGrid.getColumnValues('rscLot').includes(rscLotGrid.getValue(rscEv.rowKey,'rscLot'))){
+            var key = hdRscConGrid.findRows({'rscLot':rscLotGrid.getValue(rscEv.rowKey,'rscLot')})[0].rowKey;
+            hdRscConGrid.setValue(key,'rscQty',rscLotGrid.getValue(rscEv.rowKey,'rscQty'));
+	         }else{
+	         hdRscConGrid.appendRow({'indicaDetaNo':rscLotGrid.getValue(rscEv.rowKey,'indicaDetaNo'),
+	            'rscUseQty':rscLotGrid.getValue(rscEv.rowKey,'rscUseQty'),
+	            'rscCd':rscLotGrid.getValue(rscEv.rowKey,'rscCd'),
+	            'rscLot':rscLotGrid.getValue(rscEv.rowKey,'rscLot'),
+	            'rscQty':rscLotGrid.getValue(rscEv.rowKey,'rscQty'),},{
+	            extendPrevRowSpan : true,
+	            focus : true,
+	            at : 0
+	         });
+         }
+      }
+   })
 	
 	rscLotGrid.on("click", (rscEv) => {
 		for ( i=0 ; i<rscLotGrid.getRowCount(); i++){
@@ -694,7 +769,7 @@
 			}
 			if(gridCheck()){
 				if (confirm("지시를 저장하시겠습니까?")) { 
-					//planDgrid.blur();
+					planDgrid.blur();
 					planDgrid.request('modifyData'); // modifyData의 url 호출
 				}
 			}
@@ -813,13 +888,71 @@
 	let lotArr = []; 	//list
 	let lotData = {}; 	//obj
 	
-	function lpad(s, padLength, padString){
-	    while(s.length < padLength)
-	        s = padString + s;
-	    return s;
-	}
-	
-	$('#lotSend').on('click', function(){
+	/* 
+		 $('#lotSend').on('click', function(){
+		      let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
+		      let rscCnt = rscGrid.getRowCount(); //자재수
+		      let list=[];
+		      list.push(arr1);
+		      list.push(arr2);
+		      list.push(arr3);
+		      list.push(arr4);
+		      list.push(arr5);
+		      list.push(arr6);
+		      for(let li of list){
+		      if(li != null){
+		         var q =0;
+		         lotData =  {'indiaDetaNo': idcNo,
+		            'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
+		            'prdtLot':'',
+		            'rscCd':'',
+		            'rscLot':'' ,
+		            'rscUseQty':''
+		            } 
+
+		      for(let i =0 ; i< li.length ; i++){
+		         lotData.rscCd = li[i].rscCd;
+		         var useQty =li[i].rscUseQty;
+		         var rscLot = li[i].rscLot;
+		         var rscQty = li[i].rscQty;
+		         var t =0;
+
+		         if(lotData.rscUseQty !=li[i].rscUseQty && lotData.rscUseQty!=''){
+		            //lotData push
+		            lotData.rscLot= rscLot;
+		            rscQty=rscQty-useQty+lotData.rscUseQty;
+		            lotData.rscUseQty = useQty-lotData.rscUseQty;
+		            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+		            
+		         }
+
+		         for(let k =0; k*useQty<rscQty ; k++){
+		            lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
+		            lotData.rscLot = rscLot;
+		            lotData.rscUseQty = useQty;
+		            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+		            console.log(lotData);
+		            q++;
+		            t++; 
+
+		         }
+		         if(t*useQty==rscQty){lotData.rscUseQty=''}
+		         else{   
+		            lotData.rscLot = rscLot;   
+		            lotData.rscUseQty = rscQty%(t*useQty);
+		            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+		         }
+		         
+		      }}
+		      }
+
+		      
+		      console.log("lotArr:")
+		      console.log(lotArr);
+		   }) 
+		    */
+		
+		/* 
 		let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
 		let rscCnt = rscGrid.getRowCount(); //자재수
 		//console.log(prdtCnt);
@@ -839,16 +972,29 @@
 		} 
 		console.log("lotArr:")
 		console.log(lotArr);
-		/* 
-		for (let r = 0; r < rscCnt; r++){
-			if (hdRscConGrid.getValue(r, 'rscUseQty')/rscGrid.getValue(r, 'rscUseQty') <= prdtCnt){
-				lotArr[i].rscLot = hdRscConGrid.getValue(r, 'rscUseQty')
+		
+		
+
+		let k =0;
+
+		for(i=0; i<hdRscConGrid.getRowCount(); i++){ // 1번째 자재부터
+			for(a=0; a<(hdRscConGrid.getValue(i, 'rscQty')/
+					 hdRscConGrid.getValue(i, 'rscUseQty')) ; a++){ //1번째 로트가 들어갈 수
+				lotArr[k].rscLot = hdRscConGrid.getValue(i, 'rscLot')
+				k++;
 			}
 		} */
 		//hdPrdtRscGrid.resetData(lotArr);
-	}) 
+		//arr.length = 0; //초기화
+		//prdtaa=0;
+	//}) 
 	
 	//------------------------------함수------------------------------------------------
-	 
+ 	//lpad 함수
+	function lpad(s, padLength, padString){
+	    while(s.length < padLength)
+	        s = padString + s;
+	    return s;
+	}
 </script>
 </html>

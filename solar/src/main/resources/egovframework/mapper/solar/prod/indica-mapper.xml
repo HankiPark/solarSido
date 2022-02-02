@@ -107,6 +107,10 @@
 	SELECT nvl(max(indica_deta_no), 0)+1 FROM indica_d
 </select>
 
+<select id ="makePrdtNo" resultType="String">
+	select nvl(count(prdt_lot), 0)+1 from prdt_stc where prdt_dt = sysdate
+</select>
+
 <select id="findEqmUo" resultType="indicaVO">
 	SELECT  p.prdt_cd, p.prcs_ord, p.prcs_cd, p.eqm_cd, e.eqm_yn
 	FROM prcs_pr p

@@ -23,4 +23,6 @@ public interface IndicaMapper {
 	int modifyData(ModifyVO<IndicaVO> mvo);
 
 	List<?> findEqmUo(IndicaVO idcVo);
+	
+	String makePrdtNo();
 }

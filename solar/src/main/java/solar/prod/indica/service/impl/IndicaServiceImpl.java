@@ -63,4 +63,9 @@ public class IndicaServiceImpl implements IndicaService {
 	public List<?> findEqmUo(IndicaVO idcVo) {
 		return idcMapper.findEqmUo(idcVo);
 	}
+
+	@Override
+	public String makePrdtNo() {
+		return idcMapper.makePrdtNo();
+	}
 }
