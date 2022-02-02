@@ -37,6 +37,7 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 		
 		if(mvo.getUpdatedRows() != null) {
 			for(RscOrdr rscOrdr : mvo.getUpdatedRows()) {
+				System.out.println("@@@@@@@@");
 				System.out.println(rscOrdr);
 				rscOrdrMapper.update(rscOrdr);
 				

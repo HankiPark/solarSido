@@ -51,6 +51,8 @@
 	<update id="update" parameterType="solar.rsc.ordr.service.RscOrdr">
 		update rsc_or
 		set
+			rsc_cd = #{rscCd},
+			ordr_qty = #{ordrQty},
 		    rsc_infer_qty = #{rscInferQty},
 		    insp_cls = #{inspCls}
 		where ordr_cd = #{ordrCd}
