@@ -1,6 +1,7 @@
 package solar.prod.indica.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,5 +68,10 @@ public class IndicaServiceImpl implements IndicaService {
 	@Override
 	public String makePrdtNo() {
 		return idcMapper.makePrdtNo();
+	}
+
+	@Override
+	public int hiddenData(Map<String, List<IndicaVO>> map) {
+		return 0;
 	}
 }

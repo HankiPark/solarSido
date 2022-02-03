@@ -22,10 +22,10 @@
 		<div class="col-9">
 			<form name="indicaMngFrm">
 				<div>
-					<label>지시일자<span style="color: red">*</span></label> <input
-						type="date" id="indicaDt" name="indicaDt" required> <label>생산지시명<span
-						style="color: red">*</span></label> <input type="text" id="indicaNm"
-						name="indicaNm" required>
+					<label>지시일자<span style="color: red">*</span></label> 
+					<input type="date" id="indicaDt" name="indicaDt" required> 
+					<label>생산지시명<span	style="color: red">*</span></label> 
+					<input type="text" id="indicaNm" name="indicaNm" required>
 				</div>
 				<div>
 					<button type="button" id="btnReset">초기화</button>
@@ -61,9 +61,10 @@
 		<!-- 소요자재 그리드 -->
 		<div id="rscGrid" class="col-5">
 			<form name="rscFrm">
-				<label>지시상세번호</label> <input type="text" id="idcDno" name="idcDno"
-					readonly> <br> <label>제품코드</label> <input type="text"
-					id="prdtCd" name="prdtCd" readonly>
+				<label>지시상세번호</label> 
+				<input type="text" id="idcDno" name="idcDno" readonly> <br> 
+				<label>제품코드</label> 
+				<input type="text"	id="prdtCd" name="prdtCd" readonly>
 				<!-- <label>제품명</label>  -->
 				<input type="hidden" id="prdtNm" name="prdtNm" readonly>
 			</form>
@@ -71,20 +72,24 @@
 		<!-- 자재별 lot 선택 그리드 -->
 		<div id="rscLotGrid" class="col-7">
 			<form name="rscLotFrm">
-				<label>자재코드</label> <input type="text" id="rscCd" name="rscCd"
-					readonly> <label>자재명</label> <input type="text" id="rscNm"
-					name="rscNm" readonly> <br> <label>총 소요량</label> <input
-					type="text" id="totalUseQty" name="totalUseQty" readonly>
+				<label>자재코드</label> 
+				<input type="text" id="rscCd" name="rscCd" readonly> 
+				<!-- <label>자재명</label>  -->
+				<input type="hidden" id="rscNm" name="rscNm" readonly> <br> 
+				<label>총 소요량</label> 
+				<input type="text" id="totalUseQty" name="totalUseQty" readonly>
 			</form>
 		</div>
 	</div>
-
 	<br>
-	<!-- 소요자재 히든그리드 -->
-	<div id="hdRscConGrid">
+	
+	<div>
 		<button type="button" id="rscReset">초기화</button>
-		<button type="button" id="lotSend">lot부여</button>
+		<button type="button" id="lotSend">lot생성</button>
 	</div>
+	
+	<!-- 소요자재 히든그리드 -->
+	<div id="hdRscConGrid"></div>
 	<!-- 제품lot별 자재lot 부여 히든그리드 -->
 	<div id="hdPrdtRscGrid"></div>
 
@@ -92,6 +97,7 @@
 
 <!-- 스크립트 -->
 <script type="text/javascript">
+	//------------------------------변수------------------------------------------------
 	let iDt = new Date();
 	let idcDt = iDt.toISOString().substring(0, 10);
 	document.getElementById('indicaDt').value = idcDt;
@@ -103,10 +109,24 @@
 	let orderNo;
 	let totalUse;
 	
+	//제품-자재 lot 연결
+	let lotArr = []; 	//list
+	let lotData = {}; 	//obj
 	let arr=[];
 	let obj={};
-	let prdtaa=0;
-	let prdtnooo;
+	let pdIdx=0;
+	let prdtLotNum=0;
+	
+	/* let arr1;
+	let arr2;
+	let arr3;
+	let arr4;
+	let arr5;
+	let arr6; */
+	// 자재별 lot 사용 갯수: arr(i).length
+	
+	//let chkLot; //체크된 행 담기
+	//let udLot;
 	
 	//공통 - 제품코드 가져옴
 	$.ajax({
@@ -117,8 +137,7 @@
 		//console.log(data)
 		cmmnCodes = data;
 	});
-	
-	
+
 	//------------------------------그리드생성------------------------------------------------
 	//지시 조회 그리드
 	let indicaDgrid = new tui.Grid({
@@ -129,10 +148,10 @@
 						url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
 						method: 'GET'
 			    				},
-			    	modifyData: {
+			    	/* modifyData: {
 			    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
 						method: 'POST'
-								}
+								} */
 			  },
 				contentType: 'application/json',
 				initialRequest: false //초기에 안보이게 함
@@ -447,13 +466,13 @@
 		        position: 'bottom',
 		        height: 50,
 		        columnContent: {
-		        	rscLot: {
+		        	rscUseQty: {
 		        		template: function(valueMap) {
 		        			return '합계';
 		        			},
 		        		align:'center'
 		        	},
-		        	rscUseQty: {
+		        	rscQty: {
 						template: function(valueMap) {
 							return valueMap.sum;
 							}
@@ -496,13 +515,12 @@
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscConQty'
+					    name: 'rscUseQty'
 					  }
 				]
 	});
 	
 	//------------------------------그리드이벤트------------------------------------------------
-	
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('onGridUpdated', function() {
 		indicaDgrid.refreshLayout();
@@ -561,13 +579,13 @@
 				async: false,
 			}).done((res)=>{
 				console.log(res)
-				prdtnooo = res.num
+				prdtLotNum = res.num
 			})
 			
 		//제품수 * 해당 자재수만큼 obj 생성 -> arr
 			arr.length = 0; // arr 초기화
-			for (i=0; i<indicaDgrid.getValue(ev.rowKey, "indicaQty") * rscGrid.getRowCount() ; i++){
-				obj= {	'indiaDetaNo': idcNo,
+			for (let i=0; i<indicaDgrid.getValue(ev.rowKey, "indicaQty") * rscGrid.getRowCount() ; i++){
+				obj= {	'indicaDetaNo': idcNo,
 						'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
 						'prdtLot':'',
 						'rscCd':'',
@@ -587,39 +605,26 @@
 			rscGrid.setValue(i, 'totalUseQty',  1* idcQty * rscGrid.getValue(i, 'rscUseQty'));
 		}
 		rscLotGrid.refreshLayout(); 
-		console.log("3333")
 	});
-	
-	/* let arr1;
-	let arr2;
-	let arr3;
-	let arr4;
-	let arr5;
-	let arr6; */
-	
-	// 자재별 lot 사용 갯수: arr(i).length
-	//let chkLot; //체크된 행 담기
-	//let udLot;
-	
 	
 	//자재코드 눌렀을때 자재정보->arr
 	function rsc(){
-		let a = rscLotGrid.getModifiedRows().updatedRows;
-		console.log(a)
-		console.log(a[0].rscQty)
-		console.log(a[0].rscUseQty)
-		console.log(a[0].rscLot)
-		//a.length -> 로트종류
+		let udr = rscLotGrid.getModifiedRows().updatedRows;
+		console.log(udr)
+		console.log(udr[0].rscQty)
+		console.log(udr[0].rscUseQty)
+		console.log(udr[0].rscLot)
+		
 		let c = 0; //자재 수
-	 	for (i=0; i<a.length; i++ ){ 
-			for ( k=0; k<(a[i].rscQty*1); k=k+(1*a[i].rscUseQty)){
-					console.log("k:"+k)
-					arr[prdtaa].rscLot = a[i].rscLot
-					arr[prdtaa].rscUseQty = a[i].rscUseQty
-					arr[prdtaa].rscCd = a[i].rscCd
-					arr[prdtaa].prdtLot = 'PRD'+ idt + lpad((+1).toString(), 3,'0')
-					prdtaa++ // 다음 lot 시작 인덱스
-				console.log("prdtaa:"+prdtaa)
+	 	for (i=0; i<udr.length; i++ ){ //a.length -> 로트종류
+			for ( k=0; k<(udr[i].rscQty*1); k=k+(1*udr[i].rscUseQty)){
+					//console.log("k:"+k)
+					arr[pdIdx].rscLot = udr[i].rscLot
+					arr[pdIdx].rscUseQty = udr[i].rscUseQty
+					arr[pdIdx].rscCd = udr[i].rscCd
+					arr[pdIdx].prdtLot = 'PRD'+ idt + lpad((prdtLotNum).toString(), 3,'0')
+					pdIdx++ // 다음 lot 시작 인덱스
+					prdtLotNum++
 			}
 		} 
 	}
@@ -629,7 +634,8 @@
 			rsc();
 		}
 		console.log(arr)
-		//console.log(rscLotGrid.getCheckedRows())
+		
+			//console.log(rscLotGrid.getCheckedRows())
 		//chkLot = rscLotGrid.getCheckedRows();
 		//console.log(rscLotGrid.getModifiedRows().updatedRows)
 	/* 			if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
@@ -661,7 +667,6 @@
 					break;
 			}
 		} */
-		
 		
 		let rscCd = rscGrid.getValue(ev.rowKey, "rscCd")
 		let rscNm = rscGrid.getValue(ev.rowKey, "rscNm")
@@ -698,9 +703,16 @@
 	rscLotGrid.on("check", (rscEv) => {
       
       if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
-         if(hdRscConGrid.getColumnValues('rscLot').includes(rscLotGrid.getValue(rscEv.rowKey,'rscLot'))){
-            var key = hdRscConGrid.findRows({'rscLot':rscLotGrid.getValue(rscEv.rowKey,'rscLot')})[0].rowKey;
-            hdRscConGrid.setValue(key,'rscQty',rscLotGrid.getValue(rscEv.rowKey,'rscQty'));
+    	  if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
+  			hdRscConGrid.appendRow(rscLotGrid.getRow(rscEv.rowKey),{
+  				extendPrevRowSpan : false,
+  				focus : true,
+  				at : 0
+  			});
+  		}
+    	   /* if(hdRscConGrid.getColumnValues('rscLot').includes(rscLotGrid.getValue(rscEv.rowKey,'rscLot'))){
+          var key = hdRscConGrid.findRows({'rscLot':rscLotGrid.getValue(rscEv.rowKey,'rscLot')})[0].rowKey;
+          hdRscConGrid.setValue(key,'rscQty',rscLotGrid.getValue(rscEv.rowKey,'rscQty'));
 	         }else{
 	         hdRscConGrid.appendRow({'indicaDetaNo':rscLotGrid.getValue(rscEv.rowKey,'indicaDetaNo'),
 	            'rscUseQty':rscLotGrid.getValue(rscEv.rowKey,'rscUseQty'),
@@ -711,7 +723,7 @@
 	            focus : true,
 	            at : 0
 	         });
-         }
+       } */
       }
    })
 	
@@ -759,6 +771,11 @@
 		indicaNm = $('#indicaNm').val();
 		indicaDt = $('#indicaDt').val();
 		
+		let hdData = {};
+		hdData.hdRscConGrid = hdRscConGrid.getData();
+		hdData.hdPrdtRscGrid = hdPrdtRscGrid.getData();
+		console.log(hdData)
+		
 		if (indicaNm == null || indicaNm == ""){
 			alert('필수입력칸이 비어있습니다.');
 			$('#indicaNm').focus();
@@ -771,6 +788,17 @@
 				if (confirm("지시를 저장하시겠습니까?")) { 
 					planDgrid.blur();
 					planDgrid.request('modifyData'); // modifyData의 url 호출
+					
+					$.ajax({
+						url: '${pageContext.request.contextPath}/hiddenData',
+						dataType: 'JSON',
+						method: 'POST',
+						data: JSON.stringify(hdData),
+						contentType: 'application/json',
+						success: function () {
+							alert("완료");
+						}
+					})
 				}
 			}
 		} 
@@ -883,12 +911,11 @@
 		rscLotGrid.resetData([]);
 	})
 	
-	
-	//제품-자재 lot 연결 테스트 중
-	let lotArr = []; 	//list
-	let lotData = {}; 	//obj
-	
-	/* 
+	 $('#lotSend').on('click', function(){
+		rsc();
+		console.log("lot부여");
+		
+		/* 
 		 $('#lotSend').on('click', function(){
 		      let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
 		      let rscCnt = rscGrid.getRowCount(); //자재수
@@ -902,7 +929,7 @@
 		      for(let li of list){
 		      if(li != null){
 		         var q =0;
-		         lotData =  {'indiaDetaNo': idcNo,
+		         lotData =  {'indicaDetaNo': idcNo,
 		            'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
 		            'prdtLot':'',
 		            'rscCd':'',
@@ -952,43 +979,14 @@
 		   }) 
 		    */
 		
-		/* 
-		let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
-		let rscCnt = rscGrid.getRowCount(); //자재수
-		//console.log(prdtCnt);
-		//console.log(rscCnt);
-		for (let r = 0; r < rscCnt; r++){ //자재코드별
-			for (let p = 0; p < prdtCnt; p++){ //제품수 = 제품lot
-				lotData = {'indiaDetaNo': idcNo,
-							'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
-							'prdtLot':'',
-							'rscCd':'',
-							'rscLot':'' 
-							} 
-				lotData.prdtLot = 'PRD'+ idt + lpad((p+1).toString(), 3,'0')
-				lotData.rscCd = rscGrid.getValue(r, 'rscCd')
-				lotArr.push(lotData);
-			}
-		} 
-		console.log("lotArr:")
-		console.log(lotArr);
-		
-		
-
-		let k =0;
-
-		for(i=0; i<hdRscConGrid.getRowCount(); i++){ // 1번째 자재부터
-			for(a=0; a<(hdRscConGrid.getValue(i, 'rscQty')/
-					 hdRscConGrid.getValue(i, 'rscUseQty')) ; a++){ //1번째 로트가 들어갈 수
-				lotArr[k].rscLot = hdRscConGrid.getValue(i, 'rscLot')
-				k++;
-			}
-		} */
-		//hdPrdtRscGrid.resetData(lotArr);
-		//arr.length = 0; //초기화
-		//prdtaa=0;
-	//}) 
-	
+		    
+		//hdPrdtRscGrid.resetData(arr);
+		hdPrdtRscGrid.appendRows(arr);
+		//초기화
+		arr.length = 0; 
+		pdIdx=0;
+	 })
+	 	
 	//------------------------------함수------------------------------------------------
  	//lpad 함수
 	function lpad(s, padLength, padString){

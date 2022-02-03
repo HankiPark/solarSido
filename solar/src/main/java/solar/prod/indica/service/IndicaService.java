@@ -1,6 +1,7 @@
 package solar.prod.indica.service;
 
 import java.util.List;
+import java.util.Map;
 
 import solar.prod.plan.service.ProdPlanVO;
 import solar.sales.order.dao.ModifyVO;
@@ -24,5 +25,7 @@ public interface IndicaService {
 	List<?> findEqmUo(IndicaVO idcVo);
 
 	String makePrdtNo();
+
+	int hiddenData(Map<String, List<IndicaVO>> map);
 
 }
