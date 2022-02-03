@@ -75,7 +75,15 @@ public class EqmController {
 	public String eqmtoggle(@RequestParam Map map, Model model) {
 		System.out.println(map);
 		unopMapper.updateEqmYn(map);
-		unopMapper.eqmuoInsert(map);
+		
+		if(map.get("uoprCd")!=null) {
+			System.out.println("IF");
+			unopMapper.eqmuoInsert(map);
+		} else {
+			System.out.println("ELSE");
+			unopMapper.updateToTm(map);
+		}
+		
 		return "jsonView";
 	}
 	
@@ -89,6 +97,13 @@ public class EqmController {
 		model.addAttribute("result", true);
 		model.addAttribute("data", data);
 		
+		return "jsonView";
+	}
+	
+	//비가동 그리드 더블클릭 단건
+	@GetMapping("/ajax/eqm/uoselect")
+	public String uoselect(@RequestParam Map map, Model model) {
+		model.addAttribute("unop", unopMapper.selectUnop(map));
 		return "jsonView";
 	}
 }

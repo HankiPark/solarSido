@@ -9,4 +9,6 @@ public class UnopVO {
 	String toTm;
 	String eqmCd;
 	String uoprCd;
+	String uoprNm;
+	String eqmNm;
 }
