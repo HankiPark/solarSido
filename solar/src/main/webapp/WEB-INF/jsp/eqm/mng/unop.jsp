@@ -227,16 +227,16 @@
 				name: 'eqmMdl',
 				align: 'center',
 			},
-			{
-				header: '용량/규격',
-				name: 'eqmSpec',
-				align: 'center',
-			},
-			{
-				header: '라인번호',
-				name: 'liNo',
-				align: 'center',
-			},
+// 			{
+// 				header: '용량/규격',
+// 				name: 'eqmSpec',
+// 				align: 'center',
+// 			},
+// 			{
+// 				header: '라인번호',
+// 				name: 'liNo',
+// 				align: 'center',
+// 			},
 			{
 				header: '작업자',
 				name: 'empId',
@@ -257,11 +257,11 @@
 				name: 'temp',
 				align: 'center',
 			},
-			{
-				header: 'UPH',
-				name: 'uph',
-				align: 'center',
-			},
+// 			{
+// 				header: 'UPH',
+// 				name: 'uph',
+// 				align: 'center',
+// 			},
 			{
 				header: '공정코드',
 				name: 'prcsCd',
