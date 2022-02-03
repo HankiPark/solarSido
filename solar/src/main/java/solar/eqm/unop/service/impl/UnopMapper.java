@@ -11,4 +11,6 @@ public interface UnopMapper {
 	int updateEqmYn(Map map);
 	int eqmuoInsert(Map map);
 	List<UnopVO> selectUnopList(Map map);
+	UnopVO selectUnop(Map map);
+	int updateToTm(Map map);
 }

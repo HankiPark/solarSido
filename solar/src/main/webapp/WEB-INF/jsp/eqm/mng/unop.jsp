@@ -61,28 +61,29 @@
 		<div class="flex row">
 			<div id="grid" class="col-8"></div>
 			<div class="col-1 controller" align="center">
-				<h4 id="eh">비가동 관리</h4>
+				<h4 id="eh">설비명</h4>
 				<hr>
 				<div>
-					<div class="switches red-on">정지</div>
+					<div class="switches red-on">비가동</div>
 					<div class="switches green-on">재가동</div>
 				</div>
 			</div>
 			<div class="col-2 unopDetail">
+				<h3>비가동/재가동 관리</h3><hr>
 				<div class="flex row">
-					<div class="col-4">
-						<span class="row">비가동일시</span><br>
-						<span class="row">비가동사유</span><br>
-						<span class="row">비가동코드</span><br>
-						<span class="row">재가동일시</span>
+					<div class="col-5">
+						<span class="row">&ensp;비가동일시 :</span><br>
+						<span class="row">&ensp;비가동사유 :</span><br>
+						<span class="row">&ensp;비가동코드 :</span><br>
+						<span class="row">&ensp;재가동일시 :</span>
 					</div>
 					<div class="col-6">
-						<input id="stt" class="row right" size="14" readonly><br>
+						<input id="stt" class="row right" size="17" disabled><br>
 						<select id="uoNm" class="row right">
-							<option selected disabled>비가동 사유 선택
+							<option value="notSelected" selected disabled>--비가동 사유 선택--
 						</select><br>
-						<input id="uoCd" class="row right" size="14" readonly><br>
-						<input id="edt" class="row right" size="14" readonly>
+						<input id="uoCd" class="row right" size="17" disabled><br>
+						<input id="edt" class="row right" size="17" disabled>
 					</div>
 				</div>
 			</div>
@@ -90,6 +91,7 @@
 	</div>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<hr>
+	<h2>비가동 내역</h2>
 	<div id="grid2"></div>
 </body>
 <script>
@@ -101,6 +103,7 @@
 	let switches = document.getElementsByClassName('switches');
 	let selectTag = document.getElementById('uoNm');
 	let uoCdTag = document.getElementById('uoCd');
+	let intervalFn;
 	
 	switches[0].addEventListener('click', function () {
 		if(grid.getValue(event.rowKey,'eqmYn')=='N'){
@@ -116,16 +119,48 @@
 			alert('관리할 설비를 먼저 선택해주세요.');
 			return false;
 		}
+		if(selectTag.value=='notSelected'){
+			alert('비가동 사유를 선택해주세요.');
+			return false;
+		}
 		let sure = confirm('정지하시겠습니까?');
 		if (!sure) {
 			return false;
 		}
-		eh.innerText +='*';
-		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=N')
-		.then(grid.readData())
-		stt.value = 'asdfasdf';
+		refreshForm();
+		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=N&uoprCd='+selectTag.value)
+		.then(()=>{
+			grid.readData();
+			grid2.readData();
+		});
 	});
-
+	
+	switches[1].addEventListener('click', function () {
+		if(grid.getValue(event.rowKey,'eqmYn')=='Y'){
+			alert('이미 가동중인 설비입니다.')
+			return false;
+		}
+		let isValid = false;
+		for (let i = 0; i < grid.getRowCount(); i++) {
+			if (eh.innerText == grid.getValue(i, 'eqmNm'))
+				isValid = true;
+		}
+		if (!isValid) {
+			alert('관리할 설비를 먼저 선택해주세요.');
+			return false;
+		}
+		let sure = confirm('재가동하시겠습니까?');
+		if (!sure) {
+			return false;
+		}
+		eh.innerText +='*';
+		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=Y')
+		.then(()=>{
+			grid.readData();
+			grid2.readData();
+		});
+		refreshForm();
+	});
 	var Grid = tui.Grid;
 
 	const dataSource = {
@@ -241,18 +276,32 @@
 		]
 	});
 
-	grid.on('dblclick', function (ev) {
+	grid.on('click', function (ev) {
 		event = ev;
+		refreshForm();
 		eh.innerText = grid.getValue(ev.rowKey, 'eqmNm');
 		if (grid.getValue(ev.rowKey, 'eqmYn') == 'Y') {
 			switches[0].classList.replace('red-off', 'red-on');
 			switches[1].classList.replace('green-on', 'green-off');
+			let date = new Date().toISOString();
+			stt.value = date.substr(0,10)+' '+date.substr(11,8);
+			intervalFn = setInterval(sttDT,1000);
 		} else if (grid.getValue(ev.rowKey, 'eqmYn') == 'N') {
 			switches[0].classList.replace('red-on', 'red-off');
 			switches[1].classList.replace('green-off', 'green-on');
+			fetch('${pageContext.request.contextPath}/ajax/eqm/uoselect?eqmCd='+grid.getValue(ev.rowKey,'eqmCd'))
+			.then(data=>data.json())
+			.then(result=>{
+				stt.value = result.unop.frTm;
+				selectTag.value = result.unop.uoprCd;
+				uoCdTag.value = result.unop.uoprCd;
+			});
+			let date = new Date().toISOString();
+			edt.value = date.substr(0,10)+' '+date.substr(11,8);
+			intervalFn = setInterval(edtDT,1000);
 		} else {
-			alert('err');
-			event = undefined;
+			event = null;
+			eh.innerText = '설비명';
 			return false;
 		}
 	});
@@ -274,6 +323,26 @@
 	selectTag.addEventListener('change',function(ev){
 		uoCdTag.value = selectTag.value;
 	});
+	
+	function sttDT(){
+		let date = new Date().toISOString();
+		stt.value = date.substr(0,10)+' '+date.substr(11,8);
+	}
+	function edtDT(){
+		let date = new Date().toISOString();
+		edt.value = date.substr(0,10)+' '+date.substr(11,8);
+	}
+	function refreshForm(){
+		clearInterval(intervalFn);
+		eh.innerText = '설비명';
+		switches[0].class
+		edt.value = '';
+		stt.value = '';
+		selectTag.value = 'notSelected';
+		uoCdTag.value = '';
+		switches[0].classList.replace('red-off', 'red-on');
+		switches[1].classList.replace('green-off', 'green-on');
+	}
 </script>
 
 </html>

@@ -22,12 +22,14 @@
 			eqm_uo(
 				eqm_uo_no,
 				fr_tm,
-				eqm_cd
+				eqm_cd,
+				uopr_cd
 			)
 		values(
 			eqmuoseq.nextval,
 			sysdate,
-			#{eqmCd}
+			#{eqmCd},
+			#{uoprCd}
 		)
 	</insert>
 	
@@ -44,5 +46,27 @@
 <!-- 		<if test=""> -->
 <!-- 			and -->
 <!-- 		</if> -->
+		order by eu.eqm_uo_no
 	</select>
+	
+	<select id="selectUnop" parameterType="map" resultType="solar.eqm.unop.service.UnopVO">
+		select
+			fr_tm,
+			uopr_cd
+		from
+			eqm_uo
+		where 1=1 
+			and eqm_cd = #{eqmCd}
+			and to_tm is null
+	</select>
+	
+	<update id="updateToTm" parameterType="map">
+		update
+			eqm_uo
+		set
+			to_tm = sysdate
+		where 1=1 
+			and eqm_cd = #{eqmCd}
+			and to_tm is null
+	</update>
 </mapper>
