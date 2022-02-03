@@ -21,6 +21,12 @@
 			<if test="dtEnd != null and dtEnd != ''">
 				AND trunc(e.purc_dt) <![CDATA[<= #{dtEnd}]]>
 			</if>
+			<if test='uoYn == "Y"'>
+				AND eqm_yn = 'Y'
+			</if>
+			<if test='uoYn == "N"'>
+				AND eqm_yn = 'N'
+			</if>
 		order by e.eqm_cd
 	</select>
 	

@@ -41,7 +41,7 @@
 					<ul>
 						<li>발주량:<br><input id="ordrQty" disabled></li><br>
 						<li>검수합격량:<br><input id="rscPassedQty" disabled></li><br>
-						<li>수량확인<br><input id="confirmedQty"></li>
+						<li>입고수량확인<br><input id="confirmedQty" placeholder="검수합격량"></li>
 					</ul>
 					<div align="center">
 						<button type="button" id="btnIn">입고</button>
@@ -142,7 +142,8 @@
 		scrollY: false,
 		data: ordrDataSource,
 		rowHeaders: ['checkbox'],
-		sortable: true,
+		bodyHeight: 240,
+		scrollX: false,
 		columns: [{
 				header: '발주일',
 				name: 'ordrDt',

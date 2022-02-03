@@ -104,7 +104,6 @@
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-    sortable: true,
     columns: [{
         header: '발주일',
         name: 'ordrDt',

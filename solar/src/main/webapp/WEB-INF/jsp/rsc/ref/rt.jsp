@@ -93,7 +93,8 @@
 		scrollX: false,
 		scrollY: false,
 		data: ordrDataSource,
-		sortable: true,
+		bodyHeight: 240,
+		scrollX: false,
 		columns: [{
 				header: '발주번호',
 				name: 'ordrCd',
