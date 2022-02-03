@@ -12,6 +12,30 @@
 
 <script type="text/javascript">
 function planDList(){
+	$(function(){
+	      $("div:contains('planModal') button:contains('확인')").on('click',function(ev){
+	         indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
+	         indicaDgrid.refreshLayout();
+	         $.ajax({
+	            url:'${pageContext.request.contextPath}/ajax/makeDno.do',
+	            dataType: 'json',
+	            contentType: 'application/json; charset=utf-8',
+	            async: false,
+	         }).done((res)=>{
+	            console.log(res.num2)
+	            let idx = 0;
+	            for(i=0; i<indicaDgrid.getRowCount(); i++){
+	               if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
+	                  console.log(idx)
+	               } else {
+	                  indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
+	                  idx = Number(idx) +1
+	               }
+	            }
+	         })
+	      });
+	   })
+	   
 	//미지시 생산계획 상세 그리드
 	let planDgrid = new tui.Grid({
 		el: document.getElementById('planDgrid'),
@@ -110,7 +134,7 @@ function planDList(){
 		}
 		indicaDgrid.resetData([]);
 		//indicaDgrid.resetData(planDgrid.getCheckedRows());
-		indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
+		//indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
 	});
 	
 	planDgrid.on('uncheck', (ev) => {

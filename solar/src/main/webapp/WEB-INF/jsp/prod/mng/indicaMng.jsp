@@ -117,12 +117,12 @@
 	let pdIdx=0;
 	let prdtLotNum=0;
 	
-	/* let arr1;
+	let arr1;
 	let arr2;
 	let arr3;
 	let arr4;
 	let arr5;
-	let arr6; */
+	let arr6;
 	// 자재별 lot 사용 갯수: arr(i).length
 	
 	//let chkLot; //체크된 행 담기
@@ -529,27 +529,15 @@
 	});
 	 
 	indicaDgrid.on('click', function(ev) {
-		//지시상세번호 부여
-		$.ajax({
-				url:'${pageContext.request.contextPath}/ajax/makeDno.do',
-				dataType: 'json',
-				contentType: 'application/json; charset=utf-8',
-				async: false,
-			}).done((res)=>{
-				console.log(res.num2)
-				let idx = 0;
-				for(i=0; i<indicaDgrid.getRowCount(); i++){
-					if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
-						console.log(idx)
-					} else {
-						indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
-						idx = Number(idx) +1
-					}
-				}
-			})
+		
 	});	
 	
 	indicaDgrid.on('dblclick', function(ev){
+		
+	});
+
+	
+	indicaDgrid.on('editingFinish', function(ev) {
 		idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
 		idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
 		orderNo = indicaDgrid.getValue(ev.rowKey, "orderNo")
@@ -566,10 +554,7 @@
 				'prdtNm' : prdtNm
 		};
 		rscGrid.readData(1, rscGridParams, true);
-	});
-
-	
-	indicaDgrid.on('editingFinish', function(ev) {
+		
 		if (ev.columnName == 'indicaQty') {
 			//제품lot생성
 			$.ajax({
@@ -630,10 +615,10 @@
 	}
 	
 	rscGrid.on('dblclick', function(ev){
-		if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
+	/* 	if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
 			rsc();
 		}
-		console.log(arr)
+		console.log(arr) */
 		
 			//console.log(rscLotGrid.getCheckedRows())
 		//chkLot = rscLotGrid.getCheckedRows();
@@ -641,7 +626,7 @@
 	/* 			if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
 			obj= rscLotGrid.getModifiedRows().updatedRows;
 		} */
-		/* udLot = rscLotGrid.getModifiedRows().updatedRows;
+		udLot = rscLotGrid.getModifiedRows().updatedRows;
 		console.log(udLot)
 		if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
 			//console.log(udLot[0].rscCd)
@@ -666,7 +651,7 @@
 					arr6 = udLot;
 					break;
 			}
-		} */
+		} 
 		
 		let rscCd = rscGrid.getValue(ev.rowKey, "rscCd")
 		let rscNm = rscGrid.getValue(ev.rowKey, "rscNm")
@@ -702,15 +687,15 @@
 	
 	rscLotGrid.on("check", (rscEv) => {
       
-      if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
+     /*  if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
     	  if(rscLotGrid.getValue(rscEv.rowKey, 'rscQty') != ''){
   			hdRscConGrid.appendRow(rscLotGrid.getRow(rscEv.rowKey),{
   				extendPrevRowSpan : false,
   				focus : true,
   				at : 0
   			});
-  		}
-    	   /* if(hdRscConGrid.getColumnValues('rscLot').includes(rscLotGrid.getValue(rscEv.rowKey,'rscLot'))){
+  		} */
+    	  if(hdRscConGrid.getColumnValues('rscLot').includes(rscLotGrid.getValue(rscEv.rowKey,'rscLot'))){
           var key = hdRscConGrid.findRows({'rscLot':rscLotGrid.getValue(rscEv.rowKey,'rscLot')})[0].rowKey;
           hdRscConGrid.setValue(key,'rscQty',rscLotGrid.getValue(rscEv.rowKey,'rscQty'));
 	         }else{
@@ -723,8 +708,8 @@
 	            focus : true,
 	            at : 0
 	         });
-       } */
-      }
+       } 
+      
    })
 	
 	rscLotGrid.on("click", (rscEv) => {
@@ -868,27 +853,6 @@
 		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
 									function() { indicaList() })
 	});
-
- /* 	//설비조회 버튼: 설비 비가동현황 모달
-	let eqmUoDialog = $("#eqmUoModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 600,
-		height : 400,
-		buttons : {
-			"확인": function(){
-				console.log("설비조회")
-				//eqmUoDialog.dialog("close");
-			}
-		}
-	});  
-	
- 	$('#eqmSearch').on('click', function(){
- 		console.log("설비 비가동현황 검색")
-		eqmUoDialog.dialog("open");
-		$("#eqmUoModal").load("${pageContext.request.contextPath}/modal/findEqmUo", 
-									function() { eqmUoList() })
-	}); */
  	
  	//그리드 추가 버튼: 계획 없는 지시 등록
 	rowAdd.addEventListener("click", function(idx){
@@ -897,6 +861,24 @@
 			focus : true,
 			at : 0
 		});
+		//지시상세번호 부여
+		$.ajax({
+				url:'${pageContext.request.contextPath}/ajax/makeDno.do',
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+				async: false,
+			}).done((res)=>{
+				console.log(res.num2)
+				let idx = 0;
+				for(i=0; i<indicaDgrid.getRowCount(); i++){
+					if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
+						console.log(idx)
+					} else {
+						indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
+						idx = Number(idx) +1
+					}
+				}
+			})
 	});
 	
 	//그리드 삭제 버튼
@@ -912,21 +894,21 @@
 	})
 	
 	 $('#lotSend').on('click', function(){
-		rsc();
+		//rsc();
 		console.log("lot부여");
-		
-		/* 
-		 $('#lotSend').on('click', function(){
-		      let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
-		      let rscCnt = rscGrid.getRowCount(); //자재수
-		      let list=[];
-		      list.push(arr1);
-		      list.push(arr2);
-		      list.push(arr3);
-		      list.push(arr4);
-		      list.push(arr5);
-		      list.push(arr6);
-		      for(let li of list){
+		 
+	      let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
+	      let rscCnt = rscGrid.getRowCount(); //자재수
+	      let list=[];
+	      list.push(arr1);
+	      list.push(arr2);
+	      list.push(arr3);
+	      list.push(arr4);
+	      list.push(arr5);
+	      list.push(arr6);
+	      console.log(list);
+	      
+	      for(let li of list){
 		      if(li != null){
 		         var q =0;
 		         lotData =  {'indicaDetaNo': idcNo,
@@ -936,52 +918,47 @@
 		            'rscLot':'' ,
 		            'rscUseQty':''
 		            } 
-
-		      for(let i =0 ; i< li.length ; i++){
-		         lotData.rscCd = li[i].rscCd;
-		         var useQty =li[i].rscUseQty;
-		         var rscLot = li[i].rscLot;
-		         var rscQty = li[i].rscQty;
-		         var t =0;
-
-		         if(lotData.rscUseQty !=li[i].rscUseQty && lotData.rscUseQty!=''){
-		            //lotData push
-		            lotData.rscLot= rscLot;
-		            rscQty=rscQty-useQty+lotData.rscUseQty;
-		            lotData.rscUseQty = useQty-lotData.rscUseQty;
-		            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-		            
-		         }
-
-		         for(let k =0; k*useQty<rscQty ; k++){
-		            lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
-		            lotData.rscLot = rscLot;
-		            lotData.rscUseQty = useQty;
-		            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-		            console.log(lotData);
-		            q++;
-		            t++; 
-
-		         }
-		         if(t*useQty==rscQty){lotData.rscUseQty=''}
-		         else{   
-		            lotData.rscLot = rscLot;   
-		            lotData.rscUseQty = rscQty%(t*useQty);
-		            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-		         }
-		         
-		      }}
-		      }
-
-		      
-		      console.log("lotArr:")
-		      console.log(lotArr);
-		   }) 
-		    */
-		
+	
+			      for(let i =0 ; i< li.length ; i++){
+			         lotData.rscCd = li[i].rscCd;
+			         var useQty = li[i].rscUseQty;
+			         var rscLot = li[i].rscLot;
+			         var rscQty = li[i].rscQty;
+			         var t =0;
+			
+			         if(lotData.rscUseQty !=li[i].rscUseQty && lotData.rscUseQty!=''){
+			            //lotData push
+			            lotData.rscLot= rscLot;
+			            rscQty = rscQty-useQty+lotData.rscUseQty;
+			            lotData.rscUseQty = useQty-lotData.rscUseQty;
+			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			         }
+			
+			         for(let k =0; k*useQty<rscQty ; k++){
+			            lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
+			            lotData.rscLot = rscLot;
+			            lotData.rscUseQty = useQty;
+			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			            console.log(lotData);
+			            q++;
+			            t++; 
+			         }
+			         
+			         if(t*useQty==rscQty){
+			        	 lotData.rscUseQty=''
+			         } else {   
+			            lotData.rscLot = rscLot;   
+			            lotData.rscUseQty = rscQty%(t*useQty);
+			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			         }
+		      		}
+		      }   
+		     }
+	      console.log("lotArr:")
+	      console.log(lotArr);
 		    
 		//hdPrdtRscGrid.resetData(arr);
-		hdPrdtRscGrid.appendRows(arr);
+		hdPrdtRscGrid.appendRows(lotArr);
 		//초기화
 		arr.length = 0; 
 		pdIdx=0;
