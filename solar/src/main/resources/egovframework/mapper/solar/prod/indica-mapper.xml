@@ -130,14 +130,70 @@
 	WHERE cmmn_cd_id = 'rsc'
 </select>
 
-<insert id="indicaIndica"></insert>
+<insert id="insertIndica">
+	INSERT INTO indica (indica_no,
+					  	indica_dt,
+					  	indica_nm)
+	VALUES( CREATENO('IND', INDICASEQ.nextval), 
+			TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+			#{indicaNm} )
+</insert>
 
-<insert id="indicaIndicaD"></insert>
+<insert id="insertIndicaD">
+	<selectKey keyProperty="indicaDetaNo" resultType="int" order="BEFORE"> 
+		SELECT nvl(max(indica_deta_no), 0)+1 from indica_d
+	</selectKey>
+	INSERT INTO plan_d (indica_deta_no,
+						indica_no,
+						indica_dt,
+						order_no,
+						recv_dt,
+						prdt_cd,
+						indica_qty,
+						wk_ord,
+						wk_dt)
+	VALUES( #{indicaDetaNo}, 
+			(SELECT nvl(max(indica_no),0) FROM indica), 
+			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
+			#{orderNo}, 
+			TO_DATE(#{recvDt}, 'YYYY/MM/DD'),
+			#{prdtCd}, 
+			#{indicaQty}, 
+			#{wkOrd}, 
+			TO_DATE(#{wkDt}, 'YYYY/MM/DD') )
+</insert>
 
-<update id="updateIndica"></update>
+<update id="updateIndica">
+	UPDATE indica
+	SET indica_dt = TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+		indica_nm = #{indicaNm}
+	WHERE indica_no = #{indicaNo}
+</update>
 
-<update id="updateIndicaD"></update>
+<update id="updateIndicaD">
+	UPDATE indica_d
+	SET	indica_dt = #{indicaDt},
+		indica_qty = #{indicaQty},
+		wk_ord = #{wkOrd},
+		wk_dt = #{wkDt}
+	WHERE indica_deta_no = #{indicaDetaNo}
+	AND indica_no = #{indicaNo}
+</update>
 
-<delete id="deleteIndica"></delete>
+<delete id="deleteIndica">
+	DELETE FROM indica
+	WHERE indica_nm = #{indicaNm}
+</delete>
+
+<delete id="deleteIndicaD">
+	DELETE FROM indica_d
+	WHERE indica_deta_no = #{indicaDetaNo}
+	AND indica_no = #{indicaNo}
+</delete>	
+
+<insert id="insertRscCon">
+	Insert INTO rsc_con 
+	
+</insert>
 
 </mapper>
