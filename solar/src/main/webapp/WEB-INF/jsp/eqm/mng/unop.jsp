@@ -78,12 +78,12 @@
 						<span class="row">&ensp;재가동일시 :</span>
 					</div>
 					<div class="col-6">
-						<input id="stt" class="row right" size="17" disabled><br>
+						<input id="stt" class="row right" size="18" disabled><br>
 						<select id="uoNm" class="row right">
 							<option value="notSelected" selected disabled>--비가동 사유 선택--
 						</select><br>
-						<input id="uoCd" class="row right" size="17" disabled><br>
-						<input id="edt" class="row right" size="17" disabled>
+						<input id="uoCd" class="row right" size="18" disabled><br>
+						<input id="edt" class="row right" size="18" disabled>
 					</div>
 				</div>
 			</div>
@@ -127,9 +127,10 @@
 		if (!sure) {
 			return false;
 		}
-		refreshForm();
+		eh.innerText = '요청 중..';
 		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=N&uoprCd='+selectTag.value)
 		.then(()=>{
+			refreshForm();
 			grid.readData();
 			grid2.readData();
 		});
@@ -153,7 +154,7 @@
 		if (!sure) {
 			return false;
 		}
-		eh.innerText +='*';
+		eh.innerText ='요청 중..';
 		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=Y')
 		.then(()=>{
 			grid.readData();
@@ -283,8 +284,7 @@
 		if (grid.getValue(ev.rowKey, 'eqmYn') == 'Y') {
 			switches[0].classList.replace('red-off', 'red-on');
 			switches[1].classList.replace('green-on', 'green-off');
-			let date = new Date().toISOString();
-			stt.value = date.substr(0,10)+' '+date.substr(11,8);
+			stt.value = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
 			intervalFn = setInterval(sttDT,1000);
 		} else if (grid.getValue(ev.rowKey, 'eqmYn') == 'N') {
 			switches[0].classList.replace('red-on', 'red-off');
@@ -294,10 +294,10 @@
 			.then(result=>{
 				stt.value = result.unop.frTm;
 				selectTag.value = result.unop.uoprCd;
+				selectTag.disabled = true;
 				uoCdTag.value = result.unop.uoprCd;
 			});
-			let date = new Date().toISOString();
-			edt.value = date.substr(0,10)+' '+date.substr(11,8);
+			edt.value = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
 			intervalFn = setInterval(edtDT,1000);
 		} else {
 			event = null;
@@ -305,6 +305,18 @@
 			return false;
 		}
 	});
+	
+	grid.on('onGridUpdated',function(){
+		  let rowCnt = grid.getRowCount();
+		  for(let i = 0; i<rowCnt; i++){
+			  if(grid.getValue(i, 'eqmYn')=='Y'){
+				  $('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#e9ffe3');
+			  } else if(grid.getValue(i, 'eqmYn')=='N'){
+				  $('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#f7dad5');
+			  }
+		  }
+		  grid.refreshLayout();
+	  });
 	
 	
 	fetch('${pageContext.request.contextPath}/ajax/unopcd')
@@ -325,12 +337,10 @@
 	});
 	
 	function sttDT(){
-		let date = new Date().toISOString();
-		stt.value = date.substr(0,10)+' '+date.substr(11,8);
+		stt.value = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
 	}
 	function edtDT(){
-		let date = new Date().toISOString();
-		edt.value = date.substr(0,10)+' '+date.substr(11,8);
+		edt.value = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
 	}
 	function refreshForm(){
 		clearInterval(intervalFn);
@@ -339,6 +349,7 @@
 		edt.value = '';
 		stt.value = '';
 		selectTag.value = 'notSelected';
+		selectTag.disabled = false;
 		uoCdTag.value = '';
 		switches[0].classList.replace('red-off', 'red-on');
 		switches[1].classList.replace('green-off', 'green-on');
