@@ -111,7 +111,7 @@
 			}
 	
 	function SaveComplete(){
-		toastr.success('저장완료');
+		toastr.success('데이터가 수정되었습니다.');
 	}	
 	function SaveFail(){
 		toastr.error('저장실패');
