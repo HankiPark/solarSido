@@ -3,6 +3,7 @@ package solar.prod.indica.service;
 import java.util.List;
 import java.util.Map;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.prod.plan.service.ProdPlanVO;
 import solar.sales.order.dao.ModifyVO;
 
@@ -27,5 +28,7 @@ public interface IndicaService {
 	String makePrdtNo();
 
 	int hiddenData(Map<String, List<IndicaVO>> map);
+
+	List<?> rscCnt(CmmndataVO cVo);
 
 }

@@ -20,8 +20,8 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		'10' as day_output,
-		(B.plan_qty/10) as prod_day
+		(SELECT min(uph) FROM EQM) as day_out_put,
+		(B.plan_qty/(SELECT min(uph) FROM EQM)) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -107,7 +107,7 @@
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_qty,
         B.prdt_stc,
-        '10' as day_out_put
+        (select min(uph) from eqm) as day_out_put
 	FROM order_tb A, order_d B
 	WHERE A.order_no = B.order_no
 	<if test="orderNo != null and orderNo != ''">

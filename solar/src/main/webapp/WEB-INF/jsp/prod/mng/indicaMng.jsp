@@ -137,6 +137,22 @@
 		//console.log(data)
 		cmmnCodes = data;
 	});
+	
+	$(function(){
+		//cmmn_data_d Table에서 자재 수 가지고 옴
+		$.ajax({
+			url: '${pageContext.request.contextPath}/ajax/rscCnt.do',
+			dataType: 'JSON',
+			async: false,
+		}).done(function (data) {
+			//console.log(data)
+			data.num
+			for(let f of data.num){
+				arr.push({'rscCd':f})
+			}		
+			console.log(arr)
+		});
+	})
 
 	//------------------------------그리드생성------------------------------------------------
 	//지시 조회 그리드
@@ -460,6 +476,8 @@
 					  {
 					    header: '투입량',
 					    name: 'rscQty'
+					    
+					    
 					  }
 				],
 			summary: {
@@ -528,15 +546,6 @@
 		rscLotGrid.clear();
 	});
 	 
-	indicaDgrid.on('click', function(ev) {
-		
-	});	
-	
-	indicaDgrid.on('dblclick', function(ev){
-		
-	});
-
-	
 	indicaDgrid.on('editingFinish', function(ev) {
 		idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
 		idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
@@ -568,7 +577,7 @@
 			})
 			
 		//제품수 * 해당 자재수만큼 obj 생성 -> arr
-			arr.length = 0; // arr 초기화
+			/* arr.length = 0; // arr 초기화
 			for (let i=0; i<indicaDgrid.getValue(ev.rowKey, "indicaQty") * rscGrid.getRowCount() ; i++){
 				obj= {	'indicaDetaNo': idcNo,
 						'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
@@ -578,7 +587,7 @@
 						'rscUseQty':''
 						} 
 				arr.push(obj);
-			}
+			} */
 		}
 	});
 		
@@ -593,7 +602,7 @@
 	});
 	
 	//자재코드 눌렀을때 자재정보->arr
-	function rsc(){
+/* 	function rsc(){
 		let udr = rscLotGrid.getModifiedRows().updatedRows;
 		console.log(udr)
 		console.log(udr[0].rscQty)
@@ -601,7 +610,7 @@
 		console.log(udr[0].rscLot)
 		
 		let c = 0; //자재 수
-	 	for (i=0; i<udr.length; i++ ){ //a.length -> 로트종류
+	 	for (i=0; i<udr.length; i++ ){ //udr.length -> 로트종류
 			for ( k=0; k<(udr[i].rscQty*1); k=k+(1*udr[i].rscUseQty)){
 					//console.log("k:"+k)
 					arr[pdIdx].rscLot = udr[i].rscLot
@@ -612,7 +621,7 @@
 					prdtLotNum++
 			}
 		} 
-	}
+	} */
 	
 	rscGrid.on('dblclick', function(ev){
 	/* 	if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
@@ -620,7 +629,7 @@
 		}
 		console.log(arr) */
 		
-			//console.log(rscLotGrid.getCheckedRows())
+		//console.log(rscLotGrid.getCheckedRows())
 		//chkLot = rscLotGrid.getCheckedRows();
 		//console.log(rscLotGrid.getModifiedRows().updatedRows)
 	/* 			if (rscLotGrid.getModifiedRows().updatedRows.length != 0) {
@@ -720,7 +729,7 @@
 	})
 	
 	rscLotGrid.on("uncheck", (rscEv) => {
-		hdRscConGrid.removeRow(rscEv.rowKey);
+		hdRscConGrid.removeRow(rscEv.rowKey); //lot번호랑 비교해서 같은 lot 삭제하도록 수정
 		rscLotGrid.setValue(rscEv.rowKey, 'rscQty', '');
 		if ( totalQty >= rscLotGrid.getSummaryValues('rscQty').sum ) {
 			for ( i=rscEv.rowKey+1 ; i<rscLotGrid.getRowCount(); i++){
@@ -932,9 +941,10 @@
 			            rscQty = rscQty-useQty+lotData.rscUseQty;
 			            lotData.rscUseQty = useQty-lotData.rscUseQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			            q++;
 			         }
 			
-			         for(let k =0; k*useQty<rscQty ; k++){
+			         for(let k =1; k*useQty<rscQty ; k++){
 			            lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
@@ -947,6 +957,7 @@
 			         if(t*useQty==rscQty){
 			        	 lotData.rscUseQty=''
 			         } else {   
+			        	lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0');
 			            lotData.rscLot = rscLot;   
 			            lotData.rscUseQty = rscQty%(t*useQty);
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));

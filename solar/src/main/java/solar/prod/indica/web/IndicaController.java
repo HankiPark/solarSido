@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.code.service.CmmnCdService;
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
@@ -159,6 +160,13 @@ public class IndicaController {
 	@GetMapping("/ajax/makePrdtNo.do")
 	public String makePrdtNo(Model model, IndicaVO idcVo) {
 		model.addAttribute("num", idcService.makePrdtNo());
+		return "jsonView";
+	}
+	
+	//자재수 가지고 오는 ajax
+	@GetMapping("/ajax/rscCnt.do")
+	public String rscCnt(Model model, CmmndataVO cVo) {
+		model.addAttribute("num", idcService.rscCnt(cVo));
 		return "jsonView";
 	}
 		

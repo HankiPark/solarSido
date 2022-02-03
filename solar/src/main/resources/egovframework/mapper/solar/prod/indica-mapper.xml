@@ -17,11 +17,11 @@
 		B.prod_fg,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord,
-		'10' as day_out_put,
+		(SELECT min(uph) FROM EQM) as day_out_put,
 		(B.indica_qty/10) as prod_day
 	FROM indica_d B
 	JOIN plan_d P ON B.plan_deta_no = P.plan_deta_no
-	JOIN order_d O ON P.order_no = O.order_no AND B.prdt_cd = O.prdt_cd
+	JOIN order_d O ON (P.order_no = O.order_no AND B.prdt_cd = O.prdt_cd)
 	WHERE 1=1
 		<if test="startT != null and startT != ''">
 		AND B.indica_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY/MM/DD')
@@ -93,8 +93,8 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		'10' as day_output,
-		(B.plan_qty/10) as prod_day
+		(SELECT min(uph) FROM EQM) as day_output,
+		(B.plan_qty/(SELECT min(uph) FROM EQM)) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -124,9 +124,20 @@
 	ORDER BY 1, 4
 </select>
 
+<select id="rscCnt" resultType="String">
+	SELECT cmmn_cd_deta_id 
+	FROM cmmn_data_d
+	WHERE cmmn_cd_id = 'rsc'
+</select>
+
 <insert id="indicaIndica"></insert>
+
 <insert id="indicaIndicaD"></insert>
+
 <update id="updateIndica"></update>
+
 <update id="updateIndicaD"></update>
+
 <delete id="deleteIndica"></delete>
+
 </mapper>

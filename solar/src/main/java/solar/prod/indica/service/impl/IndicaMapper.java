@@ -2,6 +2,7 @@ package solar.prod.indica.service.impl;
 
 import java.util.List;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
 import solar.sales.order.dao.ModifyVO;
@@ -25,4 +26,6 @@ public interface IndicaMapper {
 	List<?> findEqmUo(IndicaVO idcVo);
 	
 	String makePrdtNo();
+	
+	List<?> rscCnt(CmmndataVO cVo);
 }

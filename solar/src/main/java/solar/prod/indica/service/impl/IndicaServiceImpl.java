@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
@@ -74,4 +75,11 @@ public class IndicaServiceImpl implements IndicaService {
 	public int hiddenData(Map<String, List<IndicaVO>> map) {
 		return 0;
 	}
+
+	@Override
+	public List<?> rscCnt(CmmndataVO cVo) {
+		return idcMapper.rscCnt(cVo);
+	}
+	
+	
 }
