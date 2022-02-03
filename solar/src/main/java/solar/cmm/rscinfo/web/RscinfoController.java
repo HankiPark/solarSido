@@ -30,6 +30,11 @@ public class RscinfoController {
 		return "common/mng/rscinfo";
 	}
 	
+	@RequestMapping("/modal/prcsinfoList2")
+	public String prscmodal() {
+		return "/modal/prcsinfoList2";
+	}
+	
 	@GetMapping("/grid/rscinfoList.do")
 	public String rscinfoList(Model model, RscinfoVO rscinfoVO) throws Exception{
 		
@@ -80,6 +85,7 @@ public class RscinfoController {
 	public String rscinfoInsert(RscinfoVO rscinfoVO) {
 		System.out.println(rscinfoVO);
 		rscinfoService.rscinfoInsert(rscinfoVO);
+		rscinfoService.rscinfoStc(rscinfoVO);
 		return "common/mng/rscinfo";
 	}
 	

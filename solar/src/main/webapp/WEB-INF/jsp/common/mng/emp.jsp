@@ -8,12 +8,11 @@
 
 </head>
 <body>
-<h3>사원 관리</h3>
+<h1>사원 관리</h1>
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>
 	<button type="button" id="btnSave">저장</button><br>
-	<button type="button" id="btnTest">테스트</button><br>
 	<label>사원명 입력</label>
 	<input type = "text" id="empNminfo">
 	<div><button type="button" id="btnfind">검색</button></div>
@@ -23,14 +22,6 @@
 	<!-- <div id="dialog-form" title="사원명단"></div>  -->
 
 <script>
-/*
-let dialog = $("#dialog-form").dialog({
-	autoOpen : false,
-	modal : true,
-	width : 700,
-	height : 700
-});
-*/
 
 var dataSource = {
 		  api: {
@@ -149,14 +140,7 @@ $('#btnfind').on('click', function(){
 	})
 	
 });
-/*
-$('#btnTest').on('click',function() {
-	dialog.dialog("open");
-	$("#dialog-form").load(
-	"${pageContext.request.contextPath}/modal/empinfoList"
-	);
-});
-EMP모달 테스트로만듬 지워도됨 */
+
 </script>
 </body>
 </html>

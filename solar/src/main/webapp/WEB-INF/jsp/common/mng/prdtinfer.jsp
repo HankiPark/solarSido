@@ -8,7 +8,7 @@
 
 </head>
 <body>
-<h3>제품 불량코드 관리</h3>
+<h1>제품 불량코드 관리</h1>
 <div>
 	<button type="button" id="btnAdd">추가</button>
 	<button type="button" id="btnDel">삭제</button>

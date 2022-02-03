@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<h3>공정정보관리</h3>
+	<h1>공정 관리</h1>
 	<br>
 	<br>
 	<div class="row">

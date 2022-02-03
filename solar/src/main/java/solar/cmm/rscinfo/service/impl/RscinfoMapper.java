@@ -11,6 +11,7 @@ public interface RscinfoMapper {
 	List<RscinfoVO> rscinfofind(RscinfoVO rscinfoVO);
 	RscinfoVO rscinfo(RscinfoVO rscinfoVO);
 	public int rscinfoInsert(RscinfoVO rscinfoVO);
+	public int rscinfoStc(RscinfoVO rscinfoVO);
 	public int rscinfoUpdate(RscinfoVO rscinfoVO);
 	public int rscinfoDelete(RscinfoVO rscinfoVO);
 	public int modifyData(ModifyVO<RscinfoVO> modifyVO);

@@ -13,4 +13,5 @@ public class RscinfoVO {
 	String rscUntprc;
 	String coCd;
 	String coNm;
+	String rscStc;
 }
