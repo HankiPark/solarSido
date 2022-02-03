@@ -32,7 +32,7 @@ public class RscinfoController {
 	
 	@RequestMapping("/modal/prcsinfoList2")
 	public String prscmodal() {
-		return "/modal/prcsinfoList2";
+		return "modal/prcsinfoList2";
 	}
 	
 	@GetMapping("/grid/rscinfoList.do")

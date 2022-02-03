@@ -141,7 +141,7 @@
 			$('#cmmnCdId').val(GTcode[0]);
 			$('#cmmnCdNm').val(GTcode[1]);
 		});		
-
+		
 		$('#btnfind').on('click', function() {
 			var cmmnCdNm = $("#cmmnNminfo").val();
 			var parameter = {
@@ -233,8 +233,6 @@
 			$('td').css('backgroundColor', '');
 			$('#cmmnCdId').val('');
 			$('#cmmnCdNm').val('');
-			
-			
 			detailgrid.clear();
 		});
 	</script>
