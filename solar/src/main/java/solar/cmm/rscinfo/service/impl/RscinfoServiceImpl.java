@@ -77,4 +77,9 @@ public class RscinfoServiceImpl implements RscinfoService{
 		return rscinfoMapper.findRsc(rscinfoVO);
 	}
 
+	@Override
+	public int rscinfoStc(RscinfoVO rscinfoVO) {
+		return rscinfoMapper.rscinfoStc(rscinfoVO);
+	}
+
 }

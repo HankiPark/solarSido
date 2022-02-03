@@ -23,14 +23,12 @@
 					</div>
 				</div>
 			</div>
-
 					<div align="right">
 						<button type="button" id="btnAdd">추가</button>
 						<button type="button" id="btnDel">삭제</button>
 						<button type="button" id="btnSave">저장</button>
-						<button type="butoon" id="btnReset">초기화</button>
+						<button type="button" id="btnReset">초기화</button>
 					</div>
-
 		</div>
 	</div>
 	</div>
@@ -59,11 +57,11 @@
 							<table class="table">
 								<tr>
 									<th>코드ID</th>
-									<td><input id="cmmnCdId" name="cmmnCdId" type="text" readonly="readonly"</td>
+									<td><input id="cmmnCdId" name="cmmnCdId" type="text" readonly="readonly"></td>
 								</tr>
 								<tr>
 									<th>공통코드ID명</th>
-									<td><input id="cmmnCdNm" name="cmmnCdNm" type="text"></td>
+									<td><input id="cmmnCdNm" name="cmmnCdNm" type="text" readonly="readonly"></td>
 								</tr>
 							</table>
 						</div>
@@ -233,8 +231,8 @@
 		$('#btnReset').on('click', function appendRow(index) {
 			$('#prdtCd').val();
 			$('td').css('backgroundColor', '');
-			$('#cmmnCdId').val();
-			$('#cmmnCdNm').val();
+			$('#cmmnCdId').val('');
+			$('#cmmnCdNm').val('');
 			
 			
 			detailgrid.clear();

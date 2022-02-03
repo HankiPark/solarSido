@@ -26,6 +26,7 @@
 					<button type="button" id="btnAdd">추가</button>
 					<button type="button" id="btnDel">삭제</button>
 					<button type="button" id="btnSave">저장</button>
+					<button type="button" id="btnReset">초기화</button>
 				</div>
 			</div>
 		</div>
@@ -86,7 +87,8 @@
 			columns : [ {
 				header : '제품코드',
 				name : 'prdtCd',
-				editor : 'text'
+				editor : 'text',
+				rowSpan : true
 			}, {
 				header : '자재코드',
 				name : 'rscCd',
@@ -151,7 +153,14 @@
 			})
 
 		});
-
+		
+		$('#btnReset').on('click', function(){
+			grid.clear();
+			$('#prdtCd').val('');
+			$('#prdtNm').val('');
+			$('#prdtSpec').val('');
+		});
+		
 		grid.on('click', function(ev) {
 			if (ev["columnName"] == "rscCd") {
 				dialog2.dialog("open");
@@ -172,7 +181,7 @@
 								dialog3.dialog("open");
 								$("#dialog-form3")
 										.load(
-												"${pageContext.request.contextPath}/modal/prcsinfoList",
+												"${pageContext.request.contextPath}/modal/prcsinfoList2",
 												function() {
 													prcsinfoList(ev["rowKey"]);
 													grid.refreshLayout();

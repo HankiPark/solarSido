@@ -13,7 +13,7 @@
 </style>
 </head>
 <body>
-	<h2>자재정보관리</h2>
+	<h1>자재정보관리</h1>
 	<form name="rscfrm" id="rscfrm" method="post">
 		<div class="row">
 			<div class="card card-pricing card-primary card-white col-3">
