@@ -4,7 +4,7 @@
 	
 	<select id="prdtbomList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
 		SELECT * FROM PRDT_BOM
-		ORDER BY RSC_CD
+		ORDER BY PRDT_CD, RSC_CD
 	</select>
 	
 	<select id="prdtbomSearch" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
@@ -52,12 +52,11 @@
 	
 	<update id="prdtbomUpdate">
 		UPDATE PRDT_BOM
-		SET PRDT_CD = #{prdtCd}
-		,RSC_NM = #{rscNm}
+		SET RSC_NM = #{rscNm}
 		,RSC_USE_QTY = #{rscUseQty}
 		,PRDT_SPEC = #{prdtSpec}
 		,PRCS_NM = #{prcsNm}
-		WHERE RSC_CD = #{rscCd}
+		WHERE (RSC_CD = #{rscCd} AND PRDT_CD = #{prdtCd})
 	</update>
 	
 	<delete id="prdtbomDelete">

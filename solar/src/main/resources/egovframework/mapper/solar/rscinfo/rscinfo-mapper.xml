@@ -17,6 +17,7 @@
 	order by RSC_CD asc
 </select>
 
+
 	<select id="findRsc" resultType="solar.cmm.rscinfo.dao.RscinfoVO">
 	SELECT * FROM RSC
 	<where>
@@ -72,6 +73,14 @@
 		)
 </insert>
 
+<insert id="rscinfoStc" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">
+	insert into rsc_stc
+		values(
+			#{rscCd},
+			0
+		)
+</insert>
+
 <update id="rscinfoUpdate" parameterType="solar.cmm.rscinfo.dao.RscinfoVO">
 	UPDATE RSC
 	SET RSC_CD = #{rscCd},
@@ -80,7 +89,8 @@
 		CO_CD = #{coCd},
 		RSC_SPEC = #{rscSpec},
 		RSC_IMG = #{rscImg},
-		RSC_UNTPRC = #{rscUntprc}
+		RSC_UNTPRC = #{rscUntprc},
+		RSC_STC = #{rscStc}
 	WHERE RSC_CD = #{rscCd}
 </update>
 
