@@ -177,4 +177,11 @@ public class IndicaController {
 		model.addAttribute("codes", cmmnCdService.selectCd(Arrays.asList("prod")));
 		return "jsonView";
 	}
+	
+	//히든그리드 가져오기
+	@PostMapping("/hiddenData")
+	public String hiddenData(@RequestBody Map<String, List<IndicaVO>> map) {
+		idcService.hiddenData(map);
+		return "jsonView";
+	}
 }
