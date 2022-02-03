@@ -47,7 +47,6 @@ public class EqmController {
 	//설비 추가
 	@PutMapping("/eqm/grid/eqmPut")
 	public String rscOrdrData(@RequestBody ModifyVO<EqmVO> mvo, Model model) {
-		System.out.println(mvo);
 		String queryResult = eqmService.modifyData(mvo);
 		if(!queryResult.equals("true")) {
 			model.addAttribute("queryResult",queryResult);
@@ -57,7 +56,7 @@ public class EqmController {
 		return "jsonView";
 	}
 	
-	//비가동
+	//비가동관리 페이지
 	@GetMapping("/eqm/mng/unop")
 	public String unop() {
 		return "eqm/mng/unop";
@@ -73,14 +72,11 @@ public class EqmController {
 	//비가동YN
 	@GetMapping("/ajax/eqmtoggle")
 	public String eqmtoggle(@RequestParam Map map, Model model) {
-		System.out.println(map);
 		unopMapper.updateEqmYn(map);
 		
 		if(map.get("uoprCd")!=null) {
-			System.out.println("IF");
 			unopMapper.eqmuoInsert(map);
 		} else {
-			System.out.println("ELSE");
 			unopMapper.updateToTm(map);
 		}
 		
@@ -90,6 +86,7 @@ public class EqmController {
 	//비가동목록 data
 	@GetMapping("/grid/eqm/uoList")
 	public String uoList(@RequestParam Map map, Model model) {
+		System.out.println(map);
 		List<?> uoList = unopMapper.selectUnopList(map);
     	
     	Map<String,Object> data = new HashMap<>();
@@ -105,5 +102,11 @@ public class EqmController {
 	public String uoselect(@RequestParam Map map, Model model) {
 		model.addAttribute("unop", unopMapper.selectUnop(map));
 		return "jsonView";
+	}
+	
+	//비가동 조회 페이지
+	@GetMapping("/eqm/ref/unopref")
+	public String unopRef() {
+		return "eqm/ref/unopref";
 	}
 }

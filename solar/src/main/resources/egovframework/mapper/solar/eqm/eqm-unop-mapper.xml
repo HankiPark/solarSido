@@ -43,10 +43,10 @@
 		join uopr_cd uc
 			on uc.uopr_cd = eu.uopr_cd
 		where 1=1
-<!-- 		<if test=""> -->
-<!-- 			and -->
-<!-- 		</if> -->
-		order by eu.eqm_uo_no
+		<if test='eqmCd != null and eqmCd !=""'>
+			and eu.eqm_cd = #{eqmCd}
+		</if>
+		order by eu.eqm_uo_no desc
 	</select>
 	
 	<select id="selectUnop" parameterType="map" resultType="solar.eqm.unop.service.UnopVO">

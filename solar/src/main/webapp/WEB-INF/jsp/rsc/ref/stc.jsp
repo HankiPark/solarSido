@@ -90,7 +90,8 @@
 		  let rscStc = grid.getValue(i, 'rscStc');
 		  let safStc = grid.getValue(i, 'safStc');
 		  if(parseInt(rscStc)<parseInt(safStc)){
-			  grid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
+// 			  grid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
+			  $('td[data-row-key$="'+i+'"][data-column-name$="rscStc"]').css('backgroundColor','#f7dad5');
 		  }
 	  }
   });

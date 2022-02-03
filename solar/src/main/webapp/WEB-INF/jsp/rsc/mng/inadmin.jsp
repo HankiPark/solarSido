@@ -41,7 +41,7 @@
 					<ul>
 						<li>발주량:<br><input id="ordrQty" disabled></li><br>
 						<li>검수합격량:<br><input id="rscPassedQty" disabled></li><br>
-						<li>수량확인<br><input id="confirmedQty"></li>
+						<li>입고수량확인<br><input id="confirmedQty" placeholder="검수합격량"></li>
 					</ul>
 					<div align="center">
 						<button type="button" id="btnIn">입고</button>
@@ -56,9 +56,9 @@
 	let cmmnCodes;
 	let curRowKey;
 	let sum;
-	let date = new Date();
+	let date = new Date(+new Date() + 3240 * 10000);
 	let ordrDtEnd = date.toISOString().substr(0,10);
-	date.setDate(date.getDate() - 7);
+	date.setDate(date.getDate()-7);
 	let ordrDtStt = date.toISOString().substr(0,10);
 	let co;
 	let rsc;
@@ -96,14 +96,14 @@
 			readData: {
 				url: '${pageContext.request.contextPath}/grid/rsc/ordrData?inspCls=rs002',
 				method: 'GET',
-				initialRequest: false,
 			},
 			modifyData: {
 				url: '${pageContext.request.contextPath}/grid/rsc/ordrData',
 				method: 'PUT'
 			}
 		},
-		contentType: 'application/json'
+		contentType: 'application/json',
+		initialRequest: false,
 	};
 
 	//공통코드 가져옴
@@ -142,7 +142,8 @@
 		scrollY: false,
 		data: ordrDataSource,
 		rowHeaders: ['checkbox'],
-		sortable: true,
+		bodyHeight: 240,
+		scrollX: false,
 		columns: [{
 				header: '발주일',
 				name: 'ordrDt',
@@ -196,7 +197,12 @@
 	grid.disableColumn('inspCls');
 	grid.on('response', function (ev) {
 		if (ev.xhr.responseText == "201") {
-			grid.readData();
+			grid.readData(1,{
+				'ordrDtStt':ordrDtStt,
+				'ordrDtEnd':ordrDtEnd,
+				'co':co,
+				'rsc':rsc,
+			});
 		}
 		grid.refreshLayout();
 	});

@@ -32,7 +32,7 @@
 
     inferRequest();
     
-    let curYear = new Date().toISOString().substr(0,4);
+    let curYear = new Date(+new Date() + 3240 * 10000).toISOString().substr(0,4);
     let year = document.getElementById('year');
     for(let i = curYear; i>=1990; i--){
 	    let opt = document.createElement('option');

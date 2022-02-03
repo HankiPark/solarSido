@@ -36,9 +36,9 @@
 
 <script>
 let d = new Date();
-let date = new Date();
+let date = new Date(+new Date() + 3240 * 10000);
 let ordrDtEnd = date.toISOString().substr(0,10);
-date.setDate(date.getDate() - 7);
+date.setDate(date.getDate()-7);
 let ordrDtStt = date.toISOString().substr(0,10);
 $(function() {
    
