@@ -134,6 +134,16 @@ let ordrDtStt = date.toISOString().substr(0,10);
     ]
   });
   grid.disableColumn('inspCls');
+  function gridCss(){
+	  let dsabTexts = document.querySelectorAll('.tui-grid-cell-disabled');
+	  for(let dtx of dsabTexts){
+		  dtx.style.backgroundColor = '#f4f4f4';
+		  dtx.classList.remove('tui-grid-cell-disabled');
+	  }
+  }
+  grid.on('onGridUpdated',function(){
+	  gridCss();
+  });
   grid.on('response',function(){
       grid.refreshLayout();
     });

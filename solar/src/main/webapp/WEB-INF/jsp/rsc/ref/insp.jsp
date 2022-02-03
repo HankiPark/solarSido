@@ -162,6 +162,16 @@
 	grid.hideColumn('rtngdResnCd');
 	grid.hideColumn('rtngdDt');
 	
+	function gridCss(){
+		  let dsabTexts = document.querySelectorAll('.tui-grid-cell-disabled');
+		  for(let dtx of dsabTexts){
+			  dtx.style.backgroundColor = '#f4f4f4';
+			  dtx.classList.remove('tui-grid-cell-disabled');
+		  }
+	  }
+	grid.on('onGridUpdated',function(){
+		gridCss();
+	});
 	grid.on('response',function(ev){
       if(ev.xhr.responseText =="201"){
     	  grid.readData();
