@@ -19,13 +19,24 @@ public interface IndicaMapper {
 	
 	List<?> noIndicaPlan(ProdPlanVO ppVo);
 
-	String makeDno();
-
-	int modifyData(ModifyVO<IndicaVO> mvo);
-
 	List<?> findEqmUo(IndicaVO idcVo);
+	
+	List<?> rscCnt(CmmndataVO cVo);
+
+	String makeDno();
 	
 	String makePrdtNo();
 	
-	List<?> rscCnt(CmmndataVO cVo);
+	//modify
+	int modifyData(ModifyVO<IndicaVO> mvo);
+	
+	//생산지시 등록
+	int insertIndica(IndicaVO idcVo);
+	int insertIndicaD(IndicaVO idcVo);
+	//생산지시 수정
+	int updateIndica(IndicaVO idcVo);
+	int updateIndicaD(IndicaVO idcVo);
+	//생산지시 삭제
+	int deleteIndica(IndicaVO idcVo);
+	int deleteIndicaD(IndicaVO idcVo);
 }

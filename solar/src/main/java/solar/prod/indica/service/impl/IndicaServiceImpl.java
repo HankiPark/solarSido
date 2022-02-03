@@ -50,14 +50,35 @@ public class IndicaServiceImpl implements IndicaService {
 	@Override
 	public int modifyData(ModifyVO<IndicaVO> mvo) {
 		if(mvo.getCreatedRows()!=null) {
-			System.out.println("등록:" + mvo);
+			for(IndicaVO idcVo : mvo.getCreatedRows()) {
+				System.out.println("등록:" + mvo);
+				idcMapper.insertIndicaD(idcVo);
+				}
 			}
 		if(mvo.getDeletedRows()!=null) {
-			System.out.println("삭제" + mvo);
+			for(IndicaVO idcVo : mvo.getDeletedRows()) {
+				System.out.println("삭제:" + mvo);
+				idcMapper.deleteIndicaD(idcVo);
+				}
 			}
 		if(mvo.getUpdatedRows()!=null) {
-			System.out.println("수정" + mvo);
-		}
+				System.out.println(mvo.getUpdatedRows().get(0).getIndicaNo());
+				if (mvo.getUpdatedRows().get(0).getIndicaNo() != null) {
+					for(IndicaVO idcVo : mvo.getUpdatedRows()) {
+					System.out.println("수정:" + mvo);
+					idcMapper.updateIndica(idcVo);
+					idcMapper.updateIndicaD(idcVo);
+					}
+				} else {
+					for(IndicaVO idcVo : mvo.getUpdatedRows()) {
+						System.out.println("등록:" + mvo);
+						if (idcVo == mvo.getUpdatedRows().get(0)) {
+							idcMapper.insertIndica(idcVo);
+						}
+						idcMapper.insertIndicaD(idcVo);
+					}
+				}
+			}
 		return 1;
 	}
 
@@ -73,7 +94,7 @@ public class IndicaServiceImpl implements IndicaService {
 
 	@Override
 	public int hiddenData(Map<String, List<IndicaVO>> map) {
-		return 0;
+		return 1;
 	}
 
 	@Override

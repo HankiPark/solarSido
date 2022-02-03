@@ -113,6 +113,7 @@
 	let lotArr = []; 	//list
 	let lotData = {}; 	//obj
 	let arr=[];
+	let arrt=[];
 	let obj={};
 	let pdIdx=0;
 	let prdtLotNum=0;
@@ -128,7 +129,7 @@
 	//let chkLot; //체크된 행 담기
 	//let udLot;
 	
-	//공통 - 제품코드 가져옴
+	//공통 - 제품코드 호출
 	$.ajax({
 		url: '${pageContext.request.contextPath}/ajax/cmmn/code',
 		dataType: 'JSON',
@@ -139,7 +140,7 @@
 	});
 	
 	$(function(){
-		//cmmn_data_d Table에서 자재 수 가지고 옴
+		//cmmn_data_d Table에서 자재정보 호출
 		$.ajax({
 			url: '${pageContext.request.contextPath}/ajax/rscCnt.do',
 			dataType: 'JSON',
@@ -148,7 +149,7 @@
 			//console.log(data)
 			data.num
 			for(let f of data.num){
-				arr.push({'rscCd':f})
+				arr.push(f)
 			}		
 			console.log(arr)
 		});
@@ -712,7 +713,7 @@
 	            'rscUseQty':rscLotGrid.getValue(rscEv.rowKey,'rscUseQty'),
 	            'rscCd':rscLotGrid.getValue(rscEv.rowKey,'rscCd'),
 	            'rscLot':rscLotGrid.getValue(rscEv.rowKey,'rscLot'),
-	            'rscQty':rscLotGrid.getValue(rscEv.rowKey,'rscQty'),},{
+	            'rscQty':rscLotGrid.getValue(rscEv.rowKey,'rscQty')},{
 	            extendPrevRowSpan : true,
 	            focus : true,
 	            at : 0
@@ -909,17 +910,26 @@
 	      let prdtCnt = indicaDgrid.getValue(0, 'indicaQty'); //제품수
 	      let rscCnt = rscGrid.getRowCount(); //자재수
 	      let list=[];
-	      list.push(arr1);
-	      list.push(arr2);
-	      list.push(arr3);
-	      list.push(arr4);
-	      list.push(arr5);
-	      list.push(arr6);
-	      console.log(list);
+	      let pt=0;
+	      
+	      for(let i of arr){ //자재 수
+	            for(let k=0;k<hdRscConGrid.getRowCount();k++){ //소요 자재lot수
+	               if(hdRscConGrid.getValue(k,'rscCd')==i){
+	                  arrt.push({'indicaDetaNo':hdRscConGrid.getValue(k,'indicaDetaNo'),
+	                     'rscCd':hdRscConGrid.getValue(k,'rscCd'),
+	                     'rscLot':hdRscConGrid.getValue(k,'rscLot'),
+	                     'rscQty':hdRscConGrid.getValue(k,'rscQty'),
+	                     'rscUseQty':hdRscConGrid.getValue(k,'rscUseQty')})
+	               }
+	            }
+	            list.push(arrt);
+	            arrt=[];
+	            pt++;
+	         }
 	      
 	      for(let li of list){
 		      if(li != null){
-		         var q =0;
+		         //var q =0;
 		         lotData =  {'indicaDetaNo': idcNo,
 		            'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
 		            'prdtLot':'',
@@ -941,23 +951,23 @@
 			            rscQty = rscQty-useQty+lotData.rscUseQty;
 			            lotData.rscUseQty = useQty-lotData.rscUseQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            q++;
+			            prdtLotNum++;
 			         }
 			
 			         for(let k =1; k*useQty<rscQty ; k++){
-			            lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
+			            lotData.prdtLot = 'PRD'+ idt + lpad((prdtLotNum+1).toString(), 3,'0')
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
 			            console.log(lotData);
-			            q++;
+			            prdtLotNum++;
 			            t++; 
 			         }
 			         
 			         if(t*useQty==rscQty){
 			        	 lotData.rscUseQty=''
 			         } else {   
-			        	lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0');
+			        	lotData.prdtLot = 'PRD'+ idt + lpad((prdtLotNum+1).toString(), 3,'0');
 			            lotData.rscLot = rscLot;   
 			            lotData.rscUseQty = rscQty%(t*useQty);
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
