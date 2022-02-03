@@ -464,14 +464,17 @@
 						unitPTime.push(prcsEqmList.PRCS[i].ptime);
 					}  
 					
-				unitPTime.push('10000');
+/* 				unitPTime.push('10000');
 				unitPTime.push('5000');
-				unitPTime.push('7200');
-				
+				unitPTimㅇe.push('7200');
+ */				
 				console.log(prcsEqmList);
 				console.log("공정설비갯수"+prcsEqmList.PRCS.length);
 				console.log("-------------------------ptime")
-				console.log(prcsEqmList.PRCS[0].ptime);
+				console.log(prcsEqmList.PRCS[0].ptime+" 1번째 설비");
+				console.log(prcsEqmList.PRCS[1].ptime+" 2번째 설비");
+				console.log(prcsEqmList.PRCS[2].ptime+" 3번째 설비");
+				console.log(prcsEqmList.PRCS[3].ptime+" 4번째 설비");
 				console.log("-------------------------ptime")
 				console.log(unitPTime);
 

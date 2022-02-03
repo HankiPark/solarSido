@@ -69,10 +69,6 @@
 	
 	select rsc_con_no,
 			indica_deta_no,
-			recv_dt,
-			recv_dt,
-			plan_dt,
-			order_no,
 			rsc_lot,
 			rsc_con_qty 	
 	from rsc_con
