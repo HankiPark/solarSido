@@ -15,7 +15,6 @@
 	<div id="planModal" title="미지시 계획 조회"></div>
 	<div id="indicaModal" title="미공정 생산지시서 목록"></div>
 	<div id="indicaDetailModal" title="생산지시서 조회"></div>
-	<!-- <div id="eqmUoModal" title="설비현황 조회"</div> -->
 
 	<!-- 생산지시 테이블 -->
 	<div class="row">
@@ -31,6 +30,7 @@
 					<button type="button" id="btnReset">초기화</button>
 					<button type="button" id="btnSave">저장</button>
 					<!-- <button type="button" id="btnDel">삭제</button> -->
+					<button type="button" id="lotSend">lot생성</button>
 				</div>
 			</form>
 		</div>
@@ -48,7 +48,6 @@
 				readonly>
 		</div>
 		<div id="btnMng" class="col-6">
-			<!-- <button type="button" id="eqmSearch">설비조회</button> -->
 			<button type="button" id="planSearch">미지시계획</button>
 			<button type="button" id="indicaSearch">지시수정</button>
 			<button type="button" id="rowAdd">추가</button>
@@ -85,7 +84,6 @@
 	
 	<div>
 		<button type="button" id="rscReset">초기화</button>
-		<button type="button" id="lotSend">lot생성</button>
 	</div>
 	
 	<!-- 소요자재 히든그리드 -->
@@ -165,17 +163,17 @@
 						url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
 						method: 'GET'
 			    				},
-			    	/* modifyData: {
+			    	modifyData: {
 			    		url: '${pageContext.request.contextPath}/grid/indicaModify.do', 
 						method: 'POST'
-								} */
+								}
 			  },
 				contentType: 'application/json',
 				initialRequest: false //초기에 안보이게 함
 			},
 		scrollX: false,
 		scrollY: true,
-		bodyHeight: 200,
+		bodyHeight: 150,
 		rowHeaders: [{
 			type: 'checkbox',
 			width: 40}],
@@ -299,10 +297,6 @@
 					    header: '작업순서',
 					    name: 'wkOrd',
 					    editor: 'text'
-					  },
-					  {
-					    header: '제품LOT_NO',
-					    name: 'prdt_lot'
 					  }
 			 		 ]
 			});
@@ -399,7 +393,8 @@
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+					  	hidden: true
 					  },
 					  {
 					    header: '주문번호',
@@ -451,7 +446,20 @@
 	//소요 자재 목록 히든그리드 : 생산소요자재T
 	let hdRscConGrid = new tui.Grid({
 		el: document.getElementById('hdRscConGrid'),
-		data: null,
+		data: {
+			  api: {
+			    	readData: {
+						url: '.', 
+						method: 'GET'
+			    				},
+			    	modifyData: {
+			    		url: '${pageContext.request.contextPath}/grid/rscConModify.do', 
+						method: 'POST'
+								}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
 		scrollX: false,
 		scrollY: true,
 		rowHeaders : [ 'rowNum' ],
@@ -503,7 +511,20 @@
 	//자재사용현황T 히든그리드: 제품lot별 자재lot 연결
 	 let hdPrdtRscGrid = new tui.Grid({
 		el: document.getElementById('hdPrdtRscGrid'),
-		data: null,
+		data: {
+			  api: {
+			    	readData: {
+						url: '.', 
+						method: 'GET'
+			    				},
+			    	modifyData: {
+			    		url: '${pageContext.request.contextPath}/grid/prdtRscModify.do', 
+						method: 'POST'
+								}
+			  },
+				contentType: 'application/json',
+				initialRequest: false //초기에 안보이게 함
+			},
 		scrollX: false,
 		scrollY: true,
 		rowHeaders : [ 'rowNum' ],
@@ -517,7 +538,7 @@
 					  {
 					 	header: '제품코드',
 					    name: 'prdtCd',
-						hidden: true
+						// hidden: true
 					  },
 					  {
 					 	header: '제품LOT_NO',
@@ -564,7 +585,7 @@
 				'prdtNm' : prdtNm
 		};
 		rscGrid.readData(1, rscGridParams, true);
-		
+		/* 
 		if (ev.columnName == 'indicaQty') {
 			//제품lot생성
 			$.ajax({
@@ -575,7 +596,7 @@
 			}).done((res)=>{
 				console.log(res)
 				prdtLotNum = res.num
-			})
+			}) */
 			
 		//제품수 * 해당 자재수만큼 obj 생성 -> arr
 			/* arr.length = 0; // arr 초기화
@@ -589,7 +610,7 @@
 						} 
 				arr.push(obj);
 			} */
-		}
+		//}
 	});
 		
 	//자재목록 그리드 이벤트
@@ -766,35 +787,19 @@
 		indicaNm = $('#indicaNm').val();
 		indicaDt = $('#indicaDt').val();
 		
-		let hdData = {};
-		hdData.hdRscConGrid = hdRscConGrid.getData();
-		hdData.hdPrdtRscGrid = hdPrdtRscGrid.getData();
-		console.log(hdData)
-		
 		if (indicaNm == null || indicaNm == ""){
 			alert('필수입력칸이 비어있습니다.');
 			$('#indicaNm').focus();
 		} else {
 			for ( i =0 ; i <= indicaDgrid.getRowCount(); i++) {
-				indicaDgrid.setValue(i,'indicaNm',planNm);
-				indicaDgrid.setValue(i,'indicaDt',planDt);
+				indicaDgrid.setValue(i,'indicaNm', indicaNm);
+				indicaDgrid.setValue(i,'indicaDt', indicaDt);
 			}
-			if(gridCheck()){
 				if (confirm("지시를 저장하시겠습니까?")) { 
-					planDgrid.blur();
-					planDgrid.request('modifyData'); // modifyData의 url 호출
-					
-					$.ajax({
-						url: '${pageContext.request.contextPath}/hiddenData',
-						dataType: 'JSON',
-						method: 'POST',
-						data: JSON.stringify(hdData),
-						contentType: 'application/json',
-						success: function () {
-							alert("완료");
-						}
-					})
-				}
+					indicaDgrid.blur();
+					indicaDgrid.request('modifyData'); // modifyData의 url 호출
+					//hdRscConGrid.request('modifyData')
+					//hdPrdtRscGrid.request('modifyData')
 			}
 		} 
 	})
@@ -911,7 +916,18 @@
 	      let rscCnt = rscGrid.getRowCount(); //자재수
 	      let list=[];
 	      let pt=0;
-	      
+	      let prdtLotNum;
+	    //제품lot생성
+			$.ajax({
+				url:'${pageContext.request.contextPath}/ajax/makePrdtNo.do',
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+				async: false,
+			}).done((res)=>{
+				console.log(res)
+				prdtLotNum = res.num
+			})
+			
 	      for(let i of arr){ //자재 수
 	            for(let k=0;k<hdRscConGrid.getRowCount();k++){ //소요 자재lot수
 	               if(hdRscConGrid.getValue(k,'rscCd')==i){
@@ -929,7 +945,8 @@
 	      
 	      for(let li of list){
 		      if(li != null){
-		         //var q =0;
+		         //var q = 0;
+		         var q = 1*prdtLotNum -1;
 		         lotData =  {'indicaDetaNo': idcNo,
 		            'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
 		            'prdtLot':'',
@@ -951,23 +968,24 @@
 			            rscQty = rscQty-useQty+lotData.rscUseQty;
 			            lotData.rscUseQty = useQty-lotData.rscUseQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            prdtLotNum++;
+			            q++;
 			         }
 			
+			         
 			         for(let k =1; k*useQty<rscQty ; k++){
-			            lotData.prdtLot = 'PRD'+ idt + lpad((prdtLotNum+1).toString(), 3,'0')
+			            lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            console.log(lotData);
-			            prdtLotNum++;
+			            //console.log(lotData);
+			            q++;
 			            t++; 
 			         }
 			         
 			         if(t*useQty==rscQty){
 			        	 lotData.rscUseQty=''
 			         } else {   
-			        	lotData.prdtLot = 'PRD'+ idt + lpad((prdtLotNum+1).toString(), 3,'0');
+			        	lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0');
 			            lotData.rscLot = rscLot;   
 			            lotData.rscUseQty = rscQty%(t*useQty);
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
@@ -975,7 +993,6 @@
 		      		}
 		      }   
 		     }
-	      console.log("lotArr:")
 	      console.log(lotArr);
 		    
 		//hdPrdtRscGrid.resetData(arr);
@@ -983,7 +1000,26 @@
 		//초기화
 		arr.length = 0; 
 		pdIdx=0;
-	 })
+		
+		let hdData = {};
+		hdData.hdRscConGrid = hdRscConGrid.getData();
+		hdData.hdPrdtRscGrid = hdPrdtRscGrid.getData();
+		console.log(hdData)
+		
+		//hidden grid 데이터
+		$.ajax({
+			url: '${pageContext.request.contextPath}/hiddenData',
+			dataType: 'JSON',
+			method: 'POST',
+			data: JSON.stringify(hdData),
+			contentType: 'application/json',
+		}).done(function() {
+			console.log("성공")
+		}).fail(function() {
+			console.log("실패")
+		});
+		
+	})
 	 	
 	//------------------------------함수------------------------------------------------
  	//lpad 함수

@@ -42,26 +42,17 @@
 	<hr />
 
 	<!-- 생산계획 상세 그리드-->
-	<div class="row">
-		<div id="planDgrid" class="col-9">
-			<div class="row">
-				<div class="col-8">
-					<label>계획번호</label>
-					<input type="text" id="planNo" name="planNo" readonly> 
-				</div>
-				<div id="btnMng" class="col-4">
-					<button type="button" id="rowAdd">추가</button> <!-- 계획등록시 주문서 불러오기 -->
-					<button type="button" id="planSearch">계획수정</button> <!-- 계획수정, 삭제시 -->
-					<button type="button" id="rowDel">삭제</button>
-				</div>
+	<div id="planDgrid">
+		<div class="row">
+			<div class="col-8">
+				<label>계획번호</label>
+				<input type="text" id="planNo" name="planNo" readonly> 
 			</div>
-		</div>
-		<!-- 제품 재고체크 그리드-->
-		<div id="pStcGrid" class="col-3" >
-			<label>주문번호</label>
-			<input type="text" id="orderNo" name="orderNo" readonly> <br/>
-			<label>제품코드</label>
-			<input type="text" id="prdtCd" name="prdtCd" readonly> 
+			<div id="btnMng" class="col-4">
+				<button type="button" id="rowAdd">추가</button> <!-- 계획등록시 주문서 불러오기 -->
+				<button type="button" id="planSearch">계획수정</button> <!-- 계획수정, 삭제시 -->
+				<button type="button" id="rowDel">삭제</button>
+			</div>
 		</div>
 	</div>
 	<hr />
@@ -229,74 +220,9 @@
 				'prdtCd' : prdtCd,
 				'orderNo' : orderNo
 		};
-		pStcGrid.readData(1, stcGridParams, true);
 		rStcGrid.readData(1, stcGridParams, true);
 	});
  	
- 	
-	//제품재고 체크 그리드
-	let pStcGrid = new tui.Grid({
-		el: document.getElementById('pStcGrid'),
-		data: {
-			  api: {
-			    	readData: {
-						url: '${pageContext.request.contextPath}/grid/pStcGrid.do', 
-						method: 'GET',
-						initParams : { 
-							orderNo: 'orderNo',
-							prdtCd: 'prdtCd'
-						}
-			    	}
-			  },
-				contentType: 'application/json',
-				initialRequest: false //초기에 안보이게 함
-			},
-		scrollX: false,
-		scrollY: true,
-		bodyHeight: 200,
-		columns: [
-					 {
-					    header: '제품코드',
-					    name: 'prdtCd',
-					    hidden: true
-					  },
-					  {
-					    header: '주문량',
-					    name: 'orderQty',
-					    align: 'center',
-					    hidden: true
-					  },
-					  {
-					    header: '제품재고',
-					    name: 'prdtStc',
-					    align: 'center'
-					  },
-					  {
-					    header: '안전재고',
-					    name: 'psafStc',
-					    align: 'center'
-					  },
-					  {
-					    header: '추천작업량',
-					    name: 'rcomQty',
-					    align: 'center'
-					  }
-				]
-	});
-	
-	pStcGrid.on('response',function(ev){
-	  	console.log(ev.xhr)
-	  	planDgrid.refreshLayout();
-     	pStcGrid.refreshLayout(); 
-     	console.log(pStcGrid.getValue(0, 'prdtStc'));
-   	});
-	
- 	
-	pStcGrid.on('onGridUpdated', function() {
-		pStcGrid.refreshLayout(); 
-		planDgrid.refreshLayout();
-	});
-	
 	//자재재고 체크 그리드
 	let rStcGrid = new tui.Grid({
 		el: document.getElementById('rStcGrid'),
@@ -347,7 +273,6 @@
 					    header: '부족량',
 					    name: 'lackStc'
 					  }
-					  
 				]
 	});
  	
@@ -434,7 +359,6 @@
 	$('#btnReset').click(function() {
 		planMngFrm.reset();
 		planDgrid.resetData([]);
-		pStcGrid.resetData([]);
 		rStcGrid.resetData([]);
 	})
 	
@@ -518,20 +442,6 @@
 		b = Number(planDgrid.getValue( rowKey, b ));
 		result = Number(a) / Number(b);
 		planDgrid.setValue( rowKey, "prodDay" , result);
-	} 
-	
-	pStcGrid.on('editingFinish', (ev) => {
-		calRcomQty( ev.rowKey, "orderQty", "prdtStc", "pSafStc" ); 
-	})
-	
-	//추천생산량 계산 함수
-	function calRcomQty( rowKey, a, b, c ) { // 생산일수계산
-		a = Number(pStcGrid.getValue( rowKey, a )); 	//주문량
-		b = Number(pStcGrid.getValue( rowKey, b ));		//제품재고량
-		c = Number(pStcGrid.getValue( rowKey, c )); 	//안전재고량
-
-		result = Number(a) - ( Number(b) - Number(c) );
-		pStcGrid.setValue( rowKey, "rcomQty" , result);
 	} 
 
 	*/

@@ -20,7 +20,7 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		(SELECT min(uph) FROM EQM) as day_out_put,
+		(SELECT min(uph) FROM EQM) as day_output,
 		(B.plan_qty/(SELECT min(uph) FROM EQM)) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
@@ -43,18 +43,6 @@
 	ORDER BY paprd_dt, order_qty desc
 </select>
 
-<select id="selectPstc" resultType="ProdPlanVO">
-	SELECT
-		prdt_cd,
-		order_qty,
-		prdt_stc,
-		'10' as psaf_stc,
-		(order_qty-prdt_stc+10) rcom_qty
-	FROM order_d
-	WHERE order_no = #{orderNo}
-	AND prdt_cd = #{prdtCd}
-</select>
-
 <select id="selectRstc" resultType="ProdPlanVO">
 	SELECT
 		a.prdt_cd,
@@ -69,7 +57,6 @@
     AND	o.prdt_cd = #{prdtCd}
     order by prdt_cd
 </select>
-
 
 <select id="findProdPlan" resultType="ProdPlanVO">
 	SELECT DISTINCT
@@ -107,7 +94,7 @@
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_qty,
         B.prdt_stc,
-        (select min(uph) from eqm) as day_out_put
+        (select min(uph) from eqm) as day_output
 	FROM order_tb A, order_d B
 	WHERE A.order_no = B.order_no
 	<if test="orderNo != null and orderNo != ''">

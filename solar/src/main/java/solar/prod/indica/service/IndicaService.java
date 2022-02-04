@@ -21,8 +21,6 @@ public interface IndicaService {
 
 	String makeDno();
 
-	int modifyData(ModifyVO<IndicaVO> mvo);
-
 	List<?> findEqmUo(IndicaVO idcVo);
 
 	String makePrdtNo();
@@ -30,5 +28,11 @@ public interface IndicaService {
 	int hiddenData(Map<String, List<IndicaVO>> map);
 
 	List<?> rscCnt(CmmndataVO cVo);
+
+	int modifyData(ModifyVO<IndicaVO> mvo);
+	
+	int modifyRscCon(ModifyVO<IndRscVO> mvo);
+
+	int modifyPrdtRsc(ModifyVO<IndRscVO> mvo);
 
 }

@@ -33,7 +33,6 @@ public interface ProdPlanMapper {
 	List<ProdPlanVO> findCoCd(ProdPlanVO ppVo);
 	List<ProdPlanVO> findPrdtCd(ProdPlanVO ppVo);
 
-	List<?> selectPstc(ProdPlanVO ppVo);
 	List<?> selectRstc(ProdPlanVO ppVo);
 	
 }
