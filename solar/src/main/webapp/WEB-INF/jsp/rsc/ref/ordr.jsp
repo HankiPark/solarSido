@@ -81,7 +81,9 @@ let ordrDtStt = date.toISOString().substr(0,10);
 	 cmmnCodes = data;
 	});
 			
-  var grid = new tui.Grid({
+	var Grid = tui.Grid;
+	Grid.setLanguage('ko');
+  var grid = new Grid({
     el: document.getElementById('grid'),
     scrollX: false,
     scrollY: false,

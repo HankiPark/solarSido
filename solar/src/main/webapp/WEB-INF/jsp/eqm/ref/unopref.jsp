@@ -47,8 +47,14 @@
 		height: 30px;
 	}
 	
-	#grid, #grid2{
+	#grid{
 		width: 97%;
+	}
+	#rightDiv{
+		position: relative;
+		bottom: 70px;
+		width: 97%;
+ 		text-align: left;
 	}
 </style>
 
@@ -63,16 +69,18 @@
 			<label for="isUoN">비가동설비</label>
 			<input type="checkbox" id="isUoY">
 			<label for="isUoY">가동설비</label>
-			<button type="button" id=gridRequestData>조회</button>
+			<br><button type="button" id=gridRequestData>조회</button>
 		</div>
-		<br>
 		<br>
 		<div class="flex row" align="center">
 			<div id="grid" class="col-4">
 				<h3>설비 목록</h3>
 			</div>
-			<div id="grid2" class="col-8">
-				<h3 id="eh2">비가동 내역( 설비명, 코드 )</h3>
+			<div id="rightDiv" class="col-8">
+				<div id="chart-area"></div>
+				<div id="grid2">
+					<h3 id="eh2">비가동 내역( 설비명, 코드 )</h3>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -81,6 +89,7 @@
 	let eh2 = document.getElementById('eh2');
 	
 	var Grid = tui.Grid;
+	Grid.setLanguage('ko');
 
 	const dataSource = {
 		api: {
@@ -107,11 +116,12 @@
 		data: dataSource,
 		pageOptions : {
 			useClient : true,
-			perPage : 9
+			perPage : 12
 		},
-		bodyHeight: 360,
+		bodyHeight: 480,
 		scrollX: false,
 		scrollY: false,
+		rowHeaders: ['checkbox'],
 		columns: [{
 				header: '설비코드',
 				name: 'eqmCd',
@@ -126,7 +136,7 @@
 				header: '설비명',
 				name: 'eqmNm',
 				align: 'center',
-				width: 150,
+				width: 110,
 			},
 			{
 				header: '모델',
@@ -154,10 +164,10 @@
 	const grid2 = new Grid({
 		el: document.getElementById('grid2'),
 		data: uoDataSource,
-		bodyHeight: 360,
+		bodyHeight: 200,
 		pageOptions : {
 			useClient : true,
-			perPage : 9
+			perPage : 5
 		},
 		scrollX: false,
 		scrollY: false,
@@ -260,4 +270,108 @@
 	
 </script>
 
+<script>
+	const el = document.getElementById('chart-area');
+	let data = {
+	  categories: ['', '', '', '', '', '', '', '', '', '','','','','',new Date(+new Date() + 3240 * 10000).toISOString().substr(11,8)],
+	  series: [ /* 라인 */ ],
+	};
+	const options = {
+			lang: { noData: "데이터를 나타낼 설비를 체크해주십시오."},
+			chart: { title: '실시간 설비 누적 비가동시간', width: 1050, height: 400 },
+			xAxis: { pointOnColumn: false, title: { text: '현재' } },
+			yAxis: { title: '누적 비가동시간' },
+			series: {
+			shift: true,
+		  },
+	};
+	var chart = toastui.Chart.areaChart({ el, data, options });
+	
+    let graphInterval;
+    
+    function drawGraph(eqmCds){
+	
+	    fetch('${pageContext.request.contextPath}/ajax/eqm/uographdata',{
+	        method: 'POST',
+	        body: JSON.stringify({
+	            eqmCds: eqmCds,
+	        }),
+	        headers: {
+	            'Content-Type': 'application/json'
+	        }
+	    })
+	    .then(data=>data.json())
+	    .then((json)=>{
+	    	
+	    	data = {
+	    			  categories: ['', '', '', '', '', '', '', '', '', '','','','','',new Date(+new Date() + 3240 * 10000).toISOString().substr(11,8)],
+	    			  series: [],
+	    			};
+	    	
+	    	for(let initialData of json.graphData){
+				let i = initialData.seconds;
+	    		data.series.push(new Object({"name":initialData.eqmNm+'( '+initialData.eqmCd+ ' )',"data":[i,i,i,i,i,i,i,i,i,i,i,i,i,i,i]}));
+	    	}
+	    	
+	    })
+	    .then(()=>{
+	    	clearInterval(graphInterval);
+	    	chart.destroy();
+	    	chart = toastui.Chart.areaChart({ el, data, options });
+	    })
+	    .then(()=>{
+	    	graphInterval = setInterval(()=>{
+	    		
+	    		fetch('${pageContext.request.contextPath}/ajax/eqm/uographdata',{
+	    			method: 'POST',
+	    	        body: JSON.stringify({
+	    	            eqmCds: eqmCds,
+	    	        }),
+	    	        headers: {
+	    	            'Content-Type': 'application/json'
+	    	        }
+	    		})
+	   		    .then(data=>data.json())
+	   			.then((json)=>{
+	   				let arr = [];
+					for(let intervalData of json.graphData){
+						arr.push(intervalData.seconds);
+					}
+	   				
+	   				chart.addData(arr,new Date(+new Date() + 3240 * 10000).toISOString().substr(11,8));
+	   			})
+		    }, 1000);
+	    });
+    }
+	    
+    grid.on('check',function(ev){
+    	gridGetCheckedEqmCds();
+    })
+    grid.on('uncheck',function(ev){
+    	gridGetCheckedEqmCds();
+    })
+    grid.on('checkAll',function(ev){
+    	gridGetCheckedEqmCds();
+    })
+    grid.on('uncheckAll',function(ev){
+    	gridGetCheckedEqmCds();
+    })
+    
+    function gridGetCheckedEqmCds(){
+    	let eqmCds = '';
+    	let checkedRows = grid.getCheckedRows();
+    	for(let row of checkedRows){
+    		eqmCds += ','+row.eqmCd;
+    	}
+    	eqmCds = eqmCds.substr(1);
+    	console.log(eqmCds);
+    	if(eqmCds==''){
+    		clearInterval(graphInterval);
+    		chart.clear();
+    		return false;
+    	}
+    	drawGraph(eqmCds);
+    }
+
+</script>
 </html>

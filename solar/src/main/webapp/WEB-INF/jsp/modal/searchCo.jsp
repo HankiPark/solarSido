@@ -15,7 +15,9 @@
 	<div id="coGrid"></div>
 </body>
 <script>
-var coGrid = new tui.Grid({
+var Grid = tui.Grid;
+Grid.setLanguage('ko');
+var coGrid = new Grid({
     el: document.getElementById('coGrid'),
     scrollX: false,
     scrollY: false,

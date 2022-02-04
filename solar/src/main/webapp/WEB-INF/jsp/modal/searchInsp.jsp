@@ -10,7 +10,9 @@
 	<div id="inferGrid"></div>
 </body>
 <script>
-var inferGrid = new tui.Grid({
+var Grid = tui.Grid;
+Grid.setLanguage('ko');
+var inferGrid = new Grid({
     el: document.getElementById('inferGrid'),
     scrollX: true,
     scrollY: true,
