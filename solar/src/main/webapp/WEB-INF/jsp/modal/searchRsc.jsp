@@ -16,7 +16,9 @@
 </body>
 <script>
 var evVar;
-var rscGrid = new tui.Grid({
+var Grid = tui.Grid;
+Grid.setLanguage('ko');
+var rscGrid = new Grid({
     el: document.getElementById('rscGrid'),
     scrollX: true,
     scrollY: true,

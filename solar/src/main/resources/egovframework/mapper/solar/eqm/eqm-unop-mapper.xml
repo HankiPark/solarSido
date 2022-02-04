@@ -35,7 +35,13 @@
 	
 	<select id="selectUnopList" resultType="solar.eqm.unop.service.UnopVO">
 		select
-			eu.*, e.eqm_nm, uc.uopr_nm
+			to_number(eu.eqm_uo_no) "EQM_UO_NO",
+            eu.fr_tm,
+            eu.to_tm,
+            eu.eqm_cd,
+            eu.uopr_cd,
+            e.eqm_nm,
+            uc.uopr_nm
 		from
 			eqm_uo eu
 		join eqm e
@@ -52,7 +58,7 @@
 					or e.eqm_nm like '%'||#{eqmParam}||'%'
 				)
 			</if>
-		order by eu.eqm_uo_no desc
+		order by 1 desc
 	</select>
 	
 	<select id="selectUnop" parameterType="map" resultType="solar.eqm.unop.service.UnopVO">
@@ -75,4 +81,35 @@
 			and eqm_cd = #{eqmCd}
 			and to_tm is null
 	</update>
+	
+	
+	<select id="uoGraph" resultType="solar.eqm.unop.service.UoGraphVO" parameterType="map">
+		select
+			eqm_cd,
+			eqm_nm,
+			sum(days) "DAYS",
+			sum(hours) "HOURS",
+			sum(minutes) "MINUTES",
+			sum(seconds) "SECONDS"
+		from
+			(select
+			    eu.eqm_cd,
+			    e.eqm_nm,
+			    trunc(nvl(to_tm,sysdate) - fr_tm) "DAYS",
+			    trunc((nvl(to_tm,sysdate) - fr_tm)*24) "HOURS",
+			    trunc((nvl(to_tm,sysdate) - fr_tm)*24*60) "MINUTES",
+			    trunc((nvl(to_tm,sysdate) - fr_tm)*24*60*60) "SECONDS"
+			from eqm_uo eu
+			join eqm e
+			    on eu.eqm_cd = e.eqm_cd
+			where 1=1
+				<if test='eqmCds.size != 0'>
+			    	and eu.eqm_cd in
+			    		<foreach collection="eqmCds" item="eqmCd" separator="," open="(" close=")" index="index">
+			    			#{eqmCd}
+			    		</foreach>
+				</if>
+			order by 1)
+		group by eqm_cd, eqm_nm
+	</select>
 </mapper>

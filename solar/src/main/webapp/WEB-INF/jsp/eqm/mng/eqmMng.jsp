@@ -295,7 +295,8 @@
 
 
             var Grid = tui.Grid;
-
+        	Grid.setLanguage('ko');
+        	
             const dataSource = {
                 api: {
                     readData: {url: '${pageContext.request.contextPath}/grid/eqmList.do',method: 'GET'},

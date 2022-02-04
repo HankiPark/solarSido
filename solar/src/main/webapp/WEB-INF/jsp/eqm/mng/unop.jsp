@@ -174,7 +174,9 @@
 		});
 		refreshForm();
 	});
+	
 	var Grid = tui.Grid;
+	Grid.setLanguage('ko');
 
 	const dataSource = {
 		api: {
