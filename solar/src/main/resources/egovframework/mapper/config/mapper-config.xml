@@ -24,6 +24,7 @@
 		<typeAlias alias="Menu"		type="solar.menu.dao.Menu" />
 		<typeAlias alias="PrdtChase"		type="solar.prdt.dao.PrdtChase" />
 		<typeAlias alias="MessageVO"		type="solar.wsk.msg.dao.MessageVO" />
+		<typeAlias alias="Prcs2"		type="solar.prcs2.dao.Prcs2" />
 	</typeAliases>
     
 </configuration>
