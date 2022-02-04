@@ -46,6 +46,12 @@
 		<if test='eqmCd != null and eqmCd !=""'>
 			and eu.eqm_cd = #{eqmCd}
 		</if>
+		<if test="eqmParam != null and eqmParam != ''">
+				and(
+					e.eqm_cd like '%'||#{eqmParam}||'%'
+					or e.eqm_nm like '%'||#{eqmParam}||'%'
+				)
+			</if>
 		order by eu.eqm_uo_no desc
 	</select>
 	

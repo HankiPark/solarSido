@@ -21,8 +21,8 @@
     </div>
     </div>
     <div class="flex row">
-	    <div id="barChartDiv" class="row-7"></div>
-	    <div id="pieChartDiv" class="row-5"></div>
+	    &ensp;<div id="barChartDiv" class="row-1"></div>
+	    <div id="pieChartDiv" class="row-1"></div>
     </div>
 </body>
 <script>
@@ -93,7 +93,7 @@
                 const options = {
                     chart: {
                         title: '분기별 자재 불량률',
-                        width: 700,
+                        width: 750,
                         height: 400,
                     },
                     series: {
@@ -172,7 +172,7 @@
                   ],
                 };
                 const options = {
-                  chart: { title: '불량량: '+val.category, width: 600, height: 400 },
+                  chart: { title: '불량량: '+val.category, width: 450, height: 400 },
                 };
 
                 const chart = toastui.Chart.pieChart({ el, data, options });

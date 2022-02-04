@@ -169,13 +169,15 @@
 	grid.hideColumn('rtngdResnCd');
 	grid.hideColumn('rtngdDt');
 	
-  
-/*     grid.on('beforeChange',function(ev){
-    	console.log('befgg')
-    	if(ev.columnName == 'inspCls'){
-    	return false;
-    	}
-    }); */
+	function gridCss(){
+		  let dsabTexts = document.querySelectorAll('.tui-grid-cell-disabled');
+		  for(let dtx of dsabTexts){
+			  dtx.classList.remove('tui-grid-cell-disabled');
+		  }
+	  }
+	grid.on('onGridUpdated',function(){
+		gridCss();
+	});
     
 	grid.on('response',function(ev){
       if(ev.xhr.responseText =="201"){
