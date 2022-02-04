@@ -98,7 +98,8 @@
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
-    AND (SELECT order_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd) > (SELECT indica_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd)
+    AND (SELECT order_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd) 
+    	> (SELECT indica_qty FROM order_d WHERE order_no = b.order_no AND prdt_cd = b.prdt_cd)
     ORDER BY prdt_cd, paprd_dt, order_qty desc
 </select>
 
@@ -111,17 +112,6 @@
 	SELECT nvl(count(prdt_lot), 0)+1 
 	FROM prdt_stc 
 	WHERE prdt_dt = sysdate
-</select>
-
-<select id="findEqmUo" resultType="indicaVO">
-	SELECT  p.prdt_cd, p.prcs_ord, p.prcs_cd, p.eqm_cd, e.eqm_yn
-	FROM prcs_pr p
-	LEFT JOIN eqm e ON p.eqm_cd = e.eqm_cd
-	WHERE 1=1
-	<if test="prdtCd !=null and prdtCd !=''">
-		AND prdt_cd like '%'||#{prdtCd}||'%'
-	</if>
-	ORDER BY 1, 4
 </select>
 
 <select id="rscCnt" resultType="String">
@@ -141,7 +131,7 @@
 
 <insert id="insertIndicaD">
 	<selectKey keyProperty="indicaDetaNo" resultType="int" order="BEFORE"> 
-		SELECT nvl(max(indica_deta_no), 0)+1 from indica_d
+		SELECT nvl(max(indica_deta_no), 0)+1 FROM indica_d
 	</selectKey>
 	INSERT INTO plan_d (indica_deta_no,
 						indica_no,
@@ -173,6 +163,7 @@
 <update id="updateIndicaD">
 	UPDATE indica_d
 	SET	indica_dt = #{indicaDt},
+		prod_fg = #{prodFg}
 		indica_qty = #{indicaQty},
 		wk_ord = #{wkOrd},
 		wk_dt = #{wkDt}
@@ -191,9 +182,75 @@
 	AND indica_no = #{indicaNo}
 </delete>	
 
+<!-- indicaDgrid -> 주문상세T 지시량 변경 -->
+<update id="updateOdIdQty">
+	UPDATE order_d
+	SET indica_qty = #{indicaQty}
+	WHERE order_no = #{orderNo}
+	AND prdt_cd = #{prdtCd}
+</update>
+
+<!-- hdRscConGrid -> 생산소요자재T 등록 -->
 <insert id="insertRscCon">
-	Insert INTO rsc_con 
-	
+	<selectKey keyProperty="rscConNo" resultType="int" order="BEFORE"> 
+		SELECT nvl(max(rsc_con_no), 0)+1 FROM rsc_con
+	</selectKey>
+	INSERT INTO rsc_con (	rsc_con_no,
+							indica_deta_no,
+							rsc_lot,
+							rsc_con_qty 	)
+	VALUES ( 	#{rscConNo},
+				#{indicaDetaNo},
+				#{rscLot},
+				#{rscQty}	)
+</insert>
+
+<!-- hdRscConGrid -> 자재입고출고T 등록 -->
+<insert id="insertRscOut">
+	INSERT INTO rsc_inout ( rsc_slip_no,
+							rsc_cd,
+							rsc_lot,
+							rsc_qty,
+							rsc_fg	)
+	VALUES (	'rout'|| to_char(sysdate,'yyMMdd') || trim(to_char(RSCJEONPYOSEQ.nextval, '000')),
+				#{rscCd},
+				#{rscLot},
+				#{rscQty},
+				0	)
+</insert>
+
+<!-- hdRscConGrid -> 자재재고T 자재재고 변경 -->
+<update id="updateUseRscStc">
+	UPDATE rsc_stc
+	SET	rsc_stc = rsc_stc - #{rscQty} 
+	WHERE rsc_cd = #{rscCd}
+</update>
+
+<!-- hdPrdtRscGrid -> 자재사용현황T 등록 -->
+<insert id="insertPdRc">
+	INSERT INTO prdt_rsc (	prdt_lot,
+							rsc_lot,
+							rsc_con_qty)
+	VALUES (	#{prdtLot},
+				#{rscLot},
+				#{rscUseQty} )
+</insert>
+
+<!-- hdPrdtRscGrid -> 제품재고관리T 등록 -->
+<insert id="insertPdSc">
+	<selectKey keyProperty="prdtInx" resultType="int" order="BEFORE"> 
+		SELECT nvl(max(prdt_inx), 0)+1 FROM prdt_stc
+	</selectKey>
+	INSERT INTO prdt_stc (	prdt_inx,
+							prdt_lot,
+							prdt_fg,
+							prdt_cd,
+							indica_deta_no	)
+	VALUES ( 	#{prdtInx},
+				#{prdtLot},
+				'P',
+				#{prdtCd},
+				#{indicaDetaNo}		)
 </insert>
 
 </mapper>

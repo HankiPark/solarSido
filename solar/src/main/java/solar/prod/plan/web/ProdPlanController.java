@@ -46,19 +46,6 @@ public class ProdPlanController {
 		return "jsonView";
 	}
 	
-	//제품재고 조회 그리드
-	@GetMapping("/grid/pStcGrid.do")
-	public String pStcGrid(Model model, ProdPlanVO ppVo) throws Exception {
-		List<?> list = ppService.selectPstc(ppVo);
-		Map<String,Object> map = new HashMap<>();
-		map.put("contents", list);
-		System.out.println("list:"+list);
-		model.addAttribute("result", true);
-		model.addAttribute("data", map);
-		System.out.println("map:" + map);
-		return "jsonView";
-	}
-	
 	//자재재고 조회 그리드
 	@GetMapping("/grid/rStcGrid.do")
 	public String rStcGrid(Model model, ProdPlanVO ppVo) throws Exception {
@@ -77,7 +64,7 @@ public class ProdPlanController {
 	public String modifyPlan(Model model, ProdPlanVO ppVo, 
 							@RequestBody ModifyVO<ProdPlanVO> mvo) throws Exception {
 		ppService.modifyData(mvo);
-//		System.out.println("mvo:" + ppService.modifyData(mvo)); //절대 실행하지 말 것 변수에 담아서 할것
+//		System.out.println("mvo:" + ppService.modifyData(mvo)); //절대 실행하지 말 것(두 번 실행하게 됨)
 		model.addAttribute("mode", "upd");
 		return "jsonView";
 	}

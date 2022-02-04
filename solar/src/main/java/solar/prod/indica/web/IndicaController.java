@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.code.service.CmmnCdService;
+import solar.prod.indica.service.IndRscVO;
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
@@ -129,26 +130,6 @@ public class IndicaController {
 		return "modal/findIndicaDetail";
 	}
 	
-	//설비현황 조회 모달
-	@RequestMapping("/modal/findEqmUo")
-	public String findEqmUo() {
-		System.out.println("생산지시서 조회");
-		return "modal/findEqmUo";
-	}
-	
-	//설비현황 조회 모달 조회 그리드
-	@GetMapping("/grid/eqmUoMoniter.do")
-	public String eqmUoMoniter(Model model, IndicaVO idcVo) throws Exception {
-		System.out.println("설비현황 호출");
-		List<?> list = idcService.findEqmUo(idcVo);
-		Map<String,Object> map = new HashMap<>();
-		map.put("contents", list);	
-		model.addAttribute("result", true);
-		model.addAttribute("data", map);
-		System.out.println("map:" + map);
-		return "jsonView";
-	}
-		
 	//지시상세번호 부여
 	@GetMapping("/ajax/makeDno.do")
 	public String makeDno(Model model, IndicaVO idcVo) {
@@ -179,6 +160,22 @@ public class IndicaController {
 		return "jsonView";
 	}
 	
+	@PostMapping("/grid/rscConModify.do")
+	public String modifyRscCon(Model model, IndRscVO irVo, 
+							@RequestBody ModifyVO<IndRscVO> mvo) throws Exception {
+		idcService.modifyRscCon(mvo);
+		model.addAttribute("mode", "upd");
+		return "jsonView";
+	}
+	
+	@PostMapping("/grid/prdtRscModify.do")
+	public String modifyPrdtRsc(Model model, IndRscVO irVo, 
+							@RequestBody ModifyVO<IndRscVO> mvo) throws Exception {
+		idcService.modifyPrdtRsc(mvo);
+		model.addAttribute("mode", "upd");
+		return "jsonView";
+	}
+	
 	//공통-제품코드 목록 요청
 	@GetMapping("/ajax/cmmn/code")
 	public String cmmnCodes(Model model) {
@@ -189,6 +186,7 @@ public class IndicaController {
 	//히든그리드 가져오기
 	@PostMapping("/hiddenData")
 	public String hiddenData(@RequestBody Map<String, List<IndicaVO>> map) {
+		System.out.println("히든그리드데이터");
 		idcService.hiddenData(map);
 		return "jsonView";
 	}

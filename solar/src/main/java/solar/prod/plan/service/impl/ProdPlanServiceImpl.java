@@ -85,11 +85,6 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	}
 
 	@Override
-	public List<?> selectPstc(ProdPlanVO ppVo) {
-		return ppMapper.selectPstc(ppVo);
-	}
-
-	@Override
 	public List<?> selectRstc(ProdPlanVO ppVo) {
 		return ppMapper.selectRstc(ppVo);
 	}
