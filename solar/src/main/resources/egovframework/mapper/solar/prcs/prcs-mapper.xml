@@ -76,6 +76,24 @@
 	
 </select>
 
+<select id="selectPrcs" resultType="solar.prcs.prcs.service.PrcsEqmVO">
+	select * from prcs
+</select>
+
+<select id="selectPrcsFlow" resultType="solar.prcs.prcs.service.PrcsFlowVO">
+	select pp.prcs_ord,
+			 pp.prdt_cd, 
+			 pp.eqm_cd, 
+			 pp.prcs_cd, 
+			 p.prcs_nm, 
+			 p.prcs_desct 
+	from prcs p, prcs_pr pp
+	where p.prcs_cd=pp.prcs_cd
+	and p.prcs_cd=#{prcsCd}
+	
+
+</select>
+
 
 <select id="selectPrcsEqm" resultType="solar.prcs.prcs.service.PrcsEqmVO">
 	select p.prcs_fg,
@@ -99,7 +117,8 @@
 	        e.uph,
 	        trunc((1/((e.uph/60)/60))*1000,3) AS pTime,
 	        e.eqm_img,
-	        e.prcs_cd
+	        e.prcs_cd,
+	        e.eqm_yn
 	from prcs p, eqm e
 	where p.prcs_cd = e.prcs_cd
 	
@@ -136,9 +155,6 @@
 							#{indicaNo},
 							#{indicaDt}
 							)
-
-					 		
-					
 
 </insert>
 

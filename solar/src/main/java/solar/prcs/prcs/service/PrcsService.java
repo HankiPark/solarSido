@@ -7,7 +7,12 @@ public interface PrcsService {
 	List<PrcsPrMVO> selectAll();
 	List<IndicaVO> selectPDay(IndicaVO vo);
 	List<ClotVO> selectPrcsItem(ClotVO vo);
+	
+	List<PrcsEqmVO> selectPrcs(PrcsEqmVO vo);
+	List<PrcsFlowVO> selectPrcsFlow(PrcsFlowVO vo);
 	List<PrcsEqmVO> selectPrcsEqm(PrcsEqmVO vo);
+	
+	
 	List<RscConVO> selectPrcsItemRSC(RscConVO vo);
 	
 	int insertPrcsPrM(PrcsPrMVO vo);

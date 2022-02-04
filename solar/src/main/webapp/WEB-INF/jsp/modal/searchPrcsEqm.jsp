@@ -18,7 +18,7 @@
 	prcsEqmDataSource = {
 			api : {
 				readData : {
-					url : "${pageContext.request.contextPath}/modal/searchPrcsEqm/prcsEqm",
+					url : "${pageContext.request.contextPath}/modal/searchPrcsEqm/prcs",
 					method : 'GET',	
 				}
 			}
@@ -27,12 +27,10 @@
 	prcsEqmGrid = new tui.Grid({
 		el: document.getElementById('prcsEqmGrid'),
 		data : prcsEqmDataSource,
+		rowHeaders : ["rowNum"],	
 		scrollX: false,
 	    scrollY: true,
-	    columns: [{
-	        header: '공정번호',
-	        name: 'prcsFg'
-	      },
+	    columns: [
 	      {
 		    header: '공정코드',
 		    name: 'prcsCd'
@@ -44,10 +42,6 @@
 	      {
 	        header: '공정설명',
 	        name: 'prcsDesct', 
-	      },
-	      {
-	        header: '장비명',
-	        name: 'eqmNm', 
 	      },
 	    ]
 	  });
@@ -70,7 +64,7 @@
 		
 		
 		
-	})
+	});
 
 
 

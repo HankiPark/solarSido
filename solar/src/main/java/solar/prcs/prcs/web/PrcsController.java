@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
+import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsPrMVO;
 import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.RscConVO;
@@ -79,17 +79,30 @@ public class PrcsController {
 		  return "modal/searchPrcsEqm";
 	  }
 	  
-	 // 설비검색 데이터 호출
-	  @GetMapping("modal/searchPrcsEqm/prcsEqm")
-	  public String getPrcsEqm(PrcsEqmVO vo, Model model) {
-		  
+	  
+	  
+	  // 공정 검색 데이터 호출
+	  @GetMapping("modal/searchPrcsEqm/prcs")
+	  public String getPrcs(PrcsEqmVO vo, Model model) {
+		
 		  Map<String, Object> map = new HashMap();
-		  map.put("contents", prcsservice.selectPrcsEqm(vo));
+		  map.put("contents", prcsservice.selectPrcs(vo));
 		  model.addAttribute("result", true);
 		  model.addAttribute("data", map);
 		  
 		  return "jsonView";
+		  
 	  }
+	  
+	  // 선택한 공정의 가동 순서에대한 가동정보를 리턴
+	  @GetMapping("/prcs/searchPrcsFlow")
+	  public String getPrcsFlow(PrcsFlowVO vo, Model model) {
+		  model.addAttribute("PRCSFLOW", prcsservice.selectPrcsFlow(vo));
+		  return "jsonView";
+		  
+	  }
+	  
+	  
 	  
 	  // 선택한 공정이 몇개의 설비가 존재하는지 prcsCd를 조건으로 검색해서 데이터를 받아 리턴
 	  @GetMapping("/prcs/searchPrcsEqmDetail")
