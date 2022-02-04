@@ -21,7 +21,7 @@
     </div>
     </div>
     <div class="flex row">
-	    <div id="barChartDiv" class="row-1"></div>
+	    &ensp;<div id="barChartDiv" class="row-1"></div>
 	    <div id="pieChartDiv" class="row-1"></div>
     </div>
 </body>
@@ -172,7 +172,7 @@
                   ],
                 };
                 const options = {
-                  chart: { title: '불량량: '+val.category, width: 500, height: 400 },
+                  chart: { title: '불량량: '+val.category, width: 450, height: 400 },
                 };
 
                 const chart = toastui.Chart.pieChart({ el, data, options });
