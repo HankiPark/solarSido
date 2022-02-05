@@ -53,7 +53,8 @@
 	select 
 	    rsc_con_no, 
 	    prdt_lot, 
-	    prcs_cd, 
+	    prcs_cd,
+	    eqm_cd, 
 	    wk_no, 
 	    wk_dt,
 	    low_st,
@@ -64,9 +65,26 @@
 	from rsc_clot r
 	where prdt_lot in (select prdt_lot from prdt_stc where indica_deta_no = #{indicaDetaNo})
 	order by rsc_con_no
-	
-
 </select>
+
+<select id="selectPrcsItemDetail" resultType="solar.prcs.prcs.service.ClotVO">
+	
+	select
+		rsc_con_no,
+		prdt_lot,
+		prcs_cd,
+		wk_no,
+		wk_dt,
+		low_st,
+		(select prcs_ord
+	    from prcs_pr where eqm_cd = (select distinct eqm_cd from prcs where eqm_cd=r.eqm_cd)) AS prcs_ord
+	from rsc_clot
+	where 
+	    		
+	
+</select>
+
+
 
 <select id="selectPrcsItemRSC" resultType="solar.prcs.prcs.service.RscConVO">
 	
@@ -133,6 +151,11 @@
 </select>
 
 
+
+
+
+
+
 <insert id="insertPrcsPrM" parameterType="solar.prcs.prcs.service.PrcsPrMVO" useGeneratedKeys="true">
 	<selectKey keyColumn="wkNo" keyProperty="wkNo" order="BEFORE" resultType="solar.prcs.prcs.service.PrcsPrMVO" >
 		
@@ -183,8 +206,8 @@
 						'W',
 						#{wkNo},
 						sysdate,
-						sysdate,
-						sysdate
+						TO_DATE(#{prcsFrTm},'HH24:MI:SS'),
+						TO_DATE(#{prcsToTm},'HH24:MI:SS')
 				)
 						
 	

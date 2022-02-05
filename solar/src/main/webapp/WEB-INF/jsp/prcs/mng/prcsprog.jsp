@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,14 +17,22 @@
 	<div>
 		<div class="row">
 			<div class="col-5">
-				지시번호 : <input type="text" id="indicaDetaNo"><button type="button" id="searchIndica">🔍</button><br><br>
-				제품코드 : <input type="text" id="prdtCd"><br><br>
-				공정명  : <input type="text" id="prcsNm"><button type="button" id="searchEqm">🔍</button><br><br>
-				라인번호 : <input type="text" id="liNm"><br><br>
+				지시번호 : <input type="text" id="indicaDetaNo">
+				<button type="button" id="searchIndica">🔍</button>
 				<br>
-				작업자 : <input type="text" id="empNm"><button type="button" id="searchEmp">🔍</button> 작업량 : <input type="text" id="wkQty"><br><br> 
-				<input type="text" id="frTm"><button id="btnStart">시작</button>	
-				<input type="text" id="toTm"><button id="btnEnd" disabled="disabled">종료</button><br>
+				<br> 제품코드 : <input type="text" id="prdtCd"><br>
+				<br> 공정명 : <input type="text" id="prcsNm">
+				<button type="button" id="searchEqm">🔍</button>
+				<br>
+				<br> 라인번호 : <input type="text" id="liNm"><br>
+				<br> <br> 작업자 : <input type="text" id="empNm">
+				<button type="button" id="searchEmp">🔍</button>
+				작업량 : <input type="text" id="wkQty"><br>
+				<br> <input type="text" id="frTm">
+				<button id="btnStart">시작</button>
+				<input type="text" id="toTm">
+				<button id="btnEnd" disabled="disabled">종료</button>
+				<br>
 				<button id="btnAddPerf">실적등록</button>
 				<button id="btnTest1">테스트용1</button>
 				<button id="btnTest2">테스트용2</button>
@@ -33,12 +41,12 @@
 					<h1 id="prcsTimer"></h1>
 				</div>
 			</div>
-			
-			
-				
+
+
+
 			<div class="col-6" id="prcsGrid1"></div>
-			
-		</div>	
+
+		</div>
 	</div>
 </body>
 
@@ -92,6 +100,7 @@
 	let pIndicaDt;
 	let pIstQty;
 	let pPrdtCd;
+	let pPrdtNm;
 	let pProdFg;
 	let pPrcsCd;
 	
@@ -192,6 +201,7 @@
 	function innIndica(inddd,
 						prd,
 						prdf,
+						prdNm,
 						indicaDetaNo,
 						indicaNo,
 						indicaDt,
@@ -205,6 +215,7 @@
 		pIstQty = tAmount;
 		pPrdtCd = prd;
 		pProdFg = prdf;
+		pPrdtNm = prdNm;
 		
 		$("#indicaDetaNo").val(inddd);
 		$("#prdtCd").val(prd);
@@ -314,7 +325,7 @@
 	     var milliseconds = parseInt((cTime % 1000) / 100);
 	     var seconds = parseInt((cTime / 1000) % 60);
 	     var minutes = parseInt((cTime / (1000 * 60)) % 60);
-	     var hours = parseInt(((cTime / (1000 * 60 * 60)) % 24)+9);
+	     var hours = parseInt((((cTime / (1000 * 60 * 60)) % 24)+9) % 24);
 	
 	     var hours = (hours < 10) ? "0" + hours : hours;
 	     var minutes = (minutes < 10) ? "0" + minutes : minutes;
@@ -328,8 +339,8 @@
 	     var month = (month < 10) ? "0" + month : month;
 	     var days = (days < 10) ? "0" + days : days;
 	      
-	     return years+"-"+month+"-"+days+" "+hours + ":" + minutes + ":" + seconds;
-	     
+	     //return years+"-"+month+"-"+days+" "+hours + ":" + minutes + ":" + seconds;
+	     return hours + ":" + minutes + ":" + seconds;
 	}
  		
  		
@@ -550,11 +561,94 @@
  			 									console.log("호출실패")
  			 								}
  			 							});	 */
- 			 							
+//-------------------------------------------------------------------------------------------------------------------------------
+												var prcsSeq = prcsFlow.PRCSFLOW[0].prcsOrd;
 
- 			 						
+												$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
+												url:'${pageContext.request.contextPath}/prcs/prcsItem',
+												data : {
+													'indicaDetaNo':pIndicaDetaNo,
+												},
+												dataType: 'JSON',
+												async: false,
+												contentType: 'application/json',
+												success : function(result){
+													console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
+													console.log(result.data.contents);
+													items = result.data.contents;
+													console.log(items.length);
+													
+													if(prcsSeq==1){																// 첫번째 장비인경우 조건
+														if(unit1Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
+														console.log(items[unit1Count].prdtLot);
+														console.log(unit1Count);
+															if(items[unit1Count].lowSt === 'W'){									// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건
+																$.ajax({															// 현재가리키고있는 아이템의 상태를 'C' 완료로 update ajax
+																	url:"${pageContext.request.contextPath}/prcs/updateRscClot",
+																	data : {
+																		'prdtLot':items[unit1Count].prdtLot	
+																	},
+																	dataType: 'JSON',
+																	async: false,
+																	contentType: 'application/json',
+																	success : function(result){
+																		console.log(items[unit1Count].prdtLot+" 랏 장비 상태 업데이트 성공")
+																		
+																		$.ajax({													// 현재가리키고있는 아이템을 다음공정 'w' 대기상태로 insert ajsx
+												 								url:"${pageContext.request.contextPath}/prcs/insertRscClot",
+												 								data : {
+												 									'prdtLot':items[unit1Count].prdtLot,	
+												 									'prcsCd': prcsEqmList.PRCS[0].prcsCd,		//공정코드  << 장비목록 0번
+												 									'eqmCd': prcsFlow.PRCSFLOW[0].eqmCd,		//설비코드 << 장비목록 0번
+												 									'wkNo': prcsPrM.wkNo,						//작업번호 << 리턴받은 기본값
+												 									'prcsFrTm': eqmSTime,						//공정시작시간 << 계산된 시간 일단 임시로 쓰기
+												 									'prcsToTm': eqmETime 						//공정종료시간 << 계산된 시간 일단 임시로 쓰기
+												 								},
+												 								dataType: 'JSON',
+												 								async: false,
+												 								contentType: 'application/json',
+												 								success : function(result){
+												 									console.log("첫번째 공정완료");
+												 									unit1Count++;
+												 									console.log("카운트가 다음 장비를 가리킵니다")
+												 								},
+												 								error : function(result){
+												 									console.log("등록실패")
+												 								}
+												 							}); 													// 현재가리키고있는 아이템을 다음공정 'w' 대기상태로 insert ajax				
+																	},
+																	error : function(result){
+																		console.log("호출실패")
+																	}
+																});													// 현재가리키고있는 아이템의 상태를 'C' 완료로 업데이트 ajax
+																
+															}														// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건 				
+														} else{
+															
+															console.log("지시량만큼 돌았습니다 타이머 유닛1을 종료합니다");
+															clearTimeout(unit1);
+														}														// 유닛 카운트가 생산목표보다 작을때까지 조건
+														console.log("성공성공");
+													}															// 첫번째 장비인 경우 조건 끝
+													else {														// 첫번째 장비가 아닌경우 조건
+														
+														
+														
+													}															// 첫번째 장비가 아닌경우 조건 끝	
+													
+													
+												},
+												error : function(result){
+													console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 실패")
+												}
+												
+											
+											});																	// RscClot table을 조회해 작동가능한 아이템을 읽어온다  
+	
+//------------------------------------------------------------------------------------------------------------------------------- 			 						
  			 							unit1 = setTimeout(tick, u1); // (*)
  			 							}, u1);
+ 			 							
  			 						}
  			 					
  			 					// 유닛2 공정진행 함수 타이머
@@ -767,7 +861,7 @@
 
 		
 	
-		$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
+ 		$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 			url:'${pageContext.request.contextPath}/prcs/prcsItem',
 			data : {
 				'indicaDetaNo':pIndicaDetaNo,
@@ -840,7 +934,7 @@
 			}
 			
 		
-		});																	// RscClot table을 조회해 작동가능한 아이템을 읽어온다  
+		});																	// RscClot table을 조회해 작동가능한 아이템을 읽어온다   
 		
 		
 		
