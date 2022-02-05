@@ -160,22 +160,6 @@ public class IndicaController {
 		return "jsonView";
 	}
 	
-	@PostMapping("/grid/rscConModify.do")
-	public String modifyRscCon(Model model, IndRscVO irVo, 
-							@RequestBody ModifyVO<IndRscVO> mvo) throws Exception {
-		idcService.modifyRscCon(mvo);
-		model.addAttribute("mode", "upd");
-		return "jsonView";
-	}
-	
-	@PostMapping("/grid/prdtRscModify.do")
-	public String modifyPrdtRsc(Model model, IndRscVO irVo, 
-							@RequestBody ModifyVO<IndRscVO> mvo) throws Exception {
-		idcService.modifyPrdtRsc(mvo);
-		model.addAttribute("mode", "upd");
-		return "jsonView";
-	}
-	
 	//공통-제품코드 목록 요청
 	@GetMapping("/ajax/cmmn/code")
 	public String cmmnCodes(Model model) {
@@ -183,10 +167,10 @@ public class IndicaController {
 		return "jsonView";
 	}
 	
-	//히든그리드 가져오기
-	@PostMapping("/hiddenData")
+	//히든그리드 데이터 가져오기
+	@PostMapping("/ajax/modified.do")
 	public String hiddenData(@RequestBody Map<String, List<IndicaVO>> map) {
-		System.out.println("히든그리드데이터");
+		System.out.println("히든그리드데이터" + map);
 		idcService.hiddenData(map);
 		return "jsonView";
 	}

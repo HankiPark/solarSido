@@ -6,12 +6,16 @@
 	SELECT 
 		B.indica_deta_no,
 		B.indica_no,
-		(SELECT co_cd FROM order_tb WHERE order_no = p.order_no) co_cd,
+		B.indica_dt,
+		(SELECT co_cd FROM order_tb WHERE order_no = P.order_no) co_cd,
 		B.prdt_cd,
+		TO_CHAR((SELECT recv_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY/MM/DD') recv_dt,
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		P.order_no,
 		TO_CHAR((SELECT paprd_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY/MM/DD') paprd_dt,
 		O.order_qty,
+		P.plan_deta_no,
+		P.plan_dt,
 		P.plan_qty,
 		B.indica_qty,
 		B.prod_fg,
@@ -120,6 +124,7 @@
 	WHERE cmmn_cd_id = 'rsc'
 </select>
 
+<!-- **************************** 지시등록 ********************************** -->
 <insert id="insertIndica">
 	INSERT INTO indica (indica_no,
 					  	indica_dt,
@@ -133,54 +138,27 @@
 	<selectKey keyProperty="indicaDetaNo" resultType="int" order="BEFORE"> 
 		SELECT nvl(max(indica_deta_no), 0)+1 FROM indica_d
 	</selectKey>
-	INSERT INTO plan_d (indica_deta_no,
+	INSERT INTO indica_d (indica_deta_no,
 						indica_no,
 						indica_dt,
-						order_no,
-						recv_dt,
+						plan_deta_no,
 						prdt_cd,
+						prod_fg,
 						indica_qty,
 						wk_ord,
-						wk_dt)
+						wk_dt,
+						plan_dt)
 	VALUES( #{indicaDetaNo}, 
 			(SELECT nvl(max(indica_no),0) FROM indica), 
-			TO_DATE(#{planDt}, 'YYYY/MM/DD'),
-			#{orderNo}, 
-			TO_DATE(#{recvDt}, 'YYYY/MM/DD'),
+			TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+			#{planDetaNo},
 			#{prdtCd}, 
+			#{prodFg},
 			#{indicaQty}, 
 			#{wkOrd}, 
-			TO_DATE(#{wkDt}, 'YYYY/MM/DD') )
+			TO_DATE(#{wkDt}, 'YYYY/MM/DD'),
+			TO_DATE(#{planDt}, 'YYYY/MM/DD')  )
 </insert>
-
-<update id="updateIndica">
-	UPDATE indica
-	SET indica_dt = TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
-		indica_nm = #{indicaNm}
-	WHERE indica_no = #{indicaNo}
-</update>
-
-<update id="updateIndicaD">
-	UPDATE indica_d
-	SET	indica_dt = #{indicaDt},
-		prod_fg = #{prodFg}
-		indica_qty = #{indicaQty},
-		wk_ord = #{wkOrd},
-		wk_dt = #{wkDt}
-	WHERE indica_deta_no = #{indicaDetaNo}
-	AND indica_no = #{indicaNo}
-</update>
-
-<delete id="deleteIndica">
-	DELETE FROM indica
-	WHERE indica_nm = #{indicaNm}
-</delete>
-
-<delete id="deleteIndicaD">
-	DELETE FROM indica_d
-	WHERE indica_deta_no = #{indicaDetaNo}
-	AND indica_no = #{indicaNo}
-</delete>	
 
 <!-- indicaDgrid -> 주문상세T 지시량 변경 -->
 <update id="updateOdIdQty">
@@ -253,4 +231,33 @@
 				#{indicaDetaNo}		)
 </insert>
 
+<!-- **************************** 지시수정 ********************************** -->
+<update id="updateIndica">
+	UPDATE indica
+	SET indica_dt = TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+		indica_nm = #{indicaNm}
+	WHERE indica_no = #{indicaNo}
+</update>
+
+<update id="updateIndicaD">
+	UPDATE indica_d
+	SET	indica_dt = TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+		prod_fg = #{prodFg}
+		indica_qty = #{indicaQty},
+		wk_ord = #{wkOrd},
+		wk_dt = #{wkDt}
+	WHERE indica_deta_no = #{indicaDetaNo}
+	AND indica_no = #{indicaNo}
+</update>
+
+<delete id="deleteIndica">
+	DELETE FROM indica
+	WHERE indica_nm = #{indicaNm}
+</delete>
+
+<delete id="deleteIndicaD">
+	DELETE FROM indica_d
+	WHERE indica_deta_no = #{indicaDetaNo}
+	AND indica_no = #{indicaNo}
+</delete>	
 </mapper>
