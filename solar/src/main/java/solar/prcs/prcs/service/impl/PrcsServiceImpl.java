@@ -74,6 +74,18 @@ public class PrcsServiceImpl implements PrcsService {
 	public List<PrcsFlowVO> selectPrcsFlow(PrcsFlowVO vo) {
 		return prcsmapper.selectPrcsFlow(vo);
 	}
+
+
+	@Override
+	public int updateRscClot(ClotVO vo) {
+		return prcsmapper.updateRscClot(vo);
+	}
+
+
+	@Override
+	public int insertRscClot(ClotVO vo) {
+		return prcsmapper.insertRscClot(vo);
+	}
 	 
 	 
 	

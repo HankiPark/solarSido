@@ -57,11 +57,14 @@
 	    wk_no, 
 	    wk_dt,
 	    low_st,
+	    (select prcs_ord
+	    from prcs_pr where eqm_cd = (select distinct eqm_cd from prcs where eqm_cd=r.eqm_cd)) AS prcs_ord,
 	    (select cmmn_cd_nm
 	    from cmmn_data_d where cmmn_cd_deta_id=(select distinct prdt_cd from prdt_stc where prdt_lot=r.prdt_lot)) AS prdt_nm
 	from rsc_clot r
 	where prdt_lot in (select prdt_lot from prdt_stc where indica_deta_no = #{indicaDetaNo})
-	order by prdt_lot
+	order by rsc_con_no
+	
 
 </select>
 
@@ -133,7 +136,7 @@
 <insert id="insertPrcsPrM" parameterType="solar.prcs.prcs.service.PrcsPrMVO" useGeneratedKeys="true">
 	<selectKey keyColumn="wkNo" keyProperty="wkNo" order="BEFORE" resultType="solar.prcs.prcs.service.PrcsPrMVO" >
 		
-		(select nvl(max(wk_no),0)+1 as wkNo from prcs_pr_m)
+		(select nvl(max(to_number(wk_no)),0)+1 as wkNo from prcs_pr_m)
 	
 	</selectKey>
 	
@@ -157,5 +160,44 @@
 							)
 
 </insert>
+
+<update id="updateRscClot" parameterType="solar.prcs.prcs.service.ClotVO">
+	update rsc_clot set low_st = 'C'
+            where prdt_lot=#{prdtLot}
+</update>
+
+<insert id="insertRscClot" parameterType="solar.prcs.prcs.service.ClotVO">
+	insert into rsc_clot(rsc_con_no,
+						prdt_lot,
+						prcs_cd,
+						eqm_cd,
+						low_st,
+						wk_no,
+						wk_dt,
+						prcs_fr_tm,
+						prcs_to_tm)
+				values( (select nvl(max(rsc_con_no),0)+1 as rscConNo from rsc_clot),
+						#{prdtLot},
+						#{prcsCd},
+						#{eqmCd},
+						'W',
+						#{wkNo},
+						sysdate,
+						sysdate,
+						sysdate
+				)
+						
+	
+</insert>
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

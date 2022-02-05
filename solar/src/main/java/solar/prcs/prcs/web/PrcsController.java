@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
@@ -103,7 +104,6 @@ public class PrcsController {
 	  }
 	  
 	  
-	  
 	  // 선택한 공정이 몇개의 설비가 존재하는지 prcsCd를 조건으로 검색해서 데이터를 받아 리턴
 	  @GetMapping("/prcs/searchPrcsEqmDetail")
 	  public String getPrcsEqmDetail(PrcsEqmVO vo, Model model) {
@@ -126,5 +126,28 @@ public class PrcsController {
 		  return "jsonView";
 		  
 	  }
+	  
+	  @RequestMapping("prcs/updateRscClot")
+	  @ResponseBody
+	  public int updateRscClot(ClotVO vo) {
+		  return prcsservice.updateRscClot(vo);
+	  }
+	  
+	  @RequestMapping("prcs/insertRscClot")
+	  public String insertRscClot(ClotVO vo, Model model) {
+		  
+		  Map<String, Object> map = new HashMap();
+		  
+		  map.put("contents", prcsservice.insertRscClot(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
+		  return "jsonView";
+		  
+		  
+	  }
+	  
+	  
+	  
 	  
 }
