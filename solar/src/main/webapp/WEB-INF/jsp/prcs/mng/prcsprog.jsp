@@ -80,6 +80,11 @@
 	let timerFlag = true;
 	let unitPTime = [];
 	
+	let unit1Count=0;
+	let unit2Count=0;
+	let unit3Count=0;
+	let unit4Count=0;
+	
 	
 	// 공정진행 관리 insert에서 사용될 변수
 	let pIndicaDetaNo;
@@ -354,7 +359,7 @@
  						let empNm = $('#empNm').val();
  						if(!(empNm=="")){
  							
- 							var Yn = [];
+ 							let Yn = [];
  			 				for(var i = 0 ; i<prcsEqmList.PRCS.length ; i++){
  			 					Yn.push(prcsEqmList.PRCS[0].eqmYn);
  			 				} 		
@@ -410,6 +415,9 @@
  			 	 					async: false,
  			 	 					contentType: 'application/json',
  			 	 					success : function(result){
+ 			 	 						prcsPrM = result.prcsPrMVO;
+ 			 	 						console.log(prcsPrM);
+ 			 	 						console.log(prcsPrM.wkNo);
  			 	 						console.log('공정진행관리 초기 데이터 입력완료');	
  			 	 					},
  			 	 					error : function(result){
@@ -740,30 +748,102 @@
 	}	// 공정타이머 함수 끝	
 	
 	$("#btnTest1").on("click", function(ev){
-		console.log(prcsEqmList.PRCS[0].eqmYn);
-		console.log(prcsEqmList.PRCS.length);
-		var Yn = [];
-		for(var i = 0 ; i<prcsEqmList.PRCS.length ; i++){
-			Yn.push(prcsEqmList.PRCS[0].eqmYn);
-		}
 		
-		console.log(Yn);
-		console.log(Yn.includes('Y'));
+		console.log(unit1Count);
 		
-		if(!(Yn.includes('N'))){
-			alert("정상가동중!");
-		} else {
-			alert("선택안되었거나 비가동중");
-		}
-			
 	});
 	
 	$("#btnTest2").on("click", function(ev){
-		console.log(!!pIndicaDetaNo);
-		console.log(!!pPrcsCd);
-		console.log($('#empNm').val())
-		let empNm = $('#empNm').val();
-		console.log(!(empNm===""));
+		let prcsSeq = prcsFlow.PRCSFLOW[0].prcsOrd;
+		let thisUnitCd = prcsFlow.PRCSFLOW[0].eqmCd;
+		let itemSt = prcsFlow.PRCSFLOW[0].lowSt;
+		let items = [];
+		
+		console.log(unit1Count);
+		console.log(tAmount);
+		console.log(pIndicaDetaNo);
+		console.log(prcsSeq);
+		console.log(thisUnitCd);
+
+		
+	
+		$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
+			url:'${pageContext.request.contextPath}/prcs/prcsItem',
+			data : {
+				'indicaDetaNo':pIndicaDetaNo,
+			},
+			dataType: 'JSON',
+			async: false,
+			contentType: 'application/json',
+			success : function(result){
+				console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
+				console.log(result.data.contents);
+				items = result.data.contents;
+				console.log(items.length);
+				
+				if(prcsSeq==1){																// 첫번째 장비인경우 조건
+					if(unit1Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
+					console.log(items[unit1Count].prdtLot);
+					console.log(unit1Count);
+					if(items[unit1Count].lowSt === 'W'){									// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건
+						$.ajax({															// 현재가리키고있는 아이템의 상태를 'C' 완료로 update ajax
+							url:"${pageContext.request.contextPath}/prcs/updateRscClot",
+							data : {
+								'prdtLot':items[unit1Count].prdtLot	
+							},
+							dataType: 'JSON',
+							async: false,
+							contentType: 'application/json',
+							success : function(result){
+								console.log(items[unit1Count].prdtLot+" 랏 장비 상태 업데이트 성공")
+								
+								$.ajax({													// 현재가리키고있는 아이템을 다음공정 'w' 대기상태로 insert ajsx
+		 								url:"${pageContext.request.contextPath}/prcs/insertRscClot",
+		 								data : {
+		 									'prdtLot':items[unit1Count].prdtLot,	
+		 									'prcsCd': prcsEqmList.PRCS[0].prcsCd,		//공정코드  << 장비목록 0번
+		 									'eqmCd': prcsFlow.PRCSFLOW[0].eqmCd,		//설비코드 << 장비목록 0번
+		 									'wkNo': prcsPrM.wkNo,						//작업번호 << 리턴받은 기본값
+		 									/* 'prcsFrTm': '00/11/22',						//공정시작시간 << 계산된 시간 일단 임시로 쓰기
+		 									'prcsToTm': '00/11/22' */						//공정종료시간 << 계산된 시간 일단 임시로 쓰기
+		 								},
+		 								dataType: 'JSON',
+		 								async: false,
+		 								contentType: 'application/json',
+		 								success : function(result){
+		 									console.log("첫번째 공정완료");
+		 									unit1Count++;
+		 									console.log("카운트가 다음 장비를 가리킵니다")
+		 								},
+		 								error : function(result){
+		 									console.log("등록실패")
+		 								}
+		 							}); 													// 현재가리키고있는 아이템을 다음공정 'w' 대기상태로 insert ajax				
+							},
+							error : function(result){
+								console.log("호출실패")
+							}
+						});													// 현재가리키고있는 아이템의 상태를 'C' 완료로 업데이트 ajax
+						
+					}														// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건 				
+					}														// 유닛 카운트가 생산목표보다 작을때까지 조건
+					console.log("성공성공");
+				}															// 첫번째 장비인 경우 조건 끝
+				else {
+					
+				}
+				
+				
+			},
+			error : function(result){
+				console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 실패")
+			}
+			
+		
+		});																	// RscClot table을 조회해 작동가능한 아이템을 읽어온다  
+		
+		
+		
 		
 	});
 	
