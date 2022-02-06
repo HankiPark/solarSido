@@ -98,7 +98,14 @@
 </select>
 
 <select id="selectPrcs" resultType="solar.prcs.prcs.service.PrcsEqmVO">
-	select * from prcs
+	select distinct pc.*
+	from prcs pc
+	join prcs_pr pp
+		on pc.prcs_cd = pp.prcs_cd
+	join prdt pd
+		on pd.prdt_cd = pp.prdt_cd
+	where pd.prdt_cd = #{prdtCd}
+	order by 1
 </select>
 
 <select id="selectPrcsFlow" resultType="solar.prcs.prcs.service.PrcsFlowVO">
