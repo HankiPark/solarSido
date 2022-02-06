@@ -46,6 +46,21 @@
 	
 </select>
 
+<select id="selectBasicItem" resultType="solar.prcs.prcs.service.ClotVO">
+	select
+		rsc_con_no,
+		prdt_lot,
+		prcs_cd,
+		low_st,
+		(select cmmn_cd_nm
+	    from cmmn_data_d where cmmn_cd_deta_id=(select distinct prdt_cd from prdt_stc where prdt_lot=r.prdt_lot)) AS prdt_nm
+	from rsc_clot r
+	where prdt_lot in (select prdt_lot from prdt_stc where indica_deta_no = #{indicaDetaNo})
+	and prcs_cd = '0'
+	order by rsc_con_no
+
+</select>
+
 <select id="selectPrcsItem" resultType="solar.prcs.prcs.service.ClotVO">
 	
 	select 
@@ -188,6 +203,39 @@
 							)
 
 </insert>
+
+<insert id="insertRslt" parameterType="solar.prcs.rslt.service.RsltVO">
+	insert into rslt (
+					rslt_no,
+					prdt_cd,
+					emp_id,
+					prcs_cd,
+					ist_qty,
+					rslt_qty,
+					infer_qty
+					fr_tm,
+					to_tm,
+					wk_no,
+					wk_dt
+				)
+				values (
+					(select nvl(max(rsc_con_no),0)+1 as rscConNo from rsc_clot),
+					#{prdtCd},
+					#{empId},
+					#{prcsCd},
+					#{istQty},
+					#{rsltQty},
+					#{inferQty},
+					TO_DATE(#{frTm},'HH24:MI:SS'),
+					TO_DATE(#{toTm},'HH24:MI:SS'),
+					#{wkNo},
+					#{wkDt}
+				)
+				
+				
+	
+</insert>
+
 
 <update id="updateRscClot" parameterType="solar.prcs.prcs.service.ClotVO">
 	update rsc_clot set low_st = 'C'
