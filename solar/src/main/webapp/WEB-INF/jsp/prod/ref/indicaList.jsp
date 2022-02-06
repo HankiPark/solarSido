@@ -5,6 +5,58 @@
 <head>
 <meta charset="UTF-8">
 <title>생산지시조회</title>
+<style>
+input#noing {
+display : none;
+}
+
+input#inding {
+display : none;
+}
+
+input#noing+label{
+display: inline-block;
+        width: 15px;
+        height: 15px;
+        border:3px solid #e37c6b;
+        margin-bottom:0px;
+               position: relative;
+      
+}
+input#noing:checked + label::after{
+        content:'✔';
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+position: absolute;
+		top:-3.5px;
+		left:0;
+        background-color: #e37c6b;
+        color:#fff;
+         margin-bottom:0px;
+      }
+input#inding+label{
+display: inline-block;
+        width: 15px;
+        height: 15px;
+        border:3px solid #e37c6b;
+        margin-bottom:0px;
+               position: relative;
+      
+}
+input#inding:checked + label::after{
+        content:'✔';
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+position: absolute;
+		top:-3px;
+		left:0px;
+        background-color: #e37c6b;
+        color:#fff;
+         margin-bottom:0px;
+      }
+</style>
 </head>
 
 <body>
@@ -16,40 +68,48 @@
 <div id="prdtCdModal" title="제품 목록"></div>
 
 <!-- 검색테이블 -->
-<div>
-	<form action="searchFrm" name="searchFrm">
-		<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
-		<table>
-			<tr>
-				<th>지시일자</th>
-				<td colspan="3">
-					<input type="text" id="startT" name="startT">
-				</td>
-			</tr>
-			<tr>
-				<th>업체코드</th>
-				<td>
-					<input type="text" id="coCd" name="coCd" readonly>
-					<button type="button" id="btnCoCdFind">🔍</button>
-				</td>
-				<th>제품코드</th>
-				<td>
-					<input type="text" id="prdtCd" name="prdtCd" readonly>
-					<button type="button" id="btnPrdtCdFind">🔍</button>
-				</td>
-			</tr>
-		</table>
-		<div align="center">
-			<button type="button" id="btnSearch">조회</button>
-			<button type="button" id="btnReset">초기화</button>
-			<button type="button" id="btnExcel">Excel</button>
+<div class="row" id="senseIn">
+	<div id="senseInBody" class="card card-pricing card-primary card-white card-outline col-3"
+			style="margin-left: 50px; margin-right: 30px; margin-top: 150px; padding-left: 40px; margin-bottom: 300px; height: 400px">
+			<div class="card-body">
+				<form action="searchFrm" name="searchFrm">
+					<input type="hidden" id="indicaNo" name="indicaNo" value="indicaNo">
+					<div style="margin-bottom: 20px; margin-top: 50px;">
+						<label>지시일&nbsp;&nbsp;&nbsp;&nbsp;</label> 
+						<input type="text" id="startT" name="startT" class="dtp">
+					</div>
+					<div style="margin-bottom: 20px;">
+						<label>업체코드</label> 
+						<input type="text" id="coCd" name="coCd" readonly>
+						<button type="button" id="btnCoCdFind">🔍</button>
+					</div>
+					<div style="margin-bottom: 20px;">
+						<label>제품코드</label> 
+						<input type="text" id="prdtCd" name="prdtCd" readonly>
+						<button type="button" id="btnPrdtCdFind">🔍</button>
+					</div>
+					<div data-role="fieldcontain" style="margin-bottom: 20px;">
+						<label>진행상태&nbsp;&nbsp;&nbsp;</label> 
+						<label><input type="checkbox" name="nowSt" id="noing" value="미진행">
+								<label for="noing"></label>미지시</label> 
+						<label><input type="checkbox" id="inding" name="nowSt" value="진행">
+								<label for="inding"></label>지시완료</label>
+					</div>
+				</form>
+			</div>
+
+			<div class="card-footer" style="margin-bottom: 30px;">
+					<button type="button" id="btnSearch">조회</button>
+					<button type="button" id="btnReset">초기화</button>
+			</div>
 		</div>
-	</form>
-</div>
-<hr/>
 
 <!-- 생산지시 상세 그리드-->
-<div id="indicaDgrid"></div>
+	<div class="col-8" style="margin-top: 50px;">
+		<button style="width: 100px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
+		<div id="indicaDgrid"></div>
+	</div>
+</div>
 </body>
 
 <!-- 스크립트 -->
@@ -235,12 +295,17 @@
 		var endT = $("#startT").val().substring(13,23);
 		var coCd = document.getElementById('coCd').value
 		var prdtCd = document.getElementById('prdtCd').value
-		console.log(startT + "~" + endT + "& coCd:" + coCd + "& prdtCd:" + prdtCd);
+		if($("input:checkbox[name=nowSt]:checked").length==2){
+			var nowSt = null;
+		}else{
+			var nowSt = $('input:checkbox[name=nowSt]:checked').val();
+		}
 		var params = {
 				'startT': startT,
 				'endT': endT,
 				'coCd': coCd,
-				'prdtCd': prdtCd
+				'prdtCd': prdtCd,
+				'nowSt' : nowSt
 		}
 		$.ajax({
 			url : '${pageContext.request.contextPath}/grid/indicaGrid.do',
@@ -262,6 +327,13 @@
 		indicaDgrid.refreshLayout();
 	});
 	
+	$('#senseIn').resize(function(){
+		if($('#senseIn').width()<1780){
+			$('#senseInBody').css('paddingLeft','15px');
+		}else{
+			$('#senseInBody').css('paddingLeft','40px');
+		}
+	})
 	//Excel 버튼
 	
 </script>

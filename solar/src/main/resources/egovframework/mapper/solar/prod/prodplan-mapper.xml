@@ -20,8 +20,8 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		(SELECT min(uph) FROM EQM) as day_output,
-		(B.plan_qty/(SELECT min(uph) FROM EQM)) as prod_day
+		(SELECT min(uph)*24 FROM EQM) as day_output,
+		ROUND((B.plan_qty/(SELECT min(uph)*24 FROM EQM)), 2) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -40,6 +40,18 @@
 		<if test="planNo != null and planNo != ''">
 		AND B.plan_no = #{planNo}
 		</if>
+		<choose>
+		<when test="nowSt !=null and nowSt != ''">
+			<choose>
+				<when test='nowSt == "미진행"'>
+					 AND (select indica_qty from order_d where order_no = o.order_no and prdt_cd = b.prdt_cd) = 0
+				</when>
+				<when test='nowSt == "진행"'>
+					AND (select indica_qty from order_d where order_no = o.order_no and prdt_cd = b.prdt_cd) > 0
+				</when>
+			</choose>
+		</when>
+		</choose>
 	ORDER BY paprd_dt, order_qty desc
 </select>
 
@@ -48,8 +60,7 @@
 		a.prdt_cd,
 		a.rsc_cd,
 		a.rsc_use_qty,
-		(SELECT rsc_stc FROM rsc_stc WHERE rsc_cd = b.rsc_cd) rsc_stc,
-		b.saf_stc
+		(SELECT rsc_stc FROM rsc_stc WHERE rsc_cd = b.rsc_cd) rsc_stc
 	FROM prdt_bom a, rsc b, order_d o
 	WHERE a.rsc_cd = b.rsc_cd
     AND   a.prdt_cd = o.prdt_cd
@@ -66,7 +77,23 @@
 	FROM plan a
     LEFT JOIN plan_d b ON b.plan_no = a.plan_no
     JOIN order_d o ON o.order_no = b.order_no
-    AND order_qty > indica_qty
+    WHERE 1=1
+    <choose>
+		<when test="nowSt !=null and nowSt != ''">
+			<choose>
+				<when test='nowSt == "미진행"'>
+					 AND o.indica_qty = 0
+				</when>
+				<when test='nowSt == "진행"'>
+					AND o.indica_qty > 0
+				</when>
+			</choose>
+		</when>
+		<otherwise>
+			AND o.indica_qty = 0
+		</otherwise>
+	</choose>
+	ORDER BY plan_no
 </select>
 
 <select id="findOrder" resultType="ProdPlanVO">
@@ -94,7 +121,7 @@
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_qty,
         B.prdt_stc,
-        (select min(uph) from eqm) as day_output
+        (select min(uph)*24 from eqm) as day_output
 	FROM order_tb A, order_d B
 	WHERE A.order_no = B.order_no
 	<if test="orderNo != null and orderNo != ''">
