@@ -7,20 +7,22 @@ public class IndRscVO {
 	//자재사용현황
 	String prdtLot;
 	String rscLot;
-	String rscConQty;
-	String rscUseQty;
+	int rscConQty;
+	int rscUseQty;
 	
 	//생산소요자재
-	String indicaDetaNo;
+	int indicaDetaNo;
 	
 	//제품재고관리
+	int prdtInx;
+	String prdtFg;
 	String prdtCd;
 	
 	//자재입고출고
-	String rscQty;
+	int rscQty;
 	String rscCd;
 	
 	//주문상세
-	String indicaQty;
+	int indicaQty;
 	String orderNo;
 }
