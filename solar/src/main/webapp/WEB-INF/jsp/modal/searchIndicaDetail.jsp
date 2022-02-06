@@ -103,7 +103,7 @@
 		
 		var prdNm = indicaGrid.getValue(rk,"prdtNm");
 		var inddd = indicaNo + "-" + indicaDetaNo;
-
+		selectedPrdtCd = indicaGrid.getValue(ev.rowKey,'prdtCd');
 		
 		// 더블클릭하여 선택된 row의 지시번호가 null이 아닐때 공정페이지에 정보넘어가면서 이벤트발생
 		if(inddd!=="null-null"){
