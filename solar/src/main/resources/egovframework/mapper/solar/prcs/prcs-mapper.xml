@@ -12,8 +12,6 @@
 				wk_qty,
 				infer_qty,
 				prdt_lot,
-				expc_tm,
-				real_tm,
 				prcs_cd,
 				indica_deta_no,
 				indica_no,
@@ -219,15 +217,6 @@
 						
 	
 </insert>
-
-
-
-
-
-
-
-
-
 
 
 </mapper>
