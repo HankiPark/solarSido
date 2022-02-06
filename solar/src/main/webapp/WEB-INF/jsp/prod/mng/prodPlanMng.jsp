@@ -11,14 +11,11 @@
 <body>
 	<h2>생산계획 관리</h2>
 
-
 	<!-- 모달 -->
-	<div id="prodPlanModal" title="미지시 계획 목록"></div>
+	<div id="prodPlanModal" title="생산계획서 목록"></div>
 	<div id="orderModal" title="미계획 주문서 목록"></div>
-	<div id="planDetailModal" title="생산계획서 조회"></div>
 
 	<!-- 생산계획 테이블 -->
-
 	<div class="card card-pricing card-primary card-white card-outline"
 		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
 		<div class="card-body">
@@ -57,16 +54,7 @@
 							readonly>
 					</div>
 					<div id="btnMng" class="col-5" style="margin-top: -10px">
-						<button type="button" id="rowAdd"
-							style="width: 200px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
-							<i class="far fa-file"></i> &nbsp;미계획주문서
-						</button>
-						<!-- 계획등록시 주문서 불러오기 -->
-						<button type="button" id="planSearch"
-							style="width: 200px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
-							<i class="far fa-file"></i> &nbsp;미지시계획서
-						</button>
-						<!-- 계획수정, 삭제시 -->
+						<button type="button" id="rowAdd">추가</button>
 						<button type="button" id="rowDel">삭제</button>
 					</div>
 				</div>
@@ -83,7 +71,7 @@
 					<label>필요자재 재고 체크</label>
 				</div>
 				<div class="col-3" style="margin-top: -10px">
-					<button type="button" id="rscDmnd"
+					<button type="button" id="rscOrder"
 						style="width: 150px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
 						<i class="far fa-folder-open"></i> &nbsp; 발주요청
 					</button>
@@ -91,8 +79,7 @@
 			</div>
 		</div>
 	</div>
-
-
+	
 </body>
 
 <!-- 스크립트 -->
@@ -100,6 +87,7 @@
 	let pDt = new Date();
 	document.getElementById('planDt').value = pDt.toISOString().substring(0, 10);
 
+	//------------------------------그리드생성------------------------------------------------
 	//생산계획 상세 그리드
 	let planDgrid = new tui.Grid({
 		el: document.getElementById('planDgrid'),
@@ -142,9 +130,8 @@
 			  {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
-			    hidden: true
+			    //hidden: true
 			  },
-			 
 			  { //주문없는 계획 불가
 			    header: '주문번호',
 			    name: 'orderNo',
@@ -154,7 +141,7 @@
 			  },
 			  { header: '접수일자',
 			    name: 'recvDt',
-			   	//hidden: true
+			   	hidden: true
 			  },
 			  {
 			    header: '제품코드',
@@ -181,7 +168,7 @@
 			    align: 'center',
 			  },
 			 {
-			    header: '작업량',
+			    header: '계획량',
 			    name: 'planQty',
 			    align: 'center',
 			    editor : 'text',
@@ -192,10 +179,9 @@
 	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
 	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
 	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
-	    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
-	    	    		console.log(e.value)
-	    	    		rscGrid.setValue(i, 'ndStc',
-	    	    				e.value * rscGrid.getValue(i, 'rscUseQty'));
+	    	    	for ( i=0; i< rStcGrid.getRowCount(); i++){
+	    	    		rStcGrid.setValue(i, 'ndStc',
+	    	    				e.value * rStcGrid.getValue(i, 'rscUseQty'));
 	    	    	}
 	    	    }    	
 			  },
@@ -229,24 +215,6 @@
 	 		 ]
 	});	
 	
-	//계획상세 그리드 내부 클릭 이벤트
-	planDgrid.on('dblclick', function(ev){
-		let prdtCd = planDgrid.getValue(ev["rowKey"], "prdtCd")
-		let prdtNm = planDgrid.getValue(ev["rowKey"], "prdtNm")
-		let orderNo = planDgrid.getValue(ev["rowKey"], "orderNo")
-		
-		console.log(orderNo);
-		$('#prdtCd').val(prdtCd);
-		$('#prdtNm').val(prdtNm);
-		$('#orderNo').val(orderNo);
-		
-		var stcGridParams = {
-				'prdtCd' : prdtCd,
-				'orderNo' : orderNo
-		};
-		rStcGrid.readData(1, stcGridParams, true);
-	});
- 	
 	//자재재고 체크 그리드
 	let rStcGrid = new tui.Grid({
 		el: document.getElementById('rStcGrid'),
@@ -286,10 +254,6 @@
 					    name: 'rscStc'
 					  },
 					  {
-					    header: '안전재고',
-					    name: 'safStc'
-					  },
-					  {
 					    header: '필요량',
 					    name: 'ndStc'
 					  },
@@ -299,51 +263,78 @@
 					  }
 				]
 	});
- 	
-	rStcGrid.on('response',function(ev){
-     	rStcGrid.refreshLayout(); 
-   	});
-	 
-	rStcGrid.on('onGridUpdated', function(ev) {
-		let rowCnt = rStcGrid.getRowCount();
-		for(let i = 0; i<rowCnt; i++){
-			  let rscStc = rStcGrid.getValue(i, 'rscStc');
-			  let ndStc = rStcGrid.getValue(i, 'ndStc');
-			  if(parseInt(rscStc) < parseInt(ndStc)){
-				  rStcGrid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
-			  }
-		 }
+	//------------------------------모달------------------------------------------------------
+	//생산계획서 모달
+	let prodPlanDialog = $("#prodPlanModal").dialog({
+		autoOpen : false,
+		modal : true,
+		width : 900,
+		height : 600,
+		buttons : {
+			'확인': function(){
+				prodPlanDialog.dialog("close");
+			}
+		}
 	});
 	
-	//주문서 조회 모달
+	//미계획 주문서 모달
 	let orderDialog = $("#orderModal").dialog({
 			autoOpen : false,
 			modal : true,
 			width : 900,
-			height : 600
+			height : 600,
+			buttons : {
+				'확인': function(){
+					orderDialog.dialog("close");
+				}
+			}
 		});
 	
-	/* planDgrid.on('click', function(ev) {
-		console.log(planDgrid.getValue(ev["rowKey"], "orderNo"));
-		if ( ev["columnName"] == "orderNo" ) {
+	//------------------------------그리드이벤트------------------------------------------------
+	//계획상세 그리드 이벤트	
+	planDgrid.on('click', function(ev){
+		if(ev.columnName == "orderNo") {
 			orderDialog.dialog("open");
 			$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
 									function() { orderList() })
-		} 
-	});  */
+		}
+	});
 	
+	planDgrid.on('dblclick', function(ev){
+		let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
+		let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
+		let orderNo = planDgrid.getValue(ev.rowKey, "orderNo")
+		console.log(planDgrid.getValue(ev.rowKey, "planQty"));
+		
+		$('#prdtCd').val(prdtCd);
+		$('#prdtNm').val(prdtNm);
+		$('#orderNo').val(orderNo);
+		
+		var stcGridParams = {
+				'prdtCd' : prdtCd,
+				'orderNo' : orderNo
+		};
+		rStcGrid.readData(1, stcGridParams, true)
+		//fetch
+		//settimeout -> delay
+		setTimeout(function(){
+		for ( i=0; i< rStcGrid.getRowCount(); i++){
+    		rStcGrid.setValue(i, 'ndStc',
+    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
+			rStcGrid.setValue(i, 'lackStc',
+					rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))}
+		}, 1200); //실행시킬 함수,딜레이시간;
+	});
 	
 	planDgrid.on('onGridUpdated', function() {
 		planDgrid.refreshLayout();
+		 for(let p = 0; p < planDgrid.getRowCount(); p++){
+				calProdDay( p, "planQty", "dayOutput" ); 
+			 }
 	});
 
-	planDgrid.on('click', (ev) => {
-		console.log(ev);
-	})
-
-	// 성공 실패와 관계 없이 응답을 받았을 경우
 	planDgrid.on('response', function(ev) { 
-		console.log("응답");
+		console.log("응답완료");
 		let res = JSON.parse(ev.xhr.response);
 		console.log(res);
 		if (res.mod =='upd'){
@@ -351,37 +342,33 @@
 		}
 	})
 	
-	//그리드 행추가 버튼
-	rowAdd.addEventListener("click", function(){
-		//$("#rowAdd").hide();
-		orderDialog.dialog("open");
-		$("#orderModal").load("${pageContext.request.contextPath}/modal/findOrder", 
-								function() { orderList() })
+	//필요자재 재고체크 이벤트
+	rStcGrid.on('response',function(ev){
+     	rStcGrid.refreshLayout(); 
+   	});
+	 
+	rStcGrid.on('onGridUpdated', function(ev) {
+		for ( i=0; i< rStcGrid.getRowCount(); i++){
+			  if(rStcGrid.getValue(i, 'lackStc') > 0){
+				  rStcGrid.setValue(i,'lackStc',"<font color='red' size='4'>"+lackStc+"</font>");
+				  rStcGrid.check(i)
+			  }
+		 }
 	});
 	
-	//그리드 행삭제 버튼 
-	rowDel.addEventListener("click", function(){
-		planDgrid.removeCheckedRows(true); //false면 확인 안하고 삭제함
-	});
-	
-	//조회 버튼: 미지시 계획서 모달
-	let prodPlanDialog = $("#prodPlanModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 900,
-		height : 600
-	});
-  
- 	$('#planSearch').on('click', function(){
- 		console.log("생산계획서 검색")
+	//------------------------------버튼------------------------------------------------
+	//생산계획서 조회버튼: 생산계획서 조회모달 호출
+ 	$('#btnFind').on('click', function(){
+ 		console.log("생산계획서 조회")
 		prodPlanDialog.dialog("open");
 		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", 
 									function() { planList() })
 	});
-			
+ 	
 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
 	$('#btnReset').click(function() {
 		planMngFrm.reset();
+		$('#planNo').val('');
 		planDgrid.resetData([]);
 		rStcGrid.resetData([]);
 	})
@@ -392,6 +379,7 @@
 		planDt = $('#planDt').val();
 		
 		if (planNm == null || planNm == ""){
+			alert("필수 입력칸이 비어 있습니다")
 			$('#planNm').focus();
 		} else {
 			for ( i =0 ; i <= planDgrid.getRowCount(); i++) {
@@ -407,7 +395,7 @@
 		} 
 	})
 	
-	//삭제 버튼: 계획 + 계획상세그리드 삭제
+	/* //삭제 버튼: 계획 + 계획상세그리드 삭제
 	$('#btnDel').click(function(){
 		planNo = $('#planNo').val();
 		planDt = $('#planDt').val();
@@ -436,7 +424,34 @@
 				});
 			}
 		}
-	})
+	}) */
+	
+	//그리도 추가 버튼
+	rowAdd.addEventListener("click", function(){
+		planDgrid.appendRow({},{
+			extendPrevRowSpan : true,
+			focus : true,
+			at : 0
+		});
+	});
+	
+	//그리드 삭제 버튼 
+	rowDel.addEventListener("click", function(){
+		planDgrid.removeCheckedRows(true); //false면 확인 안하고 삭제함
+	});
+	
+	//발주요청 버튼
+	$('rscOrder').on("click", function(){
+		sendMsgToParent('발주요청', '/rsc/mng/ordradmin')
+	});
+	//------------------------------함수------------------------------------------------
+	//생산일수 계산 함수
+	function calProdDay( rowKey, a, b ) { // 생산일수계산
+		a = Number(planDgrid.getValue( rowKey, a ));
+		b = Number(planDgrid.getValue( rowKey, b ));
+		result = (Number(a) / Number(b)).toFixed(1);
+		planDgrid.setValue( rowKey, "prodDay" , result);
+	} 
 	
 	//그리드 필수입력칸 함수
 	function gridCheck(){
@@ -456,41 +471,7 @@
 			//}
 		//}
 	}
-	/* planDgrid.on('editingFinish', (ev) => {
-		calProdDay( ev.rowKey, "planQty", "dayOutput" ); 
-	})
 	
-	//생산일수 계산 함수
-	function calProdDay( rowKey, a, b ) { // 생산일수계산
-		a = Number(planDgrid.getValue( rowKey, a ));
-		b = Number(planDgrid.getValue( rowKey, b ));
-		result = Number(a) / Number(b);
-		planDgrid.setValue( rowKey, "prodDay" , result);
-	} 
-
-	*/
-	
-	
-	
-	//생산계획서 조회 버튼: 기간별 생산계획 조회
-	let planDetailDialog = $("#planDetailModal").dialog({
-		autoOpen : false,
-		modal : true,
-		width : 900,
-		height : 600,
-		buttons : {
-			'확인': function(){
-				planDetailDialog.dialog("close");
-			}
-		}
-	});
-  
- 	$('#btnFind').on('click', function(){
- 		console.log("생산계획서 조회")
-		planDetailDialog.dialog("open");
-		$("#planDetailModal").load("${pageContext.request.contextPath}/modal/findPlanDetail", 
-									function() { planDetailList() })
-	});
 </script>
 
 </html>

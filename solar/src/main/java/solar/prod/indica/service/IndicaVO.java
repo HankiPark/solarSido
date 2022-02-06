@@ -41,7 +41,8 @@ public class IndicaVO extends IndRscVO {
 	String coNm;		//업체명
 	String bizno;		//사업자등록번호
 	String coFg;		//업체구분
-
+	String nowSt;		//진행상태
+	
 	//주문
 	String paprdDt;		//납기일자
 	int orderQty; 		//주문량
