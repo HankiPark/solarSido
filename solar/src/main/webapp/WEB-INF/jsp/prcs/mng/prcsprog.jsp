@@ -512,8 +512,6 @@
  			 								clearTimeout(unit1);
  			 							}
  			 							
- 			 							console.log("1번 유닛 완료 7.2초 단위");
- 			 							
  			 							const endTm = new Date(); 
  			 							console.log("-----------------완료시점")
  			 							console.log((endTm-u1));
@@ -589,8 +587,8 @@
 													}														// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건 				
 												} else{
 													
-													console.log("지시량만큼 돌았습니다 타이머 유닛1을 종료합니다");
-													clearTimeout(unit1);
+													console.log("지시량만큼 제 1공정을 마쳤습니다");
+													
 												}														// 유닛 카운트가 생산목표보다 작을때까지 조건
 												console.log("성공성공");
 											}															// 첫번째 장비인 경우 조건 끝
@@ -601,14 +599,6 @@
 												let itemSt = prcsFlow.PRCSFLOW[0].lowSt;
 												let items = [];
 												let targetItems = [];
-												
-												console.log("공정순서가 1이 아닐시에 카운트, 목표량, 순서, 장비코드")
-												console.log(unit1Count);
-												console.log(tAmount);
-												console.log(prcsSeq);
-												console.log(thisUnitCd);
-												console.log("공정순서가 1이 아닐시에 카운트, 목표량, 순서, 장비코드")
-												
 										
 												$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 													url:'${pageContext.request.contextPath}/prcs/prcsItem',
@@ -619,19 +609,12 @@
 													async: false,
 													contentType: 'application/json',
 													success : function(result){
-														console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
-														console.log(result.data.contents);
 														items = result.data.contents;
 														console.log(items.length);
 													
 														for(let item of items){
 															if(prcsSeq-1 == item.prcsOrd){
 																targetItems.push(item);
-																console.log("not11111111111111111111111111111111111111 item");
-																console.log(item);
-																console.log(targetItems)
-																console.log("not11111111111111111111111111111111111111 item");
-																
 															}	
 														}
 	
@@ -718,31 +701,18 @@
  			 							if(timerFlag===true){
  			 								clearTimeout(unit2);
  			 							}
- 			 							console.log("2번 유닛 완료 10초 단위");
+
  			 							const endTm = new Date(); 
- 			 							console.log("-----------------완료시점")
- 			 							console.log((endTm-u2));
- 			 							console.log(endTm);
  			 							var eqmETime = msToHMS(endTm);
  			 							var eqmSTime = msToHMS(endTm-u2);
  			 							console.log(eqmSTime+"공정시작시간");
  			 							console.log(eqmETime+"공정끝난시간");
- 			 							console.log("-----------------완료시점")
 //------------------------------------------------------------------------------------------------------------------------------- 
  			 							let prcsSeq = prcsFlow.PRCSFLOW[1].prcsOrd;
 										let thisUnitCd = prcsFlow.PRCSFLOW[1].eqmCd;
 										let itemSt = prcsFlow.PRCSFLOW[0].lowSt;
 										let items = [];
 										let targetItems = [];
-										
-										console.log("두번째부터 테스트 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-										console.log(unit2Count);
-										console.log(tAmount);
-										console.log(pIndicaDetaNo);
-										console.log(prcsSeq);
-										console.log(thisUnitCd);
-										console.log("두번째부터 테스트 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-										
 								
 										$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 										url:'${pageContext.request.contextPath}/prcs/prcsItem',
@@ -753,41 +723,19 @@
 										async: false,
 										contentType: 'application/json',
 										success : function(result){
-											console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
-											console.log(result.data.contents);
 											items = result.data.contents;
 											console.log(items.length);
-/* 											console.log(items[12].prcsOrd);
-											console.log(items[12].prcsOrd-1); */
 											console.log(prcsSeq);
-
-											console.log("Qkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk22222222222")
-											console.log(items);
-											console.log("Qkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk22222222222")
-											
-											
 											
 											for(let item of items){
-												console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
-												console.log(prcsPrM.wkNo);
-												console.log(item.wkNo);
-												console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
-												
 												//if(prcsSeq-1 == item.prcsOrd && prcsPrM.wkNo == item.wkNo){
 													if(prcsSeq-1 == item.prcsOrd){
 														targetItems.push(item);
-														console.log(targetItems);
 													}												
 												}	
 											
-											
-													console.log(targetItems);
-											
-											console.log("중요테스트입니다 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-											
 											if(unit2Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
 											console.log(targetItems[unit2Count].prdtLot);
-											console.log(unit2Count);
 												if(targetItems[unit2Count].lowSt === 'W'){									// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건
 													$.ajax({															// 현재가리키고있는 아이템의 상태를 'C' 완료로 update ajax
 														url:"${pageContext.request.contextPath}/prcs/updateRscClot",
@@ -856,12 +804,8 @@
  			 							if(timerFlag===true){
  			 								clearTimeout(unit3);
  			 							}
- 			 							console.log("3번 유닛 완료 5초 단위");
 
  			 							const endTm = new Date(); 
- 			 							console.log("-----------------완료시점")
- 			 							console.log((endTm-u3));
- 			 							console.log(endTm);
  			 							var eqmETime = msToHMS(endTm);
  			 							var eqmSTime = msToHMS(endTm-u3);
  			 							console.log(eqmSTime+"공정시작시간");
@@ -873,15 +817,6 @@
 										let itemSt = prcsFlow.PRCSFLOW[2].lowSt;
 										let items = [];
 										let targetItems = [];
-										
-										console.log("두번째부터 테스트 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-										console.log(unit3Count);
-										console.log(tAmount);
-										console.log(pIndicaDetaNo);
-										console.log(prcsSeq);
-										console.log(thisUnitCd);
-										console.log("두번째부터 테스트 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-										
 								
 										$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 										url:'${pageContext.request.contextPath}/prcs/prcsItem',
@@ -892,32 +827,16 @@
 										async: false,
 										contentType: 'application/json',
 										success : function(result){
-											console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
-											console.log(result.data.contents);
 											items = result.data.contents;
 											console.log(items.length);
-											/* console.log(items[12].prcsOrd);
-											console.log(items[12].prcsOrd-1); */
 											console.log(prcsSeq);
-											
-											console.log("Qkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk3333333333")
-											console.log(items);
-											console.log("Qkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk3333333333")
-											
-											console.log("중요테스트입니다 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-											
-											console.log(prcsPrM.wkNo)
-											
-											
+																						
 											for(let item of items){
 												//if(prcsSeq-1 == item.prcsOrd && prcsPrM.wkNo == item.wkNo){
 												if(prcsSeq-1 == item.prcsOrd){
 													targetItems.push(item);
 												}	
 											}
-													console.log(targetItems);
-											
-											console.log("중요테스트입니다 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
 											
 											if(unit3Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
 											console.log(unit3Count);
@@ -994,13 +913,7 @@
  			 							
  			 							let complete = false;
  			 							
- 			 							
- 			 							console.log("4번 유닛 완료 7.2초 단위");
  			 							const endTm = new Date();
- 			 						
- 			 							console.log("-----------------완료시점")
- 			 							console.log((endTm-u4));
- 			 							console.log(endTm);
  			 							var eqmETime = msToHMS(endTm);
  			 							var eqmSTime = msToHMS(endTm-u4);
  			 							console.log(eqmSTime+"공정시작시간");
@@ -1012,16 +925,7 @@
 										let itemSt = prcsFlow.PRCSFLOW[3].lowSt;
 										let items = [];
 										let targetItems = [];
-										
-										console.log("두번째부터 테스트 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-										console.log(unit4Count);
-										console.log(tAmount);
-										console.log(pIndicaDetaNo);
-										console.log(prcsSeq);
-										console.log(thisUnitCd);
-										console.log("두번째부터 테스트 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-										
-										
+						
 										$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 										url:'${pageContext.request.contextPath}/prcs/prcsItem',
 										data : {
@@ -1031,23 +935,9 @@
 										async: false,
 										contentType: 'application/json',
 										success : function(result){
-											console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
-											console.log(result.data.contents);
 											items = result.data.contents;
 											console.log(items.length);
-											/* console.log(items[12].prcsOrd);
-											console.log(items[12].prcsOrd-1); */
 											console.log(prcsSeq);
-											
-											console.log("Qkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk44444444444")
-											console.log(items);
-											console.log("Qkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk44444444444")
-											
-											
-											console.log("중요테스트입니다 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-											
-											console.log(prcsPrM.wkNo)
-											
 											
 											for(let item of items){
 												//if(prcsSeq-1 == item.prcsOrd && prcsPrM.wkNo == item.wkNo){
@@ -1055,9 +945,6 @@
 													targetItems.push(item);
 												}		
 											}
-													console.log(targetItems);
-											
-											console.log("중요테스트입니다 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
 											
 											if(unit4Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
 											console.log(targetItems[unit4Count].prdtLot);
