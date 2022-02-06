@@ -457,7 +457,7 @@
     </div>
     <div class="tab-content">
       <div class="tab-empty">
-        <h2 class="display-4" id="needLog"> 로그인 해주세요</h2>
+        <h2 class="display-4" id="needLog" style="display:none"> 로그인 해주세요</h2>
         <img id="afterLog" src="${pageContext.request.contextPath}/resources/mainScreen.png" style="width:2000px; height: 880px;">
         	<div id="dialog-login" title="로그인"></div>
       </div>
@@ -555,6 +555,9 @@ $(function(){
 		}
 		},2000);
  })
+ 
+ 
+ 
  
 })
 window.addEventListener( 'message', receiveMsgFromChild );

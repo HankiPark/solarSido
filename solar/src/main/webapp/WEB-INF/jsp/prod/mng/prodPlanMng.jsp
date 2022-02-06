@@ -10,65 +10,89 @@
 
 <body>
 	<h2>생산계획 관리</h2>
-	<hr />
-	
+
+
 	<!-- 모달 -->
 	<div id="prodPlanModal" title="미지시 계획 목록"></div>
 	<div id="orderModal" title="미계획 주문서 목록"></div>
 	<div id="planDetailModal" title="생산계획서 조회"></div>
-	
+
 	<!-- 생산계획 테이블 -->
-	<div  class="row">
-		<div class="col-9">
-			<form action="planMngFrm" name="planMngFrm">
-				<div>
-					<label>계획일자<span style="color: red">*</span></label>
-					<input type="date" id="planDt" name="planDt" required>
-					<label>생산계획명<span style="color: red">*</span></label>
-					<input type="text" id="planNm" name="planNm" required>
+
+	<div class="card card-pricing card-primary card-white card-outline"
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-9">
+					<form action="planMngFrm" name="planMngFrm">
+						<div>
+							<label>계획일자<span style="color: red">*</span></label> <input
+								type="date" id="planDt" name="planDt" required> <label>생산계획명<span
+								style="color: red">*</span></label> <input type="text" id="planNm"
+								name="planNm" required>
+						</div>
+						<div>
+							<button type="button" id="btnReset">초기화</button>
+							<button type="button" id="btnSave">저장</button>
+							<!--  <button type="button" id="btnDel">삭제</button> -->
+						</div>
+					</form>
 				</div>
-				<div>
-					<button type="button" id="btnReset">초기화</button>
-					<button type="button" id="btnSave">저장</button>
-					<!--  <button type="button" id="btnDel">삭제</button> -->
+				<div class="col-3">
+					<label>생산계획서 조회</label>
+					<button type="button" id="btnFind">🔍</button>
 				</div>
-			</form>
-		</div>
-		<div class="col-3">
-			<label>생산계획서 조회</label>
-			<button type="button" id="btnFind">🔍</button>
+			</div>
 		</div>
 	</div>
-	<hr />
 
 	<!-- 생산계획 상세 그리드-->
-	<div id="planDgrid">
-		<div class="row">
-			<div class="col-8">
-				<label>계획번호</label>
-				<input type="text" id="planNo" name="planNo" readonly> 
-			</div>
-			<div id="btnMng" class="col-4">
-				<button type="button" id="rowAdd">추가</button> <!-- 계획등록시 주문서 불러오기 -->
-				<button type="button" id="planSearch">계획수정</button> <!-- 계획수정, 삭제시 -->
-				<button type="button" id="rowDel">삭제</button>
+	<div class="card card-pricing card-primary card-white card-outline"
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+		<div class="card-body">
+			<div id="planDgrid">
+				<div class="row">
+					<div class="col-7">
+						<label>계획번호</label> <input type="text" id="planNo" name="planNo"
+							readonly>
+					</div>
+					<div id="btnMng" class="col-5" style="margin-top: -10px">
+						<button type="button" id="rowAdd"
+							style="width: 200px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
+							<i class="far fa-file"></i> &nbsp;미계획주문서
+						</button>
+						<!-- 계획등록시 주문서 불러오기 -->
+						<button type="button" id="planSearch"
+							style="width: 200px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
+							<i class="far fa-file"></i> &nbsp;미지시계획서
+						</button>
+						<!-- 계획수정, 삭제시 -->
+						<button type="button" id="rowDel">삭제</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<hr />
-	
+
 	<!-- 자재 재고체크 그리드 -->
-	<div id="rStcGrid" class="row">
-		<div class="col-10">
-			<label>필요자재 재고 체크</label>
-		</div>
-		<div class="col-2">
-			<button type="button" id="rscDmnd">발주요청</button>
+	<div class="card card-pricing card-primary card-white card-outline"
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+		<div class="card-body">
+			<div id="rStcGrid" class="row">
+				<div class="col-9">
+					<label>필요자재 재고 체크</label>
+				</div>
+				<div class="col-3" style="margin-top: -10px">
+					<button type="button" id="rscDmnd"
+						style="width: 150px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
+						<i class="far fa-folder-open"></i> &nbsp; 발주요청
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
-	
-	
-	
+
+
 </body>
 
 <!-- 스크립트 -->

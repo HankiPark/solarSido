@@ -60,6 +60,14 @@
   --breakpoint-xl: 1200px;
   --font-family-sans-serif: "Rubik", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.card-primary.card-outline {
+  border-top: 3px solid #FA8383;
+}
+
+h1{
+	margin-bottom: 30px;
+}
+
 
 *,
 *::before,
@@ -3497,7 +3505,6 @@ input[type="button"].btn-block {
 
 .card-footer {
   padding: 0.75rem 25px;
-  background-color: rgba(0, 0, 0, 0.03);
   border-top: 0 solid #e9ecef; }
   .card-footer:last-child {
     border-radius: 0 0 calc(0.25rem - 0) calc(0.25rem - 0); }

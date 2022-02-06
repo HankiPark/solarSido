@@ -64,25 +64,36 @@ a {
 	</div>
 
 	<div id="iG">
-		<div class="card card-pricing card-primary card-white">
-			<div class="card-body" id="grid">
-				<div class="row">
-					<div data-role="fieldcontain" >
-						<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
-							id="startT" type="text" data-role="datebox"
-							data-options='{"mode": "calbox"}'> 
+		<div class="row" id="sensePrdtIn">
+			<div
+				class="card card-pricing card-primary card-white card-outline col-3" id="sensePrdtInBody"
+				style="margin-left: 50px; margin-right: 30px; margin-top: 70px; padding-left: 40px; margin-bottom: 250px; height: 350px">
+				<div class="card-body" id="grid">
+					<div class="row">
+						<div data-role="fieldcontain"
+							style="margin-bottom: 40px; margin-top: 40px;">
+							<label for="defandroid">입고일자&nbsp;</label> <input name="startT"
+								class="dtp" id="startT" type="text" data-role="datebox"
+								data-options='{"mode": "calbox"}'>
+						</div>
 					</div>
-				</div>
-				<div class="row">	
-					<div data-role="fieldcontain" class="col-5">
-						<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px"> 🔍 </button>
-					</div>
-				</div>
-		<div >
-			<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
-		</div>
+					<div>
 
-				<div align="right">
+						<label>제품명&nbsp;</label> <input type="text" id="prdNm">
+						<button type="button" id="prdtNmBtn" style="width: 33px">
+							🔍</button>
+					</div>
+
+
+
+				</div>
+				<div class="card-footer" style="margin-bottom: 30px;">
+					<button type="button" id="findgrid" style="margin-left: 120px">조회</button>
+				</div>
+			</div>
+			<div class="col-8">
+				<div class="float-right"
+					style="margin-left: 30px; margin-top: -50px">
 					<button type="button" id="insertBtn"
 						class="btn btn-default btn-simple btn-sm">추가</button>
 					<button type="button" id="updateBtn"
@@ -90,26 +101,38 @@ a {
 					<button type="button" id="deleteBtn"
 						class="btn btn-default btn-simple btn-sm">삭제</button>
 				</div>
+				<div id="inGrid"></div>
 			</div>
-		</div>
 
-		<div id="inGrid"></div>
+		</div>
 	</div>
 
 	<div id="oG">
 
 		<div id="C">
-				<div class="card card-pricing card-primary card-white">
-			<div class="card-body" >
+			<div class="row" id="sensePrdtOut1">
+				<div
+					class="card card-pricing card-primary card-white card-outline col-3" id="sensePrdtOut1Body"
+					style="margin-left: 50px; margin-right: 30px; margin-top: 70px; padding-left: 40px; margin-bottom: 170px; height: 350px">
+					<div class="card-body">
 
-		
-			<label for="slipNm">부여될 전표번호</label><br> <input id="slipNm"
-				type="text" readonly><br>
-<div>
-			<button type="button" id="findgrid2"  style="margin-left:-10px">조회</button>
-		</div>
-	
-					<div align="right">
+						<div style="margin-top: 40px; margin-bottom: 30px;">
+							<label for="slipNm">부여될 전표번호</label>
+						</div>
+						<div>
+							<input id="slipNm" type="text" readonly>
+						</div>
+
+
+
+					</div>
+					<div class="card-footer" style="margin-bottom: 30px;">
+						<button type="button" id="findgrid2" style="margin-left: 120px">조회</button>
+					</div>
+				</div>
+				<div class="col-8">
+					<div class="float-right"
+						style="margin-left: 30px; margin-top: -50px">
 						<button type="button" id="insertBtn2"
 							class="btn btn-default btn-simple btn-sm">추가</button>
 						<button type="button" id="updateBtn2"
@@ -117,32 +140,33 @@ a {
 						<button type="button" id="deleteBtn2"
 							class="btn btn-default btn-simple btn-sm">삭제</button>
 					</div>
+					<div id="outGrid"></div>
 				</div>
 			</div>
-			<div id="outGrid"></div>
-			</div>
-			
 
+		</div>
 
 		<div id="noC" style="display: none">
-		<div class="card card-pricing card-primary card-white">
-			<div class="card-body" >
-			
-			<label for="slipNm2">조회중인 전표번호</label><br> <input id="slipNm2"
-				type="text" readonly>
-<div>
-			<button type="button" id="findgrid3"  style="margin-left:-10px">조회</button>
-		</div>
-	
-					<div align="right">
-						<button type="button" id="excelBtn"
-							class="btn btn-default btn-simple btn-sm">excel</button>
+			<div class="row" id="sensePrdtOut2">
+				<div
+					class="card card-pricing card-primary card-white card-outline col-3" id="sensePrdtOut2Body"
+					style="margin-left: 50px; margin-right: 30px; margin-top: 70px; padding-left: 40px; margin-bottom: 200px; height: 350px">
+					<div class="card-body">
+						<div style="margin-top: 40px; margin-bottom: 30px;">
+							<label for="slipNm2">조회중인 전표번호</label>
+						</div>
+						<div">
+							<input id="slipNm2" type="text" readonly>
+						</div>
+					</div>
+					<div class="card-footer" style="margin-bottom: 30px;">
+						<button type="button" id="findgrid3" style="margin-left: 120px">조회</button>
+					</div>
 
-			
+				</div>
+				<div id="outGrid2" class="col-8"></div>
 			</div>
-			</div>
-			</div>
-			<div id="outGrid2"></div>
+
 
 		</div>
 
@@ -165,7 +189,7 @@ a {
 
 
 
-<script>
+	<script>
 let rowKeyNm;
 let tempNo=0;
 var d = new Date();
@@ -215,6 +239,7 @@ $(function() {
 					if ($(this)[0].id == "in") {
 						$("#oG").css("display", "none");
 						$("#iG").css("display", "block");
+						$('td').css('backgroundColor','');
 
 						inGrid.refreshLayout();
 						inGrid.clear();
@@ -228,7 +253,7 @@ $(function() {
 						$("#oG").css("display", "block");
 						$("#noC").css("display", "none");
 						$("#C").css("display", "block");
-					
+						$('td').css('backgroundColor','');
 						$.ajax({
 							url:'${pageContext.request.contextPath}/ajax/resetOw.do',
 							dataType: 'json',
@@ -516,7 +541,7 @@ $(function() {
 					initialRequest : false,
 					contentType : 'application/json'
 				},
-				bodyHeight : 700,
+				bodyHeight : 500,
 				rowHeaders : [ {
 					type : 'rowNum',
 					width : 100,
@@ -680,7 +705,7 @@ $(function() {
 					contentType : 'application/json'
 				},
 
-				bodyHeight : 700,
+				bodyHeight : 500,
 				rowHeaders : [ {
 					type : 'rowNum',
 					width : 100,
@@ -693,7 +718,8 @@ $(function() {
 					hidden : true
 				}, {
 					header : '전표상세번호',
-					name : 'slipDetaNo'
+					name : 'slipDetaNo',
+					hidden : true
 				}, {
 					header : '출고일자',
 					name : 'prdtDt'
@@ -743,13 +769,35 @@ $(function() {
 	}})
 	
 	outGrid2.on('onGridUpdated', function() {
+		$('td[data-column-name$="oustQty"]').css('backgroundColor','#ffeeee');
 		outGrid2.refreshLayout();
+		setTimeout(()=>{$('td[data-column-name$="oustQty"]').css('backgroundColor','#ffeeee')},1000);
 		});
 	
 	outGrid2.refreshLayout();
 	outGrid.refreshLayout();
 	inGrid.refreshLayout();
+	$('#sensePrdtIn').resize(function(){
+		if($('#sensePrdtIn').width()<1780){
+			$('#sensePrdtInBody').css('paddingLeft','15px');
+		}else{
+			$('#sensePrdtInBody').css('paddingLeft','40px');
+		}
+	})
+	$('#sensePrdtOut1').resize(function(){
+		if($('#sensePrdtOut1').width()<1780){
+			$('#sensePrdtOut1Body').css('paddingLeft','15px');
+		}else{
+			$('#sensePrdtOut1Body').css('paddingLeft','40px');
+		}
+	})
+	$('#sensePrdtOut2').resize(function(){
+		if($('#sensePrdtOut2').width()<1780){
+			$('#sensePrdtOut2Body').css('paddingLeft','15px');
+		}else{
+			$('#sensePrdtOut2Body').css('paddingLeft','40px');
+		}
+	})
 </script>
-
 </body>
 </html>

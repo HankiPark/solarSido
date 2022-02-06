@@ -39,24 +39,24 @@
 <script type="text/javascript">
 $(function(){
 
-	$("div:contains('dialog-') button:contains('🔍')").html("<i class='fas fa-search-plus'> </i>");
+	$("div:contains('dialog-') button:contains('🔍')").html("<i class='fas fa-search-plus'> </i>&nbsp;");
 	$("div:contains('dialog-') button:contains('검색')").html("조회");
-	$("div:contains('dialog-') button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>");
+	$("div:contains('dialog-') button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>&nbsp;");
 	 	$("div:contains('dialog-') button:contains('조회')").css("width","80");
 		$("div:contains('dialog-') button:contains('조회')").css("height","33");
 		$("div:contains('dialog-') button:contains('조회')").css("borderRadius",20);
 		$("div:contains('dialog-') button:contains('조회')").css("padding","6 1 6 3"); 	
-	$("div:contains('dialog-') button:contains('저장')").prepend("<i class='far fa-save'> </i> ");
+	$("div:contains('dialog-') button:contains('저장')").prepend("<i class='far fa-save'> </i> &nbsp;");
 	$("div:contains('dialog-') button:contains('저장')").css("height","33");
 	$("div:contains('dialog-') button:contains('저장')").css("width","80");
 	$("div:contains('dialog-') button:contains('저장')").css("borderRadius",20);
 	$("div:contains('dialog-') button:contains('저장')").css("padding","6 1 6 3"); 
-	$("div:contains('dialog-') button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i> ");
+	$("div:contains('dialog-') button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i>&nbsp; ");
 	$("div:contains('dialog-') button:contains('초기화')").css("height","33");
 	$("div:contains('dialog-') button:contains('초기화')").css("width","80");	
 	$("div:contains('dialog-') button:contains('초기화')").css("borderRadius",20);
 	$("div:contains('dialog-') button:contains('초기화')").css("padding","6 1 6 3"); 
-	$("div:contains('dialog-') button:contains('선택완료')").html("완료");
+	$("div:contains('dialog-') button:contains('선택완료')").html("<i class='fas fa-stamp'></i>&nbsp;완료");
 	$("div:contains('dialog-') button:contains('완료')").css("height","40");
 	$("div:contains('dialog-') button:contains('완료')").css("width","100");
 	$("div:contains('dialog-') button:contains('완료')").css("fontSize",20);

@@ -76,6 +76,17 @@
 	
 	</update>
 
+	<select id="orderCal" resultType="Calender">
+		select CONCAT(CONCAT('주문서', ' '),order_no) title,recv_dt "start",paprd_dt+1 "end" from order_tb
+	</select>
 
-
+	<select id="inPrdtCal" resultType="Calender">
+		select '입고 '||count(*)||'건' as title ,prdt_dt as "start" from prdt_stc where prdt_fg = 'I' and prdt_lot in	
+	                            (select prdt_lot from prdt_stc where prdt_fg='I') 
+	                        and prdt_lot not in
+	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW') group by prdt_dt
+	</select>
+	<select id="outPrdtCal" resultType="Calender">
+		select '출고 '||slip_no as title, prdt_dt as "start" from oust
+	</select>
 </mapper>

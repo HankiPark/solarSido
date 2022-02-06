@@ -13,7 +13,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <link href="${pageContext.request.contextPath}/resources/assets/libs/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+
  <link
 	href="${pageContext.request.contextPath}/resources/dist/css/style.min.css"
 	rel="stylesheet">
@@ -36,6 +37,7 @@
 <script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -44,7 +46,7 @@
 <link rel="stylesheet" href="https://uicdn.toast.com/chart/latest/toastui-chart.min.css" />
 <script src="https://uicdn.toast.com/chart/latest/toastui-chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-resize/1.1/jquery.ba-resize.min.js" integrity="sha512-f39z0cdBuo6BZaPaU97tfdGSh0IJePwvm385z7hDHmmh357Huqbp0WyDnYuyWOysaIOSFCakaaoQlXJgSnM2dw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
 
 
@@ -111,32 +113,32 @@ $(function(){
  	connectWs();
 
 	$("button:contains('🔍')").html("<i class='fas fa-search-plus'> </i>");
-	$("button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>");
+	$("button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>&nbsp;");
 	 	$("button:contains('조회')").css("width","100");
 		$("button:contains('조회')").css("height","40");
 		$("button:contains('조회')").css("fontSize",20);
 		$("button:contains('조회')").css("borderRadius",20);
 		$("button:contains('조회')").css("padding","6 1 6 3"); 
-	$("button:contains('삭제')").prepend("<i class='far fa-trash-alt'> </i>  ");
+	$("button:contains('삭제')").prepend("<i class='far fa-trash-alt'> </i>  &nbsp;");
 	$("button:contains('삭제')").css("height","40");
 	$("button:contains('삭제')").css("width","100");
 	$("button:contains('삭제')").css("fontSize",20);
 	$("button:contains('삭제')").css("borderRadius",20);
 	$("button:contains('삭제')").css("padding","6 1 6 3"); 
 	
-	$("button:contains('저장')").prepend("<i class='far fa-save'> </i> ");
+	$("button:contains('저장')").prepend("<i class='far fa-save'> </i> &nbsp;");
 	$("button:contains('저장')").css("height","40");
 	$("button:contains('저장')").css("width","100");
 	$("button:contains('저장')").css("fontSize",20);
 	$("button:contains('저장')").css("borderRadius",20);
 	$("button:contains('저장')").css("padding","6 1 6 3"); 
-	$("button:contains('추가')").prepend("<i class='far fa-plus-square'> </i> ");
+	$("button:contains('추가')").prepend("<i class='far fa-plus-square'> </i> &nbsp;");
 	$("button:contains('추가')").css("height","40");
 	$("button:contains('추가')").css("width","100");
 	$("button:contains('추가')").css("fontSize",20);
 	$("button:contains('추가')").css("borderRadius",20);
 	$("button:contains('추가')").css("padding","6 1 6 3");  
-	$("button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i> ");
+	$("button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i> &nbsp;");
 	$("button:contains('초기화')").css("height","40");
 	$("button:contains('초기화')").css("width","100");
 	$("button:contains('초기화')").css("fontSize",20);
@@ -168,10 +170,10 @@ $(function(){
     <script src="${pageContext.request.contextPath}/resources/dist/js/custom.min.js"></script>
     <!--This page JavaScript -->
     <script src="${pageContext.request.contextPath}/resources/assets/libs/moment/min/moment.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/assets/libs/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/dist/js/pages/calendar/cal-init.js"></script>
 <script
 			src="${pageContext.request.contextPath}/resources/dist/js/iframe-custom.js"></script>
 <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+
 </body>
 </html>

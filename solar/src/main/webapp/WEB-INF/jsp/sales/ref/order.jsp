@@ -11,22 +11,23 @@
 
 <body>
 	<h1>주문서 참조</h1>
-
-		<div class="card card-pricing card-primary card-white">
-		<div class="card-body" >
+	<div class="row" id="senseOrder">
+		<div id="senseOrderBody" class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px;">
+		<div class="card-body"  >
 	<div class="row">
-		<div data-role="fieldcontain" class="col-12">
-			<label for="defandroid">날짜 선택</label> <input name="startT" class="dtp"
+		<div data-role="fieldcontain" class="col-12" style="margin-bottom: 20px; margin-top: 50px;">
+			<label for="defandroid">주문일자</label> <input name="startT" class="dtp"
 				id="startT" type="text" data-role="datebox"
 				data-options='{"mode": "calbox"}'>
 		</div>
 	</div>
-	<div class="row">
-				<div data-role="fieldcontain" class="col-3">
-			<label>자료구분</label> 
+
+				<div style="margin-bottom: 20px;">			
+				<label>자료구분</label> 
 			<input type="radio" name="dateTy" value="접수" checked>접수일자
 			<input type="radio" name="dateTy" value="납기">납기일자
-			</div><div data-role="fieldcontain" class="col-4">
+			</div>
+			<div >
 			<label>진행상태</label>
 			<select name="nowSt">
 				<option value="진행">진행</option>
@@ -35,18 +36,18 @@
 			</select>
 		</div>
 		
-		
-		</div>
-		<div>
-		<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
+	
+
 	</div>
+			<div class="card-footer" style="margin-bottom: 30px;" >
+		<button type="button" id="findgrid" style="margin-left:120px">조회</button>
 	</div>
 	</div>
 	
+
+
+	<div class="col-8" id="grid" style="margin-top:100px"></div>
 	</div>
-
-	<div id="grid"></div>
-
 	<div id="dialog-form" title="주문 상세 목록"></div>
 
 
@@ -109,7 +110,7 @@
 		const grid = new tui.Grid({
 			el : document.getElementById('grid'), // 컨테이너 엘리먼트
 			data : dataSource,
-			bodyHeight : 700,
+			bodyHeight : 500,
 			columns : [ {
 				header : '주문번호',
 				name : 'orderNo'
@@ -134,8 +135,9 @@
 
 		});
 		grid.on('onGridUpdated', function() {
-			$('td[data-column-name$="deNum"]').css('backgroundColor','#ECC9AB');
+			$('td[data-column-name$="deNum"]').css('backgroundColor','#ffeeee');
 			grid.refreshLayout();
+
 		});
 		grid
 				.on(
@@ -179,7 +181,13 @@
 			grid.refreshLayout();
 		})
 		
-		
+		$('#senseOrder').resize(function(){
+			if($('#senseOrder').width()<1780){
+				$('#senseOrderBody').css('paddingLeft','20px');
+			}else{
+				$('#senseOrderBody').css('paddingLeft','40px');
+			}
+		})
 		
 	</script>
 

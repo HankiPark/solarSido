@@ -268,7 +268,6 @@ position: absolute;
 				params.endTIndica = endTIndica;
 			}		
 			$("#grid").css("display","block");
-			console.log(params);
 
 			grid.readData(1,params,true);
 			
