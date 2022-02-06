@@ -92,6 +92,7 @@
 	let unit4Count=0;
 	
 	
+	
 	// 공정진행 관리 insert에서 사용될 변수
 	let pIndicaDetaNo;
 	let pIndicaNo;
@@ -104,9 +105,9 @@
 	
 	let prcsPrM;
 	
-	// 테스트용 변수 전역처리
+	let wkQty = document.getElementById("wkQty");
 	
-	let items = [];
+	// 테스트용 변수 전역처리
 	
 	
 	
@@ -400,6 +401,9 @@
  			 	 				$("#frTm").val(sTime);
  			 	 				
  			 	 				// 시작버튼 시간 이벤트끝
+ 			 	 				
+ 			 	 				document.getElementById("wkQty").value=0;
+ 			 	 				
  			 	 				
  			 	 				console.log("----------------------------------------- prcsGrid 테스트")
  			 	 				console.log(prcsGrid.getRowCount());
@@ -802,10 +806,14 @@
 											
 											console.log("중요테스트입니다 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
 											
-											console.log(prcsPrM.wkNo)
 											
 											
 											for(var item of items){
+												console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+												console.log(prcsPrM.wkNo);
+												console.log(item.wkNo);
+												console.log("ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ")
+												
 												if(prcsSeq-1 == item.prcsOrd && prcsPrM.wkNo == item.wkNo){
 													targetItems.push(item);
 												}	
@@ -1016,40 +1024,7 @@
  			 								
  			 							}
  			 							
- 			 							/* if(!unit4Count<tAmount){
- 			 								
- 			 								clearTimeout(unit1);
- 			 			 					clearTimeout(unit2);
- 			 			 					clearTimeout(unit3);
- 			 			 					clearTimeout(unit4);
- 			 			 					clearInterval(timer);
- 			 			 	 			    starFlag = true;
-	 			 			 	 			
- 			 			 	 			    $("#toTm").val("");
-	 			 		 					btnStart.disabled = false;
-	 			 		 					btnEnd.disabled = true;
-	 			 		 					
-	 			 		 					clearTimeout(unit1);
-	 			 		 					clearTimeout(unit2);
-	 			 		 					clearTimeout(unit3);
-	 			 		 					clearTimeout(unit4);
-	 			 		 					
-	 			 		 					// 종료버튼 시간 이벤트
-	 			 		 					const eTm = new Date();
-	 			 		 					var eHours = eTm.getHours();
-	 			 		 					var eMinutes = eTm.getMinutes();
-	 			 		 					var eSeconds = eTm.getSeconds();
-	 			 		 					
-	 			 		 					var eTime = eHours+"/"+eMinutes+"/"+eSeconds;
-	 			 		 					
-	 			 		 					console.log(eTime);
-	 			 		 					console.log($("#toTm"));
-	 			 		 					
-	 			 		 					$("#toTm").val(eTime);
-	 			 		 					
-	 			 		 					alert("마지막 설비가 완료되어 공정을 종료합니다 실적등록을 해주세요");
- 			 			 	 			    
- 			 							} */
+ 			 							let complete = false;
  			 							
  			 							
  			 							console.log("4번 유닛 완료 7.2초 단위");
@@ -1139,9 +1114,11 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("첫번째 공정완료");
+									 									console.log("네번째 공정완료");
 									 									unit4Count++;
-									 									console.log("카운트가 다음 장비를 가리킵니다")
+									 									wkQty.value = wkQty.value*1+1;
+									 									console.log(wkQty);
+									 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1156,7 +1133,43 @@
 												}														// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건 				
 											} else{
 												
-												console.log("지시량만큼 돌았습니다 타이머 유닛1을 종료합니다");
+												console.log("마지막 설비가 지시량횟수만큼 공정을 완료했습니다");
+												
+												clearTimeout(unit1);
+	 			 			 					clearTimeout(unit2);
+	 			 			 					clearTimeout(unit3);
+	 			 			 					clearTimeout(unit4);
+	 			 			 					clearInterval(timer);
+	 			 			 	 			    starFlag = true;
+		 			 			 	 			
+	 			 			 	 			    $("#toTm").val("");
+	
+	 			 			 					btnStart.disabled = false;
+	 			 			 					btnEnd.disabled = true;
+	 			 			 	 			    
+		 			 		 					clearTimeout(unit1);
+		 			 		 					clearTimeout(unit2);
+		 			 		 					clearTimeout(unit3);
+		 			 		 					clearTimeout(unit4);
+		 			 		 					
+		 			 		 					// 종료버튼 시간 이벤트
+		 			 		 					const eTm = new Date();
+		 			 		 					var eHours = eTm.getHours();
+		 			 		 					var eMinutes = eTm.getMinutes();
+		 			 		 					var eSeconds = eTm.getSeconds();
+		 			 		 					
+		 			 		 					var eTime = eHours+"/"+eMinutes+"/"+eSeconds;
+		 			 		 					
+		 			 		 					console.log(eTime);	
+		 			 		 					console.log($("#toTm"));
+		 			 		 					
+		 			 		 					$("#toTm").val(eTime);
+		 			 		 					
+		 			 		 					alert("마지막 설비가 완료되어 공정을 종료합니다 실적등록을 해주세요");
+												
+		 			 		 					complete = true;
+												
+												
 											
 											}														// 유닛 카운트가 생산목표보다 작을때까지 조건
 												console.log("성공성공");
@@ -1167,9 +1180,13 @@
 										
 									
 									});																// RscClot table을 조회해 작동가능한 아이템을 읽어온다   
-		
+							
+										if(!complete){
+											unit4 = setTimeout(tick, u4);
+										}
+									
 //------------------------------------------------------------------------------------------------------------------------------- 			 						
- 			 							unit4 = setTimeout(tick, u4); // (*)
+ 			 							 // (*)
  			 							}, u4);
  			 					}
  			 			
@@ -1283,7 +1300,8 @@
 	}	// 공정타이머 함수 끝	
 	
 	$("#btnTest1").on("click", function(ev){
-		
+		console.log(document.getElementById("wkQty").value);
+		console.log(wkQty);
 		
 	});
 	
