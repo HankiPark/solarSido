@@ -59,25 +59,46 @@ public class IndicaServiceImpl implements IndicaService {
 	}
 
 	@Override
-	public int hiddenData(Map<String, List<IndicaVO>> map) {
-		System.out.println("히든service");
-		IndRscVO irVo = new IndRscVO();
-		System.out.println("생산소요자재 데이터 등록");
-		System.out.println(irVo);
-		//idcMapper.insertRscCon(irVo);
-		
-		irVo = new IndRscVO();
-		System.out.println("자재사용현황 데이터 등록");
-		System.out.println(irVo);
-		//idcMapper.insertPdRc(irVo);
-		return 1;
-	}
-
-	@Override
 	public List<?> rscCnt(CmmndataVO cVo) {
 		return idcMapper.rscCnt(cVo);
 	}
 
+	@Override
+	public int hiddenData(Map<String, List<IndicaVO>> map) {
+		if(map.get("idcD") !=null) {
+			//IndicaVO idcVo = new IndicaVO();
+			for(IndicaVO idcVo : map.get("idcD")) {
+				if (idcVo == map.get("idcD").get(0)) {
+					System.out.println("지시 등록:" + idcVo);
+					idcMapper.insertIndica(idcVo);
+					}
+				System.out.println("지시상세 등록:" + idcVo);
+				idcMapper.insertIndicaD(idcVo);
+				System.out.println("주문상세 지시량 수정:" + idcVo);
+				idcMapper.updateOdIdQty(idcVo);
+			}
+		}
+		if(map.get("rscCon") !=null) {
+			for(IndicaVO idcVo : map.get("rscCon")) {
+				System.out.println("생산소요자재 등록:" + idcVo);
+				idcMapper.insertRscCon(idcVo);
+				System.out.println("자재출고 등록:" + idcVo);
+				idcMapper.insertRscOut(idcVo);
+				System.out.println("자재재고 변경:" + idcVo);
+				idcMapper.updateUseRscStc(idcVo);
+			}		
+		}
+		if(map.get("prdtRsc") !=null) {
+			for(IndicaVO idcVo : map.get("prdtRsc")) {
+				System.out.println("자재사용현황 등록:" + idcVo);
+				idcMapper.insertPdRc(idcVo);
+				System.out.println("제품재고관리 등록:" + idcVo);
+				idcMapper.insertPdSc(idcVo);
+			}
+		}
+		return 1;
+	}
+	
 	@Override
 	public int modifyData(ModifyVO<IndicaVO> mvo) {
 		if(mvo.getCreatedRows()!=null) {
@@ -120,61 +141,4 @@ public class IndicaServiceImpl implements IndicaService {
 		return 1;
 	}
 
-	@Override
-	public int modifyRscCon(ModifyVO<IndRscVO> mvo) {
-		if(mvo.getCreatedRows()!=null) {
-			for(IndRscVO irVo : mvo.getCreatedRows()) {
-				System.out.println("등록c:" + mvo);
-				//idcMapper.insertRscCon(irVo);
-				//idcMapper.insertRscOut(irVo);
-				//idcMapper.updateUseRscStc(irVo);
-				}
-			}
-		if(mvo.getDeletedRows()!=null) {
-			for(IndRscVO irVo : mvo.getDeletedRows()) {
-				System.out.println("삭제:" + mvo);
-				//idcMapper.insertRscCon(irVo);
-				//idcMapper.insertRscOut(irVo);
-				//idcMapper.updateUseRscStc(irVo);
-				}
-			}
-		if(mvo.getUpdatedRows()!=null) {
-			for(IndRscVO irVo : mvo.getDeletedRows()) {
-				System.out.println("수정:" + mvo);
-				//idcMapper.insertRscCon(irVo);
-				//idcMapper.insertRscOut(irVo);
-				//idcMapper.updateUseRscStc(irVo);
-				}
-			}
-		return 0;
-	}
-
-	@Override
-	public int modifyPrdtRsc(ModifyVO<IndRscVO> mvo) {
-		if(mvo.getCreatedRows()!=null) {
-			for(IndRscVO irVo : mvo.getCreatedRows()) {
-				System.out.println("등록c:" + mvo);
-				//idcMapper.updateOdIdQty(irVo);
-				//idcMapper.insertPdRc(irVo);
-				//idcMapper.insertPdSc(irVo);
-				}
-			}
-		if(mvo.getDeletedRows()!=null) {
-			for(IndRscVO irVo : mvo.getDeletedRows()) {
-				System.out.println("삭제:" + mvo);
-				//idcMapper.updateOdIdQty(irVo);
-				//idcMapper.insertPdRc(irVo);
-				//idcMapper.insertPdSc(irVo);
-				}
-			}
-		if(mvo.getUpdatedRows()!=null) {
-			for(IndRscVO irVo : mvo.getDeletedRows()) {
-				System.out.println("수정:" + mvo);
-				//idcMapper.updateOdIdQty(irVo);
-				//idcMapper.insertPdRc(irVo);
-				//idcMapper.insertPdSc(irVo);
-				}
-			}
-		return 0;
-	}
 }

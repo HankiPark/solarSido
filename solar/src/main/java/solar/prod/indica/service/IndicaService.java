@@ -30,9 +30,5 @@ public interface IndicaService {
 	List<?> rscCnt(CmmndataVO cVo);
 
 	int modifyData(ModifyVO<IndicaVO> mvo);
-	
-	int modifyRscCon(ModifyVO<IndRscVO> mvo);
-
-	int modifyPrdtRsc(ModifyVO<IndRscVO> mvo);
 
 }

@@ -62,7 +62,7 @@ function planDList(){
 		 	 {
 			    header: '계획명',
 			    name: 'planNm',
-			    hidden: true
+			    //hidden: true
 			  },
 			  {
 			    header: '계획일자',
@@ -78,6 +78,7 @@ function planDList(){
 			  { 
 			    header: '주문번호',
 			    name: 'orderNo',
+			    hidden: true
 			  },
 			  { header: '접수일자',
 			    name: 'recvDt',

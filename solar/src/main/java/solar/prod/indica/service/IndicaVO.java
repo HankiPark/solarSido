@@ -1,9 +1,11 @@
 package solar.prod.indica.service;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class IndicaVO {
+@EqualsAndHashCode(callSuper=false)
+public class IndicaVO extends IndRscVO {
 	
 	//생산지시
 	String indicaNo;	//지시번호
@@ -12,8 +14,6 @@ public class IndicaVO {
 	
 	//생산지시상세
 	int indicaDetaNo;	//지시상세번호
-//	String indicaNo;	//지시번호
-//	String indicaDt;	//지시일자
 	int planDetaNo;		//계획상세번호
 	String prdtCd;		//제품코드
 	String prodFg;		//생산구분
@@ -21,15 +21,12 @@ public class IndicaVO {
 	String wkOrd;		//작업순서
 	String wkDt;		//작업일자
 	String planDt;		//계획일자
-	String dayOutput; 	//일생산량 
+	int dayOutput; 		//일생산량 
 	String prodDay;		//생산일수
 	
 	//생산소요자재
 	int rscConNo;		//소요자재번호
-//	int indicaDetaNo;	//지시상세번호
 	String recvDt;		//접수일자
-//	String planDt;		//계획일자
-//	String indicaDt;	//지시일자
 	String orderNo;		//주문번호
 	String rscLot;		//자재LotNo
 	int rscConQty;		//소요량
@@ -52,17 +49,12 @@ public class IndicaVO {
 	//제품BOM, 자재
 	String rscCd;		//자재코드
 	String rscNm;		//자재명
-	String rscUseQty;	//소요량
-	String rsc_qty;		//수량
-	String rscStc;		//자재재고
-	String totalUseQty; //총소요량
+	int rscUseQty;		//소요량
+	int rscQty;			//수량
+	int rscStc;			//자재재고
+	int totalUseQty;	//총소요량
 	
 	//계획
-	String planQty;		//계획량
-	
-	//공정
-	String prcsOrd;		//공정순서
-	String prcsCd; 		//공정코드
-	String eqmCd; 		//설비코드
-	String eqmYn;		//설비비가동코드
+	int planQty;		//계획량
+
 }

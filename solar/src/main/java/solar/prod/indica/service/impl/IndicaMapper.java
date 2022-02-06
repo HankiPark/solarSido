@@ -1,6 +1,7 @@
 package solar.prod.indica.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.prod.indica.service.IndRscVO;
@@ -30,8 +31,7 @@ public interface IndicaMapper {
 	
 	//modify
 	int modifyData(ModifyVO<IndicaVO> mvo);
-	int modifyRscCon(ModifyVO<IndRscVO> mvo);
-	int modifyPrdtRsc(ModifyVO<IndRscVO> mvo);
+	int hiddenData(Map<String, List<IndicaVO>> map);
 	
 	//생산지시 등록
 	int insertIndica(IndicaVO idcVo);
@@ -46,4 +46,8 @@ public interface IndicaMapper {
 	//타테이블 데이터 변경
 	int insertPdRc(IndRscVO iprVo);
 	int updateOdIdQty(IndicaVO idcVo);
+	int insertRscCon(IndicaVO idcVo);
+	int insertRscOut(IndicaVO idcVo);
+	int updateUseRscStc(IndicaVO idcVo);
+	int insertPdSc(IndicaVO idcVo);
 }
