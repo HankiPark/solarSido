@@ -11,25 +11,24 @@ import lombok.Data;
 @Data
 public class RsltVO {
 
-	String prcsNm;
-	String liNo;
-	String wkNo;
-	
 	String rsltNo;
-	@JsonFormat(pattern="yyyy/MM/dd", timezone="Asia/Seoul")
-	@DateTimeFormat(pattern="yyyy/MM/dd")
-	Date wkDt;
-	
-	String rsltDetaNo;
+	String prdtCd;
 	String empId;
-	String empNo;
-	String eqmCd;
+	String prcsCd;
 	String istQty;
 	String rsltQty;
 	String inferQty;
+	@JsonFormat(pattern="hh24:mi:ss", timezone="Asia/Seoul")
+	@DateTimeFormat(pattern="hh24:mi:ss")
 	Date frTm;
+	@JsonFormat(pattern="hh24:mi:ss", timezone="Asia/Seoul")
+	@DateTimeFormat(pattern="hh24:mi:ss")
 	Date toTm;
-	String rscLot;
+	
+	String wkNo;
+	@JsonFormat(pattern="yyyy/MM/dd", timezone="Asia/Seoul")
+	@DateTimeFormat(pattern="yyyy/MM/dd")
+	Date wkDt;
 	
 	
 }

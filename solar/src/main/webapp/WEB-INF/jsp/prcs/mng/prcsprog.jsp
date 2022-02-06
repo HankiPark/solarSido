@@ -31,7 +31,7 @@
 				<input type="text" id="toTm">
 				<button id="btnEnd" disabled="disabled">종료</button>
 				<br>
-				<button id="btnAddPerf">실적등록</button>
+				<button id="btnAddRslt">실적등록</button>
 				<button id="btnTest1">테스트용1</button>
 				<button id="btnTest2">테스트용2</button>
 				<div>
@@ -121,6 +121,10 @@
 	
 	let wkQty = document.getElementById("wkQty");
 	
+	// 선택한 사원정보를 담을 변수
+	let sEmp;
+	
+	
 	// 테스트용 변수 전역처리
 	
 	
@@ -185,7 +189,19 @@
 		}, {
 			header : '공정명',
 			name : 'prcsCd',
-			
+			formatter:'listItemText',
+			editor: {
+				type: 'text',
+				options : {
+					listItems : [
+						{ text:'생산대기중', value: '0' },
+						{ text:'1번공정', value: '1번공정'},
+						{ text:'2번공정', value: '2번공정'},
+						{ text:'3번공정', value: '3번공정'},
+						{ text:'4번공정', value: '4번공정'},
+						]
+	            }
+			}
 		}, {
 			header : '진행상태',
 			name : 'lowSt'
@@ -196,7 +212,7 @@
 	const inDataSource = {
 			   api : {
 			      readData : {
-			         url : '${pageContext.request.contextPath}/prcs/prcsItem',
+			         url : '${pageContext.request.contextPath}/prcs/prcsBasicItem',
 			         method : 'GET'
 			      }
 			   },
@@ -248,8 +264,8 @@
 		var readParams = {
 				'indicaDetaNo':indicaDetaNo
 		}
-		prcsGrid.readData(1,readParams,true);
-		prcsGrid.refreshLayout();
+		prcsGrid.readData(1,readParams,false);
+		//prcsGrid.refreshLayout();
 		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/prcs/prcsItemRsc",
@@ -377,7 +393,7 @@
 		var min = "0";
 		var hour = "0";
  			
- 			// 테스트 버튼
+ 			// 시작 버튼
  			$("#btnStart").on("click", function(ev){
  			
  					
@@ -1177,7 +1193,46 @@
  					// 종료버튼 끝
 				});
 
+ 				$("#btnAddRslt").on("click", function(){			// 실적 등록 버튼 이벤트 
+ 					
+ 					console.log(pIstQty);
+ 					console.log(pPrdtCd);
+ 					console.log(pPrcsCd);
+ 					
+ 					
+ 					$.ajax({
+						url:"${pageContext.request.contextPath}/prcs/insertRslt",
+						data : {
+							'prcsCd':prcsCd,
+							'empId':empId,
+							'prcsCd':prcsCd,
+							'istQty':itsQty,
+							'rsltQty':rsltQty,
+							'inferQty':inferQty,
+							'frTm':frTm,
+							'toTm':toTm,
+							'wkNo':wkNo,
+							'wkDt':wkDt
+						},
+						dataType: 'JSON',
+						async: false,
+						contentType: 'application/json',
+						success : function(result){
+												
+						},
+						error : function(result){
+							console.log("실적등록 실패")
+						}
+					});	
+ 					
+ 				});
+ 				
+ 				
+ 				
+ 				
 	}	// 공정타이머 함수 끝	
+	
+	
 	
 	$("#btnTest1").on("click", function(ev){
 		console.log(document.getElementById("wkQty").value);

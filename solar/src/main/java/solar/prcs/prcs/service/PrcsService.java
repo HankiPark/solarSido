@@ -6,6 +6,7 @@ public interface PrcsService {
 
 	List<PrcsPrMVO> selectAll();
 	List<IndicaVO> selectPDay(IndicaVO vo);
+	List<ClotVO> selectBasicItem(ClotVO vo);
 	List<ClotVO> selectPrcsItem(ClotVO vo);
 	int updateRscClot(ClotVO vo);
 	int insertRscClot(ClotVO vo);
@@ -19,5 +20,6 @@ public interface PrcsService {
 	
 	int insertPrcsPrM(PrcsPrMVO vo);
 	List<PrcsPrMVO> updatePrcsPrM(PrcsPrMVO vo);
+	int insertRslt(RsltVO vo);
 	
 }
