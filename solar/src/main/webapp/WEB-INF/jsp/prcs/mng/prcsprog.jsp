@@ -43,12 +43,26 @@
 
 
 			<div class="col-6" id="prcsGrid1"></div>
-
+		</div>
+		<br><br><br>
+		<div>
+			<div>
+				<h6 id="whichPrcs">공정명</h6>
+				<div>1번설비: <span id="fstEqm">0</span></div>
+				<div>2번설비: <span id="sndEqm">0</span></div>
+				<div>3번설비: <span id="trdEqm">0</span></div>
+				<div>4번설비: <span id="fthEqm">0</span></div>
+			</div>
 		</div>
 	</div>
 </body>
 
 <script>
+	let fstEqm = document.getElementById('fstEqm');
+	let sndEqm = document.getElementById('sndEqm');
+	let trdEqm = document.getElementById('trdEqm');
+	let fthEqm = document.getElementById('fthEqm');
+	let selectedPrdtCd;
 	
 	// 그리드 선언
 	let prcsGrid
@@ -268,6 +282,7 @@
 	function innPrcsEqm(prcsNm, prcsCd, liNm){
 		$("#prcsNm").val(prcsNm);
 		$("#liNm").val(liNm);
+		whichPrcs.innerText = prcsNm;
 		
 		pPrcsCd = prcsCd;
 		
@@ -575,6 +590,7 @@
 										 									console.log("첫번째 공정완료");
 										 									unit1Count++;
 										 									console.log("카운트가 다음 장비를 가리킵니다")
+										 									fstEqm.innerText = unit1Count;
 										 								},
 										 								error : function(result){
 										 									console.log("등록실패")
@@ -817,6 +833,7 @@
 									 									console.log("첫번째 공정완료");
 									 									unit2Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
+									 									sndEqm.innerText = unit2Count;
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -951,6 +968,7 @@
 									 									console.log("첫번째 공정완료");
 									 									unit3Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
+									 									trdEqm.innerText = unit3Count;
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1093,6 +1111,7 @@
 									 									wkQty.value = wkQty.value*1+1;
 									 									console.log(wkQty);
 									 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
+									 									fthEqm.innerText = unit4Count;
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1360,6 +1379,7 @@
 	 									console.log("첫번째 공정완료");
 	 									unit1Count++;
 	 									console.log("카운트가 다음 장비를 가리킵니다")
+	 									fstEqm.innerText = unit1Count;
 	 								},
 	 								error : function(result){
 	 									console.log("등록실패")

@@ -18,7 +18,7 @@
 	prcsEqmDataSource = {
 			api : {
 				readData : {
-					url : "${pageContext.request.contextPath}/modal/searchPrcsEqm/prcs",
+					url : "${pageContext.request.contextPath}/modal/searchPrcsEqm/prcs?prdtCd="+selectedPrdtCd,
 					method : 'GET',	
 				}
 			}

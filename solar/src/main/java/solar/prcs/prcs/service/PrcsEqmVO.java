@@ -36,6 +36,6 @@ public class PrcsEqmVO {
 	String pTime;
 	String eqmImg;
 	String eqmYn;
-	
+	String prdtCd;
 	
 }
