@@ -299,7 +299,15 @@
         	
             const dataSource = {
                 api: {
-                    readData: {url: '${pageContext.request.contextPath}/grid/eqmList.do',method: 'GET'},
+                    readData: {
+                    	url: '${pageContext.request.contextPath}/grid/eqmList.do',
+                    	method: 'GET',
+                    	initParams: {
+                            'eqmParam': document.getElementById('eqmParam').value,
+                            'eqmParam2': 1,
+                            'dtStt': dtStt,
+                            'dtEnd': dtEnd,
+                    		}},
                     modifyData: {url: '${pageContext.request.contextPath}/eqm/grid/eqmPut',method: 'PUT'} 
                 },
                 contentType: 'application/json'
@@ -521,6 +529,7 @@
             findGrid.addEventListener('click', function () {
                 grid.readData(1, {
                     'eqmParam': document.getElementById('eqmParam').value,
+                    'eqmParam2': 1,
                     'dtStt': dtStt,
                     'dtEnd': dtEnd,
                 });

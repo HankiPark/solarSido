@@ -7,6 +7,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+	.eqmImg{
+		width: 150px;
+		height: 150px;
+	}
+	.progressBar{
+		background-color: #d3d3d3;
+	}
+	.pBar{
+		background-color: #47af50;
+	}
+	.eqm{
+		background-color: rgb(247,247,247);
+		text-align: center;
+	}
+	.tk{
+		position: absolute;
+		z-index: 100;
+		width: 128px;
+		height: 86px;
+		display: none;
+	}
+</style>
 <body>
 
 	<div id="indicaDialog-form" title="작업지시번호"></div>
@@ -44,26 +67,93 @@
 
 			<div class="col-6" id="prcsGrid1"></div>
 		</div>
-		<br><br><br>
+		<br><br><br><br><br>
 		<div>
-			<div>
-				<h6 id="whichPrcs">공정명</h6>
-				<div>1번설비: <span id="fstEqm">0</span></div>
-				<div>2번설비: <span id="sndEqm">0</span></div>
-				<div>3번설비: <span id="trdEqm">0</span></div>
-				<div>4번설비: <span id="fthEqm">0</span></div>
+			<h3 id="whichPrcs">공정명</h3>
+			<div class="flex row">
+				<div class="col-2 eqm">
+					<div><img id="fstImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번설비: <span id="eqm1">0</span></div>
+					<div class="progressBar">
+					  <div id="pBar1" class="pBar" style="width:0%">
+					    <div class="pBarText">0%</div>
+					  </div>
+					</div>
+				</div>
+				<div class="col-2 eqm">
+					<div><img id="sndImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번설비: <span id="eqm2">0</span></div>
+					<div class="progressBar">
+					  <div id="pBar2" class="pBar" style="width:0%">
+					    <div class="pBarText">0%</div>
+					  </div>
+					</div>
+				</div>
+				<div class="col-2 eqm">
+					<div><img id="trdImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번설비: <span id="eqm3">0</span></div>
+					<div class="progressBar">
+					  <div id="pBar3" class="pBar" style="width:0%">
+					    <div class="pBarText">0%</div>
+					  </div>
+					</div>
+				</div>
+				<div class="col-2 eqm">
+					<div><img id="fthImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번설비: <span id="eqm4">0</span></div>
+					<div class="progressBar">
+					  <div id="pBar4" class="pBar" style="width:0%">
+					    <div class="pBarText">0%</div>
+					  </div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </body>
 
 <script>
-	let fstEqm = document.getElementById('fstEqm');
-	let sndEqm = document.getElementById('sndEqm');
-	let trdEqm = document.getElementById('trdEqm');
-	let fthEqm = document.getElementById('fthEqm');
+	/*---------------------------------------------------------*/
 	let selectedPrdtCd;
 	
+	let fst=true,snd=true,trd=true,fth=true;
+	
+	function sleep(ms) {
+		  return new Promise((r) => setTimeout(r, ms));
+		}
+	
+	function pngToGif(i){
+		let imgTag = document.getElementById('eqmImg'+i);
+		imgTag.src = '${pageContext.request.contextPath}/images/eqm'+i+'.gif';
+		sleep(3210).then(() => {imgTag.src = '${pageContext.request.contextPath}/images/eqm'+i+'.png';});
+	}
+	
+	function setProgress(num, cnt, max) {
+		let pBar = document.getElementById('pBar'+num);
+		let eqm = document.getElementById('eqm'+num);
+		pBar.style.width = (cnt/max*100)+'%';
+	    pBar.childNodes[1].innerHTML = (cnt/max*100).toFixed(1)+'%';
+	    eqm.innerText = cnt;
+	    pngToGif(num);
+	}
+		
+	function makeTk(num, cnt, max) {
+		let pBar = document.getElementById('pBar'+num);
+		let eqm = document.getElementById('eqm'+num);
+		pBar.style.width = (cnt/max*100)+'%';
+	    pBar.childNodes[1].innerHTML = (cnt/max*100).toFixed(1)+'%';
+	    eqm.innerText = cnt;
+	    moveTk(num);
+	}
+	function moveTk(i){
+		let tk = document.getElementById('tk'+i);
+		tk.style.display = 'block';
+		if(parseInt(tk.style.left)<200){
+			sleep(50).then(() => {tk.style.left = parseInt(tk.style.left)+5+'px';tk.style.top = parseInt(tk.style.top)+3+'px';moveTk(i);});
+		}else{
+			tk.style.display = 'none';
+			tk.style.left = '0px';
+			tk.style.top = '100px';
+		}
+	}
+	
+	/*----------------------------------------------------------*/
 	// 그리드 선언
 	let prcsGrid
 	let rk
@@ -607,9 +697,8 @@
 										 								success : function(result){
 										 									//console.log("첫번째 공정완료");
 										 									unit1Count++;
-										 									console.log("1번장비 "+unit1Count+"번 완료");
-										 									//console.log("카운트가 다음 장비를 가리킵니다")
-										 									fstEqm.innerText = unit1Count;
+										 									console.log("카운트가 다음 장비를 가리킵니다")
+										 									setProgress(1,unit1Count,tAmount);
 										 								},
 										 								error : function(result){
 										 									console.log("등록실패")
@@ -803,9 +892,8 @@
 									 								success : function(result){
 									 									//console.log("첫번째 공정완료");
 									 									unit2Count++;
-									 									console.log("2번장비 "+unit2Count+"번 완료");
-									 									//console.log("카운트가 다음 장비를 가리킵니다")
-									 									sndEqm.innerText = unit2Count;
+									 									console.log("카운트가 다음 장비를 가리킵니다")
+									 									setProgress(1,unit2Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -910,9 +998,8 @@
 									 								success : function(result){
 									 									//console.log("첫번째 공정완료");
 									 									unit3Count++;
-									 									console.log("3번장비 "+unit3Count+"번 완료");
-									 									//console.log("카운트가 다음 장비를 가리킵니다")
-									 									trdEqm.innerText = unit3Count;
+									 									console.log("카운트가 다음 장비를 가리킵니다")
+ 									 									setProgress(1,unit3Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1023,8 +1110,8 @@
 									 									console.log("4번장비 "+unit4Count+"번 완료");
 									 									wkQty.value = wkQty.value*1+1;
 									 									console.log(wkQty);
-									 									//console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
-									 									fthEqm.innerText = unit4Count;
+									 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
+ 									 									setProgress(1,unit4Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1331,7 +1418,7 @@
 	 									console.log("첫번째 공정완료");
 	 									unit1Count++;
 	 									console.log("카운트가 다음 장비를 가리킵니다")
-	 									fstEqm.innerText = unit1Count;
+	 									setProgress(1,unit1Count,10);
 	 								},
 	 								error : function(result){
 	 									console.log("등록실패")
