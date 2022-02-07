@@ -181,6 +181,8 @@
 			});
 		});
 		$('#btnSave').on('click', function appendRow(index) {
+			
+			
 			grid.blur();
 			grid.request('modifyData');
 			SaveComplete();

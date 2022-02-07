@@ -51,6 +51,13 @@
 				toastr.warning('생산일수에 숫자만 입력해주세요')
 			}
 		}
+		
+		function Savedone(){
+			toastr.success('수정이 완료되었습니다.')
+		}
+		function Deletedone(){
+			toastr.success('해당 데이터가 삭제되었습니다 저장 해주세요.');
+		}
 
 		var dataSource = {
 			api : {
@@ -146,10 +153,12 @@
 		$('#btnSave').on('click', function appendRow(index) {
 			grid.blur();
 			grid.request('modifyData');
+			Savedone();
 		});
 		$('#btnDel').on('click', function appendRow(index) {
 			grid.blur();
 			grid.removeCheckedRows(true);
+			Deletedone();
 		});
 
 		$('#btnfind').on('click', function() {
