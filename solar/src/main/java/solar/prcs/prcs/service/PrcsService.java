@@ -10,6 +10,7 @@ public interface PrcsService {
 	List<ClotVO> selectPrcsItem(ClotVO vo);
 	int updateRscClot(ClotVO vo);
 	int insertRscClot(ClotVO vo);
+	int insertPrdtStc(PrdtStcVO vo);
 	
 	List<PrcsEqmVO> selectPrcs(PrcsEqmVO vo);
 	List<PrcsFlowVO> selectPrcsFlow(PrcsFlowVO vo);

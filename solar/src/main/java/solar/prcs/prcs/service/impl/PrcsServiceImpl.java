@@ -9,8 +9,9 @@ import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsFlowVO;
-import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.PrcsPrMVO;
+import solar.prcs.prcs.service.PrcsService;
+import solar.prcs.prcs.service.PrdtStcVO;
 import solar.prcs.prcs.service.RscConVO;
 import solar.prcs.prcs.service.RsltVO;
 
@@ -99,8 +100,14 @@ public class PrcsServiceImpl implements PrcsService {
 	public int insertRslt(RsltVO vo) {
 		return prcsmapper.insertRslt(vo);
 	}
-	 
-	 
-	
+
+
+	@Override
+	public int insertPrdtStc(PrdtStcVO vo) {
+		return prcsmapper.insertPrdtStc(vo);
+	}
+
+
+
 	
 }

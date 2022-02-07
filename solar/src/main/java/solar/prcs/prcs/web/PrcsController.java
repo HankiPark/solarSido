@@ -16,6 +16,7 @@ import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsPrMVO;
 import solar.prcs.prcs.service.PrcsService;
+import solar.prcs.prcs.service.PrdtStcVO;
 import solar.prcs.prcs.service.RscConVO;
 import solar.prcs.prcs.service.RsltVO;
 
@@ -146,17 +147,29 @@ public class PrcsController {
 		  return prcsservice.updateRscClot(vo);
 	  }
 	  
+	  
 	  @RequestMapping("prcs/insertRscClot")
 	  public String insertRscClot(ClotVO vo, Model model) {
 		  
 		  Map<String, Object> map = new HashMap();
-		  
 		  map.put("contents", prcsservice.insertRscClot(vo));
 		  model.addAttribute("result", true);
 		  model.addAttribute("data", map);
 		  
 		  return "jsonView";  
 	  }
+	  
+	  @RequestMapping("prcs/insertPrdtStc")
+	  public String insertPrdtStc(PrdtStcVO vo, Model model) {
+		  Map<String, Object> map = new HashMap();
+		  map.put("contents", prcsservice.insertPrdtStc(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
+		  return "jsonView";
+		  
+	  }
+	  
 	  
 	  @RequestMapping("prcs/insertRslt")
 	  public String insertRslt(RsltVO vo, Model model) {
@@ -168,8 +181,7 @@ public class PrcsController {
 		  
 		  return "jsonView";
 	  }
-	  
-	  
+
 	  
 	  
 }
