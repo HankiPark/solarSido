@@ -179,7 +179,7 @@
 <insert id="insertPrcsPrM" parameterType="solar.prcs.prcs.service.PrcsPrMVO" useGeneratedKeys="true">
 	<selectKey keyColumn="wkNo" keyProperty="wkNo" order="BEFORE" resultType="solar.prcs.prcs.service.PrcsPrMVO" >
 		
-		(select nvl(max(to_number(wk_no)),0)+1 as wkNo from prcs_pr_m)
+		(select nvl(max(wk_no),0)+1 as wkNo from prcs_pr_m)
 	
 	</selectKey>
 	
@@ -192,7 +192,7 @@
 							indica_no,
 							indica_dt
 					)
-				 	values(	#{wkNo},
+				 	values(	TO_NUMBER(#{wkNo}),
 							sysdate,
 							#{prodFg},
 							#{prdtCd},
