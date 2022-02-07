@@ -66,7 +66,7 @@ $(function(){
 	$("div:contains('dialog-') button:contains('완료')").css("boxShadow","2px 2px 2px #74a3b0");
 	$("div:contains('dialog-') button:contains('완료')").css("borderRadius",5);
 	$("div:contains('dialog-') button:contains('완료')").css("padding","6 1 6 3"); 
-	
+	$('th').css('border-bottom','5px solid #fc7a45');
 	}
 )
 

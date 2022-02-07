@@ -33,8 +33,8 @@ border-top:3px solid #FECEBB;
 								name="planNm" required>
 						</div>
 						<div>
-							<button type="button" id="btnReset">초기화</button>
-							<button type="button" id="btnSave">저장</button>
+							<button type="button" id="btnReset" style="margin-top:5px">초기화</button>
+							<button type="button" id="btnSave" style="margin-top:5px">저장</button>
 							<!--  <button type="button" id="btnDel">삭제</button> -->
 						</div>
 					</form>
@@ -76,7 +76,7 @@ border-top:3px solid #FECEBB;
 				</div>
 				<div class="col-3" style="margin-top: -10px">
 					<button type="button" id="rscOrder"
-						style="width: 150px; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0">
+						style="box-shadow:2px 2px 2px #74a3b0;width: 150px; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0">
 						<i class="far fa-folder-open"></i> &nbsp; 발주요청
 					</button>
 				</div>

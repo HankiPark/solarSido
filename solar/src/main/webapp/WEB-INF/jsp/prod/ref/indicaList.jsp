@@ -61,7 +61,7 @@ position: absolute;
 
 <body>
 <h2>생산지시조회</h2>
-<hr/>
+
 
 <!-- 검색모달 -->
 <div id="coCdModal" title="업체 목록"></div>
@@ -98,15 +98,15 @@ position: absolute;
 				</form>
 			</div>
 
-			<div class="card-footer" style="margin-bottom: 30px;">
+			<div class="card-footer" style="margin-left:50px;margin-bottom: 30px;">
 					<button type="button" id="btnSearch">조회</button>
 					<button type="button" id="btnReset">초기화</button>
 			</div>
 		</div>
 
 <!-- 생산지시 상세 그리드-->
-	<div class="col-8" style="margin-top: 50px;">
-		<button style="width: 100px; height: 40px; font-size: 20px; border-radius: 5px;boxShadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
+	<div class="col-8" style="margin-top: 40px;">
+		<button style="margin-bottom:10px;width: 100px; height: 40px; font-size: 20px; border-radius: 5px;box-shadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
 		<div id="indicaDgrid"></div>
 	</div>
 </div>

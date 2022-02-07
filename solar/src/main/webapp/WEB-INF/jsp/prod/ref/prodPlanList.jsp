@@ -100,7 +100,7 @@ position: absolute;
 				</form>
 			</div>
 
-			<div class="card-footer" style="margin-bottom: 30px;">
+			<div class="card-footer" style="margin-left:50px;margin-bottom: 30px;">
 				<button type="button" id="btnSearch">조회</button>
 				<button type="button" id="btnReset">초기화</button>
 
@@ -108,8 +108,8 @@ position: absolute;
 		</div>
 		
 		<!-- 생산계획 상세 그리드-->
-		<div class="col-8" style="margin-top: 50px;">
-			<button style="width: 100px;boxShadow:2px 2px 2px #74a3b0; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
+		<div class="col-8" style="margin-top: 40px;">
+			<button style="width: 100px;margin-bottom:10px;box-shadow:2px 2px 2px #74a3b0; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
 			<div id="planDgrid"></div>
 		</div>
 	</div>
