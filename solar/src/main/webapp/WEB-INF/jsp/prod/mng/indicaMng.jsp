@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 <title>생산지시 관리</title>
 </head>
-
+<style>
+.card-outline2 {
+	border-top: 3px solid #FECEBB;
+}
+</style>
 <body>
 	<h2>생산지시 관리</h2>
 	<hr />
@@ -16,79 +20,105 @@
 	<div id="indicaModal" title="생산지시서 조회"></div>
 
 	<!-- 생산지시 테이블 -->
-	<div class="row">
-		<div class="col-9">
-			<form name="indicaMngFrm">
-				<div>
-					<label>지시일자<span style="color: red">*</span></label> 
-					<input type="date" id="indicaDt" name="indicaDt" required> 
-					<label>생산지시명<span	style="color: red">*</span></label> 
-					<input type="text" id="indicaNm" name="indicaNm" required>
+	<div class="card card-pricing card-primary card-white card-outline"
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-9">
+					<form name="indicaMngFrm">
+						<div>
+							<label>지시일자<span style="color: red">*</span></label> <input
+								type="date" id="indicaDt" name="indicaDt" required> <label>생산지시명<span
+								style="color: red">*</span></label> <input type="text" id="indicaNm"
+								name="indicaNm" required>
+						</div>
+						<div>
+							<button type="button" id="btnReset" style="margin-top: 5px">초기화</button>
+							<button type="button" id="btnSave" style="margin-top: 5px">저장</button>
+							<!-- <button type="button" id="btnDel">삭제</button> -->
+						</div>
+					</form>
 				</div>
-				<div>
-					<button type="button" id="btnReset">초기화</button>
-					<button type="button" id="btnSave">저장</button>
-					<!-- <button type="button" id="btnDel">삭제</button> -->
+				<div class="col-3">
+					<label>생산지시서 조회</label>
+					<button type="button" id="btnFind">🔍</button>
 				</div>
-			</form>
-		</div>
-		<div class="col-3">
-			<label>생산지시서 조회</label>
-			<button type="button" id="btnFind">🔍</button>
+			</div>
 		</div>
 	</div>
-	<hr />
 
 	<!-- 생산지시 상세 그리드-->
-	<div id="indicaDgrid" class="row">
-		<div class="col-6">
-			<label>지시번호</label> <input type="text" id="indicaNo" name="indicaNo"
-				readonly>
-		</div>
-		<div id="btnMng" class="col-6">
-			<!-- <button type="button" id="planSearch">미지시계획</button>
+	<div class="card card-pricing card-primary card-white card-outline2"
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+		<div class="card-body">
+			<div id="indicaDgrid" class="row">
+				<div class="col-7">
+					<label>지시번호</label> <input type="text" id="indicaNo"
+						name="indicaNo" readonly>
+				</div>
+				<div id="btnMng" class="col-5" style="margin-top: -10px">
+					<!-- <button type="button" id="planSearch">미지시계획</button>
 			<button type="button" id="indicaSearch">지시수정</button> -->
-			<button type="button" id="rowAdd">추가</button>
-			<button type="button" id="rowDel">삭제</button>
+					<button type="button" id="rowAdd">추가</button>
+					<button type="button" id="rowDel">삭제</button>
+				</div>
+			</div>
 		</div>
 	</div>
-	<hr />
+
 
 	<div class="row">
 		<!-- 소요자재 그리드 -->
-		<div id="rscGrid" class="col-5">
-			<form name="rscFrm">
-				<label>지시상세번호</label> 
-				<input type="text" id="idcDno" name="idcDno" readonly> <br> 
-				<label>제품코드</label> 
-				<input type="text"	id="prdtCd" name="prdtCd" readonly>
-				<!-- <label>제품명</label>  -->
-				<input type="hidden" id="prdtNm" name="prdtNm" readonly>
-			</form>
-		</div>
-		<!-- 자재별 lot 선택 그리드 -->
-		<div id="rscLotGrid" class="col-7">
-			<form name="rscLotFrm">
-				<label>자재코드</label> 
-				<input type="text" id="rscCd" name="rscCd" readonly> 
-				<!-- <label>자재명</label>  -->
-				<input type="hidden" id="rscNm" name="rscNm" readonly> <br> 
-				<label>총 소요량</label> 
-				<input type="text" id="totalUseQty" name="totalUseQty" readonly>
-			</form>
-		</div>
-	</div>
-	<br>
-	
-	<div>
-		<button type="button" id="rscReset">초기화</button>
-	</div>
-	
-	<!-- 소요자재 히든그리드 -->
-	<div id="hdRscConGrid"></div>
-	<!-- 제품lot별 자재lot 부여 히든그리드 -->
-	<div id="hdPrdtRscGrid" style="display:none"></div>
+		<div
+			class="card card-pricing card-primary card-white card-outline2 col-5"
+			style="margin-left: 50px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+			<div class="card-body">
+				<div id="rscGrid">
 
+					<form name="rscFrm">
+						<label>지시상세번호</label> <input type="text" id="idcDno" name="idcDno"
+							readonly> <br> <label>제품코드</label> <input
+							type="text" id="prdtCd" name="prdtCd" readonly>
+						<!-- <label>제품명</label>  -->
+						<input type="hidden" id="prdtNm" name="prdtNm" readonly>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- 자재별 lot 선택 그리드 -->
+		<div
+			class="card card-pricing card-primary card-white card-outline2 col-6"
+			style=" margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+			<div class="card-body">
+				<div id="rscLotGrid">
+
+					<form name="rscLotFrm">
+						<label>자재코드</label> <input type="text" id="rscCd" name="rscCd"
+							readonly>
+						<!-- <label>자재명</label>  -->
+						<input type="hidden" id="rscNm" name="rscNm" readonly> <br>
+						<label>총 소요량</label> <input type="text" id="totalUseQty"
+							name="totalUseQty" readonly>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="card card-pricing card-primary card-white card-outline2 "
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+		<div class="card-body">
+			<div style="margin-top:-10px">
+				<button type="button" id="rscReset" style="margin-bottom:10px">초기화</button>
+			</div>
+
+			<!-- 소요자재 히든그리드 -->
+			<div id="hdRscConGrid"></div>
+			<!-- 제품lot별 자재lot 부여 히든그리드 -->
+			<div id="hdPrdtRscGrid" style="display: none"></div>
+		</div>
+	</div>
 </body>
 
 <!-- 스크립트 -->

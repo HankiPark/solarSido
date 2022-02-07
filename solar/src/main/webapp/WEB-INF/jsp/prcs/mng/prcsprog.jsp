@@ -8,99 +8,125 @@
 <title>Insert title here</title>
 </head>
 <style>
-	.eqmImg{
-		width: 150px;
-		height: 150px;
-	}
-	.progressBar{
-		background-color: #d3d3d3;
-	}
-	.pBar{
-		background-color: #47af50;
-	}
-	.eqm{
-		background-color: rgb(247,247,247);
-		text-align: center;
-	}
-	.tk{
-		position: absolute;
-		z-index: 100;
-		width: 128px;
-		height: 86px;
-		display: none;
-	}
+.eqmImg {
+	width: 150px;
+	height: 150px;
+}
+
+.progressBar {
+	background-color: #d3d3d3;
+}
+
+.pBar {
+	background-color: #47af50;
+}
+
+.eqm {
+	background-color: rgb(247, 247, 247);
+	text-align: center;
+}
+
+.tk {
+	position: absolute;
+	z-index: 100;
+	width: 128px;
+	height: 86px;
+	display: none;
+}
 </style>
 <body>
-
+	<h1>공정 진행 관리</h1>
 	<div id="indicaDialog-form" title="작업지시번호"></div>
 	<div id="prcsEqmDialog-form" title="공정선택"></div>
 	<div id="empDialog-form" title="사원검색"></div>
 
 
 	<div>
-		<div class="row">
-			<div class="col-5">
-				지시번호 : <input type="text" id="indicaDetaNo">
-				<button type="button" id="searchIndica">🔍</button>
-				<br> <br> 제품코드 : <input type="text" id="prdtCd"><br>
-				<br> 공정명 : <input type="text" id="prcsNm">
-				<button type="button" id="searchEqm">🔍</button>
-				<br> <br> 라인번호 : <input type="text" id="liNm"><br>
-				<br> <br> 작업자 : <input type="text" id="empNm">
-				<button type="button" id="searchEmp">🔍</button>
-				작업량 : <input type="text" id="wkQty"><br> <br> <input
-					type="text" id="frTm">
-				<button id="btnStart">시작</button>
-				<input type="text" id="toTm">
-				<button id="btnEnd" disabled="disabled">종료</button>
-				<br>
-				<button id="btnAddRslt">실적등록</button>
-				<button id="btnTest1">테스트용1</button>
-				<button id="btnTest2">테스트용2</button>
-				<div>
-					<!-- 실시간으로 변화할 파트  -->
-					<h1 id="prcsTimer"></h1>
+		<div class="row" id="sensePrdtIn">
+			<div
+				class="card card-pricing card-primary card-white card-outline col-4"
+				id="sensePrdtInBody"
+				style="margin-left: 50px; margin-right: 30px; margin-top: 70px; padding-left: 40px; margin-bottom: 250px; height: 600px">
+				<div class="card-body">
+					<div data-role="fieldcontain" style="margin-bottom: 20px; margin-top: 50px;"><label>지시번호 </label> <input type="text" id="indicaDetaNo">
+					<button type="button" id="searchIndica">🔍</button></div>
+					<div style="margin-bottom: 20px;"> <label>제품코드</label> <input type="text"
+						id="prdtCd"></div><div style="margin-bottom: 20px;"> <label>공정명&nbsp;&nbsp;&nbsp;&nbsp;</label> <input
+						type="text" id="prcsNm">
+					<button type="button" id="searchEqm">🔍</button></div>
+					<div style="margin-bottom: 20px;"> <label>라인번호</label> <input type="text"
+						id="liNm"></div> <div style="margin-bottom: 20px;"><label>작업자&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<input type="text" id="empNm">
+					<button type="button" id="searchEmp">🔍</button></div>
+					<div style="margin-bottom: 10px;"><label>작업량&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="wkQty"></div>
+					<div style="margin-bottom: 10px;"><input type="text" id="frTm">
+					<button id="btnStart" style="margin-bottom:10px;width: 100px; height: 40px; font-size: 20px; border-radius: 5px;box-shadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px">시작</button></div>
+					<div style="margin-bottom: 10px;"><input type="text" id="toTm">
+					<button id="btnEnd" disabled="disabled" style="margin-bottom:10px;width: 100px; height: 40px; font-size: 20px; border-radius: 5px;box-shadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px">종료</button></div>
+					
+					<button id="btnAddRslt" style="margin-bottom:10px;margin-left:120px;width: 150px; height: 40px; font-size: 20px; border-radius: 5px;box-shadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px"><i class="far fa-registered"></i>실적등록</button>
+					<div>
+						<!-- 실시간으로 변화할 파트  -->
+						<h1 id="prcsTimer"></h1>
+					</div>
 				</div>
 			</div>
 
+			<div class="col-7">
+				<div id="prcsGrid1"></div>
 
-
-			<div class="col-6" id="prcsGrid1"></div>
-		</div>
-		<br><br><br><br><br>
-		<div>
-			<h3 id="whichPrcs">공정명</h3>
-			<div class="flex row">
-				<div class="col-2 eqm">
-					<div><img id="eqmImg1" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번설비: <span id="eqm1">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar1" class="pBar" style="width:0%">
-					    <div class="pBarText">0%</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-2 eqm">
-					<div><img id="eqmImg2" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번설비: <span id="eqm2">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar2" class="pBar" style="width:0%">
-					    <div class="pBarText">0%</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-2 eqm">
-					<div><img id="eqmImg3" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번설비: <span id="eqm3">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar3" class="pBar" style="width:0%">
-					    <div class="pBarText">0%</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-2 eqm">
-					<div><img id="eqmImg4" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번설비: <span id="eqm4">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar4" class="pBar" style="width:0%">
-					    <div class="pBarText">0%</div>
-					  </div>
+				<div>
+					
+					<div class="flex row"><h3 id="whichPrcs">공정명</h3> &nbsp;&nbsp;
+						<div class="col-2 eqm">
+						
+							<div>
+								<img id="eqmImg1" class="eqmImg"
+									src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번설비:
+								<span id="eqm1">0</span>
+							</div>
+							<div class="progressBar">
+								<div id="pBar1" class="pBar" style="width: 0%">
+									<div class="pBarText">0%</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 eqm">
+							<div>
+								<img id="eqmImg2" class="eqmImg"
+									src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번설비:
+								<span id="eqm2">0</span>
+							</div>
+							<div class="progressBar">
+								<div id="pBar2" class="pBar" style="width: 0%">
+									<div class="pBarText">0%</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 eqm">
+							<div>
+								<img id="eqmImg3" class="eqmImg"
+									src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번설비:
+								<span id="eqm3">0</span>
+							</div>
+							<div class="progressBar">
+								<div id="pBar3" class="pBar" style="width: 0%">
+									<div class="pBarText">0%</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2 eqm">
+							<div>
+								<img id="eqmImg4" class="eqmImg"
+									src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번설비:
+								<span id="eqm4">0</span>
+							</div>
+							<div class="progressBar">
+								<div id="pBar4" class="pBar" style="width: 0%">
+									<div class="pBarText">0%</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -315,6 +341,8 @@
 	  el: document.getElementById('prcsGrid1'),
 	  data : inDataSource ,
 	  columns : prcsColumns,
+	  bodyHeight : 500,
+	  minBodyHeight : 500,
 	  initialRequest : false						// 그리드 생성시 readdata 사용 x
 	});	
  		
@@ -1449,7 +1477,13 @@
 		
 		
 	});
-	
+	$('#sensePrdtIn').resize(function(){
+		if($('#sensePrdtIn').width()<1780){
+			$('#sensePrdtInBody').css('paddingLeft','15px');
+		}else{
+			$('#sensePrdtInBody').css('paddingLeft','40px');
+		}
+	})
  		
 	</script>
 </html>

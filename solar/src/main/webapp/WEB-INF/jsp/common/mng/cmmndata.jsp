@@ -9,46 +9,51 @@
 </head>
 <body>
 	<h2>공통자료관리</h2>
-	<div class="row">
-	<div class="card card-pricing card-primary card-white col-11">
-		<div class="card-body">
-			<div class="row">
-
-				<div class="col-sm-6">
-					<div align="left">
-						<label>공통코드ID </label><input type="text" id="cmmnNminfo">
-						<div>
-							<button type="button" id="btnfind">조회</button>
+	<div class="row" id="senseOrder">
+		<div class=" col-3">
+			<div id="senseOrderBody"
+				class="card card-pricing card-primary card-white card-outline"
+				style="margin-left: 50px; margin-right: 30px; margin-top: 60px; padding-left: 40px;">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-6">
+							<div align="left">
+								<label>공통코드ID </label><input type="text" id="cmmnNminfo">
+								
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="card-footer" style="margin-bottom: 10px;" >
+					<button type="button" id="btnfind" style="margin-left:50px">조회</button>
+				</div>
 			</div>
-					<div align="right">
-						<button type="button" id="btnAdd">추가</button>
-						<button type="button" id="btnDel">삭제</button>
-						<button type="button" id="btnSave">저장</button>
-						<button type="button" id="btnReset">초기화</button>
-					</div>
+			<div id="grid" style="margin-left: 30px; margin-right: 30px; margin-top: 30px;padding-left: 30px;"></div>
+
 		</div>
-	</div>
-	</div>
-	<div class=row>
-		<div class=col-4>
-			<div id="grid"></div>
-			<br>
-		</div>
-		<div class=col-7>		
-			<div id="detailgrid" >
+		<div class="col-8">
+
+			<div class="float-right" >
+				<button type="button" id="btnAdd" style="margin-bottom:10px">추가</button>
+				<button type="button" id="btnDel" style="margin-bottom:10px">삭제</button>
+				<button type="button" id="btnSave" style="margin-bottom:10px">저장</button>
+				<button type="button" id="btnReset" style="margin-bottom:10px">초기화</button>
 			</div>
+			<div id="detailgrid"></div>
+
+
+
+		</div>
+
 
 	</div>
-	</div>
+
 
 	<script>
-	 $( function() {
-		    $( "#tabs" ).tabs();
-		  } );
-	
+		$(function() {
+			$("#tabs").tabs();
+		});
+
 		var dataSource = {
 			api : {
 				readData : {
@@ -103,8 +108,8 @@
 			};
 
 			detailgrid.readData(1, GridParams, true);
-		});	
-		
+		});
+
 		$('#btnfind').on('click', function() {
 			var cmmnCdNm = $("#cmmnNminfo").val();
 			var parameter = {
@@ -141,7 +146,8 @@
 			data : detailgridinfo,
 			scrollY : true,
 			rowHeaders : [ 'rowNum', 'checkbox' ],
-			bodyHeight : 400,
+			bodyHeight : 600,
+			minBodyHeight : 600,
 			columns : [ {
 				header : '공통코드상세ID',
 				name : 'cmmnCdDetaId',
@@ -198,6 +204,13 @@
 			$('#cmmnCdNm').val('');
 			detailgrid.clear();
 		});
+		$('#senseOrder').resize(function() {
+			if ($('#senseOrder').width() < 1780) {
+				$('#senseOrderBody').css('paddingLeft', '20px');
+			} else {
+				$('#senseOrderBody').css('paddingLeft', '40px');
+			}
+		})
 	</script>
 </body>
 

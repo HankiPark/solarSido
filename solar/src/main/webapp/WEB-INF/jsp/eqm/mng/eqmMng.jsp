@@ -41,7 +41,7 @@
 
         .tab_menu .list li.is_on .btn {
             font-weight: bold;
-            color: #5f76e8;
+           color: #e37c6b;
         }
 
         .tab_menu .list li.is_on .cont {
@@ -64,41 +64,43 @@
             </ul>
         </div>
     </div>
-	<hr>
     <div id="iG">
-        <div class="card card-pricing card-primary card-white">
-            <div class="card-body">
-                <div class="row">
-                    <div data-role="fieldcontain" class="col-3">
-                        <div>
+     <div class="row">
+        <div
+				class="card card-pricing card-primary card-white card-outline col-3" id="sensePrdtRefBody"
+				style="margin-left: 50px; margin-right: 30px; margin-top: 120px; padding-left: 40px; margin-bottom: 300px;">
+		<div class="card-body" >
+                        <div style="margin-bottom: 20px; margin-top: 50px;">
                             <label>설비</label>
                             <input type="text" id="eqmParam" name="eqmParam" placeholder="설비코드 또는 설비명">
                         </div>
-                    </div>
+         <div style="margin-bottom: 20px;">               
                     <label for="defandroid">구매일</label>
                     <input name="datePicker" class="dtp" id="datePicker" type="text" data-role="datebox"
                         data-options='{"mode": "calbox"}'>
                 </div>
-                <div data-role="fieldcontain" class="col-5">
-                    <label>제품(미구현)</label>
+         <div style="margin-bottom: 20px;">
+                    <label>제품</label>
                     <input type="text" id="prdtCd">
                     <button type="button" id="btnPrdtCdFind" style="width: 33px">🔍</button>
                 </div>
             </div>
-            <div>
-                <button type="button" id="findGrid">조회</button>
+            <div class="card-footer" style="margin-bottom: 30px;">
+                <button type="button" id="findGrid" style="margin-left:120px">조회</button>
             </div>
-
-            <div align="right">
+</div>
+<div class="col-8" style="margin-top:0px">
+            <div class="float-right">
 <!--                 <button type="button" id="insertBtn" class="btn btn-default btn-simple btn-sm">추가</button> -->
-                <button type="button" id="updateBtn" class="btn btn-default btn-simple btn-sm">저장</button>
-                <button type="button" id="deleteBtn" class="btn btn-default btn-simple btn-sm">삭제</button>
+                <button type="button" id="updateBtn" class="btn btn-default btn-simple btn-sm" style="margin-bottom:10px">저장</button>
+                <button type="button" id="deleteBtn" class="btn btn-default btn-simple btn-sm" style="margin-bottom:10px">삭제</button>
             </div>
+            <div id="grid"></div>
         </div>
-        <div id="grid"></div>
+        
         <div id="prdtCdModal" title="제품 목록"></div>
     </div>
-
+	</div>
 
 
 
@@ -325,6 +327,8 @@
                 el: document.getElementById('grid'),
                 data: dataSource,
                 rowHeaders: ['checkbox'],
+                minBodyHeight : 500,
+                bodyHeight: 500,
                 columns: [{
                         header: '설비코드',
                         name: 'eqmCd'

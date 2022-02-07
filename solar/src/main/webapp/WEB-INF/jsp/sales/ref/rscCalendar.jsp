@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
     	        $(".fc-daygrid-event").css("padding","2px");
     	
     })
+    setTimeout(() => {
+        $('th').css('border-bottom',' 1px solid #ddd')
+        }, 1000);
   });
 
 

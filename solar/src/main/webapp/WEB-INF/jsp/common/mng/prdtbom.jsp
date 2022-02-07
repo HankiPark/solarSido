@@ -8,31 +8,44 @@
 </head>
 <body>
 	<h2>제품 BOM 관리</h2>
-
-	<div class="row">
-		<div class="card card-pricing card-primary card-white col-11">
+	<div class="row" id="senseOrder">
+		<div id="senseOrderBody"
+			class="card card-pricing card-primary card-white card-outline col-3"
+			style="margin-left: 50px; margin-right: 30px; margin-top: 150px; padding-left: 40px; margin-bottom: 300px;">
 			<div class="card-body">
-				<div class="col-12" align="left">
-					<label>제품코드</label><input type="text" id="prdtCd"> <label>제품명</label><input
-						type="text" id="prdtNm" readonly="readonly"> <label>규격</label><input
-						type="text" id="prdtSpec" readonly="readonly">
-					<div>
-						<button type="button" id="btnfindinfo">조회</button>
-					</div>
+
+				<div style="margin-bottom: 20px; margin-top: 50px;">
+					<label>제품코드</label><input type="text" id="prdtCd">
 				</div>
+				<div style="margin-bottom: 20px;">
+					<label>제품명 &nbsp;&nbsp;&nbsp;</label><input type="text" id="prdtNm"
+						readonly="readonly">
+				</div>
+				<div style="margin-bottom: 20px;">
+					<label>규격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" id="prdtSpec"
+						readonly="readonly">
+				</div>
+
+
 			</div>
-			<div class="row">
-				<div class="col-12" align="right">
-					<button type="button" id="btnAdd">추가</button>
-					<button type="button" id="btnDel">삭제</button>
-					<button type="button" id="btnSave">저장</button>
-					<button type="button" id="btnReset">초기화</button>
-				</div>
+			<div class="card-footer" style="margin-bottom: 30px;">
+				<button type="button" id="btnfindinfo" style="margin-left: 120px">조회</button>
 			</div>
 		</div>
+		
+			<div class="col-8" style="margin-top:40px">
+			<div class="float-right" style="margin-bottom:10px">
+				<button type="button" id="btnAdd">추가</button>
+				<button type="button" id="btnDel">삭제</button>
+				<button type="button" id="btnSave">저장</button>
+				<button type="button" id="btnReset">초기화</button>
+			</div>
+			<div id="grid"></div>
+		</div>
+	</div>
 	</div>
 
-	<div id="grid"></div>
+	
 
 	<div id="dialog-form"></div>
 
@@ -40,57 +53,55 @@
 
 	<div id="dialog-form3"></div>
 	<script>
-		
-	toastr.options = {
-			  "closeButton": false,
-			  "debug": false,
-			  "newestOnTop": false,
-			  "progressBar": true,
-			  "positionClass": "toast-top-right",
-			  "preventDuplicates": false,
-			  "onclick": null,
-			  "showDuration": "100",
-			  "hideDuration": "1000",
-			  "timeOut": "2000",
-			  "extendedTimeOut": "1000",
-			  "showEasing": "swing",
-			  "hideEasing": "linear",
-			  "showMethod": "fadeIn",
-			  "hideMethod": "fadeOut"
-			}
-	
-	function SaveComplete(){
-		toastr.success('데이터가 수정되었습니다');
-	}	
-	function SaveFail(){
-		toastr.error('저장실패');
-	}
-	function DeleteComplete(){
-		toastr.success('체크 한 행의 데이터가 삭제되었습니다, 저장해주세요.');
-	}
-	function DeleteFail(){
-		toastr.error('삭제실패');
-	}
-	function ResetComplete(){
-		toastr.info('리셋 완료.');
-	}
-	function insertComplete(){
-		toastr.success('등록완료');
-	}
-	function insertFail(){
-		toastr.error('등록실패 빈 값이 있는지 확인해주세요.');
-	}
-	function updateFail(){
-		toastr.error('수정실패, 값을 확인해주세요.');
-	}
-	function updateComplete(){
-		toastr.success('수정완료');
-	}
-	function datawarning(){
-		toastr.warning('데이터 입력오류 정확한 값을 입력해주세요');
-	}
-		
-	
+		toastr.options = {
+			"closeButton" : false,
+			"debug" : false,
+			"newestOnTop" : false,
+			"progressBar" : true,
+			"positionClass" : "toast-top-right",
+			"preventDuplicates" : false,
+			"onclick" : null,
+			"showDuration" : "100",
+			"hideDuration" : "1000",
+			"timeOut" : "2000",
+			"extendedTimeOut" : "1000",
+			"showEasing" : "swing",
+			"hideEasing" : "linear",
+			"showMethod" : "fadeIn",
+			"hideMethod" : "fadeOut"
+		}
+
+		function SaveComplete() {
+			toastr.success('데이터가 수정되었습니다');
+		}
+		function SaveFail() {
+			toastr.error('저장실패');
+		}
+		function DeleteComplete() {
+			toastr.success('체크 한 행의 데이터가 삭제되었습니다, 저장해주세요.');
+		}
+		function DeleteFail() {
+			toastr.error('삭제실패');
+		}
+		function ResetComplete() {
+			toastr.info('리셋 완료.');
+		}
+		function insertComplete() {
+			toastr.success('등록완료');
+		}
+		function insertFail() {
+			toastr.error('등록실패 빈 값이 있는지 확인해주세요.');
+		}
+		function updateFail() {
+			toastr.error('수정실패, 값을 확인해주세요.');
+		}
+		function updateComplete() {
+			toastr.success('수정완료');
+		}
+		function datawarning() {
+			toastr.warning('데이터 입력오류 정확한 값을 입력해주세요');
+		}
+
 		let prdtGrid;
 
 		let dialog = $("#dialog-form").dialog({
@@ -134,6 +145,8 @@
 			data : dataSource,
 			scrollX : true,
 			scrollY : true,
+			bodyHeight : 500,
+			minBodyHeight : 500,
 			rowHeaders : [ 'rowNum', 'checkbox' ],
 			columns : [ {
 				header : '제품코드',
@@ -181,8 +194,7 @@
 			});
 		});
 		$('#btnSave').on('click', function appendRow(index) {
-			
-			
+
 			grid.blur();
 			grid.request('modifyData');
 			SaveComplete();
@@ -208,15 +220,15 @@
 			})
 
 		});
-		
-		$('#btnReset').on('click', function(){
+
+		$('#btnReset').on('click', function() {
 			grid.clear();
 			$('#prdtCd').val('');
 			$('#prdtNm').val('');
 			$('#prdtSpec').val('');
 			ResetComplete();
 		});
-		
+
 		grid.on('click', function(ev) {
 			if (ev["columnName"] == "rscCd") {
 				dialog2.dialog("open");

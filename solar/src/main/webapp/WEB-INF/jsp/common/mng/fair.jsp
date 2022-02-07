@@ -9,24 +9,28 @@
 </head>
 <body>
 	<h1>공정 관리</h1>
-	<br>
-	<br>
-	<div class="row">
-		<div class="col-12" align="left">
-			<label>공정명 입력</label> <input type="text" id="prcsNminfo">
-			<button type="button" id="btnfind">검색</button>
+	<div class="row" id="senseOrder">
+		<div id="senseOrderBody" class="card card-pricing card-primary card-white card-outline col-3"
+		 style="margin-left: 50px; margin-right: 30px; margin-top: 200px; padding-left: 60px;padding-top:30px; margin-bottom: 300px;">
+		<div class="card-body"  >
+		<div style="margin-bottom: 20px; margin-top: 50px;">
+			<label>공정명&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="prcsNminfo">	
 		</div>
 	</div>
+	<div class="card-footer" style="margin-bottom: 30px;" >
+	<button type="button" id="btnfind" style="margin-left:120px">조회</button>
 	</div>
-	<div class="row">
-		<div class="col-12" align="right">
-			<button type="button" id="btnAdd">추가</button>
-			<button type="button" id="btnDel">삭제</button>
-			<button type="button" id="btnSave">저장</button>
+	</div>
+	<div class="col-8">
+		<div class="float-right">
+			<button type="button" id="btnAdd" style="margin-bottom:10px">추가</button>
+			<button type="button" id="btnDel" style="margin-bottom:10px">삭제</button>
+			<button type="button" id="btnSave" style="margin-bottom:10px">저장</button>
 		</div>
+		<div id="grid"></div>
 	</div>
 
-	<div id="grid"></div>
+	
 	<script>
 		toastr.options = {
 			"closeButton" : false,
@@ -176,6 +180,13 @@
 			})
 
 		});
+		$('#senseOrder').resize(function(){
+			if($('#senseOrder').width()<1780){
+				$('#senseOrderBody').css('paddingLeft','20px');
+			}else{
+				$('#senseOrderBody').css('paddingLeft','40px');
+			}
+		})
 	</script>
 </body>
 </html>

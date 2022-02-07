@@ -16,70 +16,69 @@
 	<h1>자재정보관리</h1>
 	<form name="rscfrm" id="rscfrm" method="post">
 		<div class="row">
-			<div class="card card-pricing card-primary card-white col-3">
-				<div class="card-body">
-					<div>
-						<label>자재명</label> <input type="text" id="rscNmFind">
-						<button type="button" id="btnFind">검색</button>
+			<div class=" col-3">
+				<div id="senseOrderBody"
+					class="card card-pricing card-primary card-white card-outline"
+					style="margin-left: 50px; margin-right: 30px; margin-top: 150px; padding-left: 40px;">
+					<div class="card-body">
+						<div>
+							<label>자재명</label> <input type="text" id="rscNmFind">
+
+						</div>
 					</div>
+					<div class="card-footer" style="margin-bottom: 10px;">
+						<button type="button" id="btnFind" style="margin-left: 50px">조회</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-8">
+				<div id="grid"></div>
+			</div>
+		</div>
+		<div class="card card-pricing card-primary card-white card-outline"
+			style="margin-left: 50px; margin-right: 150px; margin-top: 60px; padding-left: 40px;">
+			<div class="card-body">
+				<div class=" row">
+					<div class="col-3">
+						<label>자재코드</label> <input type="text" name="rscCd" id="rscCd"
+							readonly="readonly">
+					</div>
+
+					<div class=" col-3">
+						<label>자재명</label> <input type="text" name="rscNm" id="rscNm">
+					</div>
+					<div class=" col-3">
+						<label>규격</label> <input type="text" name="rscSpec" id="rscSpec">
+					</div>
+					<div class=" col-3">
+						<label>관리단위&nbsp;</label><input type="text" name="rscUnit" id="rscUnit">
+					</div>
+				</div>
+				<div class="row">
+					<div class=" col-3">
+						<label>업체코드&nbsp; </label><input type="text" name="coCd" id="coCd"
+							readonly="readonly">
+						<button type="button" id="coCdFind">🔍</button>
+					</div>
+					<div class=" col-3">
+						<label>업체명&nbsp;</label><input type="text" name="coNm" id="coNm"
+							readonly="readonly">
+					</div>
+					<div class=" col-3">
+						<label>단가</label> <input type="text" name="rscUntprc"
+							id="rscUntprc">
+					</div>
+					<div class=" col-3">
+						<label>안전재고</label> <input type="text" name="safStc" id="safStc">
+					</div>
+				</div>
+				<div>
+					<button type="button" id="btnInsert">저장</button>
+					<button type="button" id="btnUpdate">변경</button>
+					<button type="button" id="btnReset">초기화</button>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-4">
-				<div id="grid"></div>
-			</div>
-			<div class="card card-pricing card-primary card-white col-4">
-				<div class="card-body">
-					<div class=" table">
-						<table id=table>
-							<tbody>
-								<tr>
-									<th scope="row">자재코드 *</th>
-									<td><input type="text" name="rscCd" id="rscCd"
-										readonly="readonly"></td>
-								</tr>
-								<tr>
-									<th scope="row">자재명 *</th>
-									<td><input type="text" name="rscNm" id="rscNm"></td>
-								</tr>
-								<tr>
-									<th scope="row">규격</th>
-									<td><input type="text" name="rscSpec" id="rscSpec"></td>
-								</tr>
-								<tr>
-									<th scope="row">관리단위</th>
-									<td><input type="text" name="rscUnit" id="rscUnit"></td>
-								</tr>
-								<tr>
-									<th scope="row">업체코드</th>
-									<td><input type="text" name="coCd" id="coCd"
-										readonly="readonly">
-										<button type="button" id="coCdFind">🔍</button></td>
-								</tr>
-								<tr>
-									<th scope="row">업체명</th>
-									<td><input type="text" name="coNm" id="coNm"
-										readonly="readonly"></td>
-								</tr>
-								<tr>
-									<th scope="row">단가</th>
-									<td><input type="text" name="rscUntprc" id="rscUntprc"></td>
-								</tr>
-								<tr>
-									<th scope="row">안전재고</th>
-									<td><input type="text" name="safStc" id="safStc"></td>
-								</tr>
-							</tbody>
-						</table>
-						<div>
-							<button type="button" id="btnInsert">저장</button>
-							<button type="button" id="btnUpdate">변경</button>
-							<button type="button" id="btnReset">초기화</button>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 		<div id="coCdModal" title="업체명단"></div>
 	</form>
@@ -156,7 +155,7 @@
 			data : dataSource,
 			scrollY : false,
 			rowHeaders : ['rowNum'],
-			bodyHeight : 500,
+			bodyHeight : 450,
 			columns : 
 			[ 
 				{
@@ -329,6 +328,14 @@
 			 })
 		 });
 */		
+
+$('#senseOrder').resize(function() {
+	if ($('#senseOrder').width() < 1780) {
+		$('#senseOrderBody').css('paddingLeft', '20px');
+	} else {
+		$('#senseOrderBody').css('paddingLeft', '40px');
+	}
+})
 </script>
 </body>
 </html>

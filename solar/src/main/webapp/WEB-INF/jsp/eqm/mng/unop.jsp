@@ -1,107 +1,122 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <style>
-	.switches {
-		border-radius: 100px;
-		width: 80px;
-		height: 80px;
-		border: 1px solid black;
-		margin: 5px
-	}
-
-	.green-on {
-		background-color: rgb(63, 216, 63);
-	}
-
-	.green-off {
-		background-color: rgb(61, 84, 61);
-	}
-
-	.red-on {
-		background-color: red;
-	}
-
-	.red-off {
-		background-color: rgb(112, 61, 61);
-	}
-
-	.row {
-		height: 40px;
-	}
-
-	.controller {
-		background-color: lightgray;
-		padding: 10px;
-		border-radius: 15px;
-		height: 280px;
-	}
-
-	#eh{
-		height: 30px;
-	}
+.switches {
 	
-	#grid2{
-		width: 97%;
-	}
+	width: 210px;
+	height: 70px;
+	border: 1px solid black;
+	margin-top: -15px;
+	box-shadow: 5px 5px 5px black;
+}
+
+.green-on {
+	background-color: rgb(63, 216, 63);
+}
+
+.green-off {
+	background-color: rgb(61, 84, 61);
+}
+
+.red-on {
+	background-color: red;
+}
+
+.red-off {
+	background-color: rgb(112, 61, 61);
+}
+
+
+.controller {
+	margin-top:20px;
+	background-color: lightgray;
+	padding: 10px;
+	border-radius: 15px;
+	height: 120px;
+}
+
+#eh {
+	height: 30px;
+}
+
+#grid2 {
+	width: 97%;
+}
 </style>
 
 <body>
 	<h1>설비 비가동 관리</h1>
-	<hr>
-	<div>
-		<div>
-			<label>설비</label>
-			<input type="text" id="eqmParam" name="eqmParam" placeholder="설비코드 또는 설비명">
-			<input type="checkbox" id="isUoN">
-			<label for="isUoN">비가동설비</label>
-			<input type="checkbox" id="isUoY">
-			<label for="isUoY">가동설비</label>
-			<button type="button" id=gridRequestData>조회</button>
-		</div>
-		<div class="flex row">
-			<div id="grid" class="col-8"></div>
-			<div class="col-1 controller" align="center">
-				<h4 id="eh">설비명</h4>
-				<hr>
-				<div>
-					<div class="switches red-on">비가동</div>
-					<div class="switches green-on">재가동</div>
+	<div class="row" id="senseOrder">
+		<div class=" col-4">
+			<div id="senseOrderBody"
+				class="card card-pricing card-primary card-white card-outline"
+				style="margin-left: 50px; margin-right: 30px; margin-top: 30px; padding-left: 70px;">
+				<div class="card-body">
+					<div data-role="fieldcontain"
+						style="margin-bottom: 40px; margin-top: 40px;">
+						<label>설비</label> <input type="text" id="eqmParam" name="eqmParam"
+							placeholder="설비코드 또는 설비명">
+					</div>
+					<div data-role="fieldcontain" style="margin-bottom: 20px;">
+						<input type="checkbox" id="isUoN"> <label for="isUoN">비가동설비</label>
+						<input type="checkbox" id="isUoY"> <label for="isUoY">가동설비</label>
+					</div>
 				</div>
-			</div>
-			<div class="col-2 unopDetail">
-				<h3>비가동/재가동 관리</h3><hr>
-				<div class="flex row">
-					<div class="col-6">
-						<span class="row">&ensp;비가동일시 :</span><br>
-						<span class="row">&ensp;비가동사유 :</span><br>
-						<span class="row">&ensp;비가동코드 :</span><br>
-						<span class="row">&ensp;재가동일시 :</span>
-					</div>
-					<div class="col-6">
-						<input id="stt" class="row right" size="18" disabled><br>
-						<select id="uoNm" class="row right">
-							<option value="notSelected" selected disabled>--비가동 사유 선택--
-						</select><br>
-						<input id="uoCd" class="row right" size="18" disabled><br>
-						<input id="edt" class="row right" size="18" disabled>
-					</div>
+				<div class="card-footer" style="margin-bottom: 30px;">
+					<button type="button" id="gridRequestData"
+						style="margin-left: 60px">조회</button>
 				</div>
 			</div>
 		</div>
+		<div id="grid" class="col-7"
+			style="margin-left: 50px; margin-right: 30px; margin-top: 30px;"></div>
 	</div>
-	<br><br><br><br><br><br><br><br><br><br><br><br>
-	<hr>
-	<h2 id="eh2">비가동 내역( 설비명, 코드 )</h2>
-	<div align=center>
-		<div id="grid2"></div>
-	</div>
+	<div class="row"
+>
+		<div class="col-7" style="margin-left:10px">
+			<h2 id="eh2">비가동 내역( 설비명, 코드 )</h2>
+
+			<div id="grid2"></div>
+		</div>
+		<div
+			class="card card-pricing card-primary card-white card-outline col-4">
+			<div class="card-body">
+				
+				<div class="unopDetail">
+					<h3>비가동/재가동 관리</h3>
+						<div data-role="fieldcontain" style="margin-bottom: 20px; margin-top: 50px;" >
+					<label>비가동일시</label><input id="stt"  disabled></div>
+						<div data-role="fieldcontain" style="margin-bottom: 20px;">
+							<label>비가동사유</label><select id="uoNm" >
+								<option value="notSelected" selected disabled>--비가동 사유
+									선택--
+							</select></div>
+								<div data-role="fieldcontain" style="margin-bottom: 20px;">
+								<label>비가동코드</label><input id="uoCd"  disabled></div>
+								<div data-role="fieldcontain" style="margin-bottom: 20px;">
+								<label>재가동일시</label><input id="edt"  disabled>
+						
+					</div>
+					<div data-role="fieldcontain" style="margin-bottom: 20px;">
+					<label>최종 확인 버튼</label>
+					<div class="controller">
+					<h4 id="eh" style="text-align:center">설비명</h4>
+					<div class=" row">
+					<div class="col-5">
+						<div class="switches red-on" style="text-align:center; font-size:20px;color:white;padding-top:5px"><i class="fas fa-stop"></i><br>비가동</div></div><div class="col-1"></div>
+						<div class="col-5"><div class="switches green-on" style="text-align:center;font-size:20px;color:white;padding-top:5px"><i class="fas fa-play"></i><br>재가동</div></div>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
 </body>
 <script>
 	let unopCds = [];
@@ -447,7 +462,13 @@
 			'uoYn': uoYn,
 		});
 	}
-	
+	$('#senseOrder').resize(function() {
+		if ($('#senseOrder').width() < 1780) {
+			$('#senseOrderBody').css('paddingLeft', '20px');
+		} else {
+			$('#senseOrderBody').css('paddingLeft', '40px');
+		}
+	})
 </script>
 
 </html>

@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+
 <body>
 <div class="row" id="sensePrdtIn">
 			<div
@@ -111,6 +112,9 @@ document.addEventListener('DOMContentLoaded', function() {
     	        $(".fc-daygrid-event").css("padding","2px");
     	
     })
+    setTimeout(() => {
+    $('th').css('border-bottom',' 1px solid #ddd')
+    }, 1000);
   });
 
 
