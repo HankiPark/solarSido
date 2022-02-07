@@ -112,11 +112,6 @@ $(function() {
         name: 'rscLot',
         sortable: true,
       },
-      {
-        header: '금액',
-        name: 'rscAmt',
-        sortable: true,
-      }
     ]
   });
   
