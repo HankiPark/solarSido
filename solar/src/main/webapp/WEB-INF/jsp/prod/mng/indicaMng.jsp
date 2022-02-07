@@ -255,12 +255,10 @@
 			    	      },
 			    	       onAfterChange(e) {
 				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
-				    	    	indicaDgrid.setValue(e.rowKey, 'prodDay',
-				    	    					e.value / indicaDgrid.getValue(e.rowKey, 'dayOutput'));
-				    	    	b = e.value;
+				    			calProdDay( p, "planQty", "dayOutput" ); 
 				    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
 				    	    		rscGrid.setValue(i, 'totalUseQty',
-		    	    					b * rscGrid.getValue(i, 'rscUseQty'));
+				    	    				e.value * rscGrid.getValue(i, 'rscUseQty'));
 				    	    	}
 				    	    }    	
 					  },
@@ -299,7 +297,8 @@
 					  {
 					    header: '작업순서',
 					    name: 'wkOrd',
-					    editor: 'text'
+					    editor: 'text',
+					    hidden: true
 					  }
 			 		 ]
 			});

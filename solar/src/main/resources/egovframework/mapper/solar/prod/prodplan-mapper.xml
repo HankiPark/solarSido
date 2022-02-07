@@ -18,7 +18,7 @@
 		B.plan_qty,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord,
-		A.plan_dt,
+		TO_CHAR(A.plan_dt, 'YYYY/MM/DD') plan_dt,
 		A.plan_nm,
 		(SELECT min(uph)*24 FROM EQM) as day_output,
 		ROUND((B.plan_qty/(SELECT min(uph)*24 FROM EQM)), 2) as prod_day
@@ -102,7 +102,7 @@
 	    TO_CHAR(o.recv_dt, 'YYYY-MM-DD') recv_dt,
 	    o.co_cd,
 	    o.prog_info,
-	    o.paprd_dt
+	    TO_CHAR(o.paprd_dt, 'YYYY-MM-DD') paprd_dt
 	FROM order_tb o 
 	LEFT JOIN plan_d p ON p.order_no = o.order_no
 	JOIN order_d od ON od.order_no = o.order_no
@@ -211,7 +211,7 @@
 	SET	plan_dt = #{planDt},
 		plan_qty = #{planQty},
 		wk_ord = #{wkOrd},
-		wk_dt = #{wkDt}
+		wk_dt = TO_DATE(#{wkDt}, 'YYYY/MM/DD')
 	WHERE plan_deta_no = #{planDetaNo}
 	AND plan_no = #{planNo}
 </if>

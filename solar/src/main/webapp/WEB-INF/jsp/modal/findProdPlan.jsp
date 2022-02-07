@@ -91,6 +91,7 @@ function planList(){
 	
 	//지시진행별 계획서 조회 그리드 이벤트
 	prodPlanGrid.on('dblclick', function(ev) {
+		nowSt = $("#nowSt option:selected").val();
 		if(nowSt == '미진행') {
 			$('#planNo').val(prodPlanGrid.getValue(ev.rowKey, "planNo"));
 	 		$('#planDt').val(prodPlanGrid.getValue(ev.rowKey, "planDt"));
@@ -106,7 +107,7 @@ function planList(){
 				dataType:"json",
 				contentType : 'application/json; charset=utf-8',
 			}).done(function(pln) {
-				console.log(pln.data)
+				//console.log(pln.data)
 				planDgrid.resetData(pln.data);
 			}).fail(function(reject){
 				console.log(reject);

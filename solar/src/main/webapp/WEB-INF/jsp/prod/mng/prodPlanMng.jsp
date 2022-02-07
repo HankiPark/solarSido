@@ -7,7 +7,11 @@
 <meta charset="UTF-8">
 <title>생산계획관리</title>
 </head>
-
+<style>
+.card-outline2{
+border-top:3px solid #FECEBB;
+}
+</style>
 <body>
 	<h2>생산계획 관리</h2>
 
@@ -44,7 +48,7 @@
 	</div>
 
 	<!-- 생산계획 상세 그리드-->
-	<div class="card card-pricing card-primary card-white card-outline"
+	<div class="card card-pricing card-primary card-white card-outline2"
 		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
 		<div class="card-body">
 			<div id="planDgrid">
@@ -63,7 +67,7 @@
 	</div>
 
 	<!-- 자재 재고체크 그리드 -->
-	<div class="card card-pricing card-primary card-white card-outline"
+	<div class="card card-pricing card-primary card-white card-outline2 "
 		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
 		<div class="card-body">
 			<div id="rStcGrid" class="row">
@@ -130,7 +134,7 @@
 			  {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
-			    //hidden: true
+			    hidden: true
 			  },
 			  { //주문없는 계획 불가
 			    header: '주문번호',
@@ -177,8 +181,7 @@
 	    	      },
 			    onAfterChange(e) {
 	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
-	    	    	planDgrid.setValue(e.rowKey, 'prodDay',
-	    	    					e.value / planDgrid.getValue(e.rowKey, 'dayOutput'));
+	    	    	calProdDay( e, "planQty", "dayOutput" ); 
 	    	    	for ( i=0; i< rStcGrid.getRowCount(); i++){
 	    	    		rStcGrid.setValue(i, 'ndStc',
 	    	    				e.value * rStcGrid.getValue(i, 'rscUseQty'));
@@ -210,7 +213,8 @@
 			  {
 			    header: '작업순서',
 			    name: 'wkOrd',
-			    editor : 'text'
+			    editor : 'text',
+			    hidden : true
 			  }
 	 		 ]
 	});	
@@ -300,30 +304,54 @@
 		}
 	});
 	
+	planDgrid.on('editingFinish', function(ev){
+		if(ev.columnName == "planQty") {
+			let orderQty = planDgrid.getValue(ev.rowKey, "orderQty");
+			let planQty = planDgrid.getValue(ev.rowKey, "planQty");
+			if(orderQty != planQty){
+				toastr.warning("주문량과 계획량이 다릅니다.");
+				planDgrid.setValue(ev.rowKey, "planQty", "");
+			}			
+		}
+		if(ev.columnName == "workDt") {
+			let recvDt = planDgrid.getValue(ev.rowKey, "recvDt");
+			let workDt = planDgrid.getValue(ev.rowKey, "workDt");
+			let prodDay = planDgrid.getValue(ev.rowKey, "prodDay");
+			if(recvDt > workDt){
+				toastr.warning("작업일이 납기일보다 늦습니다.");
+				planDgrid.setValue(ev.rowKey, "workDt", "");
+			} else if(recvDt > workDt + prodDay ){
+				toastr.warning("작업시간이 부족합니다.");
+				planDgrid.setValue(ev.rowKey, "workDt", "");
+			}
+		}
+	});
+	
 	planDgrid.on('dblclick', function(ev){
-		let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
-		let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
-		let orderNo = planDgrid.getValue(ev.rowKey, "orderNo")
-		console.log(planDgrid.getValue(ev.rowKey, "planQty"));
-		
-		$('#prdtCd').val(prdtCd);
-		$('#prdtNm').val(prdtNm);
-		$('#orderNo').val(orderNo);
-		
-		var stcGridParams = {
-				'prdtCd' : prdtCd,
-				'orderNo' : orderNo
-		};
-		rStcGrid.readData(1, stcGridParams, true)
-		//fetch
-		//settimeout -> delay
-		setTimeout(function(){
-		for ( i=0; i< rStcGrid.getRowCount(); i++){
-    		rStcGrid.setValue(i, 'ndStc',
-    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
-			rStcGrid.setValue(i, 'lackStc',
-					rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))}
-		}, 1200); //실행시킬 함수,딜레이시간;
+		if(ev.columnName != "planQty") {
+			let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
+			let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
+			let orderNo = planDgrid.getValue(ev.rowKey, "orderNo")
+			
+			$('#prdtCd').val(prdtCd);
+			$('#prdtNm').val(prdtNm);
+			$('#orderNo').val(orderNo);
+			
+			var stcGridParams = {
+					'prdtCd' : prdtCd,
+					'orderNo' : orderNo
+			};
+			rStcGrid.readData(1, stcGridParams, true)
+			//fetch
+			//settimeout -> delay
+			setTimeout(function(){
+			for ( i=0; i< rStcGrid.getRowCount(); i++){
+	    		rStcGrid.setValue(i, 'ndStc',
+	    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
+				rStcGrid.setValue(i, 'lackStc',
+						rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))}
+			}, 1200); //실행시킬 함수,딜레이시간;
+		}
 	});
 	
 	planDgrid.on('onGridUpdated', function() {
@@ -379,17 +407,20 @@
 		planDt = $('#planDt').val();
 		
 		if (planNm == null || planNm == ""){
-			alert("필수 입력칸이 비어 있습니다")
+			toastr.error("생산계획명을 입력해주세요.")
 			$('#planNm').focus();
-		} else {
+		} else if (planDgird.getRowCount ) {
+		 			
+		}	else {
 			for ( i =0 ; i <= planDgrid.getRowCount(); i++) {
 				planDgrid.setValue(i,'planNm',planNm);
 				planDgrid.setValue(i,'planDt',planDt);
 			}
-			if(gridCheck()){
+			if(blankCheck()){
 				if (confirm("계획을 저장하시겠습니까?")) { 
 					//planDgrid.blur();
 					planDgrid.request('modifyData'); // modifyData의 url 호출
+					toastr.success("생산계획이 저장되었습니다.")
 				}
 			}
 		} 
@@ -453,25 +484,34 @@
 		planDgrid.setValue( rowKey, "prodDay" , result);
 	} 
 	
-	//그리드 필수입력칸 함수
-	function gridCheck(){
-		/* for (let i = 0; i <planDgrid.getRowCount(); i++){
+	//그리드 필수입력칸 체크 함수
+	function blankCheck(){
+		 for (let i = 0; i <planDgrid.getRowCount(); i++){
 			console.log(planDgrid.getRowAt(i).prdtCd);
 			if(planDgrid.getRowAt(i).orderNo == null || planDgrid.getRowAt(i).orderNo == ""){
-				alert("주문번호가 비어있습니다.");
+				toast.error("주문번호가 지정되지 않았습니다.");
 				return false;
 			} else if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
-				alert("제품코드가 지정되지 않았습니다.");
+				toast.error("제품코드가 지정되지 않았습니다.");
 				return false;
 			} else if(planDgrid.getRowAt(i).planQty == null || planDgrid.getRowAt(i).planQty == ""){
-				alert("작업량이 지정되지 않았습니다.");
+				toast.error("계획량이 지정되지 않았습니다.");
 				return false;
-			} else { */
+			} else if(planDgrid.getRowAt(i).workDt == null || planDgrid.getRowAt(i).workDt == ""){
+				toast.error("작업일이 지정되지 않았습니다.");
+				return false;
+			} else { 
 				return true;
-			//}
-		//}
+			}
+		}
 	}
 	
+	//필요자재 체크 함수
+	function stcCheck(){
+		 for (let i = 0; i <rStcGrid.getRowCount(); i++){
+
+		 }
+	}
 </script>
 
 </html>
