@@ -88,6 +88,7 @@ function indicaList(){
 
 	//공정진행별 지시서 조회 그리드 이벤트
 	indicaGrid.on('dblclick', function(ev) {
+		nowSt = $("#nowSt option:selected").val();
 		if(nowSt == '미진행') {
 			$('#indicaNo').val(indicaGrid.getValue(ev.rowKey, "indicaNo"));
 			$('#indicaDt').val(indicaGrid.getValue(ev.rowKey, "indicaDt"));

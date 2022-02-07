@@ -91,9 +91,9 @@ position: absolute;
 					<div data-role="fieldcontain" style="margin-bottom: 20px;">
 						<label>진행상태&nbsp;&nbsp;&nbsp;</label> 
 						<label><input type="checkbox" name="nowSt" id="noing" value="미진행">
-								<label for="noing"></label>미지시</label> 
+								<label for="noing"></label>미공정</label> 
 						<label><input type="checkbox" id="inding" name="nowSt" value="진행">
-								<label for="inding"></label>지시완료</label>
+								<label for="inding"></label>공정진행</label>
 					</div>
 				</form>
 			</div>
