@@ -71,7 +71,8 @@ var coGrid = new Grid({
 	  coCds = coCds.substr(1);
 	  let coCdsInput = document.getElementById("coCds");
 	  coCdsInput.value = coCds;
-	  coDialog.dialog("close");
+	  //coDialog.dialog("close");
+	  coDialog2.dialog("close");
   });
   
 </script>
