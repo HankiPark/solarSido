@@ -88,15 +88,15 @@
 								value: '1'
 							},
 							{
-								text:'가공 공정',
+								text:'전극 및 측정공정',
 								value: '2'
 							},
 							{
-								text:'접착 공정',
+								text:'용접 공정',
 								value: '3'
 							},
 							{
-								text:'검사 공정',
+								text:'접착 공정',
 								value: '4'
 							}
 						]
