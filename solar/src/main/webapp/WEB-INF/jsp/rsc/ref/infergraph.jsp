@@ -9,20 +9,21 @@
 </head>
 
 <body>
-    <h1>자재 불량률</h1><hr>
-    <div id="coModal" title="업체 목록"></div>
-    <div class="card card-pricing card-primary card-white">
-		<div class="card-body" >
-   <div><label>연도</label>
-<!--     <input type="text" id="year" value="2022"> -->
-    <select id="year" value="${curYear }"></select></div>
-   <label> 발주업체:</label> <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
-    <button id="sendRequest" onclick="inferRequest()" style="margin-left:-10px">조회</button>
-    </div>
-    </div>
-    <div class="flex row">
-	    &ensp;<div id="barChartDiv" class="row-1"></div>
-	    <div id="pieChartDiv" class="row-1"></div>
+	<div>
+	    <h1>자재 불량률</h1><hr>
+	    <div id="coModal" title="업체 목록"></div>
+	    <div class="card card-pricing card-primary card-white">
+			<div class="card-body" >
+	   <div><label>연도</label>
+	    <select id="year" value="${curYear }"></select></div>
+	   <label> 발주업체:</label> <input type="text" id="coCds" name="co"><button type="button" id="coSearchBtn">🔍</button>
+	    <button id="sendRequest" onclick="inferRequest()" style="margin-left:-10px">조회</button>
+	    </div>
+	    </div>
+	    <div class="flex row">
+		    &ensp;<div id="barChartDiv" class="row-1"></div>
+		    <div id="pieChartDiv" class="row-1"></div>
+	    </div>
     </div>
 </body>
 <script>
