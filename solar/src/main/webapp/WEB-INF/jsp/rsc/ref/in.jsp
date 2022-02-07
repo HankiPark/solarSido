@@ -129,6 +129,7 @@ $(function() {
 			'ordrDtEnd':ordrDtEnd,
 			'co':co,
 			'rsc':rsc,
+			'rscFg':1,
 		});
 	});
 
@@ -142,7 +143,8 @@ $(function() {
 		'ordrDtStt':ordrDtStt,
 		'ordrDtEnd':ordrDtEnd,
 		'co':co,
-		'rsc':rsc
+		'rsc':rsc,
+		'rscFg':1,
 	});
   });
 
