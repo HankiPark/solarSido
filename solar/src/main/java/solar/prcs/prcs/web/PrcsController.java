@@ -17,6 +17,7 @@ import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsPrMVO;
 import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.RscConVO;
+import solar.prcs.prcs.service.RsltVO;
 
 @Controller
 public class PrcsController {
@@ -50,6 +51,18 @@ public class PrcsController {
 	
 	/*------------------------------------------------------------------------------------------------ */
 	// LOT추적 테이블을 탐색해 최초 등록된 장비 가져오는 명령
+		
+	  @GetMapping("/prcs/prcsBasicItem")
+	  public String getBasic(ClotVO vo, Model model) {
+		  Map<String, Object> map = new HashMap();
+		  map.put("contents", prcsservice.selectBasicItem(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
+		  return "jsonView";
+		  
+	  }
+	
 	
 	  @GetMapping("/prcs/prcsItem") 
 	  public String getItem(ClotVO vo, Model model) {
@@ -142,9 +155,18 @@ public class PrcsController {
 		  model.addAttribute("result", true);
 		  model.addAttribute("data", map);
 		  
+		  return "jsonView";  
+	  }
+	  
+	  @RequestMapping("prcs/insertRslt")
+	  public String insertRslt(RsltVO vo, Model model) {
+		  Map<String, Object> map = new HashMap();
+		  
+		  map.put("contents", prcsservice.insertRslt(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
 		  return "jsonView";
-		  
-		  
 	  }
 	  
 	  

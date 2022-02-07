@@ -54,7 +54,7 @@
 				<input type="text" id="toTm">
 				<button id="btnEnd" disabled="disabled">종료</button>
 				<br>
-				<button id="btnAddPerf">실적등록</button>
+				<button id="btnAddRslt">실적등록</button>
 				<button id="btnTest1">테스트용1</button>
 				<button id="btnTest2">테스트용2</button>
 				<div>
@@ -105,43 +105,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div>
-			<h3 id="whichPrcs">공정명</h3>
-			<div class="flex row">
-				<div class="col-2 eqm">
-					<div><img id="eqmImg1" class="eqmImg" src="${pageContext.request.contextPath}/images/factory.gif"><img class="tk" id="tk1" style="left: 0px; top: 100px;" src="${pageContext.request.contextPath}/images/siege.gif"><br>1번설비: <span id="eqm1">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar1" class="pBar" style="width:0%">
-					    <div class="pBarText">0.0%</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-2 eqm">
-					<div><img id="eqmImg2" class="eqmImg" src="${pageContext.request.contextPath}/images/factory.gif"><img class="tk" id="tk2" style="left: 0px; top: 100px;" src="${pageContext.request.contextPath}/images/siege.gif"><br>2번설비: <span id="eqm2">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar2" class="pBar" style="width:0%">
-					    <div class="pBarText">0.0%</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-2 eqm">
-					<div><img id="eqmImg3" class="eqmImg" src="${pageContext.request.contextPath}/images/factory.gif"><img class="tk" id="tk3" style="left: 0px; top: 100px;" src="${pageContext.request.contextPath}/images/siege.gif"><br>3번설비: <span id="eqm3">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar3" class="pBar" style="width:0%">
-					    <div class="pBarText">0.0%</div>
-					  </div>
-					</div>
-				</div>
-				<div class="col-2 eqm">
-					<div><img id="eqmImg4" class="eqmImg" src="${pageContext.request.contextPath}/images/factory.gif"><img class="tk" id="tk4" style="left: 0px; top: 100px;" src="${pageContext.request.contextPath}/images/siege.gif"><br>4번설비: <span id="eqm4">0</span></div>
-					<div class="progressBar">
-					  <div id="pBar4" class="pBar" style="width:0%">
-					    <div class="pBarText">0.0%</div>
-					  </div>
-					</div>
-				</div>
-			</div>
-		</div>-->
 	</div>
 </body>
 
@@ -248,6 +211,10 @@
 	
 	let wkQty = document.getElementById("wkQty");
 	
+	// 선택한 사원정보를 담을 변수
+	let sEmp;
+	
+	
 	// 테스트용 변수 전역처리
 	
 	
@@ -312,7 +279,19 @@
 		}, {
 			header : '공정명',
 			name : 'prcsCd',
-			
+			formatter:'listItemText',
+			editor: {
+				type: 'text',
+				options : {
+					listItems : [
+						{ text:'생산대기중', value: '0' },
+						{ text:'태양전지 제조공정', value: '태양전지_제조공정'},
+						{ text:'태양전지 전극공정', value: '태양전지_전극공정'},
+						{ text:'모듈 용접 공정', value: '모듈_용접_공정'},
+						{ text:'모듈 접합 공정', value: '모듈_접합_공정'},
+						]
+	            }
+			}
 		}, {
 			header : '진행상태',
 			name : 'lowSt'
@@ -323,7 +302,7 @@
 	const inDataSource = {
 			   api : {
 			      readData : {
-			         url : '${pageContext.request.contextPath}/prcs/prcsItem',
+			         url : '${pageContext.request.contextPath}/prcs/prcsBasicItem',
 			         method : 'GET'
 			      }
 			   },
@@ -375,8 +354,8 @@
 		var readParams = {
 				'indicaDetaNo':indicaDetaNo
 		}
-		prcsGrid.readData(1,readParams,true);
-		prcsGrid.refreshLayout();
+		prcsGrid.readData(1,readParams,false);
+		//prcsGrid.refreshLayout();
 		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/prcs/prcsItemRsc",
@@ -504,7 +483,7 @@
 		var min = "0";
 		var hour = "0";
  			
- 			// 테스트 버튼
+ 			// 시작 버튼
  			$("#btnStart").on("click", function(ev){
  			
  					
@@ -655,19 +634,20 @@
  			 							}
  			 							
  			 							const endTm = new Date(); 
- 			 							console.log("-----------------완료시점")
+ 			 							console.log("-----------------1번장비 완료시점")
  			 							console.log((endTm-u1));
  			 							console.log(endTm);
- 			 							var eqmETime = msToHMS(endTm);
- 			 							var eqmSTime = msToHMS(endTm-u1);
+ 			 							let eqmETime = msToHMS(endTm);
+ 			 							let eqmSTime = msToHMS(endTm-u1);
  			 							console.log(eqmSTime+"공정시작시간");
  			 							console.log(eqmETime+"공정끝난시간");
- 			 							console.log("-----------------완료시점")
+ 			 							console.log("-----------------1번장비 완료시점")
  			 														
  			 							
 //-------------------------------------------------------------------------------------------------------------------------------
-										var prcsSeq = prcsFlow.PRCSFLOW[0].prcsOrd;
-
+										let prcsSeq = prcsFlow.PRCSFLOW[0].prcsOrd;
+ 			 							let targetItems = [];
+ 			 							
 										$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 										url:'${pageContext.request.contextPath}/prcs/prcsItem',
 										data : {
@@ -677,31 +657,34 @@
 										async: false,
 										contentType: 'application/json',
 										success : function(result){
-											console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
-											console.log(result.data.contents);
 											items = result.data.contents;
-											console.log(items.length);
-											
 											if(prcsSeq==1){																// 첫번째 장비인경우 조건
 												if(unit1Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
-												console.log(items[unit1Count].prdtLot);
+/* 												console.log(items[unit1Count].prdtLot);
 												console.log(unit1Count);
+												 */
+												for(let item of items){
+													if(item.prcsCd=='0'){
+														targetItems.push(item);
+													}	
+												}
+												
 													if(items[unit1Count].lowSt === 'W'){									// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건
 														$.ajax({															// 현재가리키고있는 아이템의 상태를 'C' 완료로 update ajax
 															url:"${pageContext.request.contextPath}/prcs/updateRscClot",
 															data : {
-																'prdtLot':items[unit1Count].prdtLot	
+																'prdtLot':targetItems[unit1Count].prdtLot	
 															},
 															dataType: 'JSON',
 															async: false,
 															contentType: 'application/json',
 															success : function(result){
-																console.log(items[unit1Count].prdtLot+" 랏 장비 상태 업데이트 성공")
+																console.log(targetItems[unit1Count].prdtLot+" 랏 장비 상태 업데이트 성공")
 																
 																$.ajax({													// 현재가리키고있는 아이템을 다음공정 'w' 대기상태로 insert ajsx
 										 								url:"${pageContext.request.contextPath}/prcs/insertRscClot",
 										 								data : {
-										 									'prdtLot':items[unit1Count].prdtLot,	
+										 									'prdtLot':targetItems[unit1Count].prdtLot,	
 										 									'prcsCd': prcsEqmList.PRCS[0].prcsCd,		//공정코드  << 장비목록 0번
 										 									'eqmCd': prcsFlow.PRCSFLOW[0].eqmCd,		//설비코드 << 장비목록 0번
 										 									'wkNo': prcsPrM.wkNo,						//작업번호 << 리턴받은 기본값
@@ -712,10 +695,10 @@
 										 								async: false,
 										 								contentType: 'application/json',
 										 								success : function(result){
-										 									console.log("첫번째 공정완료");
+										 									//console.log("첫번째 공정완료");
 										 									unit1Count++;
 										 									console.log("카운트가 다음 장비를 가리킵니다")
-										 									setProgress(1,unit1Count,10);
+										 									setProgress(1,unit1Count,tAmount);
 										 								},
 										 								error : function(result){
 										 									console.log("등록실패")
@@ -790,9 +773,11 @@
 												 								async: false,
 												 								contentType: 'application/json',
 												 								success : function(result){
-												 									console.log("첫번째 공정완료");
+												 									//console.log("첫번째 공정완료");
 												 									unit1Count++;
-												 									console.log("카운트가 다음 장비를 가리킵니다")
+												 									console.log("1번장비 "+unit1Count+"번 완료");
+												 									fstEqm.innerText = unit1Count;
+												 									//console.log("카운트가 다음 장비를 가리킵니다")
 												 								},
 												 								error : function(result){
 												 									console.log("등록실패")
@@ -905,10 +890,10 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("첫번째 공정완료");
+									 									//console.log("첫번째 공정완료");
 									 									unit2Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
-									 									setProgress(1,unit2Count,10);
+									 									setProgress(1,unit2Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1011,10 +996,10 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("첫번째 공정완료");
+									 									//console.log("첫번째 공정완료");
 									 									unit3Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
- 									 									setProgress(1,unit3Count,10);
+ 									 									setProgress(1,unit3Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1120,12 +1105,13 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("네번째 공정완료");
+									 									//console.log("네번째 공정완료");
 									 									unit4Count++;
+									 									console.log("4번장비 "+unit4Count+"번 완료");
 									 									wkQty.value = wkQty.value*1+1;
 									 									console.log(wkQty);
 									 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
- 									 									setProgress(1,unit4Count,10);
+ 									 									setProgress(1,unit4Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1304,7 +1290,46 @@
  					// 종료버튼 끝
 				});
 
+ 				$("#btnAddRslt").on("click", function(){			// 실적 등록 버튼 이벤트 
+ 					
+ 					console.log(pIstQty);
+ 					console.log(pPrdtCd);
+ 					console.log(pPrcsCd);
+ 					
+ 					
+ 					$.ajax({
+						url:"${pageContext.request.contextPath}/prcs/insertRslt",
+						data : {
+							'prcsCd':prcsCd,
+							'empId':empId,
+							'prcsCd':prcsCd,
+							'istQty':itsQty,
+							'rsltQty':rsltQty,
+							'inferQty':inferQty,
+							'frTm':frTm,
+							'toTm':toTm,
+							'wkNo':wkNo,
+							'wkDt':wkDt
+						},
+						dataType: 'JSON',
+						async: false,
+						contentType: 'application/json',
+						success : function(result){
+												
+						},
+						error : function(result){
+							console.log("실적등록 실패")
+						}
+					});	
+ 					
+ 				});
+ 				
+ 				
+ 				
+ 				
 	}	// 공정타이머 함수 끝	
+	
+	
 	
 	$("#btnTest1").on("click", function(ev){
 		console.log(document.getElementById("wkQty").value);

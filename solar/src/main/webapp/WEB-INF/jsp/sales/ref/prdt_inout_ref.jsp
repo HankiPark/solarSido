@@ -73,7 +73,7 @@ input#inref:checked + label::after{
         width: 12px;
         height: 12px;
 position: absolute;
-		top:-2px;
+		top:-3.5px;
 		left:0;
         background-color: #e37c6b;
         color:#fff;
@@ -94,8 +94,8 @@ input#outref:checked + label::after{
         width: 12px;
         height: 12px;
 position: absolute;
-		top:-2px;
-		left:-1px;
+		top:-3px;
+		left:0px;
         background-color: #e37c6b;
         color:#fff;
          margin-bottom:0px;
@@ -106,39 +106,49 @@ position: absolute;
 </head>
 <body>
 	<h1>제품 입/출고조회</h1>
-	<div class="card card-pricing card-primary card-white">
+	<div class="row" id="sensePrdtRef">
+	<div
+				class="card card-pricing card-primary card-white card-outline col-3" id="sensePrdtRefBody"
+				style="margin-left: 50px; margin-right: 30px; margin-top: 150px; padding-left: 40px; margin-bottom: 300px;">
 		<div class="card-body" >
-			<div class="row">
+			<div >
 
-				<div data-role="fieldcontain" >
-					<label for="defandroid">날짜 선택</label> <input name="startT"
+				<div data-role="fieldcontain" style="margin-bottom: 20px; margin-top: 50px;" >
+					<label for="defandroid">일자선택&nbsp;</label> <input name="startT"
 						class="dtp" id="startT" type="text" data-role="datebox"
 						data-options='{"mode": "calbox"}'>
 				</div>
 			</div>
-			<div class="row">
-				<div data-role="fieldcontain" class="col-2">
-					<label>제품구분</label> <label><input type="checkbox" name="ref" id="inref"
+			<div>
+				<div data-role="fieldcontain" style="margin-bottom: 20px;">
+					<label>제품구분&nbsp;&nbsp;&nbsp;</label> <label><input type="checkbox" name="ref" id="inref"
 						value="I"><label for="inref"></label>입고</label> <label><input type="checkbox" id="outref"
 						name="ref" value="O"><label for="outref"></label>출고</label>
 				</div>
-				<div data-role="fieldcontain" class="col-3">
-					<label>제품명</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px" > 🔍 </button>
+				
+				<div data-role="fieldcontain" style="margin-bottom: 20px;">
+					<label>제품명&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="prdNm"><button type="button" id="prdtNmBtn" style="width:33px" > 🔍 </button>
 				</div>
-				<div id="coo" data-role="fieldcontain" class="col-7" style="display: none">
-				<button type="button" id="static">제품출고 통계</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<label>회사명</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> 
+				<div id="coo" data-role="fieldcontain" style="display: none">
+					<div data-role="fieldcontain" style="margin-bottom: 20px;">
+				<button type="button" id="static" style="width:300px;height:40px;font-size:20px;borderRadius:20px;padding:6px 1px 6px 3px"><i class="fas fa-chart-line"></i>&nbsp;제품월별통계</button>
+				</div>
+					<label>회사명&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="coNm"><button type="button" id="coNmBtn" style="width:33px"> 🔍 </button> 
 					
 		</div>
 	</div>
-	<button type="button" id="findgrid" style="margin-left:-10px">조회</button>
+	
 
 		</div>
+		<div class="card-footer" style="margin-bottom: 30px;">
+		<button type="button" id="findgrid" style="margin-left:120px">조회</button>
 		</div>
-	<div id="Grid"></div>
+		</div>
+			<div class="col-8">
+	<div id="Grid" style="margin-top:100px"></div>
+</div>
 
-
-
+</div>
 
 
 	<div id="dialog-form" title="제품명단"></div>
@@ -152,7 +162,8 @@ position: absolute;
 	var nd = new Date(d.getFullYear(), d.getMonth(), d.getDate() - 7);
 	document.getElementById('startT').value = nd.toISOString().slice(0, 10);
 	document.getElementById('endT').value = d.toISOString().slice(0, 10); */
-	
+	var save;
+	var a;
 	$(function() {
 		
 		  $('input[name="startT"]').daterangepicker({
@@ -241,7 +252,12 @@ position: absolute;
 					contentType : 'application/json'
 				},
 
-				minBodyHeight : 700,
+				minBodyHeight : 500,
+				
+				pageOptions : {
+					useClient : true,
+					perPage : 15
+				},
 				rowHeaders : [ {
 					type : 'rowNum',
 					width : 100,
@@ -256,6 +272,7 @@ position: absolute;
 				{
 					header : '입출고구분',
 					name : 'prdtFg'
+
 				}, {
 					header : '생산지시번호/출고전표번호',
 					name : 'indicaNo'
@@ -280,6 +297,22 @@ position: absolute;
 				
 
 			});
+
+	$(document).on('click','.tui-page-btn',function(e){
+		$('td').css('backgroundColor','');
+		$('td').css('color','');
+		$('td').css('fontSize','');
+
+		setTimeout(function(){
+			for(let i=save;i<=a;i++){
+				$('td[data-row-key$="'+i+'"]').css('backgroundColor','#fff');
+				$('td[data-row-key$="'+i+'"]').css('color','#e37c6b');
+				$('td[data-row-key$="'+i+'"]').css('fontSize',15);
+			}
+			$('td[data-column-name$="prdtFg"]').find('div:contains("I")').html("입고");
+			$('td[data-column-name$="prdtFg"]').find('div:contains("O")').html("출고");
+		},300);
+	})
 	
 	$('#findgrid').on('click', function() {
 		
@@ -322,10 +355,10 @@ position: absolute;
 		Grid.on('onGridUpdated', function() {
 		$('td').css('backgroundColor','');
 		$('td').css('color','');
-		$('td').css('fontSize',);
+		$('td').css('fontSize','');
 		Grid.refreshLayout();
-		var a = Grid.getRowCount();
-		var save =Grid.getRowCount();
+		 a = Grid.getRowCount();
+		save =Grid.getRowCount();
 		var day = Grid.getValue(0,'prdtDt');
 		var cnt=1;
 		var up=1;
@@ -352,6 +385,8 @@ position: absolute;
 				$('td[data-row-key$="'+i+'"]').css('color','#e37c6b');
 				$('td[data-row-key$="'+i+'"]').css('fontSize',15);
 			}
+			$('td[data-column-name$="prdtFg"]').find('div:contains("I")').html("입고");
+			$('td[data-column-name$="prdtFg"]').find('div:contains("O")').html("출고");
 		},300);
 		
 	});
@@ -376,6 +411,14 @@ position: absolute;
 									prdtOutChart()
 								})
 			});
+		
+		$('#sensePrdtRef').resize(function(){
+			if($('#sensePrdtRef').width()<1780){
+				$('#sensePrdtRefBody').css('paddingLeft','15px');
+			}else{
+				$('#sensePrdtRefBody').css('paddingLeft','40px');
+			}
+		})
 	</script>
 </body>
 </html>

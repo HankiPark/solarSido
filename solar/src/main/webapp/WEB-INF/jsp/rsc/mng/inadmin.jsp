@@ -12,41 +12,44 @@
 </head>
 
 <body>
-	<h1>자재 입고 관리</h1><hr>
+	<h1>자재 입고 관리</h1>
 	<div id="coModal" title="업체 목록"></div>
 	<div id="rscModal" title="자재 목록"></div>
 	<div id="inspModal" title="입고"></div>
-		<div class="card card-pricing card-primary card-white">
-		<div class="card-body" >
+<div class="row" id="senseIn">
+		<div  id="senseInBody"  class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px; height:400px">
+
+		<div class="card-body">
 			
 	<form id="ordrQueryFrm" name="ordrQueryFrm">
-		<div>
-			<label>발주일:</label> <input type="text" id="datePicker" name="datePicker" class="dtp">
+		<div  style="margin-bottom: 20px; margin-top: 50px;">
+			<label>발주일 &nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="datePicker" name="datePicker" class="dtp">
 		</div>
-		<div>
-		<label>발주업체:</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button>
-		<label>	자재:</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
+		<div style="margin-bottom: 20px;">
+		<label>발주업체&nbsp;</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button></div>
+		<div style="margin-bottom: 20px;"><label>	자재코드&nbsp;</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button>
 		</div>
-		<button type="button" id="ordrQueryBtn" style="margin-left:-10px">조회</button>
-		<button type="button" id="inspSaveBtn" style="margin-left:-10px">저장</button>
+		
 	</form>
+	</div>
+	<div class="card-footer" style="margin-bottom: 30px;" >
+	<button type="button" id="ordrQueryBtn" style="margin-left:120px">조회</button>
 	</div>
 	</div>
 
-	<div class="flex row">
-		<div id="grid" class="col-8"></div>
-		<div class="col-4">
-			<div class="card card-pricing card-primary card-white">
+	<div class="col-8" style=" margin-top:100px;">
+		<div id="grid" ></div>
+		
+			<div class="card card-pricing card-primary card-white card-outline" style="width:100% ;margin-top:50px;margin-left:-3px">
 				<div class="card-body" >
-					<ul>
-						<li>발주량:<br><input id="ordrQty" disabled></li><br>
-						<li>검수합격량:<br><input id="rscPassedQty" disabled></li><br>
-						<li>입고수량확인<br><input id="confirmedQty" placeholder="검수합격량"></li>
-					</ul>
-					<div align="center">
-						<button type="button" id="btnIn">입고</button>
+					<div style="margin-top:20px; padding-left:30px;margin-bottom:20px" class="row">
+						<div class="col-4">발주량<input id="ordrQty" disabled></div>
+						<div class="col-4">검수합격량<input id="rscPassedQty" disabled></div>
+						<div class="col-4">입고수량확인<input id="confirmedQty" placeholder="검수합격량"></div>
 					</div>
 				</div>
+				<div class="card-footer" style="cursor:pointer;background-color:#e37c6b;color:#ffffff;text-align:center;font-size:25px ;border-radius:0px 0px 10px 10px" id="btnIn" ><i class="fas fa-truck-loading"></i>&nbsp; 입고
+					</div>
 			</div>
 		</div>
 	</div>
@@ -281,10 +284,10 @@
 		$("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
 	});
 
-	let saveBtn = document.getElementById('inspSaveBtn');
+/* 	let saveBtn = document.getElementById('inspSaveBtn');
 	saveBtn.addEventListener('click', function () {
 		grid.request('modifyData');
-	});
+	}); */
 
 	let btnIn = document.getElementById('btnIn');
 	btnIn.addEventListener('click', function () {
@@ -310,6 +313,14 @@
 			})
 		});
 	});
+	
+	$('#senseIn').resize(function(){
+		if($('#senseIn').width()<1780){
+			$('#senseInBody').css('paddingLeft','15px');
+		}else{
+			$('#senseInBody').css('paddingLeft','40px');
+		}
+	})
 </script>
 
 </html>

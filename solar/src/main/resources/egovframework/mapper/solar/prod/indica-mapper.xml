@@ -21,8 +21,8 @@
 		B.prod_fg,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord,
-		(SELECT min(uph) FROM EQM) as day_out_put,
-		(B.indica_qty/10) as prod_day
+		(SELECT min(uph)*24 FROM EQM) as day_out_put,
+		ROUND((B.indica_qty/10),2) as prod_day
 	FROM indica_d B
 	JOIN plan_d P ON B.plan_deta_no = P.plan_deta_no
 	JOIN order_d O ON (P.order_no = O.order_no AND B.prdt_cd = O.prdt_cd)
@@ -43,6 +43,18 @@
 		AND B.indica_no = #{indicaNo}
 		ORDER BY indica_no
 		</if>
+		<choose>
+		<when test="nowSt !=null and nowSt != ''">
+			<choose>
+				<when test='nowSt == "미진행"'>
+					 AND b.wk_dt is null
+				</when>
+				<when test='nowSt == "진행"'>
+					AND b.wk_dt is not null
+				</when>
+			</choose>
+		</when>
+		</choose>
 </select>
 
 <select id="findIndica" resultType="IndicaVO">
@@ -53,7 +65,22 @@
 	FROM indica i
     JOIN indica_d id  ON i.indica_no = id.indica_no
     LEFT JOIN prcs_pr_m p ON (id.prdt_cd = p.prdt_cd AND id.indica_deta_no = p.indica_deta_no)
-    WHERE  p.wk_dt is null
+    WHERE 1=1
+    <choose>
+		<when test="nowSt !=null and nowSt != ''">
+			<choose>
+				<when test='nowSt == "미진행"'>
+					 AND p.wk_dt is null
+				</when>
+				<when test='nowSt == "진행"'>
+					AND p.wk_dt is not null
+				</when>
+			</choose>
+		</when>
+		<otherwise>
+			 AND p.wk_dt is null
+		</otherwise>
+	</choose>
 	ORDER BY indica_no
 </select>
 
@@ -72,9 +99,9 @@
  SELECT 
  	r.rsc_cd, 
  	r.rsc_lot,
- 	(select rsc_use_qty from prdt_bom where prdt_cd = #{prdtCd} and rsc_cd = #{rscCd}) as rsc_use_qty,
-    (nvl((select sum(rsc_qty) from rsc_inout where r.rsc_fg=1 and rsc_lot=r.rsc_lot),0)
-     -nvl((select sum(rsc_qty) from rsc_inout where r.rsc_fg=0 and rsc_lot=r.rsc_lot),0) ) as rsc_stc
+ 	(SELECT rsc_use_qty FROM prdt_bom WHERE prdt_cd = #{prdtCd} AND rsc_cd = #{rscCd}) as rsc_use_qty,
+    (nvl((SELECT sum(rsc_qty) FROM rsc_inout WHERE r.rsc_fg=1 AND rsc_lot=r.rsc_lot),0)
+     -nvl((SELECT sum(rsc_qty) FROM rsc_inout WHERE r.rsc_fg=0 AND rsc_lot=r.rsc_lot),0) ) as rsc_stc
  FROM rsc_inout r 
  WHERE rsc_cd = #{rscCd}
 </select>
@@ -97,8 +124,8 @@
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
-		(SELECT min(uph) FROM EQM) as day_output,
-		(B.plan_qty/(SELECT min(uph) FROM EQM)) as prod_day
+		(SELECT min(uph)*24 FROM EQM) as day_output,
+		(B.plan_qty/(SELECT min(uph)*24 FROM EQM)) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no

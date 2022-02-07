@@ -14,18 +14,22 @@
 
 <body>
   <h1>자재 재고 조회</h1>
-  <hr>
+
   <div id="coModal" title="업체 목록"></div>
   <div id="rscModal" title="자재 목록"></div>
-   <div class="card card-pricing card-primary card-white">
+ <div class="row" id="senseStc">
+		<div  id="senseStcBody"  class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px; height:350px">
 		<div class="card-body" >
   <form id="ordrQueryFrm" name="ordrQueryFrm">
-    <div><label>자재:</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button></div>
-    <button type="button" id="ordrQueryBtn" style="margin-left:-10px">조회</button>
+    <div style="margin-top: 60px; margin-bottom: 30px;"><label>자재코드</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button></div>
+    
   </form>
   </div>
+  	<div class="card-footer" style="margin-bottom: 30px;" >
+  <button type="button" id="ordrQueryBtn" style="margin-left:120px">조회</button>
   </div>
-  <div id="grid"></div>
+  </div>
+  <div id="grid" class="col-8" style=" margin-top:100px;"></div>
 </body>
 
 <script>
@@ -44,6 +48,8 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
+    minBodyHeight : 500,
+	bodyHeight : 500,
     columns: [
       {
         header: '자재명',
@@ -136,6 +142,13 @@
     rscDialog.dialog("open");
     $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
   });
+	$('#senseStc').resize(function(){
+		if($('#senseStc').width()<1780){
+			$('#senseStcBody').css('paddingLeft','15px');
+		}else{
+			$('#senseStcBody').css('paddingLeft','40px');
+		}
+	})
 </script>
 
 </html>

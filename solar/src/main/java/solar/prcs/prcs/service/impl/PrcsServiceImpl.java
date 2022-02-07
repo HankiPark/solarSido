@@ -12,6 +12,7 @@ import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.PrcsPrMVO;
 import solar.prcs.prcs.service.RscConVO;
+import solar.prcs.prcs.service.RsltVO;
 
 @Service
 public class PrcsServiceImpl implements PrcsService {
@@ -85,6 +86,18 @@ public class PrcsServiceImpl implements PrcsService {
 	@Override
 	public int insertRscClot(ClotVO vo) {
 		return prcsmapper.insertRscClot(vo);
+	}
+
+
+	@Override
+	public List<ClotVO> selectBasicItem(ClotVO vo) {
+		return prcsmapper.selectBasicItem(vo);
+	}
+
+
+	@Override
+	public int insertRslt(RsltVO vo) {
+		return prcsmapper.insertRslt(vo);
 	}
 	 
 	 
