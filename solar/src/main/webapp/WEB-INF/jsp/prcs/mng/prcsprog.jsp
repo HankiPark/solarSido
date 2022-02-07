@@ -195,10 +195,10 @@
 				options : {
 					listItems : [
 						{ text:'생산대기중', value: '0' },
-						{ text:'1번공정', value: '1번공정'},
-						{ text:'2번공정', value: '2번공정'},
-						{ text:'3번공정', value: '3번공정'},
-						{ text:'4번공정', value: '4번공정'},
+						{ text:'태양전지 제조공정', value: '태양전지_제조공정'},
+						{ text:'태양전지 전극공정', value: '태양전지_전극공정'},
+						{ text:'모듈 용접 공정', value: '모듈_용접_공정'},
+						{ text:'모듈 접합 공정', value: '모듈_접합_공정'},
 						]
 	            }
 			}
