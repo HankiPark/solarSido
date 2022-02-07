@@ -51,6 +51,13 @@
 				toastr.warning('생산일수에 숫자만 입력해주세요')
 			}
 		}
+		
+		function Savedone(){
+			toastr.success('수정이 완료되었습니다.')
+		}
+		function Deletedone(){
+			toastr.success('해당 데이터가 삭제되었습니다 저장 해주세요.');
+		}
 
 		var dataSource = {
 			api : {
@@ -88,15 +95,15 @@
 								value: '1'
 							},
 							{
-								text:'가공 공정',
+								text:'전극 및 측정공정',
 								value: '2'
 							},
 							{
-								text:'접착 공정',
+								text:'용접 공정',
 								value: '3'
 							},
 							{
-								text:'검사 공정',
+								text:'접착 공정',
 								value: '4'
 							}
 						]
@@ -146,10 +153,12 @@
 		$('#btnSave').on('click', function appendRow(index) {
 			grid.blur();
 			grid.request('modifyData');
+			Savedone();
 		});
 		$('#btnDel').on('click', function appendRow(index) {
 			grid.blur();
 			grid.removeCheckedRows(true);
+			Deletedone();
 		});
 
 		$('#btnfind').on('click', function() {
