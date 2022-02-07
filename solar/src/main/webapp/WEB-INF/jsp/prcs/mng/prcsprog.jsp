@@ -544,19 +544,20 @@
  			 							}
  			 							
  			 							const endTm = new Date(); 
- 			 							console.log("-----------------완료시점")
+ 			 							console.log("-----------------1번장비 완료시점")
  			 							console.log((endTm-u1));
  			 							console.log(endTm);
- 			 							var eqmETime = msToHMS(endTm);
- 			 							var eqmSTime = msToHMS(endTm-u1);
+ 			 							let eqmETime = msToHMS(endTm);
+ 			 							let eqmSTime = msToHMS(endTm-u1);
  			 							console.log(eqmSTime+"공정시작시간");
  			 							console.log(eqmETime+"공정끝난시간");
- 			 							console.log("-----------------완료시점")
+ 			 							console.log("-----------------1번장비 완료시점")
  			 														
  			 							
 //-------------------------------------------------------------------------------------------------------------------------------
-										var prcsSeq = prcsFlow.PRCSFLOW[0].prcsOrd;
-
+										let prcsSeq = prcsFlow.PRCSFLOW[0].prcsOrd;
+ 			 							let targetItems = [];
+ 			 							
 										$.ajax({																			// RscClot table을 조회해 작동가능한 아이템을 읽어온다
 										url:'${pageContext.request.contextPath}/prcs/prcsItem',
 										data : {
@@ -566,31 +567,34 @@
 										async: false,
 										contentType: 'application/json',
 										success : function(result){
-											console.log("mmmmmmmmmmmmmmmmmmmmmmmmm장비리스트 호출 성공")
-											console.log(result.data.contents);
 											items = result.data.contents;
-											console.log(items.length);
-											
 											if(prcsSeq==1){																// 첫번째 장비인경우 조건
 												if(unit1Count < tAmount){												// 유닛 카운트가 생산목표보다 작을때까지 조건
-												console.log(items[unit1Count].prdtLot);
+/* 												console.log(items[unit1Count].prdtLot);
 												console.log(unit1Count);
+												 */
+												for(let item of items){
+													if(item.prcsCd=='0'){
+														targetItems.push(item);
+													}	
+												}
+												
 													if(items[unit1Count].lowSt === 'W'){									// 현재가리키고있는 아이템의 상태가 'w' 대기일때 조건
 														$.ajax({															// 현재가리키고있는 아이템의 상태를 'C' 완료로 update ajax
 															url:"${pageContext.request.contextPath}/prcs/updateRscClot",
 															data : {
-																'prdtLot':items[unit1Count].prdtLot	
+																'prdtLot':targetItems[unit1Count].prdtLot	
 															},
 															dataType: 'JSON',
 															async: false,
 															contentType: 'application/json',
 															success : function(result){
-																console.log(items[unit1Count].prdtLot+" 랏 장비 상태 업데이트 성공")
+																console.log(targetItems[unit1Count].prdtLot+" 랏 장비 상태 업데이트 성공")
 																
 																$.ajax({													// 현재가리키고있는 아이템을 다음공정 'w' 대기상태로 insert ajsx
 										 								url:"${pageContext.request.contextPath}/prcs/insertRscClot",
 										 								data : {
-										 									'prdtLot':items[unit1Count].prdtLot,	
+										 									'prdtLot':targetItems[unit1Count].prdtLot,	
 										 									'prcsCd': prcsEqmList.PRCS[0].prcsCd,		//공정코드  << 장비목록 0번
 										 									'eqmCd': prcsFlow.PRCSFLOW[0].eqmCd,		//설비코드 << 장비목록 0번
 										 									'wkNo': prcsPrM.wkNo,						//작업번호 << 리턴받은 기본값
@@ -601,9 +605,10 @@
 										 								async: false,
 										 								contentType: 'application/json',
 										 								success : function(result){
-										 									console.log("첫번째 공정완료");
+										 									//console.log("첫번째 공정완료");
 										 									unit1Count++;
-										 									console.log("카운트가 다음 장비를 가리킵니다")
+										 									console.log("1번장비 "+unit1Count+"번 완료");
+										 									//console.log("카운트가 다음 장비를 가리킵니다")
 										 									fstEqm.innerText = unit1Count;
 										 								},
 										 								error : function(result){
@@ -679,9 +684,11 @@
 												 								async: false,
 												 								contentType: 'application/json',
 												 								success : function(result){
-												 									console.log("첫번째 공정완료");
+												 									//console.log("첫번째 공정완료");
 												 									unit1Count++;
-												 									console.log("카운트가 다음 장비를 가리킵니다")
+												 									console.log("1번장비 "+unit1Count+"번 완료");
+												 									fstEqm.innerText = unit1Count;
+												 									//console.log("카운트가 다음 장비를 가리킵니다")
 												 								},
 												 								error : function(result){
 												 									console.log("등록실패")
@@ -794,9 +801,10 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("첫번째 공정완료");
+									 									//console.log("첫번째 공정완료");
 									 									unit2Count++;
-									 									console.log("카운트가 다음 장비를 가리킵니다")
+									 									console.log("2번장비 "+unit2Count+"번 완료");
+									 									//console.log("카운트가 다음 장비를 가리킵니다")
 									 									sndEqm.innerText = unit2Count;
 									 								},
 									 								error : function(result){
@@ -900,9 +908,10 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("첫번째 공정완료");
+									 									//console.log("첫번째 공정완료");
 									 									unit3Count++;
-									 									console.log("카운트가 다음 장비를 가리킵니다")
+									 									console.log("3번장비 "+unit3Count+"번 완료");
+									 									//console.log("카운트가 다음 장비를 가리킵니다")
 									 									trdEqm.innerText = unit3Count;
 									 								},
 									 								error : function(result){
@@ -1009,11 +1018,12 @@
 									 								async: false,
 									 								contentType: 'application/json',
 									 								success : function(result){
-									 									console.log("네번째 공정완료");
+									 									//console.log("네번째 공정완료");
 									 									unit4Count++;
+									 									console.log("4번장비 "+unit4Count+"번 완료");
 									 									wkQty.value = wkQty.value*1+1;
 									 									console.log(wkQty);
-									 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
+									 									//console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
 									 									fthEqm.innerText = unit4Count;
 									 								},
 									 								error : function(result){
