@@ -170,12 +170,6 @@
 
 </select>
 
-
-
-
-
-
-
 <insert id="insertPrcsPrM" parameterType="solar.prcs.prcs.service.PrcsPrMVO" useGeneratedKeys="true">
 	<selectKey keyColumn="wkNo" keyProperty="wkNo" order="BEFORE" resultType="solar.prcs.prcs.service.PrcsPrMVO" >
 		
@@ -256,14 +250,31 @@
 						#{prdtLot},
 						#{prcsCd},
 						#{eqmCd},
-						'W',
+						#{lowSt},
 						#{wkNo},
 						sysdate,
 						TO_DATE(#{prcsFrTm},'HH24:MI:SS'),
 						TO_DATE(#{prcsToTm},'HH24:MI:SS')
-				)
-						
-	
+				)	
+</insert>
+
+<insert id="insertPrdtStc" parameterType="solar.prcs.prcs.service.PrdtStcVO">
+	insert into prdt_stc(
+						prdt_inx,
+						prdt_lot,
+						prdt_fg,
+						prdt_cd,
+						indica_deta_no,
+						prdt_dt
+					)
+					values(
+						prdtseq.nextval,
+						#{prdtLot},
+						'C',
+						#{prdtCd},
+						#{indicaDetaNo},
+						sysdate
+					)
 </insert>
 
 
