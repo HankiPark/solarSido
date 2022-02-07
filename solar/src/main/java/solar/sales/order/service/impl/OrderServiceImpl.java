@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import solar.sales.order.dao.CalenderVO;
+import solar.sales.order.dao.CalendarVO;
 import solar.sales.order.dao.Order;
 import solar.sales.order.service.OrderService;
 
@@ -34,27 +34,42 @@ public class OrderServiceImpl implements OrderService{
 
 
 	@Override
-	public List<CalenderVO> orderCal() {
+	public List<CalendarVO> orderCal() {
 		return omapper.orderCal();
 	}
 
 	@Override
-	public List<CalenderVO> inPrdtCal() {
+	public List<CalendarVO> inPrdtCal() {
 		return omapper.inPrdtCal();
 	}
 	@Override
-	public List<CalenderVO> outPrdtCal() {
+	public List<CalendarVO> outPrdtCal() {
 		return omapper.outPrdtCal();
 	}
 
 	@Override
-	public List<CalenderVO> rscCal() {
+	public List<CalendarVO> rscCal() {
 		return omapper.rscCal();
 	}
 
 	@Override
-	public List<CalenderVO> prodCal() {
+	public List<CalendarVO> prodCal() {
 		return omapper.prodCal();
+	}
+
+	@Override
+	public List<CalendarVO> eqmCal() {
+		return omapper.eqmCal();
+	}
+
+	@Override
+	public List<CalendarVO> eqmEndCal() {
+		return omapper.eqmEndCal();
+	}
+
+	@Override
+	public List<CalendarVO> orderEndCal() {
+		return omapper.orderEndCal();
 	}
 
 } 

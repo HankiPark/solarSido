@@ -68,7 +68,7 @@ position: absolute;
 			<div class="card card-pricing card-primary card-white col-8">
 				<div class="card-body">
 					<label> 조회중인 제품 LOT</label><br> <input id="prdtEndLot" type="text"
-						readonly><br><br>
+						readonly style="background-color:#fed4c2"><br><br>
 						<div class="row">
 						<div class="col-1"><label> 제품 LOT</label></div><div class="col-3"> <input type="text" id="prdtLot" name="prdtLot" style="width:90%" ></div>
 						<div class="col-1"><label>제품 종류</label></div><div class="col-3"> <input type="text" id="prdtCd" name="prdtCd" style="width:90%" ></div>

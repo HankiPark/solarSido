@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.cmmndata.service.CmmndataService;
-import solar.sales.order.dao.CalenderVO;
+import solar.sales.order.dao.CalendarVO;
 import solar.sales.order.dao.Order;
 import solar.sales.order.service.OrderService;
 
@@ -88,21 +88,28 @@ public class OrderController {
 	//영업 캘린더 시작
 	@GetMapping("/ajax/orderCal")
 	public String orderCal(Model model) throws Exception {
-		List<CalenderVO> list = oservice.orderCal();
+		List<CalendarVO> list = oservice.orderCal();
+		model.addAttribute("events", list);
+		
+		return "jsonView";
+	}
+	@GetMapping("/ajax/orderEndCal")
+	public String orderEndCal(Model model) throws Exception {
+		List<CalendarVO> list = oservice.orderEndCal();
 		model.addAttribute("events", list);
 		
 		return "jsonView";
 	}
 	@GetMapping("/ajax/inPrdtCal")
 	public String inPrdtCal(Model model) throws Exception {
-		List<CalenderVO> list = oservice.inPrdtCal();
+		List<CalendarVO> list = oservice.inPrdtCal();
 		model.addAttribute("events", list);
 		
 		return "jsonView";
 	}
 	@GetMapping("/ajax/outPrdtCal")
 	public String outPrdtCal(Model model) throws Exception {
-		List<CalenderVO> list = oservice.outPrdtCal();
+		List<CalendarVO> list = oservice.outPrdtCal();
 		model.addAttribute("events", list);
 		
 		return "jsonView";
@@ -112,7 +119,7 @@ public class OrderController {
 	//자재 캘린더 시작
 	@GetMapping("/ajax/rscCal")
 	public String rscCal(Model model) throws Exception {
-		List<CalenderVO> list = oservice.rscCal();
+		List<CalendarVO> list = oservice.rscCal();
 		model.addAttribute("events", list);
 		
 		return "jsonView";
@@ -123,11 +130,26 @@ public class OrderController {
 	//영업 캘린더 시작
 	@GetMapping("/ajax/prodCal")
 	public String prodCal(Model model) throws Exception {
-		List<CalenderVO> list = oservice.prodCal();
+		List<CalendarVO> list = oservice.prodCal();
 		model.addAttribute("events", list);
 		
 		return "jsonView";
 	}
 	//영업 캘린더 끝
-	
+	//설비 캘린더 시작
+	@GetMapping("/ajax/eqmCal")
+	public String eqmCal(Model model) throws Exception {
+		List<CalendarVO> list = oservice.eqmCal();
+		model.addAttribute("events", list);
+		
+		return "jsonView";
+	}
+	@GetMapping("/ajax/eqmEndCal")
+	public String eqmEndCal(Model model) throws Exception {
+		List<CalendarVO> list = oservice.eqmEndCal();
+		model.addAttribute("events", list);
+		
+		return "jsonView";
+	}
+
 }

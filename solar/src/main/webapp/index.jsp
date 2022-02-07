@@ -660,7 +660,7 @@ $("#noticeNav").on("click",function(){
 			
 		}
 		$(".dropdown-menu").append(
-		`<a href="#" onclick="removeMessage(`+idK+`)" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
+		`<a href="#" onclick="removeMessage('`+idK+`')" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
 		)
 			
 	})

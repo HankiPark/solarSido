@@ -150,12 +150,12 @@ a {
 			<div class="row" id="sensePrdtOut2">
 				<div
 					class="card card-pricing card-primary card-white card-outline col-3" id="sensePrdtOut2Body"
-					style="margin-left: 50px; margin-right: 30px; margin-top: 70px; padding-left: 40px; margin-bottom: 200px; height: 350px">
+					style="margin-left: 50px; margin-right: 30px; margin-top: 70px; padding-left: 40px; margin-bottom: 170px; height: 350px">
 					<div class="card-body">
 						<div style="margin-top: 40px; margin-bottom: 30px;">
 							<label for="slipNm2">조회중인 전표번호</label>
 						</div>
-						<div">
+						<div>
 							<input id="slipNm2" type="text" readonly>
 						</div>
 					</div>

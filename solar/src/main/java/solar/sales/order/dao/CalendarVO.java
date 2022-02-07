@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 @Data
-public class CalenderVO {
+public class CalendarVO {
 	String title;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
