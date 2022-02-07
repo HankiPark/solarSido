@@ -4,15 +4,39 @@
 <mapper namespace="solar.eqm.mng.service.impl.EqmMapper">
 
 	<select id="eqmList" resultType="EqmVO" parameterType="map">
-		select e.eqm_cd, e.eqm_fg, e.eqm_nm, e.eqm_mdl, e.eqm_spec, e.eqm_co, to_char(e.purc_dt,'yyyy/MM/dd') "purc_dt", e.purc_amt, e.li_no, e.emp_id, e.energy, e.lf, e.temp, e.uph, e.eqm_img, e.prcs_cd, e.eqm_yn
-		from eqm e
-<!-- 		join prcs p -->
-<!-- 			on e.prcs_cd = p.prcs_cd -->
+		select distinct
+			e.eqm_cd,
+			e.eqm_fg,
+			e.eqm_nm,
+			e.eqm_mdl,
+			e.eqm_spec,
+			e.eqm_co,
+			to_char(e.purc_dt,'yyyy/MM/dd') "purc_dt",
+			e.purc_amt,
+			e.li_no,
+			e.emp_id,
+			e.energy,
+			e.lf,
+			e.temp,
+			e.uph,
+			e.eqm_img,
+			e.prcs_cd,
+			e.eqm_yn
+		from
+			eqm e
+		<if test='eqmParam2 == null or eqmParam2 == ""'>
+			join prcs pc
+			    on e.prcs_cd = pc.prcs_cd
+			join prcs_pr pp
+			    on pc.prcs_cd = pp.prcs_cd
+			join prdt pd
+			    on pp.prdt_cd = pd.prdt_cd
+		</if>
 		where 1=1
 			<if test="eqmParam != null and eqmParam != ''">
 				and(
-					eqm_cd like '%'||#{eqmParam}||'%'
-					or eqm_nm like '%'||#{eqmParam}||'%'
+					e.eqm_cd like '%'||#{eqmParam}||'%'
+					or e.eqm_nm like '%'||#{eqmParam}||'%'
 				)
 			</if>
 			<if test="dtStt != null and dtStt != ''">
@@ -22,10 +46,10 @@
 				AND trunc(e.purc_dt) <![CDATA[<= #{dtEnd}]]>
 			</if>
 			<if test='uoYn == "Y"'>
-				AND eqm_yn = 'Y'
+				AND e.eqm_yn = 'Y'
 			</if>
 			<if test='uoYn == "N"'>
-				AND eqm_yn = 'N'
+				AND e.eqm_yn = 'N'
 			</if>
 		order by e.eqm_cd
 	</select>

@@ -61,6 +61,9 @@
 		<if test='rsc != null and rsc != ""'>
 			AND i.rsc_cd = #{rsc}
 		</if>
+		<if test='rscFg != null and rscFg != ""'>
+			AND i.rsc_fg = #{rscFg}
+		</if>
 		ORDER BY
 		    rsc_dt
 	</select>
