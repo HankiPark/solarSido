@@ -199,7 +199,7 @@
 							#{prcsCd},
 							#{indicaDetaNo},
 							#{indicaNo},
-							#{indicaDt}
+							TO_DATE(#{indicaDt},'YYYY/MM/DD')
 							)
 
 </insert>
