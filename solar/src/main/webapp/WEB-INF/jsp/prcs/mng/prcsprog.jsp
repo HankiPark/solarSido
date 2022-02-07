@@ -72,7 +72,7 @@
 			<h3 id="whichPrcs">공정명</h3>
 			<div class="flex row">
 				<div class="col-2 eqm">
-					<div><img id="fstImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번설비: <span id="eqm1">0</span></div>
+					<div><img id="eqmImg1" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번설비: <span id="eqm1">0</span></div>
 					<div class="progressBar">
 					  <div id="pBar1" class="pBar" style="width:0%">
 					    <div class="pBarText">0%</div>
@@ -80,7 +80,7 @@
 					</div>
 				</div>
 				<div class="col-2 eqm">
-					<div><img id="sndImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번설비: <span id="eqm2">0</span></div>
+					<div><img id="eqmImg2" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번설비: <span id="eqm2">0</span></div>
 					<div class="progressBar">
 					  <div id="pBar2" class="pBar" style="width:0%">
 					    <div class="pBarText">0%</div>
@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				<div class="col-2 eqm">
-					<div><img id="trdImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번설비: <span id="eqm3">0</span></div>
+					<div><img id="eqmImg3" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번설비: <span id="eqm3">0</span></div>
 					<div class="progressBar">
 					  <div id="pBar3" class="pBar" style="width:0%">
 					    <div class="pBarText">0%</div>
@@ -96,7 +96,7 @@
 					</div>
 				</div>
 				<div class="col-2 eqm">
-					<div><img id="fthImg" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번설비: <span id="eqm4">0</span></div>
+					<div><img id="eqmImg4" class="eqmImg" src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번설비: <span id="eqm4">0</span></div>
 					<div class="progressBar">
 					  <div id="pBar4" class="pBar" style="width:0%">
 					    <div class="pBarText">0%</div>
@@ -776,8 +776,8 @@
 												 									//console.log("첫번째 공정완료");
 												 									unit1Count++;
 												 									console.log("1번장비 "+unit1Count+"번 완료");
-												 									fstEqm.innerText = unit1Count;
 												 									//console.log("카운트가 다음 장비를 가리킵니다")
+												 									setProgress(1,unit1Count,tAmount);
 												 								},
 												 								error : function(result){
 												 									console.log("등록실패")
