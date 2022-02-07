@@ -106,7 +106,7 @@ position: absolute;
 
 <!-- 생산지시 상세 그리드-->
 	<div class="col-8" style="margin-top: 50px;">
-		<button style="width: 100px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
+		<button style="width: 100px; height: 40px; font-size: 20px; border-radius: 5px;boxShadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
 		<div id="indicaDgrid"></div>
 	</div>
 </div>

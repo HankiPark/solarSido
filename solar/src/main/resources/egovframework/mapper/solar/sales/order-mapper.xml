@@ -88,5 +88,13 @@
 	</select>
 	<select id="outPrdtCal" resultType="Calender">
 		select '출고 '||slip_no as title, prdt_dt as "start" from oust
+	</select>	
+	<select id="rscCal" resultType="Calender">
+		select rsc_cd||'가 '||decode(rsc_fg,1,'입고',0,'출고')||'된 수량 : '||rsc_qty as title,rsc_dt as "start" from rsc_inout
 	</select>
+	<select id="prodCal" resultType="Calender">
+		<![CDATA[select '제품 '||d.prdt_cd||'를 '||sum(d.indica_qty)||'개 생산지시' as title,i.indica_dt as "start" from indica i join indica_d d on i.indica_no=d.indica_no group by i.indica_no, i.indica_dt, d.prdt_cd, i.indica_nm
+	]]>
+	</select>
+	
 </mapper>

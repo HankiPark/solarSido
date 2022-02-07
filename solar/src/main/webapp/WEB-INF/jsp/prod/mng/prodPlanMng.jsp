@@ -72,7 +72,7 @@
 				</div>
 				<div class="col-3" style="margin-top: -10px">
 					<button type="button" id="rscOrder"
-						style="width: 150px; height: 40px; font-size: 20px; border-radius: 20px; padding: 6px 1px 6px 3px">
+						style="width: 150px; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0">
 						<i class="far fa-folder-open"></i> &nbsp; 발주요청
 					</button>
 				</div>

@@ -47,4 +47,14 @@ public class OrderServiceImpl implements OrderService{
 		return omapper.outPrdtCal();
 	}
 
+	@Override
+	public List<CalenderVO> rscCal() {
+		return omapper.rscCal();
+	}
+
+	@Override
+	public List<CalenderVO> prodCal() {
+		return omapper.prodCal();
+	}
+
 } 

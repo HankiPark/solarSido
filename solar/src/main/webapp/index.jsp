@@ -485,7 +485,7 @@
 </div>
 
 <script type="text/javascript">
-
+let idK;
 
 
 
@@ -502,6 +502,7 @@ $(function(){
 		$("#logoutWd").css("display","block");
 		$("#needLog").css("display","none");
 		$("#afterLog").css("display","block");
+		idK="${loginVO.id}";
 		$(".ml-auto").prepend(`<span id="usna" style="padding-top:8px; padding-right:10px;">${loginVO.id}</span>`);
 		$.ajax({
 			url:"${pageContext.request.contextPath}/ajax/MenuList",
@@ -610,13 +611,15 @@ $("#logoutWd").on("click",function(){
 
 $("#noticeNav").on("click",function(){
 	
+	console.log(idK);
 	$.ajax({
 		url : '${pageContext.request.contextPath}/ajax/webcontent',
 		dataType: 'json',
 		contentType: 'application/json; charset=utf-8',
-		data : {userId : "${loginVO.id}"
+		data : {userId : idK
 				}
 	}).done((ev)=>{
+		$(".dropdown-menu").empty();
 		$('.dropdown-header').remove();
 		$('.appendmenu').remove();
 		$(".dropdown-menu").append(
@@ -657,7 +660,7 @@ $("#noticeNav").on("click",function(){
 			
 		}
 		$(".dropdown-menu").append(
-		`<a href="#" onclick="removeMessage(`+ev.main[0].userId+`)" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
+		`<a href="#" onclick="removeMessage(`+idK+`)" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
 		)
 			
 	})
@@ -678,6 +681,7 @@ function findHref(link){
 }
 
 function removeMessage(id){
+	console.log(id);
 	$.ajax({
 		url : '${pageContext.request.contextPath}/ajax/webdelete',
 		dataType: 'json',

@@ -117,32 +117,37 @@ $(function(){
 	 	$("button:contains('조회')").css("width","100");
 		$("button:contains('조회')").css("height","40");
 		$("button:contains('조회')").css("fontSize",20);
-		$("button:contains('조회')").css("borderRadius",20);
+		$("button:contains('조회')").css("borderRadius",5);
 		$("button:contains('조회')").css("padding","6 1 6 3"); 
+		$("button:contains('조회')").css("boxShadow","2px 2px 2px #74a3b0"); 
 	$("button:contains('삭제')").prepend("<i class='far fa-trash-alt'> </i>  &nbsp;");
 	$("button:contains('삭제')").css("height","40");
 	$("button:contains('삭제')").css("width","100");
 	$("button:contains('삭제')").css("fontSize",20);
-	$("button:contains('삭제')").css("borderRadius",20);
+	$("button:contains('삭제')").css("borderRadius",5);
 	$("button:contains('삭제')").css("padding","6 1 6 3"); 
+	$("button:contains('삭제')").css("boxShadow","2px 2px 2px #74a3b0"); 
 	
 	$("button:contains('저장')").prepend("<i class='far fa-save'> </i> &nbsp;");
 	$("button:contains('저장')").css("height","40");
 	$("button:contains('저장')").css("width","100");
 	$("button:contains('저장')").css("fontSize",20);
-	$("button:contains('저장')").css("borderRadius",20);
+	$("button:contains('저장')").css("borderRadius",5);
+	$("button:contains('저장')").css("boxShadow","2px 2px 2px #74a3b0");
 	$("button:contains('저장')").css("padding","6 1 6 3"); 
 	$("button:contains('추가')").prepend("<i class='far fa-plus-square'> </i> &nbsp;");
 	$("button:contains('추가')").css("height","40");
 	$("button:contains('추가')").css("width","100");
 	$("button:contains('추가')").css("fontSize",20);
-	$("button:contains('추가')").css("borderRadius",20);
+	$("button:contains('추가')").css("borderRadius",5);
+	$("button:contains('추가')").css("boxShadow","2px 2px 2px #74a3b0");
 	$("button:contains('추가')").css("padding","6 1 6 3");  
 	$("button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i> &nbsp;");
 	$("button:contains('초기화')").css("height","40");
 	$("button:contains('초기화')").css("width","100");
 	$("button:contains('초기화')").css("fontSize",20);
-	$("button:contains('초기화')").css("borderRadius",20);
+	$("button:contains('초기화')").css("borderRadius",5);
+	$("button:contains('초기화')").css("boxShadow","2px 2px 2px #74a3b0");
 	$("button:contains('초기화')").css("padding","6 1 6 3"); 
 	
 	}

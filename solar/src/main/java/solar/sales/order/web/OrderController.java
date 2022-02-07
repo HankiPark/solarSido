@@ -28,6 +28,18 @@ public class OrderController {
 	public String orderList(Model model, Order order) {
 		return "sales/ref/order";
 	}
+	@RequestMapping("/sales/ref/prodCalendar")
+	public String prodCalendar(Model model) {
+		return "sales/ref/prodCalendar";
+	}
+	@RequestMapping("/sales/ref/rscCalendar")
+	public String rscCalendar(Model model) {
+		return "sales/ref/rscCalendar";
+	}
+	@RequestMapping("/sales/ref/eqmCalendar")
+	public String eqmCalendar(Model model) {
+		return "sales/ref/eqmCalendar";
+	}
 	@RequestMapping("/sales/ref/saleCalendar")
 	public String saleCalendar(Model model) {
 		return "sales/ref/saleCalendar";
@@ -98,12 +110,24 @@ public class OrderController {
 	//영업 캘린더 끝
 	
 	//자재 캘린더 시작
-	
+	@GetMapping("/ajax/rscCal")
+	public String rscCal(Model model) throws Exception {
+		List<CalenderVO> list = oservice.rscCal();
+		model.addAttribute("events", list);
+		
+		return "jsonView";
+	}
 	
 	//자재 캘린더 끝
 	
 	//영업 캘린더 시작
-	
+	@GetMapping("/ajax/prodCal")
+	public String prodCal(Model model) throws Exception {
+		List<CalenderVO> list = oservice.prodCal();
+		model.addAttribute("events", list);
+		
+		return "jsonView";
+	}
 	//영업 캘린더 끝
 	
 }

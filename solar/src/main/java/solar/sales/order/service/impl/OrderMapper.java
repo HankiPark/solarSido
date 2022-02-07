@@ -11,5 +11,7 @@ public interface OrderMapper {
 	List<CalenderVO> orderCal();
 	List<CalenderVO> inPrdtCal();
 	List<CalenderVO> outPrdtCal();
+	List<CalenderVO> rscCal();
+	List<CalenderVO> prodCal();
 	int inStcUpdate(Order order);
 }
