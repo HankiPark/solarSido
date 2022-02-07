@@ -893,7 +893,7 @@
 									 									//console.log("첫번째 공정완료");
 									 									unit2Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
-									 									setProgress(1,unit2Count,tAmount);
+									 									setProgress(2,unit2Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -999,7 +999,7 @@
 									 									//console.log("첫번째 공정완료");
 									 									unit3Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
- 									 									setProgress(1,unit3Count,tAmount);
+ 									 									setProgress(3,unit3Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
@@ -1111,7 +1111,7 @@
 									 									wkQty.value = wkQty.value*1+1;
 									 									console.log(wkQty);
 									 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
- 									 									setProgress(1,unit4Count,tAmount);
+ 									 									setProgress(4,unit4Count,tAmount);
 									 								},
 									 								error : function(result){
 									 									console.log("등록실패")
