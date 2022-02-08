@@ -546,7 +546,7 @@
                     let requiredParams = document.getElementsByClassName('requiredParams');
                     for(let param of requiredParams){
                     	if(param.value == '' || param.value == null){
-                    		alert('필수항목들을 입력해주세요');
+                    		toastr.warning('필수항목들을 입력해주세요');
                     		param.focus();
                     		return false;
                     	}
@@ -583,7 +583,7 @@
             	//console.log(result);
             	if(result.length!=0){
 	            	if(result != 'true'){
-	            		alert('설비코드가 중복된 데이터를 제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
+	            		toastr.success('설비코드가 중복된 데이터를 제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
 	            		
 	            		let duplRows = result.split(',');
 	            		console.log(duplRows);
@@ -599,7 +599,7 @@
 	            		}
 	            		
 	            	} else {
-	            		alert('모두 저장되었습니다.');
+	            		toastr.success('모두 저장되었습니다.');
             	}
             	}
             });

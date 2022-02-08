@@ -58,6 +58,7 @@
 
 
 <script type="text/javascript">
+toastr.options.positionClass = "toast-top-center"; //토스트 메시지 중앙으로
 var UID=null;
 function receiveMsgFromParent( e ) {
     // e.data가 전달받은 메시지

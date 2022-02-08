@@ -120,7 +120,8 @@
 </body>
 <script>
 	let unopCds = [];
-	let event;
+	let event = {};
+	event.rowKey = '';
 	let stt = document.getElementById('stt');
 	let edt = document.getElementById('edt');
 	let eh = document.getElementById('eh');
@@ -132,62 +133,71 @@
 	let eqmCd;
 	
 	switches[0].addEventListener('click', function () {
-		if(grid.getValue(event.rowKey,'eqmYn')=='N'){
-			alert('이미 비가동된 설비입니다.')
-			return false;
-		}
 		let isValid = false;
 		for (let i = 0; i < grid.getRowCount(); i++) {
 			if (eh.innerText == grid.getValue(i, 'eqmNm'))
 				isValid = true;
 		}
 		if (!isValid) {
-			alert('관리할 설비를 먼저 선택해주세요.');
+			toastr.warning('관리할 설비를 먼저 선택해주세요.');
+			return false;
+		}
+		if(grid.getValue(event.rowKey,'eqmYn')=='N'){
+			toastr.error('이미 비가동된 설비입니다.')
 			return false;
 		}
 		if(selectTag.value=='notSelected'){
-			alert('비가동 사유를 선택해주세요.');
+			toastr.warning('비가동 사유를 선택해주세요.');
 			return false;
 		}
-		let sure = confirm('정지하시겠습니까?');
-		if (!sure) {
-			return false;
-		}
-		eh.innerText = '요청 중..';
-		
-		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=N&uoprCd='+selectTag.value)
-		.then(()=>{
-			refreshForm();
-			gridRequest();
-			grid2.readData();
+		toastr.info("<br><div align='right'><button type='button' id='toastrYes'>확인</button>&emsp;<button type='button' id='toastrNo'>취소</button></div>",'비가동 처리하시겠습니까?',
+				{
+			closeButton: false,
+			allowHtml: true,
+			onShown: function (toast) {
+				$("#toastrYes").click(function(){
+					eh.innerText = '요청 중..';
+					fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=N&uoprCd='+selectTag.value)
+					.then(()=>{
+						refreshForm();
+						gridRequest();
+						grid2.readData();
+						});
+					});
+				}
 		});
-	});
+		});
 	
 	switches[1].addEventListener('click', function () {
-		if(grid.getValue(event.rowKey,'eqmYn')=='Y'){
-			alert('이미 가동중인 설비입니다.')
-			return false;
-		}
 		let isValid = false;
 		for (let i = 0; i < grid.getRowCount(); i++) {
 			if (eh.innerText == grid.getValue(i, 'eqmNm'))
 				isValid = true;
 		}
 		if (!isValid) {
-			alert('관리할 설비를 먼저 선택해주세요.');
+			toastr.warning('관리할 설비를 먼저 선택해주세요.');
 			return false;
 		}
-		let sure = confirm('재가동하시겠습니까?');
-		if (!sure) {
+		if(grid.getValue(event.rowKey,'eqmYn')=='Y'){
+			toastr.error('이미 가동중인 설비입니다.')
 			return false;
 		}
-		eh.innerText ='요청 중..';
-		fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=Y')
-		.then(()=>{
-			gridRequest();
-			grid2.readData();
+		toastr.info("<br><div align='right'><button type='button' id='toastrYes'>확인</button>&emsp;<button type='button' id='toastrNo'>취소</button></div>",'재가동 처리하시겠습니까?',
+				{
+			closeButton: false,
+			allowHtml: true,
+			onShown: function (toast) {
+				$("#toastrYes").click(function(){
+					eh.innerText ='요청 중..';
+					fetch('${pageContext.request.contextPath}/ajax/eqmtoggle?eqmCd='+grid.getValue(event.rowKey,'eqmCd')+'&eqmYn=Y')
+					.then(()=>{
+						gridRequest();
+						grid2.readData();
+						refreshForm();
+					});
+				});
+			}
 		});
-		refreshForm();
 	});
 	
 	var Grid = tui.Grid;
