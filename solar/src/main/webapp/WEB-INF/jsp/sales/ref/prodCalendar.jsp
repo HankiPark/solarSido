@@ -49,29 +49,31 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
     	$(".fc-view-harness").css("marginTop","-40px");
     	$(".fc-daygrid-day-frame").css("height","50px");
-        $(".fc-daygrid-event").css("margin","-5px -7px");
-        $(".fc-daygrid-event").css("padding","2px");
+        $(".fc-daygrid-event").css("margin","3px ");
+        $(".fc-daygrid-event").css("height","18px ");
+       // $(".fc-daygrid-event").css("padding","-2px");
 	}, 1000);
 
     $(document).on("click",".fc-next-button",function(){
     	$(".fc-view-harness").css("marginTop","-40px");
     	    	$(".fc-daygrid-day-frame").css("height","50px");
-    	        $(".fc-daygrid-event").css("margin","-5px -7px");
-    	        $(".fc-daygrid-event").css("padding","2px");
+    	        $(".fc-daygrid-event").css("margin","3px ");
+    	        $(".fc-daygrid-event").css("height","18px ");
+    	    //    $(".fc-daygrid-event").css("padding","2px");
     
     })
     $(document).on("click",".fc-prev-button",function(){
     	$(".fc-view-harness").css("marginTop","-40px");
     	    	$(".fc-daygrid-day-frame").css("height","50px");
-    	        $(".fc-daygrid-event").css("margin","-5px -7px");
-    	        $(".fc-daygrid-event").css("padding","2px");
+    	        $(".fc-daygrid-event").css("margin","3px ");
+    	        $(".fc-daygrid-event").css("height","18px ");
+    	     //   $(".fc-daygrid-event").css("padding","2px");
     	
     })
-     setTimeout(() => {
-    $('th').css('border-bottom','1px solid #ddd ')
-     }, 1000);
+    setTimeout(() => {
+    $('th').css('border-bottom',' 1px solid #ddd')
+    }, 1000);
   });
-
 
 </script>
 </body>

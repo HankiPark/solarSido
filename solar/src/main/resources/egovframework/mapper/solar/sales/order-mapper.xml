@@ -77,29 +77,55 @@
 	</update>
 
 	<select id="orderCal" resultType="Calendar">
-		select '주문서 '||order_no||' 발주' title,recv_dt "start",paprd_dt+1 "end",'or' as "url" from order_tb
+		select '주문서 ('||TO_CHAR(o.recv_dt,'MM-dd')||'~'||TO_CHAR(o.paprd_dt,'MM-dd')||')' title,
+					o.recv_dt "start",
+					o.paprd_dt+1 "end",
+					'or' as "url",
+					o.order_no as "etc",
+					o.co_cd as "etc2",
+					listagg(d.prdt_cd,',') within group(order by d.prdt_cd) as "etc3",
+					listagg(d.order_qty,',') within group(order by d.prdt_cd) as "etc4" 
+					from order_tb o join order_d d on o.order_no = d.order_no 
+					group by '주문서 ('||TO_CHAR(o.recv_dt,'MM-dd')||'~'||TO_CHAR(o.paprd_dt,'MM-dd')||')', o.recv_dt, o.paprd_dt, 'or', o.order_no, o.co_cd 
 	</select>
-	<!-- <select id="orderEndCal" resultType="Calendar">
-		select '주문서 '||order_no||' 납기일' title,paprd_dt+1 "start" from order_tb
-	</select> -->
+
 
 	<select id="inPrdtCal" resultType="Calendar">
-		select '입고 '||count(*)||'건' as title ,prdt_dt as "start",'in' as "url" from prdt_stc where prdt_fg = 'I' and prdt_lot in	
+		select '입고 '||count(*)||'건' as title ,prdt_dt as "start",'in' as "url",listagg(prdt_lot,',') within group(order by prdt_lot) as "etc" from prdt_stc where prdt_fg = 'I' and prdt_lot in	
 	                            (select prdt_lot from prdt_stc where prdt_fg='I') 
 	                        and prdt_lot not in
-	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW') group by prdt_dt
+	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW') group by prdt_dt, 'in'
 	</select>
 	<select id="outPrdtCal" resultType="Calendar">
-		select '출고 '||slip_no as title, prdt_dt,'out' as "url" as "start" from oust
+		select '출고 '||count(*)||'건' as title, 
+				to_date(to_char(prdt_dt,'yyyy-MM-dd')) as "start",
+				'out' as "url",
+				listagg(slip_no,',') within group(order by slip_no) as "etc",
+				listagg(co_nm,',') within group(order by slip_no) as "etc2"  
+				from oust 
+				group by to_date(to_char(prdt_dt,'yyyy-MM-dd')), 'out'
+
 	</select>	
 	<select id="rscCal" resultType="Calendar">
-		select rsc_cd||'가 '||decode(rsc_fg,1,'입고',0,'출고')||'된 수량 : '||rsc_qty as title,rsc_dt as "start" from rsc_inout
+		select rsc_cd||' '||decode(rsc_fg,1,'입고',0,'출고') as title,
+				to_date(to_char(rsc_dt,'yyyy-MM-dd')) as "start",
+				listagg(rsc_qty,',') within group(order by to_char(rsc_dt,'yyyy-MM-dd')) as "etc",
+				listagg(rsc_lot,',') within group(order by to_char(rsc_dt,'yyyy-MM-dd')) as "etc2",
+				decode(rsc_fg,1,'입고',0,'출고') as "etc3",
+				'inout' as "url" 
+				from rsc_inout
+				group by rsc_cd||'가 '||decode(rsc_fg,1,'입고',0,'출고'), to_date(to_char(rsc_dt,'yyyy-MM-dd')),decode(rsc_fg,1,'입고',0,'출고'),'inout'
 	</select>
 	<select id="eqmCal" resultType="Calendar">
-		select e.eqm_cd||'에 '||u.uopr_nm||' 발생' as title,e.fr_tm as "start"   from eqm_uo e join uopr_cd u on e.uopr_cd=u.uopr_cd
-	</select>
-	<select id="eqmEndCal" resultType="Calendar">
-		select e.eqm_cd||'에 '||u.uopr_nm||' 종료' as title,e.to_tm as "start"   from eqm_uo e join uopr_cd u on e.uopr_cd=u.uopr_cd where e.to_tm is not null
+		select '비가동 ('||TO_CHAR(e.fr_tm,'MM-dd')||'~'||TO_CHAR(e.to_tm,'MM-dd')||')' as title,
+				e.fr_tm as "start",
+				nvl(e.to_tm,sysdate) as "end",
+				u.uopr_nm as"etc",
+				e.eqm_cd as "etc2",
+				'inspa' as "url"  
+				from eqm_uo e 
+				join uopr_cd u 
+				on e.uopr_cd=u.uopr_cd
 	</select>
 	<select id="prodCal" resultType="Calendar">
 		<![CDATA[select '제품 '||d.prdt_cd||'를 '||sum(d.indica_qty)||'개 생산지시' as title,i.indica_dt as "start" from indica i join indica_d d on i.indica_no=d.indica_no group by i.indica_no, i.indica_dt, d.prdt_cd, i.indica_nm

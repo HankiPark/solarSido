@@ -95,8 +95,8 @@ public class OrderController {
 	}
 	@GetMapping("/ajax/orderEndCal")
 	public String orderEndCal(Model model) throws Exception {
-		List<CalendarVO> list = oservice.orderEndCal();
-		model.addAttribute("events", list);
+		//List<CalendarVO> list = oservice.orderEndCal();
+		//model.addAttribute("events", list);
 		
 		return "jsonView";
 	}
@@ -144,12 +144,17 @@ public class OrderController {
 		
 		return "jsonView";
 	}
-	@GetMapping("/ajax/eqmEndCal")
-	public String eqmEndCal(Model model) throws Exception {
-		List<CalendarVO> list = oservice.eqmEndCal();
-		model.addAttribute("events", list);
-		
-		return "jsonView";
+
+	/*
+	 * @GetMapping("/ajax/eqmEndCal") public String eqmEndCal(Model model) throws
+	 * Exception { List<CalendarVO> list = oservice.eqmEndCal();
+	 * model.addAttribute("events", list);
+	 * 
+	 * return "jsonView"; }
+	 */
+	@GetMapping("/modal/calendarModal")
+	public String calendarModal(Model model) throws Exception {
+		return "modal/calendarModal";
 	}
 
 }

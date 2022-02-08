@@ -14,8 +14,14 @@
 				<div class="card-body" style="margin-top:-20px">
  <div id='calendar2'></div>
 </div></div></div>
-
+<div id="dialog-order" title="설비 비가동 내역"></div>
 <script type="text/javascript">
+let dialog = $("#dialog-order").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 400,
+	height : 400
+});
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar2');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -40,52 +46,54 @@ document.addEventListener('DOMContentLoaded', function() {
 	    						successCallback(data.events);
 							})
     				},
-    				color : 'transparent',
-    				textColor: 'black' 
+    				color : '#FD9E77',
+    				textColor: 'white', 
     			},
-    			{
-	    				events: function(info, successCallback, failureCallback) {
-	    					$.ajax({
-			    				url : '${pageContext.request.contextPath}/ajax/eqmEndCal',
-			    				dataType: 'json',
-								contentType: 'application/json; charset=utf-8'
-
-	    					}).done((data)=>{
-	    						successCallback(data.events);
-							})
-    				},
-    				color : 'transparent',
-    				textColor: 'black' 
-    			}
-    		]
+    			
+    		],
+    		eventClick:function(ev){
+    			ev.jsEvent.preventDefault();
+    			$("span[title$='Close']").trigger("click");
+    			if(ev.event.url =='inspa'){
+    				dialog.dialog("open");
+					$("#dialog-order")
+							.load(
+									"${pageContext.request.contextPath}/modal/calendarModal",
+									function() {
+										eqm(ev.event.extendedProps.etc,ev.event.extendedProps.etc2,ev.event.start,ev.event.end);
+									})
+    			}				
+			}
     });
     calendar.render();
     setTimeout(() => {
     	$(".fc-view-harness").css("marginTop","-40px");
     	$(".fc-daygrid-day-frame").css("height","50px");
-        $(".fc-daygrid-event").css("margin","-5px -7px");
-        $(".fc-daygrid-event").css("padding","2px");
+        $(".fc-daygrid-event").css("margin","3px ");
+        $(".fc-daygrid-event").css("height","18px ");
+       // $(".fc-daygrid-event").css("padding","-2px");
 	}, 1000);
 
     $(document).on("click",".fc-next-button",function(){
     	$(".fc-view-harness").css("marginTop","-40px");
     	    	$(".fc-daygrid-day-frame").css("height","50px");
-    	        $(".fc-daygrid-event").css("margin","-5px -7px");
-    	        $(".fc-daygrid-event").css("padding","2px");
+    	        $(".fc-daygrid-event").css("margin","3px ");
+    	        $(".fc-daygrid-event").css("height","18px ");
+    	    //    $(".fc-daygrid-event").css("padding","2px");
     
     })
     $(document).on("click",".fc-prev-button",function(){
     	$(".fc-view-harness").css("marginTop","-40px");
     	    	$(".fc-daygrid-day-frame").css("height","50px");
-    	        $(".fc-daygrid-event").css("margin","-5px -7px");
-    	        $(".fc-daygrid-event").css("padding","2px");
+    	        $(".fc-daygrid-event").css("margin","3px ");
+    	        $(".fc-daygrid-event").css("height","18px ");
+    	     //   $(".fc-daygrid-event").css("padding","2px");
     	
     })
     setTimeout(() => {
-        $('th').css('border-bottom',' 1px solid #ddd')
-        }, 1000);
+    $('th').css('border-bottom',' 1px solid #ddd')
+    }, 1000);
   });
-
 
 </script>
 </body>

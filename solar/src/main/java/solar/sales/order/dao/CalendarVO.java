@@ -10,7 +10,12 @@ import lombok.Data;
 @Data
 public class CalendarVO {
 	String title;
-
+	String url;
+	String etc;
+	String etc2;
+	String etc3;
+	String etc4;
+	String etc5;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date start;
