@@ -77,20 +77,20 @@
 	</update>
 
 	<select id="orderCal" resultType="Calendar">
-		select '주문서 '||order_no||' 발주' title,recv_dt "start" from order_tb
+		select '주문서 '||order_no||' 발주' title,recv_dt "start",paprd_dt+1 "end",'or' as "url" from order_tb
 	</select>
-	<select id="orderEndCal" resultType="Calendar">
+	<!-- <select id="orderEndCal" resultType="Calendar">
 		select '주문서 '||order_no||' 납기일' title,paprd_dt+1 "start" from order_tb
-	</select>
+	</select> -->
 
 	<select id="inPrdtCal" resultType="Calendar">
-		select '입고 '||count(*)||'건' as title ,prdt_dt as "start" from prdt_stc where prdt_fg = 'I' and prdt_lot in	
+		select '입고 '||count(*)||'건' as title ,prdt_dt as "start",'in' as "url" from prdt_stc where prdt_fg = 'I' and prdt_lot in	
 	                            (select prdt_lot from prdt_stc where prdt_fg='I') 
 	                        and prdt_lot not in
 	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW') group by prdt_dt
 	</select>
 	<select id="outPrdtCal" resultType="Calendar">
-		select '출고 '||slip_no as title, prdt_dt as "start" from oust
+		select '출고 '||slip_no as title, prdt_dt,'out' as "url" as "start" from oust
 	</select>	
 	<select id="rscCal" resultType="Calendar">
 		select rsc_cd||'가 '||decode(rsc_fg,1,'입고',0,'출고')||'된 수량 : '||rsc_qty as title,rsc_dt as "start" from rsc_inout
