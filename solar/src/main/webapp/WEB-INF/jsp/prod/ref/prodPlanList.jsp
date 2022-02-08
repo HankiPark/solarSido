@@ -269,7 +269,8 @@ position: absolute;
 				}, {
 					header : '작업순서',
 					name : 'wkOrd',
-					align : 'center'
+					align : 'center',
+					hidden: true
 				}, ],
 				summary : {
 					position : 'bottom',
