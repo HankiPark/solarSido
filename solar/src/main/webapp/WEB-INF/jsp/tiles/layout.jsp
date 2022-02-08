@@ -113,6 +113,8 @@ $(function(){
  	connectWs();
 
 	$("button:contains('🔍')").html("<i class='fas fa-search-plus'> </i>");
+	$("button:contains('🔍')").css("width","28");
+	$("button:contains('🔍')").css("height","28");
 	$("button:contains('조회')").prepend("<i class='fas fa-search-plus'> </i>&nbsp;");
 	 	$("button:contains('조회')").css("width","100");
 		$("button:contains('조회')").css("height","40");
