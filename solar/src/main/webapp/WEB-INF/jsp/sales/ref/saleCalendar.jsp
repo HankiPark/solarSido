@@ -41,10 +41,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	    					}).done((data)=>{
 	    						successCallback(data.events);
+	    						
 							})
     				},
-    				color : 'transparent',
-    				textColor: 'black' 
+    				color : 'yellow',
+    				textColor: 'black',
+    			
     			},
     			{
     				events: function(info, successCallback, failureCallback) {
@@ -88,7 +90,13 @@ document.addEventListener('DOMContentLoaded', function() {
     				color : 'transparent',
     				textColor: 'black' 
     			}
-    		]
+    		],
+    		eventClick:function(ev){
+    			if(ev.event.url =='or'){
+    				
+    			}
+				
+			}
     });
     calendar.render();
     setTimeout(() => {

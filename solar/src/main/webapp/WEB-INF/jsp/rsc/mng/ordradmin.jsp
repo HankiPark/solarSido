@@ -10,19 +10,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+<style>
 
+
+ul {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #333;
+}
+
+.wrap {
+	padding: 15px;
+	letter-spacing: -0.5px;
+}
+
+.tab_menu .list {
+	overflow: hidden;
+}
+
+.tab_menu .list li {
+	float: left;
+	margin-right: 14px;
+}
+
+.tab_menu .list .btn {
+	font-size: 13px;
+}
+
+.tab_menu .list li.is_on .btn {
+	font-weight: bold;
+	color: #e37c6b;
+}
+
+.tab_menu .list li.is_on .cont {
+	display: block;
+}
+
+#oG {
+	display: none;
+}
+</style>
 
 <body>
   <h1>자재 발주 관리</h1>
   <div id="coModal" title="업체 목록"></div>
   <div id="rscModal" title="자재 목록"></div>
+   	<div class="wrap">
+		<div class="tab_menu">
+			<ul class="list">
+				<li class="is_on"><a href="#" id="in" class="btn">조회</a></li>
+				<li><a href="#" id="out" class="btn">요청</a></li>
+			</ul>
+		</div>
+	</div>
  <div class="row" id="senseOrdr">
-		<div id="senseOrdrBody" class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px; height:350px">
+		<div id="senseOrdrBody" class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 100px;padding-left: 40px;margin-bottom: 300px; height:350px">
 		<div class="card-body" >
   <form id="ordrQueryFrm" name="ordrQueryFrm">
    <div  style="margin-bottom: 20px; margin-top: 50px;"><label>발주일&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="datePicker" name="datePicker" class="dtp"></div>
-   <div style="margin-bottom: 20px;"><label>발주업체</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn">🔍</button></div>
-   <div style="margin-bottom: 20px;"><label>자재코드</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn">🔍</button></div>
+   <div style="margin-bottom: 20px;"><label>발주업체</label> <input type="text" id="co" name="co"><button type="button" id="coSearchBtn" >🔍</button></div>
+   <div style="margin-bottom: 20px;"><label>자재코드</label> <input type="text" id="rsc" name="rsc"><button type="button" id="rscSearchBtn" >🔍</button></div>
    
     
     </div>
@@ -30,7 +80,13 @@
      <button type="button" id="ordrQueryBtn" style="margin-left:120px">조회</button>
      </div>
     </div>
-    <div class="col-8"  style=" margin-top:100px">
+    <div id="oG" class="col-2" style="display:none;margin-left: 50px;margin-right: 30px;margin-top: 50px;">
+   
+    
+    </div>
+     <img src="${pageContext.request.contextPath}/resources/direction.png" style="height:200px;margin-top:150px;width:170px;display:none;" id="oGPng" class="brand-image img-circle elevation-3 col-1" >
+    
+    <div class="col-7"  style=" margin-top:50px;margin-left:50px;">
     <div style="margin-left: 30px; margin-top: -50px" class="float-right">
     <button type="button" id="prependRowBtn">추가</button>
     <button type="button" id="saveBtn">저장</button>
@@ -42,6 +98,77 @@
 </body>
 
 <script>
+const inGrid = new tui.Grid(
+		{
+			el : document.getElementById('oG'), // 컨테이너 엘리먼트
+			data : {
+				api : {
+					readData : {
+						url : '${pageContext.request.contextPath}/grid/prdtInput.do',
+						method : 'GET'
+					},
+					modifyData : {
+						url : '${pageContext.request.contextPath}/grid/prdtInputUpdate.do',
+						method : 'POST',
+						cache : false
+					}
+				},
+				initialRequest : false,
+				contentType : 'application/json'
+			},
+			
+			minBodyHeight : 500,
+			bodyHeight : 500,
+			
+			columns : [ {
+				header : '자재코드',
+				name : 'rscCd',
+				
+			}, {
+				header : '필요량',
+				name : 'prdtDt',
+				
+			}]
+		});
+inGrid.on('onGridUpdated', function() {
+	inGrid.refreshLayout();
+
+});
+inGrid.on('response', function(ev) {
+
+	let res = JSON.parse(ev.xhr.response);
+	if (res.mode == 'upd') {
+		inGrid.resetOriginData();
+
+	}
+});
+
+
+
+//탭 설정
+const tabList = document.querySelectorAll('.tab_menu .list li');
+
+for (var i = 0; i < tabList.length; i++) {
+	tabList[i].querySelector('.btn').addEventListener('click', function(e) {
+				e.preventDefault();
+				for (var j = 0; j < tabList.length; j++) {
+					tabList[j].classList.remove('is_on');
+				}
+				this.parentNode.classList.add('is_on');
+				if ($(this)[0].id == "in") {
+					$("#oG").css("display", "none");
+					$("#oGPng").css("display", "none");
+					$("#senseOrdrBody").css("display", "block");				
+
+				} else {
+					$("#senseOrdrBody").css("display", "none");
+					$("#oG").css("display", "block");
+					$("#oGPng").css("display", "block");
+				
+				}
+	})
+}
+
 let d = new Date();
 let date = new Date(+new Date() + 3240 * 10000);
 let ordrDtEnd = date.toISOString().substr(0,10);

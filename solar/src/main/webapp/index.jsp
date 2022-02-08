@@ -62,12 +62,12 @@
         </a>
       </li>
        <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown ">
         <a class="nav-link" data-toggle="dropdown" href="#" id ="noticeNav">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge"></span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right dd">
         </div>
       </li>
 
@@ -619,23 +619,23 @@ $("#noticeNav").on("click",function(){
 		data : {userId : idK
 				}
 	}).done((ev)=>{
-		$(".dropdown-menu").empty();
+		$(".dd").empty();
 		$('.dropdown-header').remove();
 		$('.appendmenu').remove();
-		$(".dropdown-menu").append(
+		$(".dd").append(
 		` <span class="dropdown-item dropdown-header">`+ev.main.length+` 건의 알림</span>
          <div class="dropdown-divider" ></div> `
          );
 		for(var con of ev.main){
 			if(con.readYn=='NY'){
 				if((new Date().getTime()-new Date(con.msDt).getTime())/(1000*60*60*24)>=1){
-			$(".dropdown-menu").append(
+			$(".dd").append(
 					`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
             <i class="fas fa-envelope mr-2"></i>`+ con.msTitle+`
             <span class="float-right text-muted text-sm">`+con.msDt+`</span>
           </a>`)}
 				else{
-					$(".dropdown-menu").append(
+					$(".dd").append(
 							`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
 		            <i class="fas fa-envelope mr-2"></i>`+ con.msTitle+`
 		            <span class="float-right text-muted text-sm"> 오늘 </span>
@@ -644,13 +644,13 @@ $("#noticeNav").on("click",function(){
 			}
 			else{
 				if((new Date().getTime()-new Date(con.msDt).getTime())/(1000*60*60*24)>=1){
-				$(".dropdown-menu").append(
+				$(".dd").append(
 						`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
 						<i class="fas fa-envelope-open mr-2"></i>`+ con.msTitle+`
 	            <span class="float-right text-muted text-sm">`+con.msDt+`</span>
 	          </a>`)
 			}else{
-				$(".dropdown-menu").append(
+				$(".dd").append(
 						`<a href="#" onclick="findHref('`+con.msContent+`')" class="dropdown-item appendmenu nav-link">
 						<i class="fas fa-envelope-open mr-2"></i>`+ con.msTitle+`
 	            <span class="float-right text-muted text-sm"> 오늘 </span>
@@ -659,7 +659,7 @@ $("#noticeNav").on("click",function(){
 			}
 			
 		}
-		$(".dropdown-menu").append(
+		$(".dd").append(
 		`<a href="#" onclick="removeMessage('`+idK+`')" class="dropdown-item dropdown-footer">모든 메세지 삭제</a>`
 		)
 			
