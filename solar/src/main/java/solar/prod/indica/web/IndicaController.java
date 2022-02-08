@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.code.service.CmmnCdService;
-import solar.prod.indica.service.IndRscVO;
 import solar.prod.indica.service.IndicaService;
 import solar.prod.indica.service.IndicaVO;
 import solar.prod.plan.service.ProdPlanVO;
