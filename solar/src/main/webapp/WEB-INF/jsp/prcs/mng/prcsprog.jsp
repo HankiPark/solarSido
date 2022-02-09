@@ -68,6 +68,7 @@
 					<div>
 						<!-- 실시간으로 변화할 파트  -->
 						<h1 id="prcsTimer"></h1>
+						<button id="btnTest1">테스트버튼</button>
 					</div>
 				</div>
 			</div>
@@ -376,6 +377,11 @@
 		$("#indicaDetaNo").val(inddd);
 		$("#prdtCd").val(prd);
 		document.getElementById("wkQty").placeholder = "목표량 : "+tAmount;
+		
+		for(var i = 0; i<prcsGrid.getRowCount(); i++){
+					prcsGrid.setValue(i,'lowSt','대기중',false);
+				}
+		
 
 		indicaDialog.dialog("close");
 		
@@ -458,7 +464,7 @@
 				prcsEqmList = {PRCS}
 				console.log("공정내 설비 리스트 > "+PRCS);
 				console.log("----------------------------------");
-				console.log(prcsEqmList);
+				console.log(prcsEqmList);	
 				console.log("----------------------------------");
 				
 				for(var i = 0; i<prcsGrid.getRowCount(); i++){
@@ -635,7 +641,7 @@
  			 					
  			 					for(var i = 0; i<prcsGrid.getRowCount(); i++){
  			 						if(prcsGrid.getValue(i,'lowSt')==="W"){
- 			 							prcsGrid.setValue(i,'lowSt','P',false);
+ 			 							prcsGrid.setValue(i,'lowSt','생산중',false);
  			 						}
  			 					}
  			 					
@@ -727,6 +733,8 @@
 										 								contentType: 'application/json',
 										 								success : function(result){
 										 									//console.log("첫번째 공정완료");
+										 									console.log("1번장비 "+unit1Count+"번 완료");
+										 									prcsGrid.setValue(unit1Count,'lowSt','1번설비 완료',false);
 										 									unit1Count++;
 										 									console.log("카운트가 다음 장비를 가리킵니다")
 										 									setProgress(1,unit1Count,tAmount);
@@ -806,8 +814,9 @@
 												 								contentType: 'application/json',
 												 								success : function(result){
 												 									//console.log("첫번째 공정완료");
-												 									unit1Count++;
 												 									console.log("1번장비 "+unit1Count+"번 완료");
+						 						 									prcsGrid.setValue(unit1Count,'lowSt','1번설비 완료',false);
+												 									unit1Count++;
 												 									//console.log("카운트가 다음 장비를 가리킵니다")
 												 									setProgress(1,unit1Count,tAmount);
 												 								},
@@ -924,6 +933,8 @@
 									 								contentType: 'application/json',
 									 								success : function(result){
 									 									//console.log("첫번째 공정완료");
+									 									console.log("2번장비 "+unit2Count+"번 완료");
+									 									prcsGrid.setValue(unit2Count,'lowSt','2번설비 완료',false);
 									 									unit2Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
 									 									setProgress(2,unit2Count,tAmount);
@@ -1031,6 +1042,8 @@
 									 								contentType: 'application/json',
 									 								success : function(result){
 									 									//console.log("첫번째 공정완료");
+									 									console.log("3번장비 "+unit3Count+"번 완료");
+									 									prcsGrid.setValue(unit3Count,'lowSt','3번설비 완료',false);
 									 									unit3Count++;
 									 									console.log("카운트가 다음 장비를 가리킵니다")
  									 									setProgress(3,unit3Count,tAmount);
@@ -1168,6 +1181,7 @@
 											 									wkQty.value = wkQty.value*1+1;
 											 									console.log(wkQty);
 											 									console.log("카운트가 네번째 설비의 다음 아이템을 가리킵니다")
+		 									 									prcsGrid.setValue(unit4Count,'lowSt','4번설비 완료',false);
 											 									unit4Count++;
 		 									 									setProgress(4,unit4Count,tAmount);
 		 									 									
@@ -1290,6 +1304,7 @@
 										 								contentType: 'application/json',
 										 								success : function(result){
 										 									//console.log("네번째 공정완료");
+										 									prcsGrid.setValue(unit4Count,'lowSt','4번설비 완료',false);
 										 									unit4Count++;
 										 									console.log("4번장비 "+unit4Count+"번 완료");
 										 									wkQty.value = wkQty.value*1+1;
@@ -1321,7 +1336,7 @@
 			 			 			 	 			
 		 			 			 	 			    $("#toTm").val("");
 		
-		 			 			 					btnStart.disabled = false;
+		 			 			 					
 		 			 			 					btnEnd.disabled = true;
 		 			 			 	 			    
 			 			 		 					clearTimeout(unit1);
@@ -1518,27 +1533,22 @@
 	
 	$("#btnTest1").on("click", function(ev){
 		
-		let prdtLot = '3232323232';
-		let pPrdtCd = 'p100';
-		let pIndicaDetaNo = '112413434';
+		$.ajax({
+			url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
+			data : {
+				'prcsCd':prcsCd	
+			},
+			dataType: 'JSON',
+			async: false,
+			contentType: 'application/json',
+			success : function(result){
+									
+			},
+			error : function(result){
+				console.log("호출실패")
+			}
+		});	
 		
-		$.ajax({												// 마지막 공정이라 Complete로 insert ajax
-				url:"${pageContext.request.contextPath}/prcs/insertPrdtStc",
-				data : {
-					'prdtLot':prdtLot,	//targetItems[unit4Count].prdtLot,	
-					'prdtCd': pPrdtCd,
-					'indicaDetaNo':pIndicaDetaNo
-				},
-				dataType: 'JSON',
-				async: false,
-				contentType: 'application/json',
-				success : function(result){
-					console.log("재고테이블 등록성공")
-				},
-				error : function(result){
-					console.log("등록실패")
-				}
-			}); 
 		
 	});
 	

@@ -80,24 +80,6 @@
 	order by rsc_con_no
 </select>
 
-<select id="selectPrcsItemDetail" resultType="solar.prcs.prcs.service.ClotVO">
-	
-	select
-		rsc_con_no,
-		prdt_lot,
-		prcs_cd,
-		wk_no,
-		wk_dt,
-		low_st,
-		(select prcs_ord
-	    from prcs_pr where eqm_cd = (select distinct eqm_cd from prcs where eqm_cd=r.eqm_cd)) AS prcs_ord
-	from rsc_clot
-	where 
-	    		
-	
-</select>
-
-
 
 <select id="selectPrcsItemRSC" resultType="solar.prcs.prcs.service.RscConVO">
 	
@@ -131,6 +113,7 @@
 	from prcs p, prcs_pr pp
 	where p.prcs_cd=pp.prcs_cd
 	and p.prcs_cd=#{prcsCd}
+	order by eqm_cd
 	
 
 </select>
