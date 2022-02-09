@@ -166,7 +166,7 @@ public class IndicaController {
 		return "jsonView";
 	}
 	
-	//히든그리드 데이터 가져오기
+	//히든그리드 데이터
 	@PostMapping("/ajax/modified.do")
 	public String hiddenData(@RequestBody Map<String, List<IndicaVO>> map) {
 		System.out.println("히든그리드데이터" + map);

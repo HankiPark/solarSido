@@ -217,4 +217,17 @@
 </if>
 </update>
 
+<insert id="insertDmnd">
+	INSERT INTO ordr_dmnd (	dmnd_no,
+							rsc_cd,
+							dmnd_qty,
+							rsc_nm,
+							co_nm	)
+	VALUES (	DMNDSEQ.nextval,
+				#{rscCd},
+				#{lackStc},
+				(SELECT rsc_nm FROM rsc WHERE rsc_cd = #{rscCd}),
+				(SELECT co_nm FROM co WHERE co_cd = (SELECT co_cd FROM rsc WHERE rsc_cd = #{rscCd}))	)
+</insert>
+
 </mapper>

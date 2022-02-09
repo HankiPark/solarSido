@@ -81,8 +81,7 @@ a {
      </div>
     </div>
     <div id="oG" class="col-2" style="display:none;margin-left: 50px;margin-right: 30px;margin-top: 50px;">
-   
-    
+   		<button type="button" id="dmndBtn">자동발주</button>
     </div>
      <img src="${pageContext.request.contextPath}/resources/direction.png" style="height:200px;margin-top:150px;width:170px;display:none;" id="oGPng" class="brand-image img-circle elevation-3 col-1" >
     
@@ -98,22 +97,24 @@ a {
 </body>
 
 <script>
+tui.Grid.setLanguage('ko');
+
 const inGrid = new tui.Grid(
 		{
 			el : document.getElementById('oG'), // 컨테이너 엘리먼트
 			data : {
 				api : {
 					readData : {
-						url : '${pageContext.request.contextPath}/grid/prdtInput.do',
+						url : '${pageContext.request.contextPath}/grid/rscDmnd',
 						method : 'GET'
 					},
 					modifyData : {
-						url : '${pageContext.request.contextPath}/grid/prdtInputUpdate.do',
+						url : '${pageContext.request.contextPath}/rsc/ordrData',
 						method : 'POST',
 						cache : false
 					}
 				},
-				initialRequest : false,
+				//initialRequest : false,
 				contentType : 'application/json'
 			},
 			
@@ -125,25 +126,74 @@ const inGrid = new tui.Grid(
 				name : 'rscCd',
 				
 			}, {
-				header : '필요량',
-				name : 'prdtDt',
+				header : '자재명',
+				name : 'rscNm',
+				hidden: true
+				
+			}, {
+				header : '업체',
+				name : 'coNm',
+				hidden: true
+			}, {
+				header : '발주요청량',
+				name : 'ordrQty',
 				
 			}]
 		});
+		
+inGrid.on('dblclick', function(ev) {
+	grid.prependRow({
+		  "ordrDt":d.toISOString().slice(0, 4)+"/"+d.toISOString().slice(5, 7)+"/"+d.toISOString().slice(8, 10),
+		  "rscNm":inGrid.getValue(ev.rowKey, 'rscNm'),
+		  "rscCd":inGrid.getValue(ev.rowKey, 'rscCd'),
+		  "ordrQty": inGrid.getValue(ev.rowKey, 'ordrQty'),
+		  "coNm": inGrid.getValue(ev.rowKey, 'coNm'),
+		  "inspCls":"rs001"
+	  });
+	inGrid.removeRow(ev.rowKey)
+});
+
 inGrid.on('onGridUpdated', function() {
 	inGrid.refreshLayout();
-
 });
-inGrid.on('response', function(ev) {
 
+inGrid.on('response', function(ev) {
 	let res = JSON.parse(ev.xhr.response);
 	if (res.mode == 'upd') {
 		inGrid.resetOriginData();
-
 	}
 });
 
 
+let oGPng = document.getElementById("oGPng");
+oGPng.addEventListener("click",function(){
+	var rowCnt =inGrid.getRowCount();
+	for (i=0; i<rowCnt; i++) {
+		grid.prependRow({
+			  "ordrDt":d.toISOString().slice(0, 4)+"/"+d.toISOString().slice(5, 7)+"/"+d.toISOString().slice(8, 10),
+			  "rscNm":inGrid.getValue(i, 'rscNm'),
+			  "rscCd":inGrid.getValue(i, 'rscCd'),
+			  "ordrQty": inGrid.getValue(i, 'ordrQty'),
+			  "coNm": inGrid.getValue(i, 'coNm'),
+			  "inspCls":"rs001"
+		  });
+		inGrid.removeRow(i)
+	}
+});
+
+let dmndBtn = document.getElementById("dmndBtn");
+dmndBtn.addEventListener("click", function(){
+	let obj ={};
+	obj.dmnd = inGrid.getData();
+	fetch('${pageContext.request.contextPath}/ajax/rsc/dmndUpdate',{
+        method:'POST',
+        headers:{
+           "Content-Type": "application/json",
+        },
+    body:JSON.stringify(obj)
+     })
+     inGrid.resetData([]);
+});
 
 //탭 설정
 const tabList = document.querySelectorAll('.tab_menu .list li');
@@ -158,13 +208,14 @@ for (var i = 0; i < tabList.length; i++) {
 				if ($(this)[0].id == "in") {
 					$("#oG").css("display", "none");
 					$("#oGPng").css("display", "none");
-					$("#senseOrdrBody").css("display", "block");				
+					$("#senseOrdrBody").css("display", "block");	
+					inGrid.refreshLayout();
 
 				} else {
 					$("#senseOrdrBody").css("display", "none");
 					$("#oG").css("display", "block");
 					$("#oGPng").css("display", "block");
-				
+					inGrid.refreshLayout();
 				}
 	})
 }
@@ -338,12 +389,12 @@ $(function() {
   let saveBtn = document.getElementById("saveBtn");
   saveBtn.addEventListener("click",function(){
 	  let newRows = grid.getModifiedRows().createdRows;
-	  for(let newRow of newRows){
+	 /*  for(let newRow of newRows){
 		  if(newRow.rscCd == '' || newRow.ordrQty == '' || parseInt(newRow.ordrQty)+'' == 'NaN'){
 			  alert('유효한 값을 입력하세요.');
 			  return false;
 		  }
-	  }
+	  } */
 	  grid.request('modifyData');
   });
   let deleteBtn = document.getElementById("deleteBtn");

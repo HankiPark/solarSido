@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.cmm.code.service.CmmnCdService;
+import solar.prod.indica.service.IndicaVO;
 import solar.rsc.cmmn.service.RscService;
 import solar.rsc.infer.service.RscInferRate;
 import solar.rsc.infer.service.RscInferService;
@@ -255,4 +256,24 @@ public class RscController {
 		return "jsonView";
 	}
 	
+	//자재발주요청 데이터
+	@GetMapping("/grid/rscDmnd")
+	public String rscDmnd(Model model, RscOrdr rscOrdr) throws Exception {
+		List<?> list = rscOrdrService.selectDmnd(rscOrdr);
+		Map<String,Object> map = new HashMap<>();
+		map.put("contents", list);	
+		System.out.println("list:"+list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		System.out.println("map:" + map);
+		return "jsonView";
+	}
+	
+	//자동발주요청
+	@PostMapping("/ajax/rsc/dmndUpdate")
+	public String hiddenData(@RequestBody Map<String, List<RscOrdr>> map) {
+		System.out.println("자동발주" + map);
+		rscOrdrService.dmndUpdate(map);
+		return "jsonView";
+	}
 }

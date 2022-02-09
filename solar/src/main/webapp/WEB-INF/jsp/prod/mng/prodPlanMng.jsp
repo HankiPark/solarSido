@@ -87,11 +87,8 @@ border-top:3px solid #FECEBB;
 		<div class="card card-pricing card-primary card-white card-outline2 "
 		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
 		<div class="card-body">
-			<div id="hdRstcGrid"></div>
-				<div class="col-9">
+			<div id="hdRstcGrid">
 					<label>발주요청 자재 목록</label>
-				</div>
-				<div class="col-3" style="margin-top: -10px">
 				</div>
 			</div>
 		</div>
@@ -103,7 +100,12 @@ border-top:3px solid #FECEBB;
 <script type="text/javascript">
 	let pDt = new Date();
 	document.getElementById('planDt').value = pDt.toISOString().substring(0, 10);
-
+	
+	tui.Grid.setLanguage('ko');
+	
+	//변수
+	let odCnt= 0; //발주요청 여부 확인
+	console.log(odCnt);
 	//------------------------------그리드생성------------------------------------------------
 	//생산계획 상세 그리드
 	let planDgrid = new tui.Grid({
@@ -212,7 +214,7 @@ border-top:3px solid #FECEBB;
 			    align: 'right'
 			  },
 			  {
-			    header: '작업일자',
+			    header: '작업시작일',
 			    name: 'wkDt',
 			    editor :'datePicker',
 			    validation: {
@@ -303,12 +305,7 @@ border-top:3px solid #FECEBB;
 					    name: 'rscCd'
 					  },
 					  {
-					    header: '필요량',
-					    name: 'ndStc',
-					    align: 'right'
-					  },
-					  {
-					    header: '부족량',
+					    header: '발주요청량',
 					    name: 'lackStc',
 					    align: 'right'
 					  }
@@ -349,8 +346,8 @@ border-top:3px solid #FECEBB;
 			let planQty = planDgrid.getValue(ev.rowKey, "planQty");
 			if(orderQty != planQty){
 				toastr.warning("주문량과 계획량이 다릅니다.");
-				planDgrid.setValue(ev.rowKey, "planQty", "");
-			} else {
+				planDgrid.setValue(ev.rowKey, "planQty", ""); 
+			} else {  
 				let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
 				let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
 				let orderNo = planDgrid.getValue(ev.rowKey, "orderNo")
@@ -372,7 +369,7 @@ border-top:3px solid #FECEBB;
 		    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
 					rStcGrid.setValue(i, 'lackStc',
 							rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))}
-				}, 1200); //실행시킬 함수, 딜레이시간;
+				}, 1600); //실행시킬 함수, 딜레이시간;
 			}	
 		}
 		if(ev.columnName == "wkDt") {
@@ -382,7 +379,7 @@ border-top:3px solid #FECEBB;
 			if(paprdDt < wkDt){
 				toastr.warning("작업일이 납기일보다 늦습니다.");
 				planDgrid.setValue(ev.rowKey, "wkDt", "");
-			} else if(paprdDt > dayAdd(wkDt, Number(prodDay)) ){
+			} else if(paprdDt < dayAdd(wkDt, Number(prodDay)) ){
 				toastr.warning("작업시간이 부족합니다.");
 				planDgrid.setValue(ev.rowKey, "wkDt", "");
 			} 
@@ -407,21 +404,32 @@ border-top:3px solid #FECEBB;
 	
 	//필요자재 재고체크 이벤트
 	rStcGrid.on('response',function(ev){
-		console.log("rrrr")
-     	//rStcGrid.refreshLayout(); 
+     	rStcGrid.refreshLayout(); 
    	});
 	 
 	rStcGrid.on('onGridUpdated', function(ev) {
-		for ( i=0; i< rStcGrid.getRowCount(); i++){
-			  if(rStcGrid.getValue(i, 'lackStc') > 0){
-				  rStcGrid.setValue(i,'lackStc',"<font color='red' size='4'>"+lackStc+"</font>");
-				  rStcGrid.check(i)
-			  }
-		 }
 		setTimeout(function(){
-			stcCheck()}, 1300)
+			stcCheck()}, 1600)
 	});
 	
+	rStcGrid.on("check", (rscEv) => {
+		if(hdRstcGrid.getColumnValues('rscCd').includes(rStcGrid.getValue(rscEv.rowKey,'rscCd'))){
+			var key = hdRstcGrid.findRows({'rscCd':rStcGrid.getValue(rscEv.rowKey,'rscCd')})[0].rowKey;
+			hdRstcGrid.setValue(key,'prdtCd', hdRstcGrid.getValue(key, 'prdtCd')+", "+rStcGrid.getValue(rscEv.rowKey,'prdtCd'));
+			hdRstcGrid.setValue(key,'lackStc', hdRstcGrid.getValue(key, 'lackStc')+rStcGrid.getValue(rscEv.rowKey,'lackStc'));
+		}else{
+			hdRstcGrid.appendRow({
+				'prdtCd':rStcGrid.getValue(rscEv.rowKey,'prdtCd'),
+			   'rscCd':rStcGrid.getValue(rscEv.rowKey,'rscCd'),
+			   'ndStc':rStcGrid.getValue(rscEv.rowKey,'ndStc'),
+			   'lackStc':rStcGrid.getValue(rscEv.rowKey,'lackStc')},{
+			   extendPrevRowSpan : true,
+			   focus : true,
+			   at : 0
+  		});
+     } 
+ })
+ 
 	//------------------------------버튼------------------------------------------------
 	//생산계획서 조회버튼: 생산계획서 조회모달 호출
  	$('#btnFind').on('click', function(){
@@ -447,22 +455,35 @@ border-top:3px solid #FECEBB;
 		if (planNm == null || planNm == ""){
 			toastr.error("생산계획명을 입력해주세요.")
 			$('#planNm').focus();
-		} else if (planDgird.getRowCount ) {
-		 			
+		} else if (planDgrid.getRowCount() == 0 ) {
+			toastr.error("생산계획 상세내용이 없습니다.")
+		} else if (hdRstcGrid.getRowCount() != 0 && odCnt == 0){
+			console.log(odCnt)
+			toastr.error("자재가 부족합니다. 발주요청 해주세요.")
 		}	else {
-			for ( i =0 ; i <= planDgrid.getRowCount(); i++) {
-				planDgrid.setValue(i,'planNm',planNm);
-				planDgrid.setValue(i,'planDt',planDt);
-			}
-			if(blankCheck()){
-				if (confirm("계획을 저장하시겠습니까?")) { 
-					//planDgrid.blur();
-					planDgrid.request('modifyData'); // modifyData의 url 호출
-					toastr.success("생산계획이 저장되었습니다.")
+				for ( i =0 ; i <= planDgrid.getRowCount(); i++) {
+					planDgrid.setValue(i,'planNm',planNm);
+					planDgrid.setValue(i,'planDt',planDt);
 				}
-			}
-		} 
-	})
+				if(blankCheck()){
+					if (confirm("계획을 저장하시겠습니까?")) { 
+						//발주요청 그리드 데이터 담기
+						let obj = {}
+						obj.dmnd = hdRstcGrid.getData();
+						fetch('${pageContext.request.contextPath}/ajax/planModified.do',{
+				            method:'POST',
+				            headers:{
+				               "Content-Type": "application/json",
+				            },
+				        body:JSON.stringify(obj)
+				         }) 
+						//planDgrid.blur();
+						planDgrid.request('modifyData'); // modifyData의 url 호출
+						toastr.success("생산계획이 저장되었습니다.")
+					}
+				}
+		}  
+	});
 	
 	/* //삭제 버튼: 계획 + 계획상세그리드 삭제
 	$('#btnDel').click(function(){
@@ -509,10 +530,13 @@ border-top:3px solid #FECEBB;
 	
 	//발주요청 버튼
 	$('#rscOrder').on("click", function(){
-		if (rStcGrid.getRowCount() != 0) {
-			console.log("ddddd")
-			sendMsgToParent('발주요청\n ㄴㄻㄴㅇㅁㄴㅇㄴㅇㅁ', '/rsc/mng/ordradmin')
+		odCnt = 0; 
+		console.log(odCnt);
+		if (hdRstcGrid.getRowCount() != 0) {
+			sendMsgToParent('발주요청 확인요망', '/rsc/mng/ordradmin')
+			odCnt = 1;
 		}
+		console.log(odCnt);
 	});
 	//------------------------------함수------------------------------------------------
 	//생산일수 계산 함수
@@ -530,7 +554,7 @@ border-top:3px solid #FECEBB;
 		
 		let wYear = wkdate.getFullYear();
 		let wMonth = wkdate.getMonth() +1;
-		let wDate = wkdate.getDate() +1; // 납기일 전날까지 작업완료
+		let wDate = wkdate.getDate() +1; // 납기일 전 날까지 작업완료
 		wMonth = wMonth > 9 ? wMonth : "0" + wMonth;
 	    wDate  = wDate > 9 ? wDate : "0" + wDate;
 	    return wYear + "-" + wMonth + "-" + wDate;
@@ -540,29 +564,31 @@ border-top:3px solid #FECEBB;
 	function blankCheck(){
 		 for (let i=0; i<planDgrid.getRowCount(); i++){
 			if(planDgrid.getRowAt(i).orderNo == null || planDgrid.getRowAt(i).orderNo == ""){
-				toast.error("주문번호가 지정되지 않았습니다.");
+				toastr.error("주문번호가 지정되지 않았습니다.");
 				return false;
-			} else if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
-				toast.error("제품코드가 지정되지 않았습니다.");
-				return false;
+				/*}  else if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
+				toastr.error("제품코드가 지정되지 않았습니다.");
+				return false; */
 			} else if(planDgrid.getRowAt(i).planQty == null || planDgrid.getRowAt(i).planQty == ""){
-				toast.error("계획량이 지정되지 않았습니다.");
+				toastr.error("계획량이 지정되지 않았습니다.");
 				return false;
-			} else if(planDgrid.getRowAt(i).workDt == null || planDgrid.getRowAt(i).workDt == ""){
-				toast.error("작업일이 지정되지 않았습니다.");
+			} else if(planDgrid.getRowAt(i).wkDt == null || planDgrid.getRowAt(i).wkDt == ""){
+				toastr.error("작업시작일이 지정되지 않았습니다.");
 				return false;
 			} else { 
-				return true;
+				console.log(i)
 			}
 		}
+		return true;
 	}
 	
-	//필요자재 체크 함수
+	//재고부족 자재 체크 함수
 	function stcCheck(){
-		 for (let i = 0; i <rStcGrid.getRowCount(); i++){
-			if (1*rStcGrid.getRowAt(i).lackStc< 0){
-				rStcGrid.check(i)
-			}
+		for ( i=0; i< rStcGrid.getRowCount(); i++){
+			let lackStc = rStcGrid.getValue(i, 'lackStc');
+			  if(rStcGrid.getValue(i, 'lackStc') > 0){
+				  rStcGrid.check(i)
+			  }
 		 }
 	}
 </script>

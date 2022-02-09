@@ -1,6 +1,7 @@
 package solar.prod.plan.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,6 +88,17 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	@Override
 	public List<?> selectRstc(ProdPlanVO ppVo) {
 		return ppMapper.selectRstc(ppVo);
+	}
+
+	@Override
+	public int planDmndData(Map<String, List<ProdPlanVO>> map) {
+		if(map.get("dmnd") !=null) {
+			for(ProdPlanVO ppVo : map.get("dmnd")) {
+				System.out.println("발주요청 자재등록:" + ppVo);
+				ppMapper.insertDmnd(ppVo);
+			}
+		}
+		return 1;
 	}
 
 }

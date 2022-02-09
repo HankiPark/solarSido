@@ -18,4 +18,8 @@ public class RscOrdr {
 	String rtngdDt;
 	String coCd;
 	String whereParam;
+	//자재발주요청
+	String dmndNo;
+	String dmndQty;
+	String lackQty;
 }
