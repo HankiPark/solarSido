@@ -7,6 +7,8 @@ import solar.sales.order.dao.ModifyVO;
 
 public interface Prcs2Service {
 	List<Prcs2> searchPlanList(Prcs2 vo);
+	List<Prcs2> findTemp();
 	int insertData(Prcs2 vo);
-	int insertDetail(ModifyVO<Prcs2> mvo);
+	//int insertDetail(ModifyVO<Prcs2> mvo);
+	int insertDetailO(ModifyVO<Prcs2> mvo);
 }

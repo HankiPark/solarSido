@@ -10,6 +10,7 @@ import lombok.Data;
 
 @Data
 public class Prcs2 {
+	String prdtIdx;
 	String prdtLot;
 	String prdtCd;
 	String prdtFg;
