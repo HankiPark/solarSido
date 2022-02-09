@@ -68,6 +68,7 @@
 					<div>
 						<!-- 실시간으로 변화할 파트  -->
 						<h1 id="prcsTimer"></h1>
+						<button id="btnTest1">테스트버튼</button>
 					</div>
 				</div>
 			</div>
@@ -458,7 +459,7 @@
 				prcsEqmList = {PRCS}
 				console.log("공정내 설비 리스트 > "+PRCS);
 				console.log("----------------------------------");
-				console.log(prcsEqmList);
+				console.log(prcsEqmList);	
 				console.log("----------------------------------");
 				
 				for(var i = 0; i<prcsGrid.getRowCount(); i++){
@@ -1518,27 +1519,22 @@
 	
 	$("#btnTest1").on("click", function(ev){
 		
-		let prdtLot = '3232323232';
-		let pPrdtCd = 'p100';
-		let pIndicaDetaNo = '112413434';
+		$.ajax({
+			url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
+			data : {
+				'prcsCd':prcsCd	
+			},
+			dataType: 'JSON',
+			async: false,
+			contentType: 'application/json',
+			success : function(result){
+									
+			},
+			error : function(result){
+				console.log("호출실패")
+			}
+		});	
 		
-		$.ajax({												// 마지막 공정이라 Complete로 insert ajax
-				url:"${pageContext.request.contextPath}/prcs/insertPrdtStc",
-				data : {
-					'prdtLot':prdtLot,	//targetItems[unit4Count].prdtLot,	
-					'prdtCd': pPrdtCd,
-					'indicaDetaNo':pIndicaDetaNo
-				},
-				dataType: 'JSON',
-				async: false,
-				contentType: 'application/json',
-				success : function(result){
-					console.log("재고테이블 등록성공")
-				},
-				error : function(result){
-					console.log("등록실패")
-				}
-			}); 
 		
 	});
 	
