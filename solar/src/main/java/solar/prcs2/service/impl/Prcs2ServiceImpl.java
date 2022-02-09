@@ -63,8 +63,21 @@ public class Prcs2ServiceImpl implements Prcs2Service {
 	public List<Prcs2> findTemp() {
 		return pmapper.findTemp();
 	}
-	
 
+	@Override
+	public List<Prcs2> repeat(Prcs2 vo) {
+		
+	
+		if(pmapper.findTemp().isEmpty()) {
+			return pmapper.listPrcs(vo);
+		}else {
+			return pmapper.findTemp();
+		}
+		
+		
+	}
+	
+	
 	
 	
 }

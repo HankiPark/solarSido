@@ -18,14 +18,16 @@ import solar.sales.order.dao.ModifyVO;
 @Controller
 public class Prcs2Controller {
 
-	@Autowired Prcs2Service pservice;
-	
+	@Autowired
+	Prcs2Service pservice;
+
 	@RequestMapping("/prcs2/mng/prcsPr")
 	public String prdtLotChasePage() {
 		return "prcs2/mng/prcsPr";
 	}
+
 	@RequestMapping("/grid/scheduler.do")
-	public String schedulerGrid(Model model,Prcs2 vo) {
+	public String schedulerGrid(Model model, Prcs2 vo) {
 		List<?> list = pservice.searchPlanList(vo);
 		Map<String, Object> map = new HashMap();
 		map.put("contents", list);
@@ -33,23 +35,25 @@ public class Prcs2Controller {
 		model.addAttribute("data", map);
 		return "jsonView";
 	}
+
 	@RequestMapping("/ajax/insertWk.do")
-	public String insertWk(Model model,Prcs2 vo) {
+	public String insertWk(Model model, Prcs2 vo) {
 		pservice.insertData(vo);
 		model.addAttribute("No", vo.getWkNo());
 		return "jsonView";
 	}
+
 	@PostMapping("/grid/insertWkDetail.do")
-	public String insertWkDetail(Model model,Prcs2 vo,@RequestBody ModifyVO<Prcs2> mvo)throws Exception  {
-		//pservice.insertDetail(mvo);
+	public String insertWkDetail(Model model, Prcs2 vo, @RequestBody ModifyVO<Prcs2> mvo) throws Exception {
+		// pservice.insertDetail(mvo);
 		pservice.insertDetailO(mvo);
 		model.addAttribute("mode", "upd");
 		return "jsonView";
 	}
-	
-	//시작버튼을 누르면 해당 지시번호에 해당하는 lot를 불러와서 list에 넣고 이를 토대로 돌아가는 스케줄러 작성
+
+	// 시작버튼을 누르면 해당 지시번호에 해당하는 lot를 불러와서 list에 넣고 이를 토대로 돌아가는 스케줄러 작성
 	@RequestMapping("/ajax/showGrid")
-	public String showGrid(Model model,Prcs2 vo) {
+	public String showGrid(Model model, Prcs2 vo) {
 		List<?> list = pservice.findTemp();
 		Map<String, Object> map = new HashMap();
 		map.put("contents", list);
@@ -57,5 +61,34 @@ public class Prcs2Controller {
 		model.addAttribute("data", map);
 		return "jsonView";
 	}
-	
+
+	@RequestMapping("/ajax/repeat")
+	public String repeat(Model model, Prcs2 vo) {
+		int a = 0, b = 0, c = 0, d = 0, e = 0;
+		List<Prcs2> list = pservice.repeat(vo);
+		Map<String, Object> map = new HashMap();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getPrdtFg().equals("P")) {
+				a++;
+			} else if (list.get(i).getPrdtFg().equals("P1")) {
+				b++;
+			} else if (list.get(i).getPrdtFg().equals("P2")) {
+				c++;
+			} else if (list.get(i).getPrdtFg().equals("P3")) {
+				d++;
+			} else if (list.get(i).getPrdtFg().equals("C")) {
+				e++;
+			}
+		}
+		model.addAttribute("len",list.size() );
+		model.addAttribute("p1", a);
+		model.addAttribute("p2", b);
+		model.addAttribute("p3", c);
+		model.addAttribute("p4", d);
+		model.addAttribute("p5", e);
+		return "jsonView";
+	}
 }

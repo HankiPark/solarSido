@@ -40,14 +40,32 @@
 		insert into prcs_d values( #{prdtIdx},#{prdtLot},#{prdtFg},#{prdtCd},#{indicaDetaNo},#{prcsFrTm},#{prcsToTm},#{eqmCd},#{wkNo},#{wkDt} )
 	</insert>
 	<update id="updateFr">
-		update prcs_d_o set prcs_fr_tm = #{prcsFrTm} where prdt_idx= #{prdtIdx}
+		update prcs_d_o set prcs_fr_tm = #{prcsFrTm},eqm_cd=#{eqmCd} where prdt_idx= #{prdtIdx}
 	</update>
 	<update id="updateTo">
 		update prcs_d_o set prcs_to_tm = #{prcsToTm} where prdt_idx= #{prdtIdx}
 	</update>
 	<update id="updateFg">
-		update prcs_d_o set prdt_fg = #{prdtFg},prcs_fr_tm=null,prcs_to_tm=null where prdt_idx= #{prdtIdx}
+		update prcs_d_o set 
+		<choose>
+			<when test='prdtFg !="C"'>
+			prdt_fg = #{prdtFg},prcs_fr_tm=null where prdt_idx= #{prdtIdx}
+			</when>
+			<otherwise>
+			prdt_fg = #{prdtFg} where prdt_idx= #{prdtIdx}
+			</otherwise>
+		</choose>
+		
 	</update>
 
+	<delete id="completePrcs">
+		delete from prcs_d_o
+	</delete>
+	<insert id="inPrdt">
+		insert into prdt_stc select prdt_inx,#{prdtLot},'C',#{prdtCd},#{indicaDetaNo},sysdate  from prdt_stc where prdt_lot = #{prdtLot}
+	</insert>
 	
+	<select id="listPrcs" resultType="Prcs2">
+		select * from prcs_d where wk_no=#{wkNo} and prdt_fg='C' order by prdt_lot
+	</select>
 </mapper>
