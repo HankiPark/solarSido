@@ -1,6 +1,7 @@
 package solar.prod.plan.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import solar.prod.plan.service.ProdPlanVO;
 import solar.sales.order.dao.ModifyVO;
@@ -22,9 +23,13 @@ public interface ProdPlanMapper {
 	int deletePlan(ProdPlanVO ppVo);
 	int deletePlanD(ProdPlanVO ppVo);
 		
+	//자재발주요청
+	int insertDmnd(ProdPlanVO ppVo);
+	
 	//modify
 	int modifyData(ModifyVO<ProdPlanVO> mvo);
-		
+	int planDmndData(Map<String, List<ProdPlanVO>> map);
+	
 	//검색모달
 	List<ProdPlanVO> findProdPlan(ProdPlanVO ppVo);
 	List<ProdPlanVO> searchPlan(ProdPlanVO ppVo);

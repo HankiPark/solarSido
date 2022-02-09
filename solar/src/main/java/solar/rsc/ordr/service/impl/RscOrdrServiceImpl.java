@@ -32,6 +32,7 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 		if(mvo.getCreatedRows() != null) {
 			for(RscOrdr rscOrdr : mvo.getCreatedRows()) {
 				rscOrdrMapper.insert(rscOrdr);
+				rscOrdrMapper.deleteDmnd(rscOrdr);
 			}
 		}
 		
@@ -58,4 +59,22 @@ public class RscOrdrServiceImpl implements RscOrdrService {
 			}
 		}
 	}
+
+	@Override
+	public List<?> selectDmnd(RscOrdr rscOrdr) {
+		return rscOrdrMapper.selectDmnd(rscOrdr);
+	}
+
+	@Override
+	public int dmndUpdate(Map<String, List<RscOrdr>> map) {
+		if(map.get("dmnd") !=null) {
+			for(RscOrdr rscOrdr : map.get("dmnd")) {
+				rscOrdrMapper.insert(rscOrdr);
+				rscOrdrMapper.deleteDmnd(rscOrdr);
+			}
+		}
+		return 1;
+	}
+	
 }
+	

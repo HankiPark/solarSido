@@ -25,4 +25,5 @@ public class IndRscVO {
 	//주문상세
 	int indicaQty;
 	String orderNo;
+	
 }

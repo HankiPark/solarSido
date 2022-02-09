@@ -47,4 +47,8 @@ public class ProdPlanVO {
 	String ndStc;		//자재필요량
 	String lackStc;		//자재부족량
 	String rscUseQty;	//자재사용량
+	
+	//자재발주요청
+	int dmndNo;
+	int lackQty;
 }
