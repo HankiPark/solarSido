@@ -25,6 +25,7 @@
 		<typeAlias alias="PrdtChase"		type="solar.prdt.dao.PrdtChase" />
 		<typeAlias alias="MessageVO"		type="solar.wsk.msg.dao.MessageVO" />
 		<typeAlias alias="Prcs2"		type="solar.prcs2.dao.Prcs2" />
+		<typeAlias alias="EqmAble"		type="solar.prcs2.dao.EqmAble" />
 		<typeAlias alias="Calendar"		type="solar.sales.order.dao.CalendarVO" />
 	</typeAliases>
     

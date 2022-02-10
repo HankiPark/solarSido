@@ -77,4 +77,19 @@
 		where ordr_cd = #{ordrCd}
 	</delete>
 	
+	<select id="selectDmnd" resultType="solar.rsc.ordr.service.RscOrdr">
+		SELECT 	rsc_cd,
+				sum(dmnd_qty) ordrQty,
+				rsc_nm,
+				co_nm
+		FROM ordr_dmnd
+        GROUP BY rsc_cd, rsc_nm, co_nm
+		ORDER BY 1
+	</select>
+	
+	<delete id="deleteDmnd" parameterType="solar.rsc.ordr.service.RscOrdr">
+		DELETE FROM ordr_dmnd
+		WHERE rsc_cd = #{rscCd}
+	</delete>
+	
 </mapper>

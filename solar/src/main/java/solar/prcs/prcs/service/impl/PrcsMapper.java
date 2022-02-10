@@ -31,7 +31,4 @@ public interface PrcsMapper {
 	List<PrcsPrMVO> updatePrcsPrM(PrcsPrMVO vo);
 	int insertRslt(RsltVO vo);
 	
-	void test(String scheduledId);
-	void test1(String scheduledId);
-	void test3();
 }

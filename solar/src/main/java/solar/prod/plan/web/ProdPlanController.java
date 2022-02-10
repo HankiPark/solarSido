@@ -163,4 +163,11 @@ public class ProdPlanController {
 		return "modal/findPlanDetail";
 	}
 	
+	//히든그리드 데이터 
+	@PostMapping("/ajax/planModified.do")
+	public String planDmndData(@RequestBody Map<String, List<ProdPlanVO>> map) {
+		System.out.println("그리드데이터" + map);
+		ppService.planDmndData(map);
+		return "jsonView";
+	}
 }

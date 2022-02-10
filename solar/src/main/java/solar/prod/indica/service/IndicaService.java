@@ -10,25 +10,19 @@ import solar.sales.order.dao.ModifyVO;
 public interface IndicaService {
 
 	List<?> selectIdc(IndicaVO idcVo);
-
 	List<?> findIndica(IndicaVO idcVo);
-
 	List<?> selectRscList(IndicaVO idcVo);
-
 	List<?> selectRscLot(IndicaVO idcVo);
-
 	List<?> noIndicaPlan(ProdPlanVO ppVo);
-
-	String makeDno();
-
 	List<?> findEqmUo(IndicaVO idcVo);
-
+	List<?> rscCnt(CmmndataVO cVo);
+	
+	//getSeq
+	String makeDno();
 	String makePrdtNo();
 
-	int hiddenData(Map<String, List<IndicaVO>> map);
-
-	List<?> rscCnt(CmmndataVO cVo);
-
+	//modify
 	int modifyData(ModifyVO<IndicaVO> mvo);
+	int hiddenData(Map<String, List<IndicaVO>> map);
 
 }
