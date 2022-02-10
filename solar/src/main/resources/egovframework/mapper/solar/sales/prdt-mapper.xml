@@ -168,7 +168,7 @@
 		insert into prdt_stc select
 		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
 		where
-		prdt_lot =#{prdtLot}
+		prdt_lot =#{prdtLot} and prdt_fg = 'C'
 	</insert>
 
 	<delete id="deleteInPrdt">
