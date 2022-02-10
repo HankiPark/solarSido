@@ -249,6 +249,8 @@
 			 $('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#e9ffe3');
 			} else if(grid.getValue(i, 'eqmYn')=='N'){
 			 $('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#f7dad5');
+			}} else if (grid.getValue(i, 'eqmYn')=='P'){
+				$('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#bfe0b6');
 			}
 	  	}
 		for(let i = 0; i<rowCnt2; i++){
