@@ -150,6 +150,9 @@
 	AND e.prcs_cd = #{prcsCd}
 	</if>
 	
+	order by eqm_cd
+	
+	
 
 </select>
 
@@ -259,6 +262,23 @@
 						sysdate
 					)
 </insert>
+
+<select id="rtSelectEqm" resultType="EqmVO">
+
+	select * from eqm order by eqm_cd
+		
+</select>
+
+<select id="rtSelectPrcsO" resultType="solar.prcs.prcs.service.PrcsDOVO">
+
+	select * from prcs_d_o
+
+</select>
+
+
+
+
+
 
 
 </mapper>

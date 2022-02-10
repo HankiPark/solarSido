@@ -31,6 +31,11 @@ public class PrcsController {
 		return "prcs/mng/prcsprog";
 	}
 	
+	@RequestMapping("/prcs/mng/prcsmonitor")
+	public String goM() {
+		return "prcs/mng/prcsmonitor";
+	}
+	
 	/*------------------------------------------------------------------------------------------------ */
 	// 생산지시검색 / 자재 / 제품 LOT 제외
 	
@@ -183,6 +188,20 @@ public class PrcsController {
 		  return "jsonView";
 	  }
 
+	  /*------------------------------------------------------------------------------------------------ */
+	  // 모니터링에 사용할 장비리스트 
+	  
+	  @RequestMapping("prcs/rtSelectEqm")
+	  public String rtSelectEqm(PrcsEqmVO vo, Model model) {
+		  Map<String, Object> map = new HashMap();
+		  map.put("contents", prcsservice.rtSelectEqm(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
+		  return "jsonView";
+	  }
+	  
+	  
 	  
 	  
 }

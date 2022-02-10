@@ -116,6 +116,12 @@ public class PrcsServiceImpl implements PrcsService {
 	public void test1(String scheduledId) {
 		schedulerService.remove(scheduledId);
 	}
+
+
+	@Override
+	public List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo) {
+		return prcsmapper.rtSelectEqm(vo);
+	}
 	
 	
 }

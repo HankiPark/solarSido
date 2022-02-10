@@ -31,4 +31,6 @@ public interface PrcsMapper {
 	List<PrcsPrMVO> updatePrcsPrM(PrcsPrMVO vo);
 	int insertRslt(RsltVO vo);
 	
+	List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo);
+	
 }
