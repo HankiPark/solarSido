@@ -315,6 +315,11 @@
 		</where>
 	</select>
 	
+	<select id="co" resultType="Prdt">
+		select * from co where co_fg ='R'
+	</select>
+	
+	
 	<select id="prdtList" resultType="Prdt">
 		select distinct p.prdt_cd from prdt p join prdt_stc s on p.prdt_cd=s.prdt_cd where s.prdt_fg='O'
 	</select>
