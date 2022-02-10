@@ -21,5 +21,6 @@ public interface Prcs2Mapper {
 	int updateFg(Prcs2 vo);
 	int completePrcs();
 	int inPrdt(Prcs2 vo);
+	int random();
 	
 }

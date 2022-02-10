@@ -566,9 +566,9 @@ border-top:3px solid #FECEBB;
 			if(planDgrid.getRowAt(i).orderNo == null || planDgrid.getRowAt(i).orderNo == ""){
 				toastr.error("주문번호가 지정되지 않았습니다.");
 				return false;
-				/*}  else if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
+			}  else if(planDgrid.getRowAt(i).prdtCd == null || planDgrid.getRowAt(i).prdtCd == ""){
 				toastr.error("제품코드가 지정되지 않았습니다.");
-				return false; */
+				return false;
 			} else if(planDgrid.getRowAt(i).planQty == null || planDgrid.getRowAt(i).planQty == ""){
 				toastr.error("계획량이 지정되지 않았습니다.");
 				return false;
