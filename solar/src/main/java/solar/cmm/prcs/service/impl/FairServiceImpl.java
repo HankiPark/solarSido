@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
+import solar.cmm.cmmndata.service.impl.CmmndataMapper;
 import solar.cmm.prcs.dao.FairVO;
 import solar.cmm.prcs.service.FairService;
 import solar.sales.order.dao.ModifyVO;
@@ -13,6 +15,7 @@ import solar.sales.order.dao.ModifyVO;
 public class FairServiceImpl implements FairService {
 
 	@Autowired FairMapper fairMapper;
+	@Autowired CmmndataMapper cmmndataMapper;
 	
 	@Override
 	public List<FairVO> fairList(FairVO fairVO) {
@@ -44,15 +47,30 @@ public class FairServiceImpl implements FairService {
 		if(mvo.getCreatedRows()!=null) {
 			for(FairVO fairVO : mvo.getCreatedRows()) {
 				fairMapper.fairInsert(fairVO);
+				CmmndataVO cmmndataVO = new CmmndataVO();
+				cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
+				cmmndataVO.setCmmnCdId("prcs");
+				cmmndataVO.setCmmnDtCdNm(fairVO.getPrcsNm());
+				cmmndataVO.setCmmnCdDesct(fairVO.getPrcsDesct());
+				cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
 		}
 		if(mvo.getDeletedRows()!=null) {
 			for(FairVO fairVO : mvo.getDeletedRows()) {
 				fairMapper.fairDelete(fairVO);
+				CmmndataVO cmmndataVO = new CmmndataVO();
+				cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
+				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 			}
 			if(mvo.getUpdatedRows()!=null) {
 				for(FairVO fairVO : mvo.getUpdatedRows()) {
 					fairMapper.fairUpdate(fairVO);
+					CmmndataVO cmmndataVO = new CmmndataVO();
+					cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
+					cmmndataVO.setCmmnCdId("prcs");
+					cmmndataVO.setCmmnDtCdNm(fairVO.getPrcsNm());
+					cmmndataVO.setCmmnCdDesct(fairVO.getPrcsDesct());
+					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);	
 				}
 			}	
 	}

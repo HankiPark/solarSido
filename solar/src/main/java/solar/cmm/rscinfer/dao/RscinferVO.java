@@ -7,4 +7,5 @@ public class RscinferVO {
 	String rtngdResnCd;
 	String rscInferNm;
 	String rscInferDesct;
+	String CmmnCdId;
 }
