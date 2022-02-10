@@ -446,7 +446,8 @@
                 rowHeaders: ['checkbox','rowNum'],
                 columns: [{
                         header: '설비코드',
-                        name: 'eqmCd'
+                        name: 'eqmCd',
+                        width: 40,
                     },
                     {
                         header: '설비구분',
