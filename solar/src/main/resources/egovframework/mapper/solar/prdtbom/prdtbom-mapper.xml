@@ -14,7 +14,7 @@
 			AND PRDT_CD LIKE '%' || #{prdtCd} || '%'
 		</if>
 	</where>
-	order by RSC_CD asc
+	order by PRDT_CD, RSC_CD
 	</select>
 	
 	<select id = "prdtList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">

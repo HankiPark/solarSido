@@ -394,7 +394,7 @@ $(function() {
 	  let newRows = grid.getModifiedRows().createdRows;
 	 /*  for(let newRow of newRows){
 		  if(newRow.rscCd == '' || newRow.ordrQty == '' || parseInt(newRow.ordrQty)+'' == 'NaN'){
-			  alert('유효한 값을 입력하세요.');
+			  toastr.error('유효한 값을 입력하세요.');
 			  return false;
 		  }
 	  } */

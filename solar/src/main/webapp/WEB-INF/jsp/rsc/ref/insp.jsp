@@ -20,7 +20,7 @@
 	<div class="row" id="senseInsp">
 		<div  id="senseInspBody"  class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px; height:350px">
 			<div class="card-body" >
-			<form id="ordrQueryFrm" name="ordrQueryFrm">
+				<form id="ordrQueryFrm" name="ordrQueryFrm">
 				<div  style="margin-bottom: 20px; margin-top: 50px;">
 					<label>발주일&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<input type="text" id="datePicker" name="datePicker" class="dtp">
@@ -35,21 +35,25 @@
 					<input type="text" id="rsc" name="rsc">
 					<button type="button" id="rscSearchBtn">🔍</button>
 				</div>
-			</form>
+				</form>
+				<div class="card-footer" style="margin-bottom: 30px;">
+					<button type="button" id="ordrQueryBtn" style="margin-left:120px">조회</button>
+				</div>
 			</div>
-			<div class="card-footer" style="margin-bottom: 30px;" >
-				<button type="button" id="ordrQueryBtn" style="margin-left:120px">조회</button>
-			</div>
-			<div class="card card-pricing card-primary card-white">
+			<div class="card card-pricing card-primary card-white card-outline">
 				<div class="card-body" >
-					<div>
-						<label>연도</label>
+					<div style="margin-bottom: 20px;">
+						<label>연도&emsp;&emsp;&nbsp;</label>
 	    				<select id="year" value="${curYear }"></select>
 	    			</div>
- 					<label> 발주업체:</label>
- 					<input type="text" id="coCds" name="co">
- 					<button type="button" id="coSearchBtn2">🔍</button>
-	    			<button id="sendRequest" onclick="inferRequest()" style="margin-left:-10px">조회</button>
+	    			<div style="margin-bottom: 20px;">
+	 					<label> 발주업체:</label>
+	 					<input type="text" id="coCds" name="co">
+	 					<button type="button" id="coSearchBtn2">🔍</button>
+ 					</div>
+ 					<div class="card-footer" style="margin-bottom: 30px;" align="center">
+		    			<button id="sendRequest" onclick="inferRequest()" style="margin-left:-10px">조회</button>
+ 					</div>
 	    		</div>
 	    	</div>
 		</div>
@@ -350,7 +354,7 @@
                 const options = {
                     chart: {
                         title: '분기별 자재 불량률',
-                        width: 700,
+                        width: 1100,
                         height: 400,
                     },
                     series: {

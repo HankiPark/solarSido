@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.cmmndata.service.CmmndataService;
 import solar.cmm.cmmndata.service.impl.CmmndataMapper;
+import solar.sales.order.dao.ModifyVO;
 
 @Controller
 public class CmmndataController {
@@ -63,4 +66,12 @@ public class CmmndataController {
 		
 		return "jsonView";
 	}
+	
+	@PostMapping("/grid/modifyData")
+	public String insertUpdate(Model model, CmmndataVO cmmndataVO, @RequestBody ModifyVO<CmmndataVO> modifyVO) throws Exception{
+		cmmndataService.modifyData(modifyVO);
+		model.addAttribute("mode", "upd");
+		return "jsonView";
+	}
+	
 }

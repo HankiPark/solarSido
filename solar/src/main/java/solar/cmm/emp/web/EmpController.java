@@ -28,9 +28,9 @@ public class EmpController {
 		return "common/mng/emp";
 	}
 	
-	@RequestMapping("modal/empinfoList")
+	@RequestMapping("/modal/empinfoList")
 	public String empmodalList() {
-		return "modal/empinfoList";
+		return "/modal/empinfoList";
 	}
 	
 	@GetMapping("/grid/empList.do")

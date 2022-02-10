@@ -126,7 +126,7 @@
 		buttons: {
 			"입력": function () {
 				if (sum > grid.getValue(curRowKey, 'rscIstQty')) {
-					alert('총량보다 많은 불량량을 입력할 수 없습니다.');
+					toastr.error('총량보다 많은 불량량을 입력할 수 없습니다.');
 					return false;
 				}
 				grid.setValue(curRowKey, 'inspCls', 'rs002');
@@ -294,7 +294,7 @@
 		let date = new Date();
  		let confirmedQty = document.getElementById('confirmedQty');
 		if (grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty') != confirmedQty.value) {
-			alert("정확한 입고량을 입력하십시오.");
+			toastr.error("정확한 입고량을 입력하십시오.");
 			return false;
 		}
 		grid.setValue(grid.getFocusedCell().rowKey, 'inspCls', "rs003");

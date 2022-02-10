@@ -136,15 +136,17 @@
 					method : 'POST'
 				}
 			},
-			initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 
+
 			contentType : 'application/json'
 		};
 
 		var grid = new tui.Grid({
 			el : document.getElementById('grid'),
 			data : dataSource,
-			scrollX : true,
-			scrollY : true,
+			pageOptions : {
+				useClient : true,
+				perPage : 60
+			},
 			bodyHeight : 500,
 			minBodyHeight : 500,
 			rowHeaders : [ 'rowNum', 'checkbox' ],

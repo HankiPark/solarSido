@@ -61,7 +61,7 @@
 <select id="findIndica" resultType="IndicaVO">
 	SELECT DISTINCT
 		i.indica_no,
-		TO_CHAR(i.indica_dt, 'YYYY-MM-DD') indica_dt,
+		TO_CHAR(i.indica_dt, 'YYYY/MM/DD') indica_dt,
 		i.indica_nm
 	FROM indica i
 	LEFT JOIN prcs_m p
@@ -97,15 +97,18 @@
 </select>
 
 <select id="selectRscLot" resultType="IndicaVO">
- 	SELECT a.rsc_lot , nvl(a.rsc_qty,0)-nvl(b.rsc_qty,0) rsc_stc
+ 	SELECT 	a.rsc_cd,
+ 			a.rsc_lot,
+ 			(SELECT rsc_use_qty FROM prdt_bom WHERE rsc_cd = #{rscCd} AND prdt_cd = #{prdtCd})  rsc_use_qty,
+ 			nvl(a.rsc_qty,0)-nvl(b.rsc_qty,0) rsc_stc
 	FROM (	SELECT rsc_cd, rsc_lot, sum(nvl(rsc_qty,0)) rsc_qty
 			FROM rsc_inout
 			WHERE rsc_fg =1 
-			GROUP BY rsc_lot, rsc_cd) a 
+			GROUP BY rsc_lot, rsc_cd ) a 
 	LEFT JOIN (	SELECT rsc_cd,  rsc_lot, sum(nvl(rsc_qty,0)) rsc_qty
 				FROM rsc_inout
 				WHERE rsc_fg =0
-				GROUP BY rsc_lot, rsc_cd) b
+				GROUP BY rsc_lot, rsc_cd ) b
 	ON a.rsc_lot = b.rsc_lot
 	WHERE a.rsc_cd = #{rscCd}
 </select>
@@ -123,7 +126,7 @@
 		B.order_no,
 		TO_CHAR(O.paprd_dt, 'YYYY/MM/DD') paprd_dt,
 		(SELECT order_qty FROM order_d WHERE order_no = B.order_no AND prdt_cd =B.prdt_cd) order_qty,
-		(SELECT plan_no FROM plan WHERE plan_no = p.plan_no) plan_no,
+		(SELECT plan_no FROM plan WHERE plan_no =a.plan_no) plan_no,
 		B.plan_qty,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord,

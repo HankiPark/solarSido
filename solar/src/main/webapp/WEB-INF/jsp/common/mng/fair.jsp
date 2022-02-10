@@ -10,28 +10,30 @@
 <body>
 	<h1>공정 관리</h1>
 	<div class="row" id="senseOrder">
-		<div id="senseOrderBody" class="card card-pricing card-primary card-white card-outline col-3"
-		 style="margin-left: 50px; margin-right: 30px; margin-top: 200px; padding-left: 60px;padding-top:30px; margin-bottom: 300px;">
-		<div class="card-body"  >
-		<div style="margin-bottom: 20px; margin-top: 50px;">
-			<label>공정명&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text" id="prcsNminfo">	
+		<div id="senseOrderBody"
+			class="card card-pricing card-primary card-white card-outline col-3"
+			style="margin-left: 50px; margin-right: 30px; margin-top: 200px; padding-left: 60px; padding-top: 30px; margin-bottom: 300px;">
+			<div class="card-body">
+				<div style="margin-bottom: 20px; margin-top: 50px;">
+					<label>공정명&nbsp;&nbsp;&nbsp;&nbsp;</label> <input type="text"
+						id="prcsNminfo">
+				</div>
+			</div>
+			<div class="card-footer" style="margin-bottom: 30px;">
+				<button type="button" id="btnfind" style="margin-left: 120px">조회</button>
+			</div>
 		</div>
-	</div>
-	<div class="card-footer" style="margin-bottom: 30px;" >
-	<button type="button" id="btnfind" style="margin-left:120px">조회</button>
-	</div>
-	</div>
-	<div class="col-8">
-		<div class="float-right">
-			<button type="button" id="btnAdd" style="margin-bottom:10px">추가</button>
-			<button type="button" id="btnDel" style="margin-bottom:10px">삭제</button>
-			<button type="button" id="btnSave" style="margin-bottom:10px">저장</button>
+		<div class="col-8">
+			<div class="float-right">
+				<button type="button" id="btnAdd" style="margin-bottom: 10px">추가</button>
+				<button type="button" id="btnDel" style="margin-bottom: 10px">삭제</button>
+				<button type="button" id="btnSave" style="margin-bottom: 10px">저장</button>
+			</div>
+			<div id="grid"></div>
 		</div>
-		<div id="grid"></div>
-	</div>
 
-	
-	<script>
+
+		<script>
 		toastr.options = {
 			"closeButton" : false,
 			"debug" : false,
@@ -87,32 +89,25 @@
 			columns : [ {
 				header : '공정코드',
 				name : 'prcsCd'
-			}, {
-				header : '공정구분',
-				name : 'prcsFg',
-				editor : {
-					type:'select',
-					options:{
-						listItems : [
-							{
-								text:'제조 공정',
-								value: '1'
-							},
-							{
-								text:'전극 및 측정공정',
-								value: '2'
-							},
-							{
-								text:'용접 공정',
-								value: '3'
-							},
-							{
-								text:'접착 공정',
-								value: '4'
+						}, 
+						{
+						header : '공정구분',
+						name : 'prcsFg',
+						editor : 'text',
+						formatter:function(value){
+							if(value.value=="1"){
+								return "제조_공정";
+							}else if(value.value=="2"){
+								return "전극_공정";
+							}else if(value.value=="3"){
+								return "용접_공정";
+							}else if(value.value=="4"){
+								return "접합_공정";
+							}else{
+								return "";
 							}
-						]
-					}
-				}
+						}
+						
 			}, {
 				header : '공정명',
 				name : 'prcsNm',
@@ -125,11 +120,13 @@
 			}, {
 				header : '관리단위',
 				name : 'prcsUnit',
-				editor : 'text'
+				editor : 'text',
+				hidden : true
 			}, {
 				header : '작업일수',
 				name : 'prodPd',
-				editor : 'text'
+				editor : 'text',
+				hidden : true
 			} ]
 		});
 
