@@ -3,7 +3,7 @@
 <mapper namespace="solar.prcs2.service.impl.Prcs2Mapper">
 
 	<select id="searchPlanList"  resultType="Prcs2">
-		select p.prdt_lot,p.prdt_cd,p.prdt_fg,p.indica_deta_no from prdt_stc p join indica_d i on p.indica_deta_no = i.indica_deta_no and i.indica_no =#{indicaNo}
+		select distinct p.prdt_lot,p.prdt_cd,p.prdt_fg,p.indica_deta_no from prdt_stc p join indica_d i on p.indica_deta_no = i.indica_deta_no and i.indica_no =#{indicaNo}
 		where  p.prdt_fg not in ('I','O') order by p.prdt_lot
 	
 	</select>
