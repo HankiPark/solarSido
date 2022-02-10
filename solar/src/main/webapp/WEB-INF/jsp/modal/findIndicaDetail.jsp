@@ -136,7 +136,8 @@ const indicaListGrid = new tui.Grid({
 				  {
 				    header: '작업순서',
 				    name: 'wkOrd',
-				    align: 'center'
+				    align: 'center',
+				    hidden: true
 				  },
 		 		 ],
 		 		summary: {
