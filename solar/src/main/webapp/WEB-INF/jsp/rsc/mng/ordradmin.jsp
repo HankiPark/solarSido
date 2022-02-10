@@ -128,7 +128,7 @@ const inGrid = new tui.Grid(
 			}, {
 				header : '자재명',
 				name : 'rscNm',
-				hidden: true
+				//hidden: true
 				
 			}, {
 				header : '업체',
@@ -168,17 +168,19 @@ inGrid.on('response', function(ev) {
 let oGPng = document.getElementById("oGPng");
 oGPng.addEventListener("click",function(){
 	var rowCnt =inGrid.getRowCount();
+	//	console.log(rowCnt)
 	for (i=0; i<rowCnt; i++) {
+		console.log(i)
 		grid.prependRow({
 			  "ordrDt":d.toISOString().slice(0, 4)+"/"+d.toISOString().slice(5, 7)+"/"+d.toISOString().slice(8, 10),
-			  "rscNm":inGrid.getValue(i, 'rscNm'),
-			  "rscCd":inGrid.getValue(i, 'rscCd'),
-			  "ordrQty": inGrid.getValue(i, 'ordrQty'),
-			  "coNm": inGrid.getValue(i, 'coNm'),
+			  "rscNm":inGrid.getRowAt(i).rscNm,
+			  "rscCd":inGrid.getRowAt(i).rscCd,
+			  "ordrQty": inGrid.getRowAt(i).ordrQty,
+			  "coNm": inGrid.getRowAt(i).coNm,
 			  "inspCls":"rs001"
 		  });
-		inGrid.removeRow(i)
 	}
+	inGrid.resetData([]);
 });
 
 let dmndBtn = document.getElementById("dmndBtn");
@@ -216,6 +218,7 @@ for (var i = 0; i < tabList.length; i++) {
 					$("#oG").css("display", "block");
 					$("#oGPng").css("display", "block");
 					inGrid.refreshLayout();
+					grid.resetData([]);
 				}
 	})
 }

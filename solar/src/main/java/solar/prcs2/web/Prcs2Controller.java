@@ -64,7 +64,7 @@ public class Prcs2Controller {
 
 	@RequestMapping("/ajax/repeat")
 	public String repeat(Model model, Prcs2 vo) {
-		int a = 0, b = 0, c = 0, d = 0, e = 0;
+		int a = 0, b = 0, c = 0, d = 0, e = 0,f=0;
 		List<Prcs2> list = pservice.repeat(vo);
 		Map<String, Object> map = new HashMap();
 		map.put("contents", list);
@@ -81,6 +81,8 @@ public class Prcs2Controller {
 				d++;
 			} else if (list.get(i).getPrdtFg().equals("C")) {
 				e++;
+			}else if (list.get(i).getPrdtFg().equals("F")) {
+				f++;
 			}
 		}
 		model.addAttribute("len",list.size() );
@@ -89,6 +91,7 @@ public class Prcs2Controller {
 		model.addAttribute("p3", c);
 		model.addAttribute("p4", d);
 		model.addAttribute("p5", e);
+		model.addAttribute("error", f);
 		return "jsonView";
 	}
 }

@@ -83,7 +83,7 @@
 						
 							<div>
 								<img id="eqmImg1" class="eqmImg"
-									src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번설비:
+									src="${pageContext.request.contextPath}/images/eqm1.png"><br>1번공정:
 								<span id="eqm1">0</span>
 							</div>
 							<div class="progressBar">
@@ -95,7 +95,7 @@
 						<div class="col-2 eqm">
 							<div>
 								<img id="eqmImg2" class="eqmImg"
-									src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번설비:
+									src="${pageContext.request.contextPath}/images/eqm2.png"><br>2번공정:
 								<span id="eqm2">0</span>
 							</div>
 							<div class="progressBar">
@@ -107,7 +107,7 @@
 						<div class="col-2 eqm">
 							<div>
 								<img id="eqmImg3" class="eqmImg"
-									src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번설비:
+									src="${pageContext.request.contextPath}/images/eqm3.png"><br>3번공정:
 								<span id="eqm3">0</span>
 							</div>
 							<div class="progressBar">
@@ -119,7 +119,7 @@
 						<div class="col-2 eqm">
 							<div>
 								<img id="eqmImg4" class="eqmImg"
-									src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번설비:
+									src="${pageContext.request.contextPath}/images/eqm4.png"><br>4번공정:
 								<span id="eqm4">0</span>
 							</div>
 							<div class="progressBar">
@@ -592,7 +592,7 @@
  			 	 				}
  			 	 			
  			 	 				timer = setInterval(function(){
- 			 	 					time++;
+ 			 	 					/* time++;
  			 	 					
  			 	 					if(time)
  			 	 					
@@ -610,9 +610,65 @@
  			 	 					if(fs<10) fs = "0"+ sec;
  			 						 					
 
- 			 	 					document.getElementById("prcsTimer").innerHTML = fh+"/"+fm+"/"+fs; 
+ 			 	 					document.getElementById("prcsTimer").innerHTML = fh+"/"+fm+"/"+fs; */ 
+ 			 	 					$.ajax({
+ 			 	 						url:"${pageContext.request.contextPath}/prcs/prcsItem",
+ 			 	 						data : {
+ 			 	 							'indicaDetaNo':pIndicaDetaNo
+ 			 	 						},
+ 			 	 						dataType: 'JSON',
+ 			 	 						async: false,
+ 			 	 						contentType: 'application/json',
+ 			 	 						success : function(result){
+ 			 	 							
+ 			 	 							items = result.data.contents;
+ 			 	 						console.log(items.length);
+ 			 	 							let prcs1Count = 0;
+ 			 	 							let prcs2Count = 0;
+ 			 	 							let prcs3Count = 0;
+ 			 	 							let prcs4Count = 0;
+ 			 	 							
+ 			 	 						for(let item of items){
+ 			 	 							//if(prcsSeq == item.prcsOrd && prcsPrM.wkNo == item.wkNo){
+ 			 	 								if(item.eqmCd == 'e014' && item.lowSt == 'W'){
+ 			 	 									prcs1Count++;
+ 			 	 									setProgress(1,prcs1Count,10);
+ 			 	 								}
+ 			 	 								
+ 			 	 								if(item.eqmCd == 'e024' && item.lowSt == 'W'){
+ 			 	 									
+ 			 	 									prcs2Count++;
+ 			 	 									setProgress(1,prcs2Count,10);
+ 			 	 								}
+ 			 	 								
+ 			 	 								if(item.eqmCd == 'e034' && item.lowSt == 'W'){
+ 			 	 									
+ 			 	 									prcs3Count++;
+ 			 	 									setProgress(1,prcs3Count,10);
+ 			 	 								}
+ 			 	 								
+ 			 	 								if(item.eqmCd == 'e044' && item.lowSt == 'C'){
+ 			 	 									
+ 			 	 									prcs4Count++;
+ 			 	 									setProgress(1,prcs4Count,10);
+ 			 	 								}
+ 			 	 								
+ 			 	 								
+ 			 	 								
+ 			 	 								
+ 			 	 								
+ 			 	 							}
+ 			 	 					
+ 			 	 						
+ 			 	 							
+ 			 	 						},
+ 			 	 						error : function(result){
+ 			 	 							console.log("호출실패")
+ 			 	 						}
+ 			 	 					});
+ 			 	 					
  			 	 				
- 			 	 				}, 1000);
+ 			 	 				}, 5000);
  			 	 				
  			 	 			// ******************************************************* setInterval 타이머 함수
 
@@ -1533,21 +1589,63 @@
 	
 	$("#btnTest1").on("click", function(ev){
 		
-		$.ajax({
-			url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
-			data : {
-				'prcsCd':prcsCd	
-			},
-			dataType: 'JSON',
-			async: false,
-			contentType: 'application/json',
-			success : function(result){
-									
-			},
-			error : function(result){
-				console.log("호출실패")
-			}
-		});	
+
+			$.ajax({
+				url:"${pageContext.request.contextPath}/prcs/prcsItem",
+				data : {
+					'indicaDetaNo':pIndicaDetaNo
+				},
+				dataType: 'JSON',
+				async: false,
+				contentType: 'application/json',
+				success : function(result){
+					
+					items = result.data.contents;
+				console.log(items.length);
+					let prcs1Count = 0;
+					let prcs2Count = 0;
+					let prcs3Count = 0;
+					let prcs4Count = 0;
+					
+				for(let item of items){
+					//if(prcsSeq == item.prcsOrd && prcsPrM.wkNo == item.wkNo){
+						if(item.eqmCd == 'e014' && item.lowSt == 'W'){
+							prcs1Count++;
+							setProgress(1,prcs1Count,10);
+						}
+						
+						if(item.eqmCd == 'e024' && item.lowSt == 'W'){
+							
+							prcs2Count++;
+							setProgress(1,prcs2Count,10);
+						}
+						
+						if(item.eqmCd == 'e034' && item.lowSt == 'W'){
+							
+							prcs3Count++;
+							setProgress(1,prcs3Count,10);
+						}
+						
+						if(item.eqmCd == 'e044' && item.lowSt == 'C'){
+							
+							prcs4Count++;
+							setProgress(1,prcs4Count,10);
+						}
+						
+						
+						
+						
+						
+					}
+			
+				
+					
+				},
+				error : function(result){
+					console.log("호출실패")
+				}
+			});
+			
 		
 		
 	});

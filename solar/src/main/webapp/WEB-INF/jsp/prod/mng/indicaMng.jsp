@@ -133,7 +133,6 @@
 	let totalQty;
 	let idcNo;
 	let orderNo;
-	let totalUse;
 	
 	//제품-자재 lot 연결
 	let lotArr = []; 	//list
@@ -167,7 +166,6 @@
 			console.log(arr)
 		});
 	})
-
 	//------------------------------그리드생성------------------------------------------------
 	//지시 조회 그리드
 	let indicaDgrid = new tui.Grid({
@@ -593,7 +591,6 @@
 			}
 		}
 	});
-
 	//------------------------------그리드이벤트------------------------------------------------
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('click', function(ev){
@@ -609,6 +606,8 @@
 		indicaDgrid.refreshLayout();
 		rscGrid.clear();
 		rscLotGrid.clear();
+		hdRscConGrid.clear();
+		hdPrdtRscGrid.clear();
 	});
 	 
 	indicaDgrid.on('editingFinish', function(ev) {
@@ -703,15 +702,25 @@
 		console.log(rscLotGrid.getModifiedRows().updatedRows.length);	
 	});
 	
+	let qtySum=0;
 	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
 	rscLotGrid.on("editingFinish", (rscEv) => {
-		totalUse = rscLotGrid.getValue(rscEv.rowKey, 'rscQty')
-		rscLotGrid.check(rscEv.rowKey)
+		console.log(rscEv)
 		totalQty = $('#totalUseQty').val();
-		if ( totalQty <= rscLotGrid.getSummaryValues('rscQty').sum ) {
+		if ( totalQty == rscLotGrid.getSummaryValues('rscQty').sum ) {
+			rscLotGrid.check(rscEv.rowKey)
 			for ( i=rscEv.rowKey+1 ; i<rscLotGrid.getRowCount(); i++){
 				rscLotGrid.disableRow(i, true)
 			}
+		} else if( totalQty < rscLotGrid.getSummaryValues('rscQty').sum ){
+			toastr.warning("필요수량을 초과했습니다.")
+			for(i=0; i<rscEv; i++){
+				qtySum += rscLotGrid.getRowAt(i).rscQty
+				console.log("qtySum: "+qtySum)
+			}
+			rscLotGrid.setValue(rscEv.rowKey, "rscQty", "");
+		} else {
+			rscLotGrid.check(rscEv.rowKey)
 		}
 		rscLotGrid.blur()
 	})
@@ -748,7 +757,7 @@
 				rscLotGrid.enableRow(i, true)
 			}
 		}
-	})
+	});
 	
 	rscLotGrid.on('onGridUpdated', function() {
 		rscLotGrid.refreshLayout(); 
@@ -770,7 +779,6 @@
 		rscLotGrid.resetData([]);
 		hdRscConGrid.resetData([]);
 	})
-
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
 		indicaNm = $('#indicaNm').val();
@@ -867,7 +875,7 @@
 		if (indicaNm == null || indicaNm == ""){
 			toastr.error('생산지시명을 입력해주세요.');
 			$('#indicaNm').focus();
-		} else if (indicaDgrid.getRowCount() == 0) {
+		} else if (indicaDgrid.getRowCount() == 0 || indicaDgrid.getValue(0, 'prdtCd')) {
 			toastr.error("생산지시 상세내용이 없습니다.")
 		} else if (hdRscConGrid.getRowCount() == 0){
 			toastr.error("소요자재Lot을 지정해주세요.")
@@ -982,13 +990,13 @@
 	function blankCheck(){
 		for (let i = 0; i <indicaDgrid.getRowCount(); i++){
 			if(indicaDgrid.getRowAt(i).prdtCd == null || indicaDgrid.getRowAt(i).prdtCd == ""){
-				alert("제품코드가 지정되지 않았습니다.");
+				toastr.warning("제품코드가 지정되지 않았습니다.");
 				return false;
 			} else if(indicaDgrid.getRowAt(i).indicaQty == null || indicaDgrid.getRowAt(i).indicaQty == ""){
-				alert("지시량이 지정되지 않았습니다.");
+				toastr.warning("지시량이 지정되지 않았습니다.");
 				return false;
 			} else if(indicaDgrid.getRowAt(i).wkDt == null || indicaDgrid.getRowAt(i).wkDt == ""){
-				alert("작업시작일이 지정되지 않았습니다.");
+				toastr.warning("작업시작일이 지정되지 않았습니다.");
 				return false;
 			} else {
 				console.log(i)
