@@ -7,7 +7,10 @@ import solar.rsc.ordr.service.RscOrdr;
 
 public interface RscOrdrMapper {
 	List<RscOrdr> search(Map map);
+	List<?> selectDmnd(RscOrdr rscOrdr);
 	int update(RscOrdr rscOrdr);
 	int insert(RscOrdr rscOrdr);
 	int delete(RscOrdr rscOrdr);
+	int deleteDmnd(RscOrdr rscOrdr);
+	int dmndUpdate(Map<String, List<RscOrdr>> map);
 }

@@ -14,8 +14,14 @@
 				<div class="card-body" style="margin-top:-20px">
  <div id='calendar2'></div>
 </div></div></div>
-
+<div id="dialog-order" title="생산 지시서"></div>
 <script type="text/javascript">
+let dialog = $("#dialog-order").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 400,
+	height : 400
+});
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar2');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -43,7 +49,24 @@ document.addEventListener('DOMContentLoaded', function() {
     				color : 'transparent',
     				textColor: 'black' 
     			}
-    		]
+    		],
+				eventClick:function(ev){
+    			
+    			ev.jsEvent.preventDefault();
+    			$("span[title$='Close']").trigger("click");
+    			
+    			 if(ev.event.url =='ind'){
+    				 console.log(ev.event.title.length)
+    				 dialog.dialog("open");
+    						$("#dialog-order")
+    								.load(
+    										"${pageContext.request.contextPath}/modal/calendarModal",
+    										function() {
+    											ind(ev.event.start,ev.event.extendedProps.etc,ev.event.extendedProps.etc2,ev.event.extendedProps.etc3,ev.event.extendedProps.etc4,ev.event.extendedProps.etc5);
+    										})
+    				
+    			} 				
+			}
     });
     calendar.render();
     setTimeout(() => {

@@ -10,6 +10,7 @@ import lombok.Data;
 
 @Data
 public class Prcs2 {
+	String prdtIdx;
 	String prdtLot;
 	String prdtCd;
 	String prdtFg;
@@ -21,11 +22,11 @@ public class Prcs2 {
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date wkDt;
 	String eqmCd;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
 	Date prcsFrTm;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
 	Date prcsToTm;
 	String empId;
 	

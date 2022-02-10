@@ -119,7 +119,7 @@
 	<select id="eqmCal" resultType="Calendar">
 		select '비가동 ('||TO_CHAR(e.fr_tm,'MM-dd')||'~'||TO_CHAR(e.to_tm,'MM-dd')||')' as title,
 				e.fr_tm as "start",
-				nvl(e.to_tm,sysdate) as "end",
+				nvl(e.to_tm+1,sysdate+1) as "end",
 				u.uopr_nm as"etc",
 				e.eqm_cd as "etc2",
 				'inspa' as "url"  
@@ -128,8 +128,17 @@
 				on e.uopr_cd=u.uopr_cd
 	</select>
 	<select id="prodCal" resultType="Calendar">
-		<![CDATA[select '제품 '||d.prdt_cd||'를 '||sum(d.indica_qty)||'개 생산지시' as title,i.indica_dt as "start" from indica i join indica_d d on i.indica_no=d.indica_no group by i.indica_no, i.indica_dt, d.prdt_cd, i.indica_nm
-	]]>
+		select d.prdt_cd||' 생산지시' as title,
+					i.indica_dt as "start",
+					sum(d.indica_qty) as "etc",
+					i.indica_no as "etc2",
+					i.indica_nm as "etc3",
+					d.prdt_cd as "etc4",
+					d.wk_dt as "etc5",
+					'ind' as "url"
+                from indica i join indica_d d on i.indica_no=d.indica_no 
+                group by  i.indica_dt, d.prdt_cd, i.indica_nm, i.indica_no, d.wk_dt
+	
 	</select>
 	
 </mapper>

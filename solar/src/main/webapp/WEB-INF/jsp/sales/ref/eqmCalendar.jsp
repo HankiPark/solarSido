@@ -52,17 +52,33 @@ document.addEventListener('DOMContentLoaded', function() {
     			
     		],
     		eventClick:function(ev){
+    			
     			ev.jsEvent.preventDefault();
     			$("span[title$='Close']").trigger("click");
-    			if(ev.event.url =='inspa'){
-    				dialog.dialog("open");
-					$("#dialog-order")
-							.load(
-									"${pageContext.request.contextPath}/modal/calendarModal",
-									function() {
-										eqm(ev.event.extendedProps.etc,ev.event.extendedProps.etc2,ev.event.start,ev.event.end);
-									})
-    			}				
+    			
+    			 if(ev.event.url =='inspa'){
+    				 console.log(ev.event.title.length)
+    				 if(ev.event.title.length>12){
+    					 console.log(ev.event.title.substring(11,16));
+    					ev.event.title.substring(11,16);	 
+    					 dialog.dialog("open");
+    						$("#dialog-order")
+    								.load(
+    										"${pageContext.request.contextPath}/modal/calendarModal",
+    										function() {
+    											eqm(ev.event.extendedProps.etc,ev.event.extendedProps.etc2,ev.event.start,ev.event.title.substring(11,16));
+    										})
+    				 }else{
+    					 dialog.dialog("open");
+    						$("#dialog-order")
+    								.load(
+    										"${pageContext.request.contextPath}/modal/calendarModal",
+    										function() {
+    											eqm(ev.event.extendedProps.etc,ev.event.extendedProps.etc2,ev.event.start,ev.event.end);
+    										})
+    				 }
+    				
+    			} 				
 			}
     });
     calendar.render();

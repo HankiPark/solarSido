@@ -82,12 +82,12 @@ position: absolute;
 					</div>
 					<div style="margin-bottom: 20px;">
 						<label>업체코드</label> 
-						<input type="text" id="coCd" name="coCd" readonly>
+						<input type="text" id="coCd" name="coCd" >
 						<button type="button" id="btnCoCdFind">🔍</button>
 					</div>
 					<div style="margin-bottom: 20px;">
 						<label>제품코드</label> 
-						<input type="text" id="prdtCd" name="prdtCd" readonly>
+						<input type="text" id="prdtCd" name="prdtCd" >
 						<button type="button" id="btnPrdtCdFind">🔍</button>
 					</div>
 					<div data-role="fieldcontain" style="margin-bottom: 20px;">

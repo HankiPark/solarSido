@@ -26,8 +26,20 @@ public class Prcs2ServiceImpl implements Prcs2Service {
 	}
 
 
+	/*
+	 * @Override public int insertDetail(ModifyVO<Prcs2> mvo) {
+	 * if(mvo.getCreatedRows()!=null) { for(Prcs2 vo : mvo.getCreatedRows()) {
+	 * 
+	 * } } if(mvo.getDeletedRows()!=null) { for(Prcs2 vo : mvo.getDeletedRows()) {
+	 * 
+	 * } } if(mvo.getUpdatedRows()!=null) { for(Prcs2 vo : mvo.getUpdatedRows()) {
+	 * pmapper.insertDetail(vo); } }
+	 * 
+	 * return 1; }
+	 */
+
 	@Override
-	public int insertDetail(ModifyVO<Prcs2> mvo) {
+	public int insertDetailO(ModifyVO<Prcs2> mvo) {
 		if(mvo.getCreatedRows()!=null) {
 			for(Prcs2 vo : mvo.getCreatedRows()) {
 				
@@ -40,14 +52,32 @@ public class Prcs2ServiceImpl implements Prcs2Service {
 			}
 			if(mvo.getUpdatedRows()!=null) {
 				for(Prcs2 vo : mvo.getUpdatedRows()) {
-					pmapper.insertDetail(vo);
+					pmapper.insertDetailO(vo);
 				}
 			}
 		
 		return 1;
 	}
-	
 
+	@Override
+	public List<Prcs2> findTemp() {
+		return pmapper.findTemp();
+	}
+
+	@Override
+	public List<Prcs2> repeat(Prcs2 vo) {
+		
+	
+		if(pmapper.findTemp().isEmpty()) {
+			return pmapper.listPrcs(vo);
+		}else {
+			return pmapper.findTemp();
+		}
+		
+		
+	}
+	
+	
 	
 	
 }

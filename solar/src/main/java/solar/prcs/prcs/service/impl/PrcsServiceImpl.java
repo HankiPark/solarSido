@@ -118,15 +118,4 @@ public class PrcsServiceImpl implements PrcsService {
 	}
 	
 	
-	 @Scheduled(fixedDelay=1000) // 주기 : 1/1000초
-	 public void test3() {
-	  System.out.println("Scheduler Test ===========================================");
-	  System.out.println("id : " + Thread.currentThread().getId());
-
-	  }
-
-
-
-
-	
 }
