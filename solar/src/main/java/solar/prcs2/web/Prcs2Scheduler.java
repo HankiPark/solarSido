@@ -44,8 +44,7 @@ public class Prcs2Scheduler {
 			elist4.addAll(pmapper.ableEqm(eqmNo));
 
 			for (int i = 0; i < plist.size(); i++) {
-				double error = Math.random();
-				System.out.println(error);
+				double error = pmapper.random();
 				if (plist.get(i).getPrdtFg().equals("P") && plist.get(i).getPrcsFrTm() == null && elist.size() != 0) {
 					EqmAble eq = new EqmAble();
 					plist.get(i).setPrcsFrTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));

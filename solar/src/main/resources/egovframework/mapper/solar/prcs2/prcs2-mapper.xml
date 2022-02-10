@@ -68,4 +68,8 @@
 	<select id="listPrcs" resultType="Prcs2">
 		select * from prcs_d where wk_no=#{wkNo} and prdt_fg in ('C','F') order by prdt_lot
 	</select>
+	
+	<select id="random" resultType="int">
+		select DBMS_RANDOM.VALUE(0,1) as "error" from dual
+	</select>
 </mapper>
