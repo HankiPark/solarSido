@@ -14,6 +14,7 @@
 		P.order_no,
 		TO_CHAR((SELECT paprd_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY/MM/DD') paprd_dt,
 		O.order_qty,
+		(SELECT plan_no FROM plan WHERE plan_no = p.plan_no) plan_no,
 		P.plan_deta_no,
 		P.plan_dt,
 		P.plan_qty,
@@ -63,8 +64,8 @@
 		TO_CHAR(i.indica_dt, 'YYYY-MM-DD') indica_dt,
 		i.indica_nm
 	FROM indica i
-    JOIN indica_d id  ON i.indica_no = id.indica_no
-    LEFT JOIN prcs_pr_m p ON (id.prdt_cd = p.prdt_cd AND id.indica_deta_no = p.indica_deta_no)
+	LEFT JOIN prcs_m p
+	ON  i.indica_no = p.indica_no
     WHERE 1=1
     <choose>
 		<when test="nowSt !=null and nowSt != ''">
@@ -96,14 +97,17 @@
 </select>
 
 <select id="selectRscLot" resultType="IndicaVO">
- SELECT 
- 	r.rsc_cd, 
- 	r.rsc_lot,
- 	(SELECT rsc_use_qty FROM prdt_bom WHERE prdt_cd = #{prdtCd} AND rsc_cd = #{rscCd}) as rsc_use_qty,
-    (nvl((SELECT sum(rsc_qty) FROM rsc_inout WHERE r.rsc_fg=1 AND rsc_lot=r.rsc_lot),0)
-     -nvl((SELECT sum(rsc_qty) FROM rsc_inout WHERE r.rsc_fg=0 AND rsc_lot=r.rsc_lot),0) ) as rsc_stc
- FROM rsc_inout r 
- WHERE rsc_cd = #{rscCd}
+ 	SELECT a.rsc_lot , nvl(a.rsc_qty,0)-nvl(b.rsc_qty,0) rsc_stc
+	FROM (	SELECT rsc_cd, rsc_lot, sum(nvl(rsc_qty,0)) rsc_qty
+			FROM rsc_inout
+			WHERE rsc_fg =1 
+			GROUP BY rsc_lot, rsc_cd) a 
+	LEFT JOIN (	SELECT rsc_cd,  rsc_lot, sum(nvl(rsc_qty,0)) rsc_qty
+				FROM rsc_inout
+				WHERE rsc_fg =0
+				GROUP BY rsc_lot, rsc_cd) b
+	ON a.rsc_lot = b.rsc_lot
+	WHERE a.rsc_cd = #{rscCd}
 </select>
 
 <select id="noIndicaPlan" resultType="ProdPlanVO">
@@ -119,6 +123,7 @@
 		B.order_no,
 		TO_CHAR(O.paprd_dt, 'YYYY/MM/DD') paprd_dt,
 		(SELECT order_qty FROM order_d WHERE order_no = B.order_no AND prdt_cd =B.prdt_cd) order_qty,
+		(SELECT plan_no FROM plan WHERE plan_no = p.plan_no) plan_no,
 		B.plan_qty,
 		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
 		B.wk_ord,
@@ -165,16 +170,16 @@
 	<selectKey keyProperty="indicaDetaNo" resultType="int" order="BEFORE"> 
 		SELECT nvl(max(indica_deta_no), 0)+1 FROM indica_d
 	</selectKey>
-	INSERT INTO indica_d (indica_deta_no,
-						indica_no,
-						indica_dt,
-						plan_deta_no,
-						prdt_cd,
-						prod_fg,
-						indica_qty,
-						wk_ord,
-						wk_dt,
-						plan_dt)
+	INSERT INTO indica_d (	indica_deta_no,
+							indica_no,
+							indica_dt,
+							plan_deta_no,
+							prdt_cd,
+							prod_fg,
+							indica_qty,
+							wk_ord,
+							wk_dt,
+							plan_dt)
 	VALUES( #{indicaDetaNo}, 
 			(SELECT nvl(max(indica_no),0) FROM indica), 
 			TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
