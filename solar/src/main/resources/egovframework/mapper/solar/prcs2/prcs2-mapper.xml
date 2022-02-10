@@ -48,7 +48,7 @@
 	<update id="updateFg">
 		update prcs_d_o set 
 		<choose>
-			<when test='prdtFg !="C"'>
+			<when test='prdtFg !="C" or prdtFg !="F"'>
 			prdt_fg = #{prdtFg},prcs_fr_tm=null where prdt_idx= #{prdtIdx}
 			</when>
 			<otherwise>
@@ -62,10 +62,10 @@
 		delete from prcs_d_o
 	</delete>
 	<insert id="inPrdt">
-		insert into prdt_stc select prdt_inx,#{prdtLot},'C',#{prdtCd},#{indicaDetaNo},sysdate  from prdt_stc where prdt_lot = #{prdtLot}
+		insert into prdt_stc select prdt_inx,#{prdtLot},#{prdtFg},#{prdtCd},#{indicaDetaNo},sysdate  from prdt_stc where prdt_lot = #{prdtLot}
 	</insert>
 	
 	<select id="listPrcs" resultType="Prcs2">
-		select * from prcs_d where wk_no=#{wkNo} and prdt_fg='C' order by prdt_lot
+		select * from prcs_d where wk_no=#{wkNo} and prdt_fg in ('C','F') order by prdt_lot
 	</select>
 </mapper>
