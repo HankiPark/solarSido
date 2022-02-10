@@ -240,7 +240,7 @@ input#isNotInspected:checked + label::after{
 		buttons: {"입력":function(){
 			let qty = grid.getValue(curRowKey,'rscIstQty');
 			if(sum > qty){
-			  alert('총량보다 많은 불량량을 입력할 수 없습니다.');
+			  toastr.error('총량보다 많은 불량량을 입력할 수 없습니다.');
 			  return false;
 			}
 
