@@ -48,7 +48,7 @@
 	<update id="updateFg">
 		update prcs_d_o set 
 		<choose>
-			<when test='prdtFg !="C" or prdtFg !="F"'>
+			<when test='prdtFg !="C" and prdtFg !="F"'>
 			prdt_fg = #{prdtFg},prcs_fr_tm=null where prdt_idx= #{prdtIdx}
 			</when>
 			<otherwise>
