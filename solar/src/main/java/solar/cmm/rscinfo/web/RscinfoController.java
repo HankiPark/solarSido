@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
+import solar.cmm.cmmndata.service.impl.CmmndataMapper;
 import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.cmm.rscinfo.service.RscinfoService;
 import solar.cmm.rscinfo.service.impl.RscinfoMapper;
@@ -24,6 +26,7 @@ public class RscinfoController {
 
 	@Autowired RscinfoService rscinfoService;
 	@Autowired RscinfoMapper rscinfoMapper;
+	@Autowired CmmndataMapper cmmndataMapper;
 	
 	@RequestMapping("common/mng/rscinfo")
 	public String rscinfoList() {
@@ -78,6 +81,11 @@ public class RscinfoController {
 	@PostMapping("/rscinfoUpdate.do")
 	public String rscinfoUpdate( RscinfoVO rscinfoVO) {
 		rscinfoService.rscinfoUpdate(rscinfoVO);
+		CmmndataVO cmmndataVO = new CmmndataVO();
+		cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+		cmmndataVO.setCmmnCdId("rsc");
+		cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+		cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 		return "common/mng/rscinfo";
 	}
 	
@@ -86,6 +94,11 @@ public class RscinfoController {
 		System.out.println(rscinfoVO);
 		rscinfoService.rscinfoInsert(rscinfoVO);
 		rscinfoService.rscinfoStc(rscinfoVO);
+		CmmndataVO cmmndataVO = new CmmndataVO();
+		cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+		cmmndataVO.setCmmnCdId("rsc");
+		cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+		cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 		return "common/mng/rscinfo";
 	}
 	

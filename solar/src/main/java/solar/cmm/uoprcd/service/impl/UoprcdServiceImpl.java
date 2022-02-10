@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
+import solar.cmm.cmmndata.service.impl.CmmndataMapper;
 import solar.cmm.uoprcd.dao.UoprcdVO;
 import solar.cmm.uoprcd.service.UoprcdService;
 import solar.sales.order.dao.ModifyVO;
@@ -13,6 +15,7 @@ import solar.sales.order.dao.ModifyVO;
 public class UoprcdServiceImpl implements UoprcdService{
 
 	@Autowired UoprcdMapper uoprcdMapper;
+	@Autowired CmmndataMapper cmmndataMapper;
 	
 	@Override
 	public List<UoprcdVO> uoprcdList(UoprcdVO uoprcdVO) {
@@ -49,15 +52,30 @@ public class UoprcdServiceImpl implements UoprcdService{
 		if(mvo.getCreatedRows()!=null) {
 		for(UoprcdVO uoprcdVO : mvo.getCreatedRows()) {
 			uoprcdMapper.uoprcdInsert(uoprcdVO);
+			CmmndataVO cmmndataVO = new CmmndataVO();
+			cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
+			cmmndataVO.setCmmnCdId("uopr");
+			cmmndataVO.setCmmnDtCdNm(uoprcdVO.getUoprNm());
+			cmmndataVO.setCmmnCdDesct(uoprcdVO.getUoprDesct());
+			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
 		if(mvo.getDeletedRows()!=null) {
 			for(UoprcdVO uoprcdVO : mvo.getDeletedRows()) {
 					uoprcdMapper.uoprcdDelete(uoprcdVO);
+					CmmndataVO cmmndataVO = new CmmndataVO();
+					cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
+					cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 				}
 			}
 		if(mvo.getUpdatedRows()!=null) {
 			for(UoprcdVO uoprcdVO : mvo.getUpdatedRows()) {
 					uoprcdMapper.uoprcdUpdate(uoprcdVO);
+					CmmndataVO cmmndataVO = new CmmndataVO();
+					cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
+					cmmndataVO.setCmmnCdId("uopr");
+					cmmndataVO.setCmmnDtCdNm(uoprcdVO.getUoprNm());
+					cmmndataVO.setCmmnCdDesct(uoprcdVO.getUoprDesct());
+					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}
 			}
 		}

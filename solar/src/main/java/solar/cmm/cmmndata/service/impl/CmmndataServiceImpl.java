@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.cmmndata.service.CmmndataService;
+import solar.sales.order.dao.ModifyVO;
 
 @Service
 public class CmmndataServiceImpl implements CmmndataService {
@@ -39,5 +40,45 @@ public class CmmndataServiceImpl implements CmmndataService {
 	public List<CmmndataVO> cmmndataFind(CmmndataVO cmmndataVO) {
 		return cmmndataMapper.cmmndataFind(cmmndataVO);
 	}
+
+	@Override
+	public int cmmnDetailInsert(CmmndataVO cmmndataVO) {
+		// TODO Auto-generated method stub
+		return cmmndataMapper.cmmnDetailInsert(cmmndataVO);
+	}
+
+	@Override
+	public int cmmnDetailUpdate(CmmndataVO cmmndataVO) {
+		// TODO Auto-generated method stub
+		return cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
+	}
+
+	@Override
+	public int cmmnDetailDelete(CmmndataVO cmmndataVO) {
+		// TODO Auto-generated method stub
+		return cmmndataMapper.cmmnDetailDelete(cmmndataVO);
+	}
+
+	@Override
+	public int modifyData(ModifyVO<CmmndataVO> modifyVO) {
+		if(modifyVO.getCreatedRows()!=null) {
+		for(CmmndataVO cmmndataVO : modifyVO.getCreatedRows()) {
+			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
+
+			}
+		if(modifyVO.getDeletedRows()!=null) {
+			for(CmmndataVO cmmndataVO : modifyVO.getDeletedRows()) {
+				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
+				}
+			}
+		if(modifyVO.getUpdatedRows()!=null) {
+			for(CmmndataVO cmmndataVO : modifyVO.getUpdatedRows()) {
+				cmmndataMapper.cmmndataDetailList(cmmndataVO);
+				}
+			}
+		}
+		return 1;
+	}
+
 	
 }
