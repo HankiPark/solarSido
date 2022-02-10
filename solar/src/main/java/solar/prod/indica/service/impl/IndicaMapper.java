@@ -50,4 +50,5 @@ public interface IndicaMapper {
 	int insertRscOut(IndicaVO idcVo);
 	int updateUseRscStc(IndicaVO idcVo);
 	int insertPdSc(IndicaVO idcVo);
+	int bomRscCnt(String prdtCd);
 }

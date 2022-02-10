@@ -105,10 +105,9 @@
 	    TO_CHAR(o.paprd_dt, 'YYYY-MM-DD') paprd_dt
 	FROM order_tb o 
 	LEFT JOIN plan_d p ON p.order_no = o.order_no
-	JOIN order_d od ON od.order_no = o.order_no
+	LEFT JOIN order_d od ON od.order_no = o.order_no
 	WHERE o.prog_info != '종료'
 	AND p.plan_no is null
-	AND od.order_qty>od.indica_qty
 </select>
 
 <select id="searchOrder" resultType="ProdPlanVO">

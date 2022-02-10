@@ -116,7 +116,7 @@
 			<!-- 소요자재 히든그리드 -->
 			<div id="hdRscConGrid"></div>
 			<!-- 제품lot별 자재lot 부여 히든그리드 -->
-			<div id="hdPrdtRscGrid" ></div>
+			<div id="hdPrdtRscGrid" style="display:none" ></div>
 		</div>
 	</div>
 </body>
@@ -660,18 +660,20 @@
 	});
 	
 	indicaDgrid.on('response', function(ev) { 
-		console.log("응답완료");
 		let res = JSON.parse(ev.xhr.response);
-		console.log(res);
+		//console.log(res);
 		if (res.mod =='upd'){
 			indicaDgrid.clear();
 		}
 	})
 	
+	let rscSum = 0;
+	
 	//자재목록 그리드 이벤트
 	rscGrid.on('onGridUpdated', function() {
 		rscGrid.refreshLayout(); 
-		//rscLotGrid.refreshLayout();
+		rscSum += 1*rscLotGrid.getSummaryValues('totalUseQty').sum;
+		console.log(rscSum);
 		for ( i=0; i< rscGrid.getRowCount(); i++){
 			rscGrid.setValue(i, 'totalUseQty',  1* idcQty * rscGrid.getValue(i, 'rscUseQty'));
 		}
@@ -695,7 +697,7 @@
 				'totalUseQty' : totalUseQty
 		};
 		rscLotGrid.readData(1, lotGridParams, true);
-		console.log(rscLotGrid.getModifiedRows().updatedRows.length);	
+		rscLotGrid.disableRow(ev, true);		
 	});
 	
 	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
@@ -746,7 +748,14 @@
 	rscLotGrid.on("uncheck", (rscEv) => {
 		let rscStc = rscLotGrid.getValue(rscEv.rowKey, 'rscStc');
 		let rscQty = rscLotGrid.getValue(rscEv.rowKey, 'rscQty');
-		hdRscConGrid.removeRow(rscEv.rowKey); //lot번호랑 비교해서 같은 lot 삭제하도록 수정
+		let rscLot = rscLotGrid.getValue(rscEv.rowKey, 'rscLot');
+		for (i=0; i<hdRscConGrid.getRowCount(); i++){
+			if (hdRscConGrid.getRowAt(i).rscLot = rscLot){
+				let evRowKey = hdRscConGrid.getRowAt(i).rowKey			
+				hdRscConGrid.removeRow(evRowKey); //lot번호랑 비교해서 같은 lot 삭제하도록 수정
+			}
+		}
+		
 		rscLotGrid.setValue(rscEv.rowKey, 'rscQty', '');
 		if ( totalQty >= rscLotGrid.getSummaryValues('rscQty').sum ) {
 			for ( i=rscEv.rowKey+1 ; i<rscLotGrid.getRowCount(); i++){
@@ -875,6 +884,8 @@
 			toastr.error("생산지시 상세내용이 없습니다.")
 		} else if (hdRscConGrid.getRowCount() == 0){
 			toastr.error("소요자재Lot을 지정해주세요.")
+		} else if (rscSum != hdRscConGrid.getSummaryValues('rscQty').sum ){
+			toastr.error("소요자재Lot 수량을 확인해주세요.")
 		} else {
 			if(blankCheck()){
 				if (confirm("지시를 저장하시겠습니까?")) {
