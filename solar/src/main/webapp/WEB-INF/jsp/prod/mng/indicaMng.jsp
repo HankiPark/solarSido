@@ -116,7 +116,7 @@
 			<!-- 소요자재 히든그리드 -->
 			<div id="hdRscConGrid"></div>
 			<!-- 제품lot별 자재lot 부여 히든그리드 -->
-			<div id="hdPrdtRscGrid" style="display: none"></div>
+			<div id="hdPrdtRscGrid" ></div>
 		</div>
 	</div>
 </body>
@@ -447,11 +447,7 @@
 					    header: '투입량',
 					    name: 'rscQty',
 					    editor: 'text',
-					    onAfterChange(e) {
-			    	    	rscLotGrid.setValue(e.rowKey, 'rscStc',
-			    	    					rscLotGrid.getValue(e.rowKey, 'rscStc') - e.value);
-			    	    	}
-			    	    }    
+		    	    }    
 				],
 		summary: {
 	        position: 'bottom',
@@ -485,7 +481,7 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-					   // hidden: true
+					    //hidden: true
 					  },
 					  {
 					    header: '자재코드',
@@ -537,12 +533,12 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-					 	// hidden: true
+					 	//hidden: true
 					  },
 					  {
 					 	header: '제품코드',
 					    name: 'prdtCd',
-						// hidden: true
+						//hidden: true
 					  },
 					  {
 					 	header: '제품LOT_NO',
@@ -551,7 +547,7 @@
 					  {
 					    header: '자재코드',
 					    name: 'rscCd',
-						// hidden: true
+						//hidden: true
 					  },
 					  {
 					    header: '자재LOT_NO',
@@ -702,23 +698,28 @@
 		console.log(rscLotGrid.getModifiedRows().updatedRows.length);	
 	});
 	
-	let qtySum=0;
 	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
+	rscLotGrid.on("click", (rscEv) => {
+		for ( i=0 ; i<rscLotGrid.getRowCount(); i++){
+			rscLotGrid.setValue(i, 'indicaDetaNo', idcNo)
+		}
+	})
+	
 	rscLotGrid.on("editingFinish", (rscEv) => {
 		console.log(rscEv)
 		totalQty = $('#totalUseQty').val();
+		let rscQty = rscLotGrid.getValue(rscEv.rowKey, 'rscQty');
+		let rscStc = rscLotGrid.getValue(rscEv.rowKey, 'rscStc');
 		if ( totalQty == rscLotGrid.getSummaryValues('rscQty').sum ) {
 			rscLotGrid.check(rscEv.rowKey)
 			for ( i=rscEv.rowKey+1 ; i<rscLotGrid.getRowCount(); i++){
 				rscLotGrid.disableRow(i, true)
 			}
 		} else if( totalQty < rscLotGrid.getSummaryValues('rscQty').sum ){
-			toastr.warning("필요수량을 초과했습니다.")
-			for(i=0; i<rscEv; i++){
-				qtySum += rscLotGrid.getRowAt(i).rscQty
-				console.log("qtySum: "+qtySum)
-			}
-			rscLotGrid.setValue(rscEv.rowKey, "rscQty", "");
+			toastr.warning("필요수량을 초과했습니다.");
+			rscLotGrid.setValue( rscEv.rowKey, "rscQty", Number(totalQty) 
+					- Number(rscLotGrid.getSummaryValues('rscQty').sum) + Number(rscQty) );
+			rscLotGrid.check(rscEv.rowKey)
 		} else {
 			rscLotGrid.check(rscEv.rowKey)
 		}
@@ -742,14 +743,9 @@
        } 
    })
 	
-	rscLotGrid.on("click", (rscEv) => {
-		for ( i=0 ; i<rscLotGrid.getRowCount(); i++){
-			rscLotGrid.setValue(i, 'indicaDetaNo', idcNo)
-			rscLotGrid.setValue(i, 'orderNo', orderNo)
-		}
-	})
-	
 	rscLotGrid.on("uncheck", (rscEv) => {
+		let rscStc = rscLotGrid.getValue(rscEv.rowKey, 'rscStc');
+		let rscQty = rscLotGrid.getValue(rscEv.rowKey, 'rscQty');
 		hdRscConGrid.removeRow(rscEv.rowKey); //lot번호랑 비교해서 같은 lot 삭제하도록 수정
 		rscLotGrid.setValue(rscEv.rowKey, 'rscQty', '');
 		if ( totalQty >= rscLotGrid.getSummaryValues('rscQty').sum ) {
@@ -873,9 +869,9 @@
 		
 		//validataion
 		if (indicaNm == null || indicaNm == ""){
-			toastr.error('생산지시명을 입력해주세요.');
+			toastr.error("생산지시명을 입력해주세요.");
 			$('#indicaNm').focus();
-		} else if (indicaDgrid.getRowCount() == 0 || indicaDgrid.getValue(0, 'prdtCd')) {
+		} else if (indicaDgrid.getRowCount() == 0) {
 			toastr.error("생산지시 상세내용이 없습니다.")
 		} else if (hdRscConGrid.getRowCount() == 0){
 			toastr.error("소요자재Lot을 지정해주세요.")
