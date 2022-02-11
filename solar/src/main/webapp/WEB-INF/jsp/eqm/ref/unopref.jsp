@@ -73,11 +73,11 @@
 		</div>
 		<br>
 		<div class="flex row" align="center">
-			<div id="grid" class="col-4">
+			<div id="chart-area" class="col-4">
 				<h3>설비 목록</h3>
 			</div>
 			<div id="rightDiv" class="col-8">
-				<div id="chart-area"></div>
+				<div id="grid"></div>
 				<div id="grid2">
 					<h3 id="eh2">비가동 내역( 설비명, 코드 )</h3>
 				</div>

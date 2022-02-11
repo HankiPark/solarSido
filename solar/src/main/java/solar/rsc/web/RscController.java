@@ -61,7 +61,6 @@ public class RscController {
 	//발주데이터
 	@GetMapping("/grid/rsc/ordrData")
 	public String rscOrdrData(@RequestParam Map<String,String> map, Model model) {
-		System.out.println(map);
 		Map<String,Object> data = new HashMap<String, Object>();
 		Map<String,Object> page = new HashMap<String, Object>();
 		List<?> list = rscOrdrService.search(map);
@@ -177,10 +176,12 @@ public class RscController {
 	//입고 처리 요청
 	@ResponseBody
 	@PostMapping("/grid/rsc/in/rscin")
-	public int rscIn(@RequestBody RscInOut rscInOut, Model model) {
-		//rscOrdrService.
-		rscInOutService.insert(rscInOut);
-		rscInOutService.stcInc(rscInOut);
+	public int rscIn(@RequestBody List<Map> list, Model model) {
+		System.out.println(list);
+		for(Map map : list) {
+		rscInOutService.insert(map);
+		rscInOutService.stcInc(map);
+		}
 		return 202;
 	}
 	
@@ -249,9 +250,7 @@ public class RscController {
 	//불량률그래프 데이터
 	@PostMapping("/ajax/rsc/inferGraphData")
 	public String rscInferGraphData(@RequestBody Map map, Model model) {
-		System.out.println(map);
 		List<RscInferRate> list = rscInferService.getQuarteredInferRate(map);
-		System.out.println(list);
 		model.addAttribute("inferRates",list);
 		return "jsonView";
 	}
@@ -262,10 +261,8 @@ public class RscController {
 		List<?> list = rscOrdrService.selectDmnd(rscOrdr);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);	
-		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	

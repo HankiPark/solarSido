@@ -295,12 +295,20 @@
 		let date = new Date();
  		let passedQty = document.getElementById("rscPassedQty").value;
  		let confirmedQty = document.getElementById('confirmedQty').value;
+ 		let arr = [];
 		if (passedQty != confirmedQty) {
 			toastr.error("정확한 입고량을 입력하십시오.");
 			return false;
 		}
-		for(let row of grid.getCheckedRows()){
-			grid.setValue(grid.getFocusedCell().rowKey, 'inspCls', "rs003");
+		for(let i of grid.getCheckedRowKeys()){
+			grid.setValue(i, 'inspCls', "rs003");
+			let obj = {
+				rscSlipNo: "rin",
+				rscCd: grid.getValue(i, 'rscCd'),
+				rscQty: grid.getValue(i, 'rscPassedQty'),
+				rscFg: 1,
+			}
+			arr.push(obj);
 		}
 		grid.request('modifyData');
 		
@@ -309,12 +317,7 @@
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({
-				rscSlipNo: "rin",
-				rscCd: grid.getValue(grid.getFocusedCell().rowKey, 'rscCd'),
-				rscQty: grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty'),
-				rscFg: 1,
-			})
+			body: JSON.stringify(arr)
 		});
 	});
 	

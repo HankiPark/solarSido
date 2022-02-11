@@ -27,7 +27,6 @@ public class RscInferServiceImpl implements RscInferService {
 	public List<RscInferRate> getQuarteredInferRate(Map<String,String> map) {
 		List<String> coCdList = new ArrayList<String>();
 		for(String coCd : map.get("coCds").split(",")) {
-			System.out.println(coCd);
 			coCdList.add(coCd);
 		}
 		Map<String,Object> map2 = new HashMap<String, Object>();
