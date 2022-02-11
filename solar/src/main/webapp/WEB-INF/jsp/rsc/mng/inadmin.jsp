@@ -147,7 +147,11 @@
 		scrollY: false,
 		data: ordrDataSource,
 		rowHeaders: ['checkbox'],
-		bodyHeight: 240,
+		bodyHeight: 320,
+	    pageOptions : {
+			useClient : true,
+			perPage : 8
+		},
 		scrollX: false,
 		columns: [{
 				header: '발주일',
@@ -225,10 +229,7 @@
 	grid.on('click', function (ev) {
 		//if (ev.columnName == "inspCls") {
 			curRowKey = ev.rowKey;
-			let ordrQty = document.getElementById("ordrQty");
-			let rscPassedQty = document.getElementById("rscPassedQty");
-			ordrQty.value = grid.getValue(grid.getFocusedCell().rowKey, 'ordrQty');
-			rscPassedQty.value = grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty');
+
 		//}
 	});
 	grid.on('onGridMounted',function(){
@@ -275,7 +276,7 @@
 	let rscDialog = $("#rscModal").dialog({
 		modal: true,
 		autoOpen: false,
-		width : 600,
+		width : 1000,
 		height : 600
 	});
 
@@ -292,12 +293,15 @@
 	let btnIn = document.getElementById('btnIn');
 	btnIn.addEventListener('click', function () {
 		let date = new Date();
- 		let confirmedQty = document.getElementById('confirmedQty');
-		if (grid.getValue(grid.getFocusedCell().rowKey, 'rscPassedQty') != confirmedQty.value) {
+ 		let passedQty = document.getElementById("rscPassedQty").value;
+ 		let confirmedQty = document.getElementById('confirmedQty').value;
+		if (passedQty != confirmedQty) {
 			toastr.error("정확한 입고량을 입력하십시오.");
 			return false;
 		}
-		grid.setValue(grid.getFocusedCell().rowKey, 'inspCls', "rs003");
+		for(let row of grid.getCheckedRows()){
+			grid.setValue(grid.getFocusedCell().rowKey, 'inspCls', "rs003");
+		}
 		grid.request('modifyData');
 		
  		fetch("${pageContext.request.contextPath}/grid/rsc/in/rscin", {
@@ -321,6 +325,30 @@
 			$('#senseInBody').css('paddingLeft','40px');
 		}
 	})
+	
+    grid.on('check',function(ev){
+    	checkedRowsSum();
+    })
+    grid.on('uncheck',function(ev){
+    	checkedRowsSum();
+    })
+    grid.on('checkAll',function(ev){
+    	checkedRowsSum();
+    })
+    grid.on('uncheckAll',function(ev){
+    	checkedRowsSum();
+    })
+    
+    function checkedRowsSum(){
+		let ordrSum = 0;
+		let passedSum = 0;
+		for(let row of grid.getCheckedRows()){
+			ordrSum += parseInt(row.ordrQty);
+			passedSum += parseInt(row.rscPassedQty);
+		}
+		document.getElementById("ordrQty").value = ordrSum;
+		document.getElementById("rscPassedQty").value = passedSum;
+	}
 </script>
 
 </html>

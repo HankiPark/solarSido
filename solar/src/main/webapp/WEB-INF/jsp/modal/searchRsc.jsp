@@ -25,11 +25,12 @@ var rscGrid = new Grid({
     data: [],
     columns: [{
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
       },
       {
         header: '자재명',
-        name: 'rscNm'
+        name: 'rscNm',
+        width: 200
       },
       {
         header: '업체명',
@@ -37,7 +38,7 @@ var rscGrid = new Grid({
       },
       {
         header: '업체코드',
-        name: 'coCd'
+        name: 'coCd',
       },
       {
 		header: '규격',
@@ -45,7 +46,7 @@ var rscGrid = new Grid({
       },
       {
 		header: '관리단위',
-		name: 'rscUnit'
+		name: 'rscUnit',
       },
       {
   		header: '단가',

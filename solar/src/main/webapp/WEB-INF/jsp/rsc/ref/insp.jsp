@@ -139,8 +139,11 @@
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-	bodyHeight : 300,
-    sortable: true,
+    pageOptions : {
+		useClient : true,
+		perPage : 10
+	},
+	bodyHeight: 400,
     columns: [{
         header: '발주일',
         name: 'ordrDt',
@@ -268,7 +271,7 @@
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 

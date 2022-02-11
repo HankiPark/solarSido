@@ -80,8 +80,11 @@ $(function() {
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
-    rowHeaders: ['checkbox'],
-    sortable: true,
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     columns: [{
         header: '자재코드',
         name: 'rscCd',
@@ -162,7 +165,7 @@ $(function() {
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 

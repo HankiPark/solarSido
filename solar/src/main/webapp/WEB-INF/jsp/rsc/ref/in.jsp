@@ -82,12 +82,15 @@ $(function() {
 	Grid.setLanguage('ko');
   var grid = new Grid({
     el: document.getElementById('grid'),
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-    sortable: true,
-    minBodyHeight : 500,
     columns: [{
         header: '입고일',
         name: 'rscDt',
@@ -173,7 +176,7 @@ $(function() {
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 
