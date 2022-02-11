@@ -71,24 +71,23 @@ border-top:3px solid #FECEBB;
 		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
 		<div class="card-body">
 			<div id="rStcGrid" class="row">
-				<div class="col-9">
-					<label>필요자재 재고 체크</label>
-				</div>
-				<div class="col-3" style="margin-top: -10px">
-					<button type="button" id="rscOrder"
-						style="box-shadow:2px 2px 2px #74a3b0;width: 150px; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0">
-						<i class="far fa-folder-open"></i> &nbsp; 발주요청
-					</button>
-				</div>
+				<label>필요자재 재고 체크</label>
 			</div>
 		</div>
 	</div>
 	
-		<div class="card card-pricing card-primary card-white card-outline2 "
-		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;">
+	<div class="card card-pricing card-primary card-white card-outline2 "
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;/*  display:none */" id="rstcDiv">
 		<div class="card-body">
-			<div id="hdRstcGrid">
+			<div id="hdRstcGrid" class="row">
+				<div class="col-9">
 					<label>발주요청 자재 목록</label>
+				</div>
+				<div class="col-3" style="margin-top: -10px; display:none; id="orderBtnDiv">
+					<button type="button" id="rscOrder"
+						style="box-shadow:2px 2px 2px #74a3b0; width: 150px; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0">
+						<i class="far fa-folder-open"></i> &nbsp; 발주요청
+					</button>
 				</div>
 			</div>
 		</div>
@@ -261,22 +260,30 @@ border-top:3px solid #FECEBB;
 					    name: 'prdtCd',
 					  },
 					  {
+					    header: '제품명',
+					    name: 'prdtNm',
+					  },
+					  {
 					    header: '자재코드',
 					    name: 'rscCd'
 					  },
 					  {
-					    header: '소요량',
-					    name: 'rscUseQty',
-					    align: 'right'
+					    header: '자재명',
+					    name: 'rscNm'
 					  },
 					  {
-					    header: '재고량',
-					    name: 'rscStc',
+					    header: '소요량(개당)',
+					    name: 'rscUseQty',
 					    align: 'right'
 					  },
 					  {
 					    header: '필요량',
 					    name: 'ndStc',
+					    align: 'right'
+					  },
+					  {
+					    header: '재고량',
+					    name: 'rscStc',
 					    align: 'right'
 					  },
 					  {
@@ -301,8 +308,16 @@ border-top:3px solid #FECEBB;
 					    name: 'prdtCd',
 					  },
 					  {
+					    header: '제품명',
+					    name: 'prdtNm',
+					  },
+					  {
 					    header: '자재코드',
 					    name: 'rscCd'
+					  },
+					  {
+					    header: '자재명',
+					    name: 'rscNm'
 					  },
 					  {
 					    header: '발주요청량',
@@ -346,7 +361,7 @@ border-top:3px solid #FECEBB;
 			let planQty = planDgrid.getValue(ev.rowKey, "planQty");
 			if(orderQty != planQty){
 				toastr.warning("주문량과 계획량이 다릅니다.");
-				planDgrid.setValue(ev.rowKey, "planQty", ""); 
+				planDgrid.setValue(ev.rowKey, "planQty", planDgrid.getValue(ev.rowKey, "orderQty")); 
 			} else {  
 				let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
 				let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
@@ -358,6 +373,7 @@ border-top:3px solid #FECEBB;
 				
 				var stcGridParams = {
 						'prdtCd' : prdtCd,
+						'prdtNm' : prdtNm,
 						'orderNo' : orderNo
 				};
 				rStcGrid.readData(1, stcGridParams, true)
@@ -386,11 +402,37 @@ border-top:3px solid #FECEBB;
 		}
 	});
 	
+	planDgrid.on('dblclick', function(ev){
+		if(ev.columnName != "wkDt" || ev.columnName != "planQty") {
+			let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
+			let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
+			let orderNo = planDgrid.getValue(ev.rowKey, "orderNo")
+			
+			$('#prdtCd').val(prdtCd);
+			$('#prdtNm').val(prdtNm);
+			$('#orderNo').val(orderNo);
+			
+			var stcGridParams = {
+					'prdtCd' : prdtCd,
+					'orderNo' : orderNo
+			};
+			rStcGrid.readData(1, stcGridParams, true)
+			setTimeout(function(){
+			for ( i=0; i< rStcGrid.getRowCount(); i++){
+	    		rStcGrid.setValue(i, 'ndStc',
+	    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
+				rStcGrid.setValue(i, 'lackStc',
+						rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))}
+			}, 1600); //실행시킬 함수, 딜레이시간;
+		}
+	});
+	
 	planDgrid.on('onGridUpdated', function() {
 		planDgrid.refreshLayout();
 		 for(let p = 0; p < planDgrid.getRowCount(); p++){
-				calProdDay( p, "planQty", "dayOutput" ); 
-			 }
+				planDgrid.setValue(p, "planQty", planDgrid.getValue(p, "orderQty"));
+				calProdDay( p, "planQty", "dayOutput" )	;	
+			}
 	});
 
 	planDgrid.on('response', function(ev) { 
@@ -420,16 +462,21 @@ border-top:3px solid #FECEBB;
 		}else{
 			hdRstcGrid.appendRow({
 				'prdtCd':rStcGrid.getValue(rscEv.rowKey,'prdtCd'),
+				'prdtNm':rStcGrid.getValue(rscEv.rowKey,'prdtNm'),
 			   'rscCd':rStcGrid.getValue(rscEv.rowKey,'rscCd'),
+			   'rscNm': rStcGrid.getValue(rscEv.rowKey,'rscNm'),
 			   'ndStc':rStcGrid.getValue(rscEv.rowKey,'ndStc'),
 			   'lackStc':rStcGrid.getValue(rscEv.rowKey,'lackStc')},{
 			   extendPrevRowSpan : true,
 			   focus : true,
 			   at : 0
-  		});
-     } 
- })
- 
+  			});
+	     } 
+	 })
+
+ 	hdRstcGrid.on('onGridUpdated', function(ev) {
+ 		$("#hdRstcGrid").css("display", "block");	
+	});
 	//------------------------------버튼------------------------------------------------
 	//생산계획서 조회버튼: 생산계획서 조회모달 호출
  	$('#btnFind').on('click', function(){

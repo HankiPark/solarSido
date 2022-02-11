@@ -14,6 +14,10 @@ input#inding {
 display : none;
 }
 
+input#alling {
+display : none;
+}
+
 input#noing+label{
 display: inline-block;
         width: 15px;
@@ -94,6 +98,8 @@ position: absolute;
 								<label for="noing"></label>미공정</label> 
 						<label><input type="checkbox" id="inding" name="nowSt" value="진행">
 								<label for="inding"></label>공정진행</label>
+						<label><input type="checkbox" name="nowSt" id="alling" value="전체">
+								<label for="alling"></label>전체</label>
 					</div>
 				</form>
 			</div>
@@ -106,7 +112,6 @@ position: absolute;
 
 <!-- 생산지시 상세 그리드-->
 	<div class="col-8" style="margin-top: 40px;">
-		<button style="margin-bottom:10px;width: 100px; height: 40px; font-size: 20px; border-radius: 5px;box-shadow:2px 2px 2px #74a3b0; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
 		<div id="indicaDgrid"></div>
 	</div>
 </div>
@@ -182,8 +187,8 @@ position: absolute;
 						    	method: 'GET'
 			    				},
 					}, 
-				contentType: 'application/json',
-				initialRequest: false //초기에 안보이게 함
+				contentType: 'application/json'
+				//,initialRequest: false //초기에 안보이게 함
 			},
 		scrollX: false,
 		scrollY: true,
