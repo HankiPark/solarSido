@@ -42,6 +42,7 @@ public class ProdPlanVO {
 
 	//rsc
 	String rscCd;		//자재코드
+	String rscNm; 		//자재명
 	String rscStc;		//자재재고량
 	String safStc;		//자재안전재고
 	String ndStc;		//자재필요량
