@@ -10,7 +10,11 @@
 <style>
 	.contents{
 		text-align:center;
+	},
+	div{
+		border:10px solid black;	
 	}
+	
 </style>
 
 <body>
