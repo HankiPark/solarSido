@@ -22,11 +22,9 @@ function planDList(){
 	            contentType: 'application/json; charset=utf-8',
 	            async: false,
 	         }).done((res)=>{
-	            console.log(res.num2)
 	            let idx = 0;
 	            for(i=0; i<indicaDgrid.getRowCount(); i++){
 	               if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
-	                  console.log(idx)
 	               } else {
 	                  indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
 	                  idx = Number(idx) +1
@@ -128,7 +126,6 @@ function planDList(){
 	//선택버튼 : 체크된 계획 가져오기
 	planDgrid.on('check', (ev) => {
 		let pick = planDgrid.getValue(ev["rowKey"], "prdtCd")
-		console.log(pick);
 		for ( i=0; i<planDgrid.getRowCount(); i++){
 			if(planDgrid.getValue(i, "prdtCd") != pick) {
 				planDgrid.disableRow(i, true);
@@ -140,9 +137,7 @@ function planDList(){
 	});
 	
 	planDgrid.on('uncheck', (ev) => {
-		console.log(ev);
 		let unpick = planDgrid.getValue(ev["rowKey"], "prdtCd")
-		console.log(planDgrid.getCheckedRows())
 		for ( i=0; i<planDgrid.getRowCount(); i++){
 			if(planDgrid.getValue(i, "prdtCd") != unpick) {
 				planDgrid.enableRow(i, true);

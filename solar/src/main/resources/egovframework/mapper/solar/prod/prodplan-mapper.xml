@@ -58,7 +58,9 @@
 <select id="selectRstc" resultType="ProdPlanVO">
 	SELECT
 		a.prdt_cd,
+		(SELECT prdt_nm FROM prdt WHERE prdt_cd = a.prdt_cd) prdt_nm,
 		a.rsc_cd,
+		(SELECT rsc_nm FROM rsc WHERE rsc_cd = a.rsc_cd) rsc_nm,
 		a.rsc_use_qty,
 		(SELECT rsc_stc FROM rsc_stc WHERE rsc_cd = b.rsc_cd) rsc_stc
 	FROM prdt_bom a, rsc b, order_d o

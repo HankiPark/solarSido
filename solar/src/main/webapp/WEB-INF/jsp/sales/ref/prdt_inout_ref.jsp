@@ -187,7 +187,6 @@ position: absolute;
 			          yearSuffix: '년'
 			    }
 		  }, function(start, end, label) {
-		    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		  },
 		  
 		  );
@@ -323,8 +322,6 @@ position: absolute;
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
 		if($("input:checkbox[name=ref]:checked").length==2){
-			console.log(startT);
-			console.log(endT);
 			var chk = null;
 			var co =  $("#coNm").val();
 		}else if($('input:checkbox[name=ref]:checked').val()=='O'){

@@ -168,9 +168,7 @@ inGrid.on('response', function(ev) {
 let oGPng = document.getElementById("oGPng");
 oGPng.addEventListener("click",function(){
 	var rowCnt =inGrid.getRowCount();
-	//	console.log(rowCnt)
 	for (i=0; i<rowCnt; i++) {
-		console.log(i)
 		grid.prependRow({
 			  "ordrDt":d.toISOString().slice(0, 4)+"/"+d.toISOString().slice(5, 7)+"/"+d.toISOString().slice(8, 10),
 			  "rscNm":inGrid.getRowAt(i).rscNm,

@@ -150,29 +150,39 @@
 			bodyHeight : 500,
 			minBodyHeight : 500,
 			rowHeaders : [ 'rowNum', 'checkbox' ],
-			columns : [ {
+			columns : 
+		[ 	
+			{
 				header : '제품코드',
 				name : 'prdtCd',
+				align : 'center',
 				editor : 'text',
 				rowSpan : true
-			}, {
+			}, 
+			{
 				header : '자재코드',
 				name : 'rscCd',
-			}, {
+			}, 
+			{
 				header : '자재명',
 				name : 'rscNm',
-			}, {
+			}, 
+			{
 				header : '사용량',
 				name : 'rscUseQty',
 				editor : 'text'
-			}, {
+			}, 
+			{
 				header : '사용공정명',
 				name : 'prcsNm'
-			}, {
+			}, 
+			{
 				header : '규격',
 				name : 'prdtSpec',
 				editor : 'text'
-			} ]
+			} 
+			],
+			draggable: true
 		});
 
 		grid.on('onGridUpdate', function() {
@@ -180,7 +190,6 @@
 		});
 
 		grid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				grid.resetOriginData();

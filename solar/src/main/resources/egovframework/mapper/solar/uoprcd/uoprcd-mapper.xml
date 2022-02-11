@@ -5,6 +5,7 @@
 	<select id="uoprcdList"
 		resultType="solar.cmm.uoprcd.dao.UoprcdVO">
 		SELECT * FROM UOPR_CD
+		order by UOPR_CD
 	</select>
 
 	<select id="uoprcddataFind"

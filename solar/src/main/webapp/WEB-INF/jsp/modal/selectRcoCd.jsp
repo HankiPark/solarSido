@@ -54,8 +54,6 @@ function coCdList(){
 	$('#btnfindCo').on('click', function() {
 		var coNm = $("#coNmFind").val();
 		var coCd = $("#coCdFind").val();
-		console.log(coCd);
-		console.log(coNm);
 		var Params = {
 			'coCd' : coCd,
 			'coNm' : coNm

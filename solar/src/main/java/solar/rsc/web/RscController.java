@@ -269,7 +269,6 @@ public class RscController {
 	//자동발주요청
 	@PostMapping("/ajax/rsc/dmndUpdate")
 	public String hiddenData(@RequestBody Map<String, List<RscOrdr>> map) {
-		System.out.println("자동발주" + map);
 		rscOrdrService.dmndUpdate(map);
 		return "jsonView";
 	}

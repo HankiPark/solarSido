@@ -13,9 +13,6 @@
 		insert into prcs_m values(CREATENO('WK',wkseq.nextval),sysdate,#{indicaNo},#{empId})
 	</insert>
 	
-<!-- 	<insert id="insertDetail">
-		insert into prcs_d values(prcsseq.nextval,#{prdtLot},#{prdtFg},#{prdtCd},#{indicaDetaNo},null,null,null,#{wkNo},#{wkDt})
-	</insert> -->
 		<insert id="insertDetailO">
 		insert into prcs_d_o values(prcsseqtwo.nextval,#{prdtLot},#{prdtFg},#{prdtCd},#{indicaDetaNo},null,null,null,#{wkNo},#{wkDt})
 	</insert>
@@ -32,7 +29,7 @@
 		o.wk_no,
 		o.wk_dt,
 		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
-		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as co_nm
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as eqm_nm
 		 from prcs_d_o o 
 	
 	</select>
@@ -65,7 +62,7 @@
 			
 			</when>
 			<otherwise>
-			prdt_fg = #{prdtFg},prcs_fr_tm=null,prcs_to_tm=null where prdt_idx= #{prdtIdx}
+			prdt_fg = #{prdtFg},prcs_fr_tm=null,prcs_to_tm=null,eqm_cd=null where prdt_idx= #{prdtIdx}
 			</otherwise>
 		</choose>
 		
@@ -90,7 +87,7 @@
 		o.wk_no,
 		o.wk_dt,
 		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
-		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as co_nm
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as eqm_nm
 		from prcs_d o
 		where o.wk_no=#{wkNo} and o.prdt_fg in ('C','F') order by o.prdt_lot
 	</select>

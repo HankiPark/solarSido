@@ -83,7 +83,6 @@
 		});
 
 		grid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				grid.resetOriginData();
@@ -166,7 +165,6 @@
 		});
 
 		detailgrid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				detailgrid.resetOriginData();

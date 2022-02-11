@@ -54,7 +54,6 @@ function indicaList(){
 			}
 		}, 
 	function(start, end, label) {
-		console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		}
 	)
 	
@@ -104,10 +103,8 @@ function indicaList(){
 				dataType:"json",
 				contentType : 'application/json; charset=utf-8',
 			}).done(function(idc) {
-				//console.log(idc.data)
 				indicaDgrid.resetData(idc.data);
 			}).fail(function(reject){
-				console.log(reject);
 			})
 		indicaDialog.dialog("close");
 		}

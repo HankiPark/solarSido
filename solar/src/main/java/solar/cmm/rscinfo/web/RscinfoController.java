@@ -91,7 +91,6 @@ public class RscinfoController {
 	
 	@PostMapping("/rscinfoInsert.do")
 	public String rscinfoInsert(RscinfoVO rscinfoVO) {
-		System.out.println(rscinfoVO);
 		rscinfoService.rscinfoInsert(rscinfoVO);
 		rscinfoService.rscinfoStc(rscinfoVO);
 		CmmndataVO cmmndataVO = new CmmndataVO();

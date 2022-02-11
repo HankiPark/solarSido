@@ -44,17 +44,14 @@ public class IndicaController {
 		List<?> list = idcService.selectIdc(idcVo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);
-		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 		}
 	
 	//지시조회버튼: 생산지시서검색 모달
 	@RequestMapping("/modal/findIndica")
 	public String findIndica() {
-		System.out.println("생산지시서검색 모달호출");
 		return "modal/findIndica";
 	}
 		
@@ -66,27 +63,23 @@ public class IndicaController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
 	//계획조회 버튼: 미지시 계획검색 모달
 	@RequestMapping("/modal/findPlanDlist")
 	public String findPlanDlist() {
-		System.out.println("미지시 계획검색 모달호출");
 		return "modal/findPlanDlist";
 	}
 	
 	//미지시 생산계획상세 조회 그리드
 	@GetMapping("/grid/noIndicaGrid.do")
 	public String planGrid(Model model, ProdPlanVO ppVo) throws Exception {
-		System.out.println("미지시 생산계획 호출");
 		List<?> list = idcService.noIndicaPlan(ppVo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);	
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 		
@@ -106,7 +99,6 @@ public class IndicaController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
@@ -118,14 +110,12 @@ public class IndicaController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
 	//생산지시서검색 모달
 	@RequestMapping("/modal/findIndicaDetail")
 	public String findIndicaDetail() {
-		System.out.println("생산지시서 조회");
 		return "modal/findIndicaDetail";
 	}
 	
@@ -169,7 +159,6 @@ public class IndicaController {
 	//히든그리드 데이터
 	@PostMapping("/ajax/modified.do")
 	public String hiddenData(@RequestBody Map<String, List<IndicaVO>> map) {
-		System.out.println("히든그리드데이터" + map);
 		idcService.hiddenData(map);
 		return "jsonView";
 	}

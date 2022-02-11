@@ -107,29 +107,39 @@
 			var grid = new tui.Grid({
 				el : document.getElementById('grid'),
 				data : dataSource,
+				scrollX : true,
 				scrollY : true,
 				rowHeaders : [ 'rowNum', 'checkbox' ],
-				bodyHeight : 700,
-				columns : [ {
-					header : '불량코드',
-					name : 'prdtInferCd',
-					editor : 'text',
-					sortable : true
-				}, {
-					header : '불량명',
-					name : 'prdtInferNm',
-					editor : 'text'
-				}, {
-					header : '공정코드',
-					name : 'prcsCd'
-				}, {
-					header : '공정명',
-					name : 'prcsNm'
-				}, {
-					header : '불량내역',
-					name : 'prdtInferDesct',
-					editor : 'text'
-				} ]
+				bodyHeight : 700
+				columns : 
+					[ 
+						{
+							header : '불량코드',
+							name : 'prdtInferCd',
+							editor : 'text',
+							sortable : true
+						}, 
+						{
+							header : '불량명',
+							name : 'prdtInferNm',
+							editor : 'text'
+						},
+						{
+							header : '불량내역',
+							name : 'prdtInferDesct',
+							editor : 'text',
+							width: 'auto'
+						},
+						{
+							header : '공정코드',
+							name : 'prcsCd'
+						}, 
+						{
+							header : '공정명',
+							name : 'prcsNm'
+						} 
+						
+					]
 			});
 
 			grid.on('onGridUpdated', function() {
@@ -137,7 +147,6 @@
 			});
 
 			grid.on('response', function(ev) {
-				console.log(ev);
 				let res = JSON.parse(ev.xhr.response);
 				if (res.mode == 'upd') {
 					grid.resetOriginData();

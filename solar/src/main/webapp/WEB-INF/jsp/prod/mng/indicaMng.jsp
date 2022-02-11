@@ -147,7 +147,6 @@
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {
-		//console.log(data)
 		cmmnCodes = data;
 	});
 	
@@ -158,12 +157,10 @@
 			dataType: 'JSON',
 			async: false,
 		}).done(function (data) {
-			//console.log(data)
 			data.num
 			for(let f of data.num){
 				arr.push(f)
 			}		
-			console.log(arr)
 		});
 	})
 	//------------------------------그리드생성------------------------------------------------
@@ -224,8 +221,7 @@
 					  {
 					    header: '업체코드',
 					    name: 'coCd',
-				    	sortingType: 'desc',
-				        sortable: true
+				    	hidden: true
 					  },
 					  {
 					    header: '제품코드',
@@ -282,7 +278,6 @@
 			    	        required: true
 			    	      },
 			    	       onAfterChange(e) {
-				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    			calProdDay( e, "indicaQty", "dayOutput" ); 
 				    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
 				    	    		rscGrid.setValue(i, 'totalUseQty',
@@ -591,28 +586,24 @@
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('click', function(ev){
 		if( ev.columnName == "planNo" ){
-			console.log("미지시 계획 검색")
 			planDetailDialog.dialog("open");
 			$("#planModal").load("${pageContext.request.contextPath}/modal/findPlanDlist", 
 										function() { planDList() })
 			}
 	});
 	
-	indicaDgrid.on('onGridUpdated', function() {
-		indicaDgrid.refreshLayout();
-		rscGrid.clear();
-		rscLotGrid.clear();
-		hdRscConGrid.clear();
-		hdPrdtRscGrid.clear();
-	});
-	 
 	indicaDgrid.on('editingFinish', function(ev) {
 		if(ev.columnName == "indicaQty") {
 			let planQty = indicaDgrid.getValue(ev.rowKey, "planQty");
 			idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
 			idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
 			orderNo = indicaDgrid.getValue(ev.rowKey, "orderNo")
-			if (planQty == null || planQty == ""  ) {
+			if (planQty != null  || planQty != "" ) {
+				if(planQty != idcQty) {
+					toastr.warning("계획량과 지시량이 다릅니다.");
+					indicaDgrid.setValue(ev.rowKey, "indicaQty", indicaDgrid.getValue(ev.rowKey, "planQty"));
+				} 
+			} else {
 				let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
 				let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
 				
@@ -625,24 +616,6 @@
 						'prdtNm' : prdtNm
 				};
 				rscGrid.readData(1, rscGridParams, true);
-			} else {
-				if(planQty != idcQty) {
-					toastr.warning("계획량과 지시량이 다릅니다.");
-					indicaDgrid.setValue(ev.rowKey, "indicaQty", "");
-				} else {
-					let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
-					let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
-					
-					$('#prdtCd').val(prdtCd);
-					$('#prdtNm').val(prdtNm);
-					$('#idcDno').val(idcNo);
-					
-					var rscGridParams = {
-							'prdtCd' : prdtCd,
-							'prdtNm' : prdtNm
-					};
-					rscGrid.readData(1, rscGridParams, true);
-				}
 			}
 		}
 		if(ev.columnName == "wkDt") {
@@ -659,25 +632,47 @@
 		}
 	});
 	
+	indicaDgrid.on('dblclick', function(ev){
+		if(ev.columnName != "prdtCd" && ev.columnName != "indicaQty"
+			&& ev.columnName != "prodFg" && ev.columnName != "wkDt") {
+			let idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
+			let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
+			let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
+			
+			$('#prdtCd').val(prdtCd);
+			$('#prdtNm').val(prdtNm);
+			$('#idcDno').val(idcNo);
+			
+			var rscGridParams = {
+					'prdtCd' : prdtCd,
+					'prdtNm' : prdtNm
+			};
+			rscGrid.readData(1, rscGridParams, true);
+		}
+	});
+	
+	indicaDgrid.on('onGridUpdated', function() {
+		indicaDgrid.refreshLayout();
+		 for(let i = 0; i < indicaDgrid.getRowCount(); i++){
+			 indicaDgrid.setValue(i, "indicaQty", indicaDgrid.getValue(i, "planQty"));
+				calProdDay( i, "indicaQty", "dayOutput" )	;	
+			}
+	});
+	 
 	indicaDgrid.on('response', function(ev) { 
 		let res = JSON.parse(ev.xhr.response);
-		//console.log(res);
 		if (res.mod =='upd'){
 			indicaDgrid.clear();
 		}
 	})
 	
-	let rscSum = 0;
-	
 	//자재목록 그리드 이벤트
 	rscGrid.on('onGridUpdated', function() {
 		rscGrid.refreshLayout(); 
-		rscSum += 1*rscLotGrid.getSummaryValues('totalUseQty').sum;
-		console.log(rscSum);
 		for ( i=0; i< rscGrid.getRowCount(); i++){
 			rscGrid.setValue(i, 'totalUseQty',  1* idcQty * rscGrid.getValue(i, 'rscUseQty'));
 		}
-		rscLotGrid.refreshLayout(); 
+		rscLotGrid.refreshLayout();
 	});
 	
 	rscGrid.on('dblclick', function(ev){
@@ -697,7 +692,7 @@
 				'totalUseQty' : totalUseQty
 		};
 		rscLotGrid.readData(1, lotGridParams, true);
-		rscLotGrid.disableRow(ev, true);		
+		//rscLotGrid.disableRow(ev, true);		
 	});
 	
 	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
@@ -708,7 +703,6 @@
 	})
 	
 	rscLotGrid.on("editingFinish", (rscEv) => {
-		console.log(rscEv)
 		totalQty = $('#totalUseQty').val();
 		let rscQty = rscLotGrid.getValue(rscEv.rowKey, 'rscQty');
 		let rscStc = rscLotGrid.getValue(rscEv.rowKey, 'rscStc');
@@ -776,13 +770,14 @@
 	//------------------------------버튼------------------------------------------------
 	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
 	$('#btnReset').click(function() {
-		indicaMngFrm.reset();
+		$('#indicaNm').val('');
 		rscFrm.reset();
 		rscLotFrm.reset();
 		indicaDgrid.resetData([]);
 		rscGrid.resetData([]);
 		rscLotGrid.resetData([]);
 		hdRscConGrid.resetData([]);
+		hdPrdtRscGrid.resetData([]);
 	})
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
@@ -800,7 +795,6 @@
 				contentType: 'application/json; charset=utf-8',
 				async: false,
 			}).done((res)=>{
-				console.log(res)
 				prdtLotNum = res.num
 			})
 			
@@ -853,7 +847,6 @@
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            //console.log(lotData);
 			            q++;
 			            t++; 
 			         }
@@ -869,7 +862,6 @@
 		      		}
 		      }   
 		     }
-	      console.log(lotArr);
 		    
 		//hdPrdtRscGrid.resetData(lotArr);
 		hdPrdtRscGrid.appendRows(lotArr);
@@ -918,7 +910,6 @@
 	
 	//생산지시서 조회버튼
  	$('#btnFind').on('click', function(){
- 		console.log("생산지시서 조회")
 		indicaDialog.dialog("open");
 		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
 									function() { indicaList() })
@@ -926,8 +917,10 @@
 	
  	//그리드 추가 버튼: 계획 없는 지시 등록
 	rowAdd.addEventListener("click", function(idx){
+		indicaDgrid.clear();
+		indicaDgrid.refreshLayout();
 		indicaDgrid.appendRow({},{
-			extendPrevRowSpan : true,
+			extendPrevRowSpan : false,
 			focus : true,
 			at : 0
 		});
@@ -938,11 +931,9 @@
 				contentType: 'application/json; charset=utf-8',
 				async: false,
 			}).done((res)=>{
-				console.log(res.num2)
 				let idx = 0;
 				for(i=0; i<indicaDgrid.getRowCount(); i++){
 					if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
-						console.log(idx)
 					} else {
 						indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
 						idx = Number(idx) +1
@@ -1006,7 +997,6 @@
 				toastr.warning("작업시작일이 지정되지 않았습니다.");
 				return false;
 			} else {
-				console.log(i)
 			}
 		}
 		return true;
