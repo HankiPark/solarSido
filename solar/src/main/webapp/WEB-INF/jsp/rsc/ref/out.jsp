@@ -80,11 +80,14 @@ $(function() {
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
-    rowHeaders: ['checkbox'],
-    sortable: true,
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     columns: [{
-        header: '출고일',
-        name: 'rscDt',
+        header: '자재코드',
+        name: 'rscCd',
         sortable: true,
       },
       {
@@ -93,8 +96,8 @@ $(function() {
         sortable: true,
       },
       {
-        header: '자재코드',
-        name: 'rscCd',
+        header: 'LOT번호',
+        name: 'rscLot',
         sortable: true,
       },
       {
@@ -103,13 +106,13 @@ $(function() {
         sortable: true,
       },
       {
-        header: '전표번호',
-        name: 'rscSlipNo',
+        header: '출고일',
+        name: 'rscDt',
         sortable: true,
       },
       {
-        header: 'LOT번호',
-        name: 'rscLot',
+        header: '전표번호',
+        name: 'rscSlipNo',
         sortable: true,
       },
     ]
@@ -162,7 +165,7 @@ $(function() {
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 

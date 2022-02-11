@@ -100,9 +100,11 @@
 		scrollX: false,
 		scrollY: false,
 		data: ordrDataSource,
-		minBodyHeight : 500,
-		bodyHeight : 500,
-		scrollX: false,
+	    pageOptions : {
+			useClient : true,
+			perPage : 12
+		},
+		bodyHeight: 480,
 		columns: [{
 				header: '발주번호',
 				name: 'ordrCd',
@@ -189,7 +191,7 @@
 	let rscDialog = $("#rscModal").dialog({
 		modal: true,
 		autoOpen: false,
-		width : 600,
+		width : 1000,
 		height : 600
 	});
 

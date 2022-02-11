@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface RscInOutService {
 	List<RscInOut> selectAll();
-	int insert(RscInOut rscInOut);
-	int stcInc(RscInOut rscInOut);
+	int insert(Map map);
+	int stcInc(Map map);
 	List<RscInOut> search(Map map);
 }

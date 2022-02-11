@@ -283,8 +283,11 @@ $(function() {
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-    sortable: true,
-    minBodyHeight : 500,
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     columns: [{
         header: '발주일',
         name: 'ordrDt',
@@ -425,7 +428,7 @@ $(function() {
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 
