@@ -586,8 +586,8 @@ function onMessage(evt){
 let dialog00 = $("#dialog-login").dialog({
 	autoOpen : false,
 	modal : false,
-	width : 700,
-	height : 700
+	width : 400,
+	height : 300
 });
 
 $("#loginWd").on("click",function(){

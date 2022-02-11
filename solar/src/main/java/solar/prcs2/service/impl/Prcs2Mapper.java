@@ -12,6 +12,7 @@ public interface Prcs2Mapper {
 	int insertDetailO(Prcs2 vo);
 	List<Prcs2> findTemp();
 	List<Prcs2> listPrcs(Prcs2 vo);
+	List<EqmAble> inferList(EqmAble vo);
 	List<EqmAble> ableEqm(EqmAble vo);
 	int updatePEqm(EqmAble vo);
 	int updateYEqm(EqmAble vo);
