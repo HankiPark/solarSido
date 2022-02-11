@@ -17,6 +17,7 @@ public interface PrdtMapper {
 	List<Prdt> prdtSearch(Prdt vo);
 	List<Prdt> prdtChart(Prdt vo);
 	List<Prdt> prdtList(Prdt vo);
+	List<Prdt> co();
 	
 	
 	List<Prdt> findCo(Prdt vo);

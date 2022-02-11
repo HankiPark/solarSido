@@ -118,7 +118,8 @@ function planDList(){
 			  },
 			  {
 			    header: '작업순서',
-			    name: 'wkOrd'
+			    name: 'wkOrd',
+			    hidden: true
 			  }
 	 		 ]
 	});	

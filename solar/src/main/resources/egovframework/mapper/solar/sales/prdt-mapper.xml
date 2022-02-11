@@ -168,7 +168,7 @@
 		insert into prdt_stc select
 		prdt_inx,#{prdtLot},'I',prdt_cd,indica_deta_no,#{prdtDt} from prdt_stc
 		where
-		prdt_lot =#{prdtLot}
+		prdt_lot =#{prdtLot} and prdt_fg = 'C'
 	</insert>
 
 	<delete id="deleteInPrdt">
@@ -314,6 +314,11 @@
 		
 		</where>
 	</select>
+	
+	<select id="co" resultType="Prdt">
+		select * from co where co_fg ='R'
+	</select>
+	
 	
 	<select id="prdtList" resultType="Prdt">
 		select distinct p.prdt_cd from prdt p join prdt_stc s on p.prdt_cd=s.prdt_cd where s.prdt_fg='O'

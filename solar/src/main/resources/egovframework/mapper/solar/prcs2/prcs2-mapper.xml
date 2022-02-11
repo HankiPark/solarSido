@@ -48,11 +48,12 @@
 	<update id="updateFg">
 		update prcs_d_o set 
 		<choose>
-			<when test='prdtFg !="C" and prdtFg !="F"'>
-			prdt_fg = #{prdtFg},prcs_fr_tm=null where prdt_idx= #{prdtIdx}
+			<when test='prdtFg =="C" or prdtFg =="F"'>
+			prdt_fg = #{prdtFg} where prdt_idx= #{prdtIdx}
+			
 			</when>
 			<otherwise>
-			prdt_fg = #{prdtFg} where prdt_idx= #{prdtIdx}
+			prdt_fg = #{prdtFg},prcs_fr_tm=null where prdt_idx= #{prdtIdx}
 			</otherwise>
 		</choose>
 		
@@ -69,7 +70,7 @@
 		select * from prcs_d where wk_no=#{wkNo} and prdt_fg in ('C','F') order by prdt_lot
 	</select>
 	
-	<select id="random" resultType="int">
+	<select id="random" resultType="double">
 		select DBMS_RANDOM.VALUE(0,1) as "error" from dual
 	</select>
 </mapper>

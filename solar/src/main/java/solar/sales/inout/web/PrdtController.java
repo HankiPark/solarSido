@@ -85,10 +85,20 @@ public class PrdtController {
 
 	}
 
+	//회사이름불러오기
+	@GetMapping("/ajax/coNmList2")
+	public String coNmList(Model model) {
+		List<?> list=pservice.co();
+		  
+		  model.addAttribute("co", list);
+		return "jsonView";
+	}
+	
 	
 	  //회사이름조회
 	  
-	  @GetMapping("/modal/coNmList") public String CoNmList() {
+	  @GetMapping("/modal/coNmList") 
+	  public String CoNmList() {
 	  
 	  return "modal/coNmList"; }
 	  

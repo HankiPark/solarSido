@@ -45,6 +45,7 @@ public class Prcs2Scheduler {
 
 			for (int i = 0; i < plist.size(); i++) {
 				double error = pmapper.random();
+				//System.out.println(error);
 				if (plist.get(i).getPrdtFg().equals("P") && plist.get(i).getPrcsFrTm() == null && elist.size() != 0) {
 					EqmAble eq = new EqmAble();
 					plist.get(i).setPrcsFrTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
@@ -64,7 +65,7 @@ public class Prcs2Scheduler {
 					elist.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
-					if (error >= 0.95) {
+					if (error >= 0.92) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						count++;
@@ -97,7 +98,7 @@ public class Prcs2Scheduler {
 					pmapper.updateYEqm(eq);
 					elist2.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
-					if (error >= 0.95) {
+					if (error >= 0.92) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						count++;
@@ -130,7 +131,7 @@ public class Prcs2Scheduler {
 					pmapper.updateYEqm(eq);
 					elist3.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
-					if (error >= 0.95) {
+					if (error >= 0.92) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						count++;
@@ -163,7 +164,7 @@ public class Prcs2Scheduler {
 					pmapper.updateYEqm(eq);
 					elist4.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
-					if (error >= 0.95) {
+					if (error >= 0.92) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 					} else {

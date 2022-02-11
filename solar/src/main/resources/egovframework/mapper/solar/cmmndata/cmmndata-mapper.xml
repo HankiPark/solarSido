@@ -59,16 +59,21 @@
 
 </select>
 
-<insert id="createDetail">
-	INSERT INTO CMMN_DATA_D(CMMN_CD_ID, CMMN_CD_DETA_ID, CMMN_CD_NM, CMMN_CD_DESCT) 
-	VALUES (#{cmmnCdId}, #{cmmnCdDetaId}, #{cmmnDtCdNm}, #{cmmnCdDesct})
+<insert id="cmmnDetailInsert">
+	INSERT INTO CMMN_DATA_D(CMMN_CD_DETA_ID, CMMN_CD_ID, CMMN_CD_NM, CMMN_CD_DESCT) 
+	VALUES (#{cmmnCdDetaId}, #{cmmnCdId}, #{cmmnDtCdNm}, #{cmmnCdDesct})
 </insert>
 
-<update id="updateDetail">
+<update id="cmmnDetailUpdate">
+	UPDATE CMMN_DATA_D
+	SET CMMN_CD_ID = #{cmmnCdId}
+	, CMMN_CD_NM = #{cmmnDtCdNm}
+	, CMMN_CD_DESCT = #{cmmnCdDesct}
+	WHERE CMMN_CD_DETA_ID = #{cmmnCdDetaId}
 </update>
 
-<delete id="deleteDetail">
-	DELETE FROM CMMN_DATA_DETA
-	WHERE CMMN_CD_DETA_ID = #{CMMN_CD_DETA_ID}
+<delete id="cmmnDetailDelete">
+	DELETE FROM CMMN_DATA_D
+	WHERE CMMN_CD_DETA_ID = #{cmmnCdDetaId}
 </delete>	
 </mapper>

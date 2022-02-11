@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import solar.cmm.cmmndata.dao.CmmndataVO;
+import solar.cmm.cmmndata.service.impl.CmmndataMapper;
 import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.cmm.rscinfo.service.RscinfoService;
 import solar.sales.order.dao.ModifyVO;
@@ -13,6 +15,7 @@ import solar.sales.order.dao.ModifyVO;
 public class RscinfoServiceImpl implements RscinfoService{
 
 	@Autowired RscinfoMapper rscinfoMapper;
+	@Autowired CmmndataMapper cmmndataMapper;
 	
 	@Override
 	public List<RscinfoVO> rscinfoList(RscinfoVO rscinfoVO) {
@@ -50,15 +53,29 @@ public class RscinfoServiceImpl implements RscinfoService{
 		if(modifyVO.getCreatedRows()!=null) {
 			for(RscinfoVO rscinfoVO : modifyVO.getCreatedRows()) {
 				rscinfoMapper.rscinfoInsert(rscinfoVO);
+				CmmndataVO cmmndataVO = new CmmndataVO();
+				cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+				cmmndataVO.setCmmnCdId("rsc");
+				cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+				cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
 		}
 		if(modifyVO.getDeletedRows()!=null) {
 			for(RscinfoVO rscinfoVO : modifyVO.getDeletedRows()) {
 				rscinfoMapper.rscinfoDelete(rscinfoVO);
+				CmmndataVO cmmndataVO = new CmmndataVO();
+				cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
+				
 			}
 			if(modifyVO.getUpdatedRows()!=null) {
 				for(RscinfoVO rscinfoVO : modifyVO.getUpdatedRows()) {
 					rscinfoMapper.rscinfoUpdate(rscinfoVO);
+					CmmndataVO cmmndataVO = new CmmndataVO();
+					cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+					cmmndataVO.setCmmnCdId("rsc");
+					cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}
 			}	
 	}

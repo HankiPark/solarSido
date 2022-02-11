@@ -185,6 +185,11 @@ public class PrdtServiceImpl implements PrdtService {
 		return pmapper.findCo(vo);
 	}
 
+	@Override
+	public List<Prdt> co() {
+		return pmapper.co();
+	}
+
 	
 	
 	
