@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import solar.prcs2.dao.Prcs2;
 import solar.prcs2.service.Prcs2Service;
+import solar.prcs2.service.SchedulerService;
 import solar.sales.order.dao.ModifyVO;
 
 @Controller
@@ -20,7 +21,9 @@ public class Prcs2Controller {
 
 	@Autowired
 	Prcs2Service pservice;
-
+	@Autowired
+	SchedulerService sservice;
+	
 	@RequestMapping("/prcs2/mng/prcsPr")
 	public String prdtLotChasePage() {
 		return "prcs2/mng/prcsPr";
@@ -40,6 +43,7 @@ public class Prcs2Controller {
 	public String insertWk(Model model, Prcs2 vo) {
 		pservice.insertData(vo);
 		model.addAttribute("No", vo.getWkNo());
+		sservice.register();
 		return "jsonView";
 	}
 
@@ -59,6 +63,11 @@ public class Prcs2Controller {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
+		return "jsonView";
+	}
+	@RequestMapping("/ajax/scheduleEnd")
+	public String scheduleEnd(Model model, Prcs2 vo) {
+		sservice.remove();
 		return "jsonView";
 	}
 

@@ -81,7 +81,7 @@ a {
      </div>
     </div>
     <div id="oG" class="col-2" style="display:none;margin-left: 50px;margin-right: 30px;margin-top: 50px;">
-   		<button type="button" id="dmndBtn">자동발주</button>
+   		<button type="button" id="dmndBtn" class="float-right" style="box-shadow:2px 2px 2px #74a3b0;width: 130px; height: 40px;margin-top:-10px;margin-bottom:10px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0"><i class="fa-solid fa-wand-magic-sparkles"></i>자동발주</button>
     </div>
      <img src="${pageContext.request.contextPath}/resources/direction.png" style="height:200px;margin-top:150px;width:170px;display:none;" id="oGPng" class="brand-image img-circle elevation-3 col-1" >
     

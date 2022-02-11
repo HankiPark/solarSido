@@ -91,8 +91,8 @@ progress {
 				style="margin-left: 20px; margin-right: 30px; padding-left: 40px; padding-top: 20px; height: 250px">
 				<div>
 					<progress value="0" max="100" id="pr5"></progress>
-					<span id="pct5" class="progText">0%</span> <span
-						style="margin-left: 50px">총 생산량 : </span><span id="cnt5">0</span>/
+					<span id="pct5" class="progText">0%</span><SPAN>입고량 : </SPAN><span id="Ccnt">0</span> <span
+						style="margin-left: 50px">생산량 : </span><span id="cnt5">0</span>/
 						<span>불랑량 : </span><span id="inq">0</span>
 				</div>
 				<div class="row">
@@ -177,6 +177,10 @@ const grid = new tui.Grid(
 				name : 'prdtCd',
 				
 			}, {
+				header : '제품명',
+				name : 'prdtNm',
+				
+			}, {
 				header : '공정진행',
 				name : 'prdtFg',
 			 	formatter:function(value){
@@ -232,6 +236,10 @@ const grid = new tui.Grid(
 			},{
 				header : '설비코드',
 				name : 'eqmCd',
+				
+			}, {
+				header : '설비명',
+				name : 'eqmNm',
 				
 			}, {
 				header : '작업번호',
@@ -298,9 +306,11 @@ $("#start").on('click',function(){
 
 		setTimeout(() => {
 			grid.request('modifyData',{showConfirm: false});	
+			$("#Ccnt").val(grid.getRowCount());
 		}, 1000);
 		
 	}
+	
 	
 	function repeat(){
 		$.ajax({
@@ -365,7 +375,19 @@ $("#start").on('click',function(){
 	}
 	
 });
-
+$("#end").on('click',function(){
+	$.ajax({
+		url:'${pageContext.request.contextPath}/ajax/scheduleEnd',
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+	}).done(()=>{
+		gifToPng(1);
+		gifToPng(2);
+		gifToPng(3);
+		gifToPng(4);
+	})
+	
+});
 
 function pngToGif(i){
 	let imgTag = document.getElementById('eqmImg'+i);

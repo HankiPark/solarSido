@@ -107,7 +107,6 @@ public class PrcsServiceImpl implements PrcsService {
 	public int insertPrdtStc(PrdtStcVO vo) {
 		return prcsmapper.insertPrdtStc(vo);
 	}
-	
 
 
 	@Override
@@ -120,6 +119,7 @@ public class PrcsServiceImpl implements PrcsService {
 	public List<PrcsDOVO> selectPrcsDO(PrcsDOVO vo) {
 		return prcsmapper.selectPrcsDO(vo);
 	}
+
 	
 	
 }
