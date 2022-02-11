@@ -25,7 +25,7 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 		if(mvo.getCreatedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getCreatedRows()) {
 				System.out.println("등록:" + mvo);
-				//ppMapper.insertPlanD(ppVo);
+				ppMapper.insertPlanD(ppVo);
 				}
 			}
 		if(mvo.getDeletedRows()!=null) {

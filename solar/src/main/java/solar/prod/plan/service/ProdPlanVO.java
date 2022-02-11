@@ -26,7 +26,7 @@ public class ProdPlanVO {
 	String wkOrd;		//작업순서
 	String wkDt;		//작업일자
 	int dayOutput;		//일생산량
-	int prodDay;		//생산일수
+	double prodDay;		//생산일수
 	
 	//search
 	String startT;		//기간시작

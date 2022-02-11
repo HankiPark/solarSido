@@ -32,14 +32,18 @@ document.getElementById('startT2').value = nd2.toISOString().slice(0, 10);
 document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 
 		function slList(){
-		/* 	박한기 패배하고 하드코딩하다.. 2022/1/14
+		 	
 			var nowCo = $("select[name='nowCo']");
 			nowCo.empty();
-			for(let i=0;i<"${coList.size()}";i++){
-				console.log("${coList[0].coNm}");
-
-				nowCo.append(`<option value="${coList[i].coNm}">"${coList[i].coNm}"</option>`);
-			} */
+			$.ajax({
+				url:"${pageContext.request.contextPath}/ajax/coNmList2",
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+			}).done((res)=>{
+				for(let i=0;i<res.co.length;i++){
+					nowCo.append(`<option value="`+res.co[i].coNm+`">`+res.co[i].coNm+`</option>`);
+				}
+			})
 
 			//미니 그리드(전표명단) 기본적으로 전체전표명단이 나옴
 			const gridSl = new tui.Grid({

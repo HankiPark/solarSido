@@ -21,7 +21,7 @@
 		TO_CHAR(A.plan_dt, 'YYYY/MM/DD') plan_dt,
 		A.plan_nm,
 		(SELECT min(uph)*24 FROM EQM) as day_output,
-		ROUND((B.plan_qty/(SELECT min(uph)*24 FROM EQM)), 2) as prod_day
+		ROUND((B.plan_qty/(SELECT min(uph)*8 FROM EQM)), 2) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -105,10 +105,9 @@
 	    TO_CHAR(o.paprd_dt, 'YYYY-MM-DD') paprd_dt
 	FROM order_tb o 
 	LEFT JOIN plan_d p ON p.order_no = o.order_no
-	JOIN order_d od ON od.order_no = o.order_no
+	LEFT JOIN order_d od ON od.order_no = o.order_no
 	WHERE o.prog_info != '종료'
 	AND p.plan_no is null
-	AND od.order_qty>od.indica_qty
 </select>
 
 <select id="searchOrder" resultType="ProdPlanVO">
@@ -121,7 +120,7 @@
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_qty,
         B.prdt_stc,
-        (select min(uph)*24 from eqm) as day_output
+        (select min(uph)*8 from eqm) as day_output
 	FROM order_tb A, order_d B
 	WHERE A.order_no = B.order_no
 	<if test="orderNo != null and orderNo != ''">

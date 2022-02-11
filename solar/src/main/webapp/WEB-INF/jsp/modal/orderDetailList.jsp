@@ -27,7 +27,7 @@
 			const gridD = new tui.Grid({
 				el : document.getElementById('gridD'), // 컨테이너 엘리먼트
 				data : dataSourceD,
-				bodyHeight : 500,
+				bodyHeight : 400,
 				columns : [ 
 					{
 					header : '제품코드',

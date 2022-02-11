@@ -94,7 +94,7 @@
 			autoOpen : false,
 			modal : true,
 			width : 900,
-			height : 700
+			height : 570
 		});
 		const dataSource = {
 			api : {
