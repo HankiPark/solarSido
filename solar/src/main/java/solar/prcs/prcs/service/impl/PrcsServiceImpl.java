@@ -3,10 +3,8 @@ package solar.prcs.prcs.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import solar.prcs.prcs.SchedulerService;
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
 import solar.prcs.prcs.service.PrcsDOVO;
@@ -23,7 +21,6 @@ public class PrcsServiceImpl implements PrcsService {
 
 	
 	@Autowired PrcsMapper prcsmapper;  
-	@Autowired SchedulerService schedulerService;
 	
 	@Override
 	public List<PrcsPrMVO> selectAll() {
@@ -109,15 +106,6 @@ public class PrcsServiceImpl implements PrcsService {
 	public int insertPrdtStc(PrdtStcVO vo) {
 		return prcsmapper.insertPrdtStc(vo);
 	}
-	
-	public void  test(String scheduledId) {
-		schedulerService.register(scheduledId);
-	}
-	
-	public void test1(String scheduledId) {
-		schedulerService.remove(scheduledId);
-	}
-
 
 	@Override
 	public List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo) {
@@ -129,6 +117,7 @@ public class PrcsServiceImpl implements PrcsService {
 	public List<PrcsDOVO> selectPrcsDO(PrcsDOVO vo) {
 		return prcsmapper.selectPrcsDO(vo);
 	}
+
 	
 	
 }
