@@ -21,6 +21,7 @@ public class PrcsServiceImpl implements PrcsService {
 
 	
 	@Autowired PrcsMapper prcsmapper;  
+
 	
 	@Override
 	public List<PrcsPrMVO> selectAll() {
@@ -106,6 +107,7 @@ public class PrcsServiceImpl implements PrcsService {
 	public int insertPrdtStc(PrdtStcVO vo) {
 		return prcsmapper.insertPrdtStc(vo);
 	}
+
 
 	@Override
 	public List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo) {
