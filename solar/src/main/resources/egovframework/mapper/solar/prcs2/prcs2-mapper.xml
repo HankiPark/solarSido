@@ -21,7 +21,19 @@
 	</insert>
 	
 		<select id="findTemp"  resultType="Prcs2">
-		select * from prcs_d_o 
+		select o.prdt_idx,
+		o.prdt_lot,
+		o.prdt_fg,
+		o.prdt_cd,
+		o.indica_deta_no,
+		o.prcs_fr_tm,
+		o.prcs_to_tm,
+		o.eqm_cd,
+		o.wk_no,
+		o.wk_dt,
+		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as co_nm
+		 from prcs_d_o o 
 	
 	</select>
 	
@@ -53,7 +65,7 @@
 			
 			</when>
 			<otherwise>
-			prdt_fg = #{prdtFg},prcs_fr_tm=null where prdt_idx= #{prdtIdx}
+			prdt_fg = #{prdtFg},prcs_fr_tm=null,prcs_to_tm=null where prdt_idx= #{prdtIdx}
 			</otherwise>
 		</choose>
 		
@@ -67,10 +79,31 @@
 	</insert>
 	
 	<select id="listPrcs" resultType="Prcs2">
-		select * from prcs_d where wk_no=#{wkNo} and prdt_fg in ('C','F') order by prdt_lot
+		select o.prdt_idx,
+		o.prdt_lot,
+		o.prdt_fg,
+		o.prdt_cd,
+		o.indica_deta_no,
+		o.prcs_fr_tm,
+		o.prcs_to_tm,
+		o.eqm_cd,
+		o.wk_no,
+		o.wk_dt,
+		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as co_nm
+		from prcs_d o
+		where o.wk_no=#{wkNo} and o.prdt_fg in ('C','F') order by o.prdt_lot
 	</select>
 	
 	<select id="random" resultType="double">
 		select DBMS_RANDOM.VALUE(0,1) as "error" from dual
+	</select>
+	
+	<insert id="insertInfer">
+		insert into prdt_infer values(#{prdtLot},sysdate,#{prdtInferCd},#{eqmCd})
+	</insert>
+	
+	<select id="inferList" resultType="EqmAble">
+		select * from prdt_infer_cd where prcs_cd = (select distinct prcs_cd from eqm where li_no=#{liNo})	
 	</select>
 </mapper>

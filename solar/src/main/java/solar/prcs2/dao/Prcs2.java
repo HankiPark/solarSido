@@ -18,6 +18,7 @@ public class Prcs2 {
 	String indicaNo;
 	String index;
 	String wkNo;
+	String empId;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date wkDt;
@@ -28,6 +29,15 @@ public class Prcs2 {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
 	Date prcsToTm;
-	String empId;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Seoul")
+	Date inferDt;
+	String prdtInferCd;
+	String prdtInferNm;
+	String prdtInferDesct;
+	String eqmNm;
+	String prdtNm;
+	
+	
 	
 }
