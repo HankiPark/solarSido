@@ -198,9 +198,9 @@
         <script>
             //탭 설정
             let date = new Date();
-            let dtEnd = date.toISOString().substr(0, 10);
+            let dtEnd;// = date.toISOString().substr(0, 10);
             date.setDate(date.getDate() - 7);
-            let dtStt = date.toISOString().substr(0, 10);
+            let dtStt;// = date.toISOString().substr(0, 10);
 
             const tabList = document.querySelectorAll('.tab_menu .list li');
 
@@ -430,10 +430,20 @@
                         name: 'prcsCd',
                         editor: 'text',
                     },
-                    {
-                        header: '가동여부',
-                        name: 'eqmYn',
-                    },
+        			{
+        				header: '가동여부',
+        				name: 'eqmYn',
+        				align: 'center',
+        				formatter({value}) {
+        					if(value=='Y'){
+        						return '가동';
+        					} else if(value=='P'){
+        						return '운용중';
+        					} else {
+        						return '비가동';
+        					}
+        			    }
+        			},
                 ]
             });
 
@@ -443,8 +453,7 @@
                 rowHeaders: ['checkbox','rowNum'],
                 columns: [{
                         header: '설비코드',
-                        name: 'eqmCd',
-                        width: 40,
+                        name: 'eqmCd'
                     },
                     {
                         header: '설비구분',
