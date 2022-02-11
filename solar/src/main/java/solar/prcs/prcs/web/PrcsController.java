@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
+import solar.prcs.prcs.service.PrcsDOVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsPrMVO;
@@ -195,6 +196,16 @@ public class PrcsController {
 	  public String rtSelectEqm(PrcsEqmVO vo, Model model) {
 		  Map<String, Object> map = new HashMap();
 		  map.put("contents", prcsservice.rtSelectEqm(vo));
+		  model.addAttribute("result", true);
+		  model.addAttribute("data", map);
+		  
+		  return "jsonView";
+	  }
+	  
+	  @RequestMapping("prcs/selectPrcsDO")
+	  public String rtSelectPrcsDO(PrcsDOVO vo, Model model) {
+		  Map<String, Object> map = new HashMap();
+		  map.put("contents", prcsservice.selectPrcsDO(vo));
 		  model.addAttribute("result", true);
 		  model.addAttribute("data", map);
 		  

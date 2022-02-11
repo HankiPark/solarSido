@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import solar.prcs.prcs.SchedulerService;
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
+import solar.prcs.prcs.service.PrcsDOVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsPrMVO;
@@ -121,6 +122,12 @@ public class PrcsServiceImpl implements PrcsService {
 	@Override
 	public List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo) {
 		return prcsmapper.rtSelectEqm(vo);
+	}
+
+
+	@Override
+	public List<PrcsDOVO> selectPrcsDO(PrcsDOVO vo) {
+		return prcsmapper.selectPrcsDO(vo);
 	}
 	
 	

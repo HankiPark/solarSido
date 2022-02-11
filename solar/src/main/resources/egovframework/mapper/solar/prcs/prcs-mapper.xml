@@ -269,12 +269,12 @@
 		
 </select>
 
-<select id="rtSelectPrcsO" resultType="solar.prcs.prcs.service.PrcsDOVO">
+<select id="selectPrcsDO" resultType="solar.prcs.prcs.service.PrcsDOVO">
 
 	select * from prcs_d_o
 
 </select>
-
+	
 
 
 

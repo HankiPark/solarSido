@@ -39,7 +39,8 @@
 </body>
 <script>
 
-let EqmList;
+let eqmList;
+let prcsDO;
 
 $("#btnTest").on("click", function(ev){
 	
@@ -49,39 +50,54 @@ $("#btnTest").on("click", function(ev){
 		async: false,
 		contentType: 'application/json',
 		success : function(result){
-			EqmList = result.PRCS;
-			console.log(EqmList);
+			eqmList = result.PRCS;
+			console.log(eqmList);
 			
 			let cnt = 1;
 			
-	 		for(item of EqmList){
-	 			let iiiii = 'iiiii';
-	 			console.log(item.eqmCd)
-				console.log(`asdfasdf${item.eqmCd}`)
-				console.log(`asdfasdf${iiiii}`)
-				
+	 		for(item of eqmList){
+	 			
 	 			const table = document.getElementById('divTable')
 	 			table.innerHTML += `
 	 								<div class="row">
-	 									<div class="col-md-1 mb-3 idx${cnt}">${item.eqmCd}</div>
-	 									<div class="col-md-10 mb-3 idx${cnt}">fffff</div>
+	 									<div class="col-md-1 mb-3">\${item.eqmCd}</div>
+	 									<div class="col-md-10 mb-3 idx\${cnt}"></div>
 	 								</div>
 	 								`;
 	 			
+	 			let contents = document.getElementsByClassName("idx"+cnt);
+
 	 			
-// 	 			if(item.eqmYn == 'Y'){
-// 	 				const contents = document.createTextNode("대기중")
-// 	 				divCon.appendChild(contents);
-// 	 			} else if(item.eqmYn == 'N'){
-// 	 				const contents = document.createTextNode("비가동상태")
-// 	 				divCon.appendChild(contents);
-// 	 			} else {
-// 	 				const contents = document.createTextNode("가동중")
-// 	 				divCon.appendChild(contents);
-// 	 			} 
+ 	 			if(item.eqmYn == 'Y'){
+ 	 				
+ 	 				contents[0].innerText += "대기중"; 
+ 	 				
+ 	 			} else if(item.eqmYn == 'N'){
+ 	 				
+ 	 				contents[0].innerText += "비가동 설비";
+ 	 				
+ 	 			} else {
+ 	 				
+ 	 				contents[0].innerText += "가동중 / ";
+ 	 				
+ 	 			} 
 	 			
 				cnt++;
 			} 
+	 			
+	 			$.ajax({
+					url:"${pageContext.request.contextPath}/prcs/selectPrcsDO",
+					dataType: 'JSON',
+					async: false,
+					contentType: 'application/json',
+					success : function(result){
+						prcsDO = result.data.contents;
+						console.log(prcsDO);
+					},
+					error : function(result){
+						console.log("호출실패")
+					}
+				});	 			
 			
 		},
 		error : function(result){

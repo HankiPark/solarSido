@@ -4,6 +4,7 @@ import java.util.List;
 
 import solar.prcs.prcs.service.ClotVO;
 import solar.prcs.prcs.service.IndicaVO;
+import solar.prcs.prcs.service.PrcsDOVO;
 import solar.prcs.prcs.service.PrcsEqmVO;
 import solar.prcs.prcs.service.PrcsFlowVO;
 import solar.prcs.prcs.service.PrcsPrMVO;
@@ -32,5 +33,5 @@ public interface PrcsMapper {
 	int insertRslt(RsltVO vo);
 	
 	List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo);
-	
+	List<PrcsDOVO> selectPrcsDO(PrcsDOVO vo);
 }
