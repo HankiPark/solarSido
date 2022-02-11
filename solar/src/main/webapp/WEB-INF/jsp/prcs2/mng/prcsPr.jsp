@@ -380,13 +380,11 @@ $("#end").on('click',function(){
 		url:'${pageContext.request.contextPath}/ajax/scheduleEnd',
 		dataType: 'json',
 		contentType: 'application/json; charset=utf-8',
-	}).done(()=>{
-		gifToPng(1);
-		gifToPng(2);
-		gifToPng(3);
-		gifToPng(4);
 	})
-	
+	gifToPng(1);
+	gifToPng(2);
+	gifToPng(3);
+	gifToPng(4);
 });
 
 function pngToGif(i){
