@@ -23,4 +23,7 @@ public interface PrcsService {
 	List<PrcsPrMVO> updatePrcsPrM(PrcsPrMVO vo);
 	int insertRslt(RsltVO vo);
 	
+	List<PrcsEqmVO> rtSelectEqm(PrcsEqmVO vo);
+	List<PrcsDOVO> selectPrcsDO(PrcsDOVO vo);
+	
 }
