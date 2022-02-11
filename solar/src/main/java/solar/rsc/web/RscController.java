@@ -176,10 +176,12 @@ public class RscController {
 	//입고 처리 요청
 	@ResponseBody
 	@PostMapping("/grid/rsc/in/rscin")
-	public int rscIn(@RequestBody RscInOut rscInOut, Model model) {
-		//rscOrdrService.
-		rscInOutService.insert(rscInOut);
-		rscInOutService.stcInc(rscInOut);
+	public int rscIn(@RequestBody List<Map> list, Model model) {
+		System.out.println(list);
+		for(Map map : list) {
+		rscInOutService.insert(map);
+		rscInOutService.stcInc(map);
+		}
 		return 202;
 	}
 	

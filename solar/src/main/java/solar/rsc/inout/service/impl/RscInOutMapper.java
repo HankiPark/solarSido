@@ -7,7 +7,7 @@ import solar.rsc.inout.service.RscInOut;
 
 public interface RscInOutMapper {
 	List<RscInOut> selectAll();
-	int insert(RscInOut rscInOut);
-	int stcInc(RscInOut rscInOut);
+	int insert(Map map);
+	int stcInc(Map map);
 	List<RscInOut> search(Map map);
 }

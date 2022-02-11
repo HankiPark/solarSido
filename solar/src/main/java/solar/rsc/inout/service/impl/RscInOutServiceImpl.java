@@ -20,13 +20,13 @@ public class RscInOutServiceImpl implements RscInOutService {
 	}
 
 	@Override
-	public int insert(RscInOut rscInOut) {
-		return rscInOutMapper.insert(rscInOut);
+	public int insert(Map map) {
+		return rscInOutMapper.insert(map);
 	}
 
 	@Override
-	public int stcInc(RscInOut rscInOut) {
-		return rscInOutMapper.stcInc(rscInOut);
+	public int stcInc(Map map) {
+		return rscInOutMapper.stcInc(map);
 	}
 
 	@Override
