@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+	.contents{
+		text-align:center;
+	}
+</style>
 
 <body>
 
@@ -42,7 +47,9 @@
 let eqmList;
 let prcsDO;
 
-$("#btnTest").on("click", function(ev){
+$(function(){
+	rscursion();
+	
 	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
@@ -54,37 +61,86 @@ $("#btnTest").on("click", function(ev){
 			console.log(eqmList);
 			
 			let cnt = 1;
+			let flag = false;
 			
 	 		for(item of eqmList){
 	 			
 	 			const table = document.getElementById('divTable')
 	 			table.innerHTML += `
 	 								<div class="row">
-	 									<div class="col-md-1 mb-3">\${item.eqmCd}</div>
-	 									<div class="col-md-10 mb-3 idx\${cnt}"></div>
+	 									<div class="col-md-1 mb-3 eqm">\${item.eqmCd}</div>
+	 									<div class="col-md-10 mb-3 contents idx\${cnt} \${item.eqmCd}"></div>
 	 								</div>
 	 								`;
 	 			
 	 			let contents = document.getElementsByClassName("idx"+cnt);
-
-	 			
- 	 			if(item.eqmYn == 'Y'){
- 	 				
- 	 				contents[0].innerText += "대기중"; 
- 	 				
- 	 			} else if(item.eqmYn == 'N'){
- 	 				
- 	 				contents[0].innerText += "비가동 설비";
- 	 				
- 	 			} else {
- 	 				
- 	 				contents[0].innerText += "가동중 / ";
- 	 				
- 	 			} 
-	 			
-				cnt++;
+ 			
+	 	 			if(item.eqmYn == 'Y'){
+	 	 				
+	 	 				contents[0].innerText += "대기중"; 
+	 	 				
+	 	 			} else if(item.eqmYn == 'N'){
+	 	 				
+	 	 				contents[0].innerText += "비가동 설비";
+	 	 				
+	 	 			} else {
+	 	 				
+	 	 				contents[0].innerText += "가동중 / ";
+	 	 				
+	 	 			} 
+		 			
+					cnt++;
+					
 			} 
+		},
+		error : function(result){
+			console.log("호출실패")
+		}
 	 			
+	});
+	
+});
+
+function rscursion(){
+	
+	timer = setInterval(function(){
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/prcs/selectPrcsDO",
+			dataType: 'JSON',
+			async: false,
+			contentType: 'application/json',
+			success : function(result){
+				prcsDO = result.data.contents;
+				console.log(prcsDO);
+				
+				let contents = "";
+				
+				if(!!prcsDO){
+					for(let item of prcsDO){
+						console.log(item.eqmCd);
+						let target = document.getElementsByClassName(item.eqmCd);
+						target.innerHTML = `\${item.}
+						
+					}
+					
+				}
+			},
+			error : function(result){
+				console.log("호출실패")
+			}
+		});
+		
+		
+		
+	}, 5000);
+	
+	
+}
+
+
+$("#btnTest").on("click", function(ev){
+
 	 			$.ajax({
 					url:"${pageContext.request.contextPath}/prcs/selectPrcsDO",
 					dataType: 'JSON',
@@ -93,17 +149,13 @@ $("#btnTest").on("click", function(ev){
 					success : function(result){
 						prcsDO = result.data.contents;
 						console.log(prcsDO);
+					
+						
 					},
 					error : function(result){
 						console.log("호출실패")
 					}
 				});	 			
-			
-		},
-		error : function(result){
-			console.log("호출실패")
-		}
-	});
 	
 });
 
