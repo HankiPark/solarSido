@@ -62,7 +62,6 @@ toastr.options.positionClass = "toast-top-center"; //토스트 메시지 중앙�
 var UID=null;
 function receiveMsgFromParent( e ) {
     // e.data가 전달받은 메시지
-    console.log('부모로 부터 받은 메시지 ', e.data );
     UID = e.data;
 }
 var sock  = null;
@@ -73,18 +72,15 @@ function connectWs(){
    	sock.onopen = function() {
 
         
-     console.log('open');
 
 	 };
 
  	sock.onmessage = function(e) {
-   	  console.log('message', e.data);
    	  toastr.success(e.data);
  //  	  sock.close();
 	 };
 
  	sock.onclose = function() {
- 	    console.log('close');
 	 };
  
   };
@@ -103,7 +99,6 @@ function connectWs(){
 					msTitle : msg,
 					msContent : ct}
 		}).done((ev)=>{
-			console.log(ev);
 			sock.send(UID+","+msg);
 			window.parent.postMessage(ev.count, '*' );
 		})

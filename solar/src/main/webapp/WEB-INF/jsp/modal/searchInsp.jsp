@@ -71,9 +71,6 @@ var inferGrid = new Grid({
 		  inferGrid.setValue(ev.rowKey,'rscInferQty',rest);
 	  }
 	  
-	  console.log(fullQty);
-	  console.log(inferSum);
-	  console.log(rest);
   });
 </script>
 </html>

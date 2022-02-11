@@ -110,7 +110,6 @@
                 });
 
                 chart.on('selectSeries', (ev) => {
-                	console.log(ev);
                     temp(ev.bar[0].data);
                 });
             });

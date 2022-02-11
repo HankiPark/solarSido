@@ -147,7 +147,6 @@
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {
-		//console.log(data)
 		cmmnCodes = data;
 	});
 	
@@ -158,12 +157,10 @@
 			dataType: 'JSON',
 			async: false,
 		}).done(function (data) {
-			//console.log(data)
 			data.num
 			for(let f of data.num){
 				arr.push(f)
 			}		
-			console.log(arr)
 		});
 	})
 	//------------------------------그리드생성------------------------------------------------
@@ -281,7 +278,6 @@
 			    	        required: true
 			    	      },
 			    	       onAfterChange(e) {
-				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    			calProdDay( e, "indicaQty", "dayOutput" ); 
 				    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
 				    	    		rscGrid.setValue(i, 'totalUseQty',
@@ -590,7 +586,6 @@
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('click', function(ev){
 		if( ev.columnName == "planNo" ){
-			console.log("미지시 계획 검색")
 			planDetailDialog.dialog("open");
 			$("#planModal").load("${pageContext.request.contextPath}/modal/findPlanDlist", 
 										function() { planDList() })
@@ -666,7 +661,6 @@
 	 
 	indicaDgrid.on('response', function(ev) { 
 		let res = JSON.parse(ev.xhr.response);
-		//console.log(res);
 		if (res.mod =='upd'){
 			indicaDgrid.clear();
 		}
@@ -801,7 +795,6 @@
 				contentType: 'application/json; charset=utf-8',
 				async: false,
 			}).done((res)=>{
-				console.log(res)
 				prdtLotNum = res.num
 			})
 			
@@ -854,7 +847,6 @@
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            //console.log(lotData);
 			            q++;
 			            t++; 
 			         }
@@ -870,7 +862,6 @@
 		      		}
 		      }   
 		     }
-	      console.log(lotArr);
 		    
 		//hdPrdtRscGrid.resetData(lotArr);
 		hdPrdtRscGrid.appendRows(lotArr);
@@ -919,7 +910,6 @@
 	
 	//생산지시서 조회버튼
  	$('#btnFind').on('click', function(){
- 		console.log("생산지시서 조회")
 		indicaDialog.dialog("open");
 		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
 									function() { indicaList() })
@@ -941,11 +931,9 @@
 				contentType: 'application/json; charset=utf-8',
 				async: false,
 			}).done((res)=>{
-				console.log(res.num2)
 				let idx = 0;
 				for(i=0; i<indicaDgrid.getRowCount(); i++){
 					if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
-						console.log(idx)
 					} else {
 						indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
 						idx = Number(idx) +1
@@ -1009,7 +997,6 @@
 				toastr.warning("작업시작일이 지정되지 않았습니다.");
 				return false;
 			} else {
-				console.log(i)
 			}
 		}
 		return true;

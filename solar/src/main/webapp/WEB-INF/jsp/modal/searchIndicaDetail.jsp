@@ -74,15 +74,6 @@
 	    ]
 	  });
 	 
-/* 	$.ajax({
-	    url: "${pageContext.request.contextPath}/modal/searchIndicaDetail/indica",
-	    method: "GET",
-	    dataType: "JSON"
-	  }).done(function (result) {
-		console.log(result);
-		indicaGrid.resetData(result.data.contents);
-		indicaGrid.refreshLayout();
-	  }); */
  
 	indicaGrid.on('response',function(){
 		indicaGrid.refreshLayout();
@@ -91,8 +82,6 @@
 	indicaGrid.on('dblclick', (ev)=>{
 		
 		var rk = ev.rowKey; 
-		console.log(rk);
-		console.log(indicaGrid.getValue(rk,"indicaDetaNo"));
 		
 		var indicaDetaNo = indicaGrid.getValue(rk,"indicaDetaNo");
 		var indicaDt = indicaGrid.getValue(rk, "indicaDt");
@@ -116,7 +105,6 @@
 	sDateSearchBtn.addEventListener("click", function(){
 		
 		sDate = document.getElementById('sDate').value;
-		console.log(sDate);
 		
  		var readParams = {
 				'sDate':sDate

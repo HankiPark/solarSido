@@ -169,7 +169,6 @@ position: absolute;
 					}
 				},
 				function(start, end, label) {
-					console.log("A new date selection was made: "
 							+ start.format('YYYY-MM-DD') + ' to '
 							+ end.format('YYYY-MM-DD'));
 				});
@@ -186,7 +185,6 @@ position: absolute;
 	$("#btnCoCdFind").on(
 			"click",
 			function() {
-				console.log("업체검색")
 				coCdDialog.dialog("open");
 				$("#coCdModal").load(
 						"${pageContext.request.contextPath}/modal/findCoCd",
@@ -206,7 +204,6 @@ position: absolute;
 	$('#btnPrdtCdFind').on(
 			'click',
 			function() {
-				console.log("제품검색")
 				prdtCdDialog.dialog("open");
 				$("#prdtCdModal").load(
 						"${pageContext.request.contextPath}/modal/findPrdtCd",

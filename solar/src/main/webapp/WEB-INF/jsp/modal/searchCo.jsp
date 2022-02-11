@@ -52,7 +52,6 @@ var coGrid = new Grid({
 		    method: "GET",
 		    dataType: "JSON"
 		  }).done(function (result) {
-			  console.log(result.co);
 		    coGrid.resetData(result.co);
 		    coGrid.refreshLayout();
 		  });

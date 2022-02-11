@@ -144,7 +144,6 @@
 					});
 
 					grid.on('response', function(ev) { // 성공/실패와 관계 없이 응답을 받았을 경우
-						console.log(ev);
 						let res = JSON.parse(ev.xhr.response);
 						if (res.mode == 'upd') {
 							grid.resetOriginData();

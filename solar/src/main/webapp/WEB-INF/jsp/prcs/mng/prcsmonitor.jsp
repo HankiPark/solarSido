@@ -88,7 +88,6 @@ $(function(){
 			} 
 		},
 		error : function(result){
-			console.log("호출실패")
 		}
 	 			
 	});
@@ -217,7 +216,6 @@ function rscursion(){
 							} 
 						},
 						error : function(result){
-							console.log("호출실패")
 						}
 					 			
 					});
@@ -226,7 +224,6 @@ function rscursion(){
 				
 			},
 			error : function(result){
-				console.log("호출실패")
 			}
 		});
 		

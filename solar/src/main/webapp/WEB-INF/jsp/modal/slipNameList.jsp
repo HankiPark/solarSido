@@ -100,13 +100,8 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 				}).done(function(res){
 					
 					var sres = JSON.parse(res);
-					console.log(sres.data)
-					console.log(sres.data.contents[0])
 					gridSl.resetData(sres["data"]["contents"]);
 				})
-			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')
-				.then(res=>res.json())
-				.then(response=>{inGrid.resetData(response["data"]["contents"]);console.log(response);inGrid.refreshLayout();}) */
 				
 			 });
 			
@@ -163,7 +158,6 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 					          yearSuffix: '년'
 					    }
 				  }, function(start, end, label) {
-				    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 				  },
 				  
 				  );

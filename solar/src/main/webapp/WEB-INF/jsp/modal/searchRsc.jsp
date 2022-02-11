@@ -67,7 +67,6 @@ var rscGrid = new Grid({
 			    method: "GET",
 			    dataType: "JSON"
 			  }).done(function (result) {
-				  console.log(result.rsc);
 			    rscGrid.resetData(result.rsc);
 			    rscGrid.refreshLayout();
 			  });

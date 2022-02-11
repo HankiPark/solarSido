@@ -78,7 +78,6 @@ public class PrdtServiceImpl implements PrdtService {
 				
 				pmapper.insertOutD(vo);
 				
-				System.out.println(pmapper.updateStatePrdt(vo)+"설정완료");
 				pmapper.resetOw(vo);
 				pmapper.updOrd(vo);
 				

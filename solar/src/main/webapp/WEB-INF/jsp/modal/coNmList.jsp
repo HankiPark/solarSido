@@ -71,12 +71,8 @@
 					
 				}).done(function(res){
 					var sres = JSON.parse(res);
-					console.log(sres)
 					gridCo.resetData(sres["data"]["contents"]);
 				})
-			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')
-				.then(res=>res.json())
-				.then(response=>{inGrid.resetData(response["data"]["contents"]);console.log(response);inGrid.refreshLayout();}) */
 				
 			 });
 			

@@ -59,7 +59,6 @@ function ordList(ordNo){
 				for(let i = outGrid.getRowCount()-1 ; i>0;i--){
 					if(outGrid.getValue(i,"orderNo")==ordNo && ordNo!=""){
 						outGrid.removeRow(i);
-						console.log(i);
 					}
 				}
 				
@@ -70,7 +69,6 @@ function ordList(ordNo){
 					dataType : "json",
 					contentType : 'application/json; charset=utf-8',
 				}).done((li)=>{
-					/* console.log(li["data"]["contents"][0].prdtCd); */
 					for(let i =0 ; i<li["data"]["contents"].length;i++){
 						if(i==0){
 							

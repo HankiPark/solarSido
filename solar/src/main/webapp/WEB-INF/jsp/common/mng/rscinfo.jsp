@@ -207,7 +207,6 @@
 		});
 
 		grid.on('response', function(ev) { 
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if(res.mode=='upd'){
 				grid.resetOriginData();
@@ -263,7 +262,6 @@
 		
 
 		$("#coCdFind").on("click", function(){	
-			console.log("업체검색")
 			coCdDialog.dialog("open");
 			$("#coCdModal").load("${pageContext.request.contextPath}/modal/selectRcoCd", function(){ coCdList() })
 		});
@@ -276,7 +274,6 @@
 			data: $("form").serialize(),
 			success:function(res){
 				grid.readData(1,{},true)
-				console.log(res);
 				insertComplete();
 			},
 			error:function(){
@@ -293,7 +290,6 @@
 			data: $("#rscfrm").serialize(),
 			success:function(res){
 				grid.readData(1,{},true)
-				console.log(res);
 				updateComplete();
 			},
 			error : function(){

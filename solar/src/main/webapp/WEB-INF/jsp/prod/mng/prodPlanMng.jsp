@@ -104,7 +104,6 @@ border-top:3px solid #FECEBB;
 	
 	//변수
 	let odCnt= 0; //발주요청 여부 확인
-	console.log(odCnt);
 	//------------------------------그리드생성------------------------------------------------
 	//생산계획 상세 그리드
 	let planDgrid = new tui.Grid({
@@ -194,7 +193,6 @@ border-top:3px solid #FECEBB;
 	    	        required: true
 	    	      },
 			    onAfterChange(e) {
-	    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value)
 	    	    	calProdDay( e, "planQty", "dayOutput" ); 
 	    	    	for ( i=0; i< rStcGrid.getRowCount(); i++){
 	    	    		rStcGrid.setValue(i, 'ndStc',
@@ -437,7 +435,6 @@ border-top:3px solid #FECEBB;
 
 	planDgrid.on('response', function(ev) { 
 		let res = JSON.parse(ev.xhr.response);
-		console.log(res);
 		if (res.mod =='upd'){
 			planDgrid.clear();
 		}
@@ -487,7 +484,6 @@ border-top:3px solid #FECEBB;
 	//------------------------------버튼------------------------------------------------
 	//생산계획서 조회버튼: 생산계획서 조회모달 호출
  	$('#btnFind').on('click', function(){
- 		console.log("생산계획서 조회")
 		prodPlanDialog.dialog("open");
 		$("#prodPlanModal").load("${pageContext.request.contextPath}/modal/findProdPlan", 
 									function() { planList() })
@@ -512,7 +508,6 @@ border-top:3px solid #FECEBB;
 		} else if (planDgrid.getRowCount() == 0 ) {
 			toastr.error("생산계획 상세내용이 없습니다.")
 		} else if (hdRstcGrid.getRowCount() != 0 && odCnt == 0){
-			console.log(odCnt)
 			toastr.error("자재가 부족합니다. 발주요청 해주세요.")
 		}	else {
 				for ( i =0 ; i <= planDgrid.getRowCount(); i++) {
@@ -544,7 +539,6 @@ border-top:3px solid #FECEBB;
 		planNo = $('#planNo').val();
 		planDt = $('#planDt').val();
 		planNm = $('#planNm').val();
-		console.log(planNo);
 		if (planNo == null || planNo == '') {
 			alert("삭제할 데이터가 없습니다.")
 		} else {
@@ -552,7 +546,6 @@ border-top:3px solid #FECEBB;
 			if (result) { 
 				planDgrid.resetData([]);
 				planMngFrm.reset();
-				console.log("planNo:" + planNo)
 				$.ajax({
 					async: false,
 					url: '${pageContext.request.contextPath}/deletePlan.do',
@@ -585,12 +578,10 @@ border-top:3px solid #FECEBB;
 	//발주요청 버튼
 	$('#rscOrder').on("click", function(){
 		odCnt = 0; 
-		console.log(odCnt);
 		if (hdRstcGrid.getRowCount() != 0) {
 			sendMsgToParent('발주요청 확인요망', '/rsc/mng/ordradmin')
 			odCnt = 1;
 		}
-		console.log(odCnt);
 	});
 	//------------------------------함수------------------------------------------------
 	//생산일수 계산 함수
@@ -630,7 +621,6 @@ border-top:3px solid #FECEBB;
 				toastr.error("작업시작일이 지정되지 않았습니다.");
 				return false;
 			} else { 
-				console.log(i)
 			}
 		}
 		return true;

@@ -49,7 +49,6 @@ public class PrcsController {
 	public String insIndicaModal(IndicaVO vo, Model model) {
 			
 		Map<String, Object> map = new HashMap();
-		System.out.println(vo.getSDate());
 		map.put("contents", prcsservice.selectPDay(vo));
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);

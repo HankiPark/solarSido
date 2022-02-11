@@ -19,7 +19,6 @@ public class Prcs2Scheduler  {
 	Prcs2Mapper pmapper; // 무한루프 그려서 화면에 표기
 
 	public void sch2() throws Exception {
-		System.out.println("스케줄테스트");
 		List<Prcs2> plist = pmapper.findTemp();
 		List<EqmAble> elist = new ArrayList<EqmAble>();
 		List<EqmAble> elist2 = new ArrayList<EqmAble>();
@@ -51,7 +50,6 @@ public class Prcs2Scheduler  {
 				double error = pmapper.random();
 				int ran = (int)(error*2-1);
 				
-				//System.out.println(error);
 				if (plist.get(i).getPrdtFg().equals("P") && plist.get(i).getPrcsFrTm() == null && elist.size() != 0) {
 					EqmAble eq = new EqmAble();
 					plist.get(i).setPrcsFrTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
