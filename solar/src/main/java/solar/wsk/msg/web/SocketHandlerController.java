@@ -46,7 +46,6 @@ public class SocketHandlerController extends TextWebSocketHandler {
 
 			// TODO Auto-generated method stub
 			String msg = message.getPayload();//자바스크립트에서 넘어온 Msg
-			System.out.println(msg);
 			if(msg != null) {
 				String[] msgs = msg.split(",");
 				if(msgs != null && msgs.length ==2) {
@@ -86,7 +85,6 @@ public class SocketHandlerController extends TextWebSocketHandler {
 		}
 		// 로그 메시지
 		private void log(String logmsg) {
-			System.out.println(new Date() + " : " + logmsg);
 		}
 		// 웹소켓에 id 가져오기
 	    // 접속한 유저의 http세션을 조회하여 id를 얻는 함수

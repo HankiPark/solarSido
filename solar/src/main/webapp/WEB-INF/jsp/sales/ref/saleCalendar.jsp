@@ -102,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
     			}
     		],
     		eventClick:function(ev){
-    			console.log(ev.event)
     			ev.jsEvent.preventDefault();
     			$("span[title$='Close']").trigger("click");
     			if(ev.event.url =='or'){

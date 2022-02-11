@@ -39,10 +39,8 @@ public class ProdPlanController {
 		List<?> list = ppService.selectPlan(ppVo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);	
-		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
@@ -52,10 +50,8 @@ public class ProdPlanController {
 		List<?> list = ppService.selectRstc(ppVo);
 		Map<String,Object> map = new HashMap<>();
 		map.put("contents", list);
-		System.out.println("list:"+list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
@@ -64,7 +60,6 @@ public class ProdPlanController {
 	public String modifyPlan(Model model, ProdPlanVO ppVo, 
 							@RequestBody ModifyVO<ProdPlanVO> mvo) throws Exception {
 		ppService.modifyData(mvo);
-//		System.out.println("mvo:" + ppService.modifyData(mvo)); //절대 실행하지 말 것(두 번 실행하게 됨)
 		model.addAttribute("mode", "upd");
 		return "jsonView";
 	}
@@ -83,7 +78,6 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 		
@@ -109,7 +103,6 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
@@ -135,7 +128,6 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
@@ -153,7 +145,6 @@ public class ProdPlanController {
 		map.put("contents", list);
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
-		System.out.println("map:" + map);
 		return "jsonView";
 	}
 	
@@ -166,7 +157,6 @@ public class ProdPlanController {
 	//히든그리드 데이터 
 	@PostMapping("/ajax/planModified.do")
 	public String planDmndData(@RequestBody Map<String, List<ProdPlanVO>> map) {
-		System.out.println("그리드데이터" + map);
 		ppService.planDmndData(map);
 		return "jsonView";
 	}

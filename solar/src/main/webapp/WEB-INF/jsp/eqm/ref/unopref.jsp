@@ -366,7 +366,6 @@
     		eqmCds += ','+row.eqmCd;
     	}
     	eqmCds = eqmCds.substr(1);
-    	console.log(eqmCds);
     	if(eqmCds==''){
     		clearInterval(graphInterval);
     		chart.clear();

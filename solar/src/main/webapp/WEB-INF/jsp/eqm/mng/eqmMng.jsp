@@ -288,11 +288,8 @@
                             yearSuffix: '년'
                         }
                     }, function (start, end, label) {
-                        console.log(start, end, label);
-                        console.log(start.format('YYYY-MM-DD'));
                     },
 
-                );
             });
 
 
@@ -523,7 +520,6 @@
                 height: 600
             });
             $('#btnPrdtCdFind').on('click', function () {
-                console.log("제품검색")
                 prdtCdDialog.dialog("open");
                 $("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function () {
                     prdtCdList();
@@ -581,20 +577,13 @@
             inputGrid.on('response',function(ev){
             	let result = JSON.parse(ev.xhr.response);
             	result = result.queryResult;
-            	//console.log(result);
             	if(result.length!=0){
 	            	if(result != 'true'){
 	            		toastr.success('설비코드가 중복된 데이터를 제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
 	            		
 	            		let duplRows = result.split(',');
-	            		console.log(duplRows);
-	            		
-	            		for(let i = 0; i<inputGrid.getRowCount(); i++) {
 	            			if(duplRows.includes(inputGrid.getValue(i,'eqmCd'))){
-	            				console.log('include', i)
 	            			} else{
-	            				console.log('not include', i)
-	            				console.log(i, inputGrid.getValue(i,'eqmCd'));
 	            				inputGrid.removeRow(i);
 	            			}
 	            		}
@@ -618,7 +607,6 @@
             }
             
             grid.on('click',function(ev){
-            	console.log(ev);
             	$('#insertBtn').daterangepicker({
                     singleDatePicker: true,
                     showDropdowns: true,
@@ -643,8 +631,6 @@
                         yearSuffix: '년'
                     }
                 }, function (start, end, label) {
-                    console.log(start, end, label);
-                    console.log(start.format('YYYY-MM-DD'));
                 },
 
             );

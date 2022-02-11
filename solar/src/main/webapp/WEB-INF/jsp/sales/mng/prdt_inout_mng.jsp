@@ -217,7 +217,6 @@ $(function() {
 		          yearSuffix: '년'
 		    }
 	  }, function(start, end, label) {
-	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 	  },
 	  
 	  );
@@ -260,7 +259,6 @@ $(function() {
 							contentType: 'application/json; charset=utf-8',
 							async: false,
 							}).done((res)=>{
-								console.log(res)
 								a=res["num2"];	
 								
 								//전표번호 부여(기본)
@@ -620,7 +618,6 @@ $(function() {
 				
 			}).done(function(res){
 				a=res["num2"];
-				console.log("a는"+a)
 				$("#slipNm").val(
 						"SLI" + (d.toISOString().slice(0, 10)).replaceAll("-", "")
 								+ a);
@@ -760,7 +757,6 @@ $(function() {
 			dialog6.dialog("open");
 			$("#dialog-outEndList").load("${pageContext.request.contextPath}/modal/outEndList.do",function() {
 				rowKeyNm=ev["rowKey"];
-				console.log(rowKeyNm)
 				outEndList()
 				})
 		}else{

@@ -70,7 +70,6 @@ var dataSource = {
 	});
 	
 	gridPrcs.on('response', function(ev) { 
-		console.log(ev);
 		let res = JSON.parse(ev.xhr.response);
 		if(res.mode=='upd'){
 			gridPrcs.resetOriginData();

@@ -9,11 +9,12 @@
 input#noing {
 display : none;
 }
-
 input#inding {
 display : none;
 }
-
+input#alling {
+display : none;
+}
 input#noing+label{
 display: inline-block;
         width: 15px;
@@ -56,6 +57,27 @@ position: absolute;
         color:#fff;
          margin-bottom:0px;
       }
+input#alling+label{
+display: inline-block;
+        width: 15px;
+        height: 15px;
+        border:3px solid #e37c6b;
+        margin-bottom:0px;
+               position: relative;
+      
+}
+input#alling:checked + label::after{
+        content:'✔';
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+position: absolute;
+		top:-3px;
+		left:0px;
+        background-color: #e37c6b;
+        color:#fff;
+         margin-bottom:0px;
+      }   
 </style>
 </head>
 
@@ -94,8 +116,10 @@ position: absolute;
 						<label>진행상태&nbsp;&nbsp;&nbsp;</label> 
 						<label><input type="checkbox" name="nowSt" id="noing" value="미진행">
 								<label for="noing"></label>미지시</label> 
-						<label><input type="checkbox" id="inding" name="nowSt" value="진행">
+						<label><input type="checkbox" name="nowSt" id="inding" value="진행">
 								<label for="inding"></label>지시완료</label>
+						<label><input type="checkbox" name="nowSt" id="alling" value="전체">
+								<label for="alling"></label>전체</label>
 					</div>
 				</form>
 			</div>
@@ -109,7 +133,6 @@ position: absolute;
 		
 		<!-- 생산계획 상세 그리드-->
 		<div class="col-8" style="margin-top: 40px;">
-			<button style="width: 100px;margin-bottom:10px;box-shadow:2px 2px 2px #74a3b0; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px" type="button" id="btnExcel" class="float-right"><i class="far fa-file-excel"></i>&nbsp;Excel</button>
 			<div id="planDgrid"></div>
 		</div>
 	</div>
@@ -146,7 +169,6 @@ position: absolute;
 					}
 				},
 				function(start, end, label) {
-					console.log("A new date selection was made: "
 							+ start.format('YYYY-MM-DD') + ' to '
 							+ end.format('YYYY-MM-DD'));
 				});
@@ -163,7 +185,6 @@ position: absolute;
 	$("#btnCoCdFind").on(
 			"click",
 			function() {
-				console.log("업체검색")
 				coCdDialog.dialog("open");
 				$("#coCdModal").load(
 						"${pageContext.request.contextPath}/modal/findCoCd",
@@ -183,7 +204,6 @@ position: absolute;
 	$('#btnPrdtCdFind').on(
 			'click',
 			function() {
-				console.log("제품검색")
 				prdtCdDialog.dialog("open");
 				$("#prdtCdModal").load(
 						"${pageContext.request.contextPath}/modal/findPrdtCd",
@@ -203,8 +223,8 @@ position: absolute;
 							method : 'GET'
 						}
 					},
-					contentType : 'application/json',
-					initialRequest : false
+					contentType : 'application/json'
+					//,initialRequest : false
 				//초기에 안보이게 함
 				},
 				scrollX : false,
@@ -271,7 +291,11 @@ position: absolute;
 					name : 'wkOrd',
 					align : 'center',
 					hidden: true
-				}, ],
+				},  {
+					header : '진행상태',
+					name : 'nowSt',
+					align : 'center',
+				}],
 				summary : {
 					position : 'bottom',
 					height : 50,

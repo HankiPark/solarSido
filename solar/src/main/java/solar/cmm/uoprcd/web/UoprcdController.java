@@ -78,7 +78,6 @@ public class UoprcdController {
 	
 	@PostMapping("/grid/uoprcdUpdate.do")
 	public String insertUpdate(Model model, UoprcdVO uoprcdVO, @RequestBody ModifyVO<UoprcdVO> mvo) throws Exception{
-		System.out.println(mvo);
 		uoprcdService.modifyData(mvo);
 		model.addAttribute("mode", "upd");
 		

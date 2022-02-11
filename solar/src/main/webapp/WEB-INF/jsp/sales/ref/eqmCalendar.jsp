@@ -57,9 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     			$("span[title$='Close']").trigger("click");
     			
     			 if(ev.event.url =='inspa'){
-    				 console.log(ev.event.title.length)
     				 if(ev.event.title.length>12){
-    					 console.log(ev.event.title.substring(11,16));
     					ev.event.title.substring(11,16);	 
     					 dialog.dialog("open");
     						$("#dialog-order")

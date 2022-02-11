@@ -31,7 +31,6 @@
     fetch('${pageContext.request.contextPath}/ajax/eqm/uographdata')
     .then(data=>data.json())
     .then((json)=>{
-    	console.log(json.graphData);
     	
     	for(let initialData of json.graphData){
 			let i = initialData.seconds;
@@ -48,7 +47,6 @@
     		fetch('${pageContext.request.contextPath}/ajax/eqm/uographdata')
     		    .then(data=>data.json())
     			.then((json)=>{
-					console.log(json.graphData);
     				let arr = [];
 					for(let intervalData of json.graphData){
 						arr.push(intervalData.seconds);
