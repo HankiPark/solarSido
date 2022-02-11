@@ -70,6 +70,10 @@ public class Prcs2Controller {
 		sservice.remove();
 		return "jsonView";
 	}
+	@RequestMapping("/modal/progIng")
+	public String progIng(Model model, Prcs2 vo) {
+		return "modal/progIng";
+	}
 
 	@RequestMapping("/ajax/repeat")
 	public String repeat(Model model, Prcs2 vo) {
