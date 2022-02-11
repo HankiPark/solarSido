@@ -254,6 +254,16 @@
 				name: 'eqmMdl',
 				align: 'center',
 			},
+// 			{
+// 				header: '용량/규격',
+// 				name: 'eqmSpec',
+// 				align: 'center',
+// 			},
+// 			{
+// 				header: '라인번호',
+// 				name: 'liNo',
+// 				align: 'center',
+// 			},
 			{
 				header: '작업자',
 				name: 'empId',
@@ -274,6 +284,11 @@
 				name: 'temp',
 				align: 'center',
 			},
+// 			{
+// 				header: 'UPH',
+// 				name: 'uph',
+// 				align: 'center',
+// 			},
 			{
 				header: '공정코드',
 				name: 'prcsCd',
@@ -283,6 +298,15 @@
 				header: '가동여부',
 				name: 'eqmYn',
 				align: 'center',
+				formatter({value}) {
+					if(value=='Y'){
+						return '가동';
+					} else if(value=='P'){
+						return '운용중';
+					} else {
+						return '비가동';
+					}
+			    }
 			},
 		]
 	});
@@ -407,8 +431,6 @@
 			 $('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#e9ffe3');
 			} else if(grid.getValue(i, 'eqmYn')=='N'){
 			 $('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#f7dad5');
-			} else if (grid.getValue(i, 'eqmYn')=='P'){
-				$('div#grid').find('td[data-row-key$="'+i+'"]').css('backgroundColor','#bfe0b6');
 			}
 	  	}
 		for(let i = 0; i<rowCnt2; i++){

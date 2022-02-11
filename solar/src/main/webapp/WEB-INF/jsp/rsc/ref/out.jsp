@@ -83,8 +83,8 @@ $(function() {
     rowHeaders: ['checkbox'],
     sortable: true,
     columns: [{
-        header: '출고일',
-        name: 'rscDt',
+        header: '자재코드',
+        name: 'rscCd',
         sortable: true,
       },
       {
@@ -93,8 +93,8 @@ $(function() {
         sortable: true,
       },
       {
-        header: '자재코드',
-        name: 'rscCd',
+        header: 'LOT번호',
+        name: 'rscLot',
         sortable: true,
       },
       {
@@ -103,13 +103,13 @@ $(function() {
         sortable: true,
       },
       {
-        header: '전표번호',
-        name: 'rscSlipNo',
+        header: '출고일',
+        name: 'rscDt',
         sortable: true,
       },
       {
-        header: 'LOT번호',
-        name: 'rscLot',
+        header: '전표번호',
+        name: 'rscSlipNo',
         sortable: true,
       },
     ]
