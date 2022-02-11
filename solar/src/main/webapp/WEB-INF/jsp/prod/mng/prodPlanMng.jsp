@@ -77,13 +77,13 @@ border-top:3px solid #FECEBB;
 	</div>
 	
 	<div class="card card-pricing card-primary card-white card-outline2 "
-		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px;/*  display:none */" id="rstcDiv">
+		style="margin-left: 30px; margin-right: 30px; padding-left: 40px; margin-bottom: 30px; display:none " id="rstcDiv">
 		<div class="card-body">
 			<div id="hdRstcGrid" class="row">
 				<div class="col-9">
 					<label>발주요청 자재 목록</label>
 				</div>
-				<div class="col-3" style="margin-top: -10px; display:none; id="orderBtnDiv">
+				<div class="col-3" style="margin-top: -10px; id="orderBtnDiv">
 					<button type="button" id="rscOrder"
 						style="box-shadow:2px 2px 2px #74a3b0; width: 150px; height: 40px; font-size: 20px; border-radius: 5px; padding: 6px 1px 6px 3px ;boxShadow:2px 2px 2px #74a3b0">
 						<i class="far fa-folder-open"></i> &nbsp; 발주요청
@@ -233,7 +233,7 @@ border-top:3px solid #FECEBB;
 	 		 ]
 	});	
 	
-	//자재재고 체크 그리드
+	//필요자재 재고 체크 그리드
 	let rStcGrid = new tui.Grid({
 		el: document.getElementById('rStcGrid'),
 		data: {
@@ -403,7 +403,7 @@ border-top:3px solid #FECEBB;
 	});
 	
 	planDgrid.on('dblclick', function(ev){
-		if(ev.columnName != "wkDt" || ev.columnName != "planQty") {
+		if(ev.columnName != "planQty" && ev.columnName != "wkDt" ) {
 			let prdtCd = planDgrid.getValue(ev.rowKey, "prdtCd")
 			let prdtNm = planDgrid.getValue(ev.rowKey, "prdtNm")
 			let orderNo = planDgrid.getValue(ev.rowKey, "orderNo")
@@ -436,7 +436,6 @@ border-top:3px solid #FECEBB;
 	});
 
 	planDgrid.on('response', function(ev) { 
-		console.log("응답완료");
 		let res = JSON.parse(ev.xhr.response);
 		console.log(res);
 		if (res.mod =='upd'){
@@ -445,13 +444,15 @@ border-top:3px solid #FECEBB;
 	})
 	
 	//필요자재 재고체크 이벤트
-	rStcGrid.on('response',function(ev){
+	rStcGrid.on('response',function(){
      	rStcGrid.refreshLayout(); 
    	});
 	 
 	rStcGrid.on('onGridUpdated', function(ev) {
 		setTimeout(function(){
 			stcCheck()}, 1600)
+		rStcGrid.refreshLayout(); 
+		hdRstcGrid.refreshLayout(); 
 	});
 	
 	rStcGrid.on("check", (rscEv) => {
@@ -472,11 +473,17 @@ border-top:3px solid #FECEBB;
 			   at : 0
   			});
 	     } 
+		$("#rstcDiv").css("display", "block");	
 	 })
-
- 	hdRstcGrid.on('onGridUpdated', function(ev) {
- 		$("#hdRstcGrid").css("display", "block");	
-	});
+	 
+	 //발주요청 자재 목록 이벤트
+	 hdRstcGrid.on('response',function(){
+		 hdRstcGrid.refreshLayout(); 
+   	});
+	
+	 hdRstcGrid.on('onGridUpdated',function(){
+		 hdRstcGrid.refreshLayout(); 
+   	});
 	//------------------------------버튼------------------------------------------------
 	//생산계획서 조회버튼: 생산계획서 조회모달 호출
  	$('#btnFind').on('click', function(){
@@ -488,10 +495,10 @@ border-top:3px solid #FECEBB;
  	
 	//초기화 버튼: 계획폼, 계획상세 그리드 초기화
 	$('#btnReset').click(function() {
-		planMngFrm.reset();
-		$('#planNo').val('');
+		$('#planNm').val('');
 		planDgrid.resetData([]);
 		rStcGrid.resetData([]);
+		hdRstcGrid.resetData([]);
 	})
 	
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
