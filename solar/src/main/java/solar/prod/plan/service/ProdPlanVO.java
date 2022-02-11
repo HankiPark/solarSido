@@ -39,7 +39,7 @@ public class ProdPlanVO {
 	String bizno;		//사업자등록번호
 	String coFg;		//업체구분
 	String nowSt;		//진행상태
-	
+
 	//rsc
 	String rscCd;		//자재코드
 	String rscStc;		//자재재고량
