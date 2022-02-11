@@ -38,7 +38,6 @@
 						width : 700,
 						height : 700
 					});
-
 					toastr.options = {
 						"closeButton" : false,
 						"debug" : false,
@@ -87,8 +86,8 @@
 					function datawarning() {
 						toastr.warning('데이터 입력오류 정확한 값을 입력해주세요');
 					}
-
-					var dataSource = {
+					var dataSource = 
+					{
 						api : {
 							readData : {
 								url : '${pageContext.request.contextPath}/grid/uoprcdList.do',
@@ -100,7 +99,6 @@
 								cache : false
 							}
 						},
-						/*				initialRequest : false, // 조회버튼 누르면 값을 불러오겠다 */
 						contentType : 'application/json'
 					};
 
@@ -111,25 +109,32 @@
 						scrollY : true,
 						rowHeaders : [ 'rowNum', 'checkbox' ],
 						bodyHeight : 700,
-						columns : [ {
-							header : '비가동코드',
-							name : 'uoprCd',
-							sortable : true
-						}, {
-							header : '발생공정코드',
-							name : 'prcsCd'
-						}, {
-							header : '발생공정명',
-							name : 'prcsNm'
-						}, {
-							header : '비가동명',
-							name : 'uoprNm',
-							editor : 'text'
-						}, {
-							header : '비가동내역',
-							name : 'uoprDesct',
-							editor : 'text'
-						} ]
+						columns : 
+						[ 
+							{
+								header : '비가동코드',
+								name : 'uoprCd',
+								sortable : true
+							},
+							{
+								header : '비가동명',
+								name : 'uoprNm',
+								editor : 'text'
+							}, 
+							{
+								header : '비가동내역',
+								name : 'uoprDesct',
+								editor : 'text'
+							},
+							{
+								header : '발생공정코드',
+								name : 'prcsCd'
+							}, 
+							{
+								header : '발생공정명',
+								name : 'prcsNm'
+							} 
+						]
 					});
 
 					grid.on('onGridUpdated', function() {
@@ -152,10 +157,6 @@
 							.on(
 									'click',
 									function(ev) {
-										/*
-										console.log(ev["columnName"]);
-										console.log(grid.getValue(ev["rowKey"], "prcsNm"));
-										 */
 										if (ev["columnName"] == "prcsCd") {
 											dialog.dialog("open");
 											$("#dialog-form")
