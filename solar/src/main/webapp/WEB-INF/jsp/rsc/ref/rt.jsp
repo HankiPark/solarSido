@@ -109,36 +109,43 @@
 				header: '발주번호',
 				name: 'ordrCd',
 				sortable: true,
+		        align: 'center',
 			},
 			{
 				header: '자재명',
 				name: 'rscNm',
 		        width: 220,
 		        sortable: true,
+		        align: 'center',
 			},
 			{
 				header: '자재코드',
 				name: 'rscCd',
 				sortable: true,
+		        align: 'center',
 			},
 			{
 				header: '반품량',
 				name: 'rscInferQty',
 				sortable: true,
+		        align: 'center',
 			},
 			{
 				header: '반품사유',
 				name: 'rtngdResnCd',
+		        align: 'center',
 			},
 			{
 				header: '발주일',
 				name: 'ordrDt',
 				sortable: true,
+		        align: 'center',
 			},
 			{
 				header: '반품일',
 				name: 'rtngdDt',
 				sortable: true,
+		        align: 'center',
 			}
 		]
 	});

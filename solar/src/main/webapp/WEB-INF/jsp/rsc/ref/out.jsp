@@ -89,31 +89,37 @@ $(function() {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
         sortable: true,
+        align: 'center',
       },
       {
         header: 'LOT번호',
         name: 'rscLot',
         sortable: true,
+        align: 'center',
       },
       {
         header: '출고량',
         name: 'rscQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '출고일',
         name: 'rscDt',
         sortable: true,
+        align: 'center',
       },
       {
         header: '전표번호',
         name: 'rscSlipNo',
         sortable: true,
+        align: 'center',
       },
     ]
   });

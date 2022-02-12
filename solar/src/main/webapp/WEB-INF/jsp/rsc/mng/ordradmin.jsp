@@ -124,19 +124,23 @@ const inGrid = new tui.Grid(
 			columns : [ {
 				header : '자재코드',
 				name : 'rscCd',
+		        align: 'center',
 				
 			}, {
 				header : '자재명',
 				name : 'rscNm',
+		        align: 'center',
 				//hidden: true
 				
 			}, {
 				header : '업체',
 				name : 'coNm',
-				hidden: true
+				hidden: true,
+		        align: 'center',
 			}, {
 				header : '발주요청량',
 				name : 'ordrQty',
+		        align: 'center',
 				
 			}]
 		});
@@ -292,39 +296,46 @@ $(function() {
         header: '발주일',
         name: 'ordrDt',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주번호',
         name: 'ordrCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주량',
         name: 'ordrQty',
         editor: 'text',
         sortable: true,
+        align: 'center',
       },
       {
         header: '업체',
         name: 'coNm',
         sortable: true,
+        align: 'center',
       },
       {
           header: '상태',
           name: 'inspCls',
           formatter: 'listItemText',
           sortable: true,
+          align: 'center',
           editor: {
               type: 'select',
               options: {

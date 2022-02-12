@@ -59,34 +59,41 @@
         name: 'rscNm',
         width: 220,
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '재고',
         name: 'rscStc',
         sortable: true,
+        align: 'center',
       },
       {
         header: '안전재고',
         name: 'safStc',
         sortable: true,
+        align: 'center',
       },
       {
         header: '규격',
-        name: 'rscSpec'
+        name: 'rscSpec',
+        align: 'center',
       },
       {
         header: '관리단위',
-        name: 'rscUnit'
+        name: 'rscUnit',
+        align: 'center',
       },
       {
         header: '단가',
         name: 'rscUntprc',
         sortable: true,
+        align: 'center',
       }
     ]
   });
