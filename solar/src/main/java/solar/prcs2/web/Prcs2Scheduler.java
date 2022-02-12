@@ -49,6 +49,7 @@ public class Prcs2Scheduler  {
 			for (int i = 0; i < plist.size(); i++) {
 				double error = pmapper.random();
 				int ran = (int)(error*2-1);
+				if(ran==-1) {ran=0;}
 				
 				if (plist.get(i).getPrdtFg().equals("P") && plist.get(i).getPrcsFrTm() == null && elist.size() != 0) {
 					EqmAble eq = new EqmAble();
@@ -76,6 +77,10 @@ public class Prcs2Scheduler  {
 						pmapper.updateTo(plist.get(i));
 						pmapper.updateFg(plist.get(i));
 						pmapper.inPrdt(plist.get(i));
+						plist.get(i).setPrdtInferCd(ilist.get(ran).getPrdtInferCd());
+						
+						pmapper.insertInfer(plist.get(i));
+						
 					} else {
 						pmapper.insertMid(plist.get(i));
 						plist.get(i).setPrdtFg("P1");
@@ -109,6 +114,8 @@ public class Prcs2Scheduler  {
 						pmapper.updateTo(plist.get(i));
 						pmapper.updateFg(plist.get(i));
 						pmapper.inPrdt(plist.get(i));
+						plist.get(i).setPrdtInferCd(ilist2.get(ran).getPrdtInferCd());
+						pmapper.insertInfer(plist.get(i));
 					} else {
 						pmapper.insertMid(plist.get(i));
 						plist.get(i).setPrdtFg("P2");
@@ -142,6 +149,8 @@ public class Prcs2Scheduler  {
 						pmapper.updateTo(plist.get(i));
 						pmapper.updateFg(plist.get(i));
 						pmapper.inPrdt(plist.get(i));
+						plist.get(i).setPrdtInferCd(ilist3.get(ran).getPrdtInferCd());
+						pmapper.insertInfer(plist.get(i));
 					} else {
 						pmapper.insertMid(plist.get(i));
 						plist.get(i).setPrdtFg("P3");
@@ -171,6 +180,8 @@ public class Prcs2Scheduler  {
 					if (error >= 0.92) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
+						plist.get(i).setPrdtInferCd(ilist4.get(ran).getPrdtInferCd());
+						pmapper.insertInfer(plist.get(i));
 					} else {
 						pmapper.insertMid(plist.get(i));
 						plist.get(i).setPrdtFg("C");

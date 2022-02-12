@@ -74,6 +74,15 @@ public class Prcs2Controller {
 	public String progIng(Model model, Prcs2 vo) {
 		return "modal/progIng";
 	}
+	@RequestMapping("/grid/prdtIng.do")
+	public String progIngGrid(Model model, Prcs2 vo) {
+		List<?> list =pservice.prIng(vo);
+		Map<String, Object> map = new HashMap();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		return "jsonView";
+	}
 
 	@RequestMapping("/ajax/repeat")
 	public String repeat(Model model, Prcs2 vo) {

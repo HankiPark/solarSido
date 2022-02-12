@@ -22,6 +22,8 @@
 	}
 	.divTable{
 		width:100%;
+		margin-right : 15px;
+		margin-left: 15px;
 	}
 	.divTable > *{
 		border:1px solid black;
@@ -34,17 +36,17 @@
 
 	<h1>공정 모니터링</h1>
 	
-	<div class="DashBoard">
-		<div class="divTable" id="divTable">
-			<div class="row">
-				<div class="col-md-8 mb-6">공정 현황</div>
+	<div class="DashBoard" style="text-align:center">
+		<div class="divTable" id="divTable" style="border: 0px;padding:0px">
+			<div class="row" style="background-color:#4B89DC">
+				<div class="col-md-8 mb-6" style="padding:0px">공정 현황</div>
 				<div class="col-md-4 mb-6 present"></div>
 			</div>
-			<div class="row">
+			<div class="row" style="background-color:yellow">
 				<div class="col-md-2 mb-3">설비명</div>
-				<div class="col-md-2 mb-3">공정명</div>
-				<div class="col-md-2 mb-3">제품명</div>
-				<div class="col-md-2 mb-3">가동상태</div>
+				<!--  <div class="col-md-2 mb-3">공정명</div>-->
+				<div class="col-md-3 mb-3">제품명</div>
+				<div class="col-md-3 mb-3">가동상태</div>
 				<div class="col-md-4 mb-3">생산추적</div>
 			</div>
 		
@@ -78,9 +80,9 @@ $(function(){
 	 			
 	 			const table = document.getElementById('divTable')
 	 			table.innerHTML += `
-	 								<div class="row">
-	 									<div class="col-md-2 mb-3 eqm">\${item.eqmCd}</div>
-	 									<div class="col-md-10 mb-3 contents idx\${cnt} \${item.eqmCd}"></div>
+	 								<div class="row irdx\${cnt} \${item.eqmCd}">
+	 									<div class="col-md-2 mb-3 eqm indx\${cnt} " style="background-color:#91D653">\${item.eqmCd}</div>
+	 									<div class="col-md-10 mb-3 contents idx\${cnt} "style="background-color:white"></div>
 	 								</div>
 	 								`;
 	 			
@@ -92,7 +94,7 @@ $(function(){
 	 	 				
 	 	 			} else if(item.eqmYn == 'N'){
 	 	 				
-	 	 				contents[0].innerText += "비가동 설비";
+	 	 				contents[0].innerText += "비가동됨";
 	 	 				
 	 	 			} else {
 	 	 				
@@ -131,7 +133,6 @@ function rscursion(){
 		
 		presentDiv[0].innerHTML = `\${present}`;		
 				
-		
 		$.ajax({
 			url:"${pageContext.request.contextPath}/prcs/selectPrcsDO",
 			dataType: 'JSON',
@@ -139,13 +140,33 @@ function rscursion(){
 			contentType: 'application/json',
 			success : function(result){
 				prcsDO = result.data.contents;
-				
+				eqmlist = result.eqmList;
 				let contents = "";
 				
 				
-				
 				if(prcsDO.length!=0){
-					for(let item of prcsDO){
+					var cnt=1;
+					outer :for(let item of prcsDO){
+						inner:for(let i =0;i<eqmlist.length;i++){
+							if(eqmlist[i].eqmCd == item.eqmCd){
+								$("."+item.eqmCd).find(":not(.eqm)").remove();
+					 			$("."+item.eqmCd).append(`<div class="col-md-10 mb-3 contents idx\${cnt} ab\${item.eqmCd}"style="background-color:white"></div>`);
+					 			
+					 			let contents = document.getElementsByClassName("ab"+item.eqmCd);
+				 			
+					 	 			
+					 	 				
+					 	 		contents[0].innerText = "대기중"; 
+					 	 				
+					 	 			
+						 			
+									cnt++;
+									continue outer ;
+							}
+						}
+						
+						
+					
 						let prcsNm;
 						let prdtNm;
 						let eqmCd = item.eqmCd;
@@ -189,54 +210,19 @@ function rscursion(){
 						} else {
 							state = '가동중';
 						}
+						$("."+item.eqmCd).find(":not(.eqm)").remove();
+						$("."+item.eqmCd).append(
+								`
+								<div class="col-md-3 mb-3">\${prdtNm}</div>
+								<div class="col-md-3 mb-3">\${state}</div>
+								<div class="col-md-4 mb-3">\${item.prdtLot}</div>`		
+								)
 						
-						let target = document.getElementsByClassName(item.eqmCd);
-						
-						target[0].innerHTML = `<pre>\${prcsNm}  /  \${prdtNm}  /  \${state}  /  \${item.prdtLot}
-											</pre>`
-						
+											
+						cnt++;
 					}
 					
-				} else {
-					
-					$.ajax({
-						url:"${pageContext.request.contextPath}/prcs/searchPrcsEqmDetail",
-						dataType: 'JSON',
-						async: false,
-						contentType: 'application/json',
-						success : function(result){
-							eqmList = result.PRCS;
-						
-							let cnt = 1;
-												
-					 		for(item of eqmList){
-					 			
-					 			
-					 			let contents = document.getElementsByClassName("idx"+cnt);
-				 			
-					 	 			if(item.eqmYn == 'Y'){
-					 	 				
-					 	 				contents[0].innerText = "대기중"; 
-					 	 				
-					 	 			} else if(item.eqmYn == 'N'){
-					 	 				
-					 	 				contents[0].innerText = "비가동 설비";
-					 	 				
-					 	 			} else {
-					 	 				
-					 	 				contents[0].innerText = "가동중";
-					 	 				
-					 	 			} 
-						 			
-									cnt++;
-									
-							} 
-						},
-						error : function(result){
-						}
-					 			
-					});
-				}
+				} 
 				
 				
 			},
@@ -246,7 +232,7 @@ function rscursion(){
 		
 		
 		
-	}, 1000);
+	}, 2000);
 	
 	
 }

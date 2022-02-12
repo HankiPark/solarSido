@@ -37,6 +37,9 @@
 	<select id="ableEqm" resultType="EqmAble">
 		select * from eqm where eqm_yn ='Y' and li_no = #{liNo} order by li_no
 	</select>
+	<select id="allYEqm" resultType="EqmAble">
+		select * from eqm where eqm_yn ='Y' order by li_no
+	</select>
 	
 	<update id="updatePEqm">
 		update eqm set eqm_yn='P' where eqm_cd = #{eqmCd}
@@ -96,11 +99,39 @@
 		select DBMS_RANDOM.VALUE(0,1) as "error" from dual
 	</select>
 	
-	<insert id="insertInfer">
-		insert into prdt_infer values(#{prdtLot},sysdate,#{prdtInferCd},#{eqmCd})
-	</insert>
 	
 	<select id="inferList" resultType="EqmAble">
 		select * from prdt_infer_cd where prcs_cd = (select distinct prcs_cd from eqm where li_no=#{liNo})	
 	</select>
+	
+	<select id="prIng" resultType="PrcsIng">
+		select (select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P') as one_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P') as one_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P') as one_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P1') as two_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P1') as two_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P1') as two_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P2') as three_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P2') as three_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P2') as three_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P3') as four_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P3') as four_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P3') as four_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='F') as err_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='F') as err_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='F') as err_eqm,
+		(select prdt_infer_cd from prdt_infer where prdt_lot=#{prdtLot}) as err_cd,
+		(select prdt_infer_nm from prdt_infer_cd where prdt_infer_cd =(select prdt_infer_cd from prdt_infer where prdt_lot=#{prdtLot})) as err_nm
+		
+		
+		
+		
+		 from dual
+	
+	</select>
+	
+	
+	<insert id="insertInfer">
+		insert into prdt_infer values(#{prdtLot},sysdate,#{prdtInferCd},#{eqmCd},#{indicaDetaNo})
+	</insert>
 </mapper>

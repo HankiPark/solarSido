@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import solar.prcs2.dao.EqmAble;
 import solar.prcs2.dao.Prcs2;
+import solar.prcs2.dao.PrcsIng;
 import solar.prcs2.service.Prcs2Service;
 import solar.sales.order.dao.ModifyVO;
 
@@ -75,6 +77,17 @@ public class Prcs2ServiceImpl implements Prcs2Service {
 		}
 		
 		
+	}
+
+	@Override
+	public List<PrcsIng> prIng(Prcs2 vo) {
+		return pmapper.prIng(vo);
+	}
+
+	@Override
+	public List<EqmAble> allYEqm() {
+		// TODO Auto-generated method stub
+		return pmapper.allYEqm();
 	}
 
 	

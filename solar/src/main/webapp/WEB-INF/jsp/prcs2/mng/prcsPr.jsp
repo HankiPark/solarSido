@@ -154,8 +154,8 @@ let dialog = $("#dialog-form").dialog({
 let dialog2 = $("#dialog-ing").dialog({
 	autoOpen : false,
 	modal : true,
-	width : 900,
-	height : 700
+	width : 1600,
+	height : 270
 });
 
 const grid = new tui.Grid(
@@ -180,6 +180,9 @@ const grid = new tui.Grid(
 			bodyHeight : 700,
 			rowHeight: 30,
 			minRowHeight: 30,
+			columnOptions: {
+				 width: 'auto'
+			  },
 			columns : [ {
 				header : 'index',
 				name : 'prdtInx',
@@ -292,7 +295,7 @@ $("#indicaSearch").on('click',function(){
 });
 $("#start").on('click',function(){
 	if($("#indica").val()!='' && $("#empId").val()!=''){
-		
+		$("#Ccnt").text(grid.getRowCount());	
 		$.ajax({
 			url:'${pageContext.request.contextPath}/ajax/insertWk.do',
 			dataType: 'json',
@@ -315,6 +318,7 @@ $("#start").on('click',function(){
 				grid.setValue(i,'wkDt',today);
 				
 			}
+			
 			wkno=res.No;
 			repeat();
 		});
@@ -322,8 +326,10 @@ $("#start").on('click',function(){
 
 		setTimeout(() => {
 			grid.request('modifyData',{showConfirm: false});	
-			$("#Ccnt").val(grid.getRowCount());
+			
 		}, 1000);
+		
+		
 		
 	}
 	
@@ -425,7 +431,7 @@ $(function(){
 })
 
 grid.on('click',function(ev) {
-		if (grid.getValue(ev["rowKey"], "prdtLot") !=null and grid.getValue(ev["rowKey"], "prdtLot") !='') {
+		if (grid.getValue(ev["rowKey"], "prdtLot") !=null && grid.getValue(ev["rowKey"], "prdtLot") !='') {
 			dialog2.dialog("open");
 			$("#dialog-ing").load("${pageContext.request.contextPath}/modal/progIng",function() {
 				progIng(grid.getValue(ev["rowKey"], "prdtLot"));
