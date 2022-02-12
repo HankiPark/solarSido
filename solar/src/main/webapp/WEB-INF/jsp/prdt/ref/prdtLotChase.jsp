@@ -356,11 +356,31 @@ position: absolute;
 					header : '전표번호',
 					name : 'slipNo'
 				},{
-					header : '주문서번호',
-					name : 'orderNo'
+					header : '사용설비',
+					name : 'eqmLi',
+					formatter:function(value){
+						  if(value.value !=null && value.value !=''){
+							  var st = value.value.split(',');
+							  var fin='';
+							 for (let i = 0 ;i< st.length;i++){
+								 fin+=st[i]+`<br>`;
+							 }
+							  return fin; }
+							else {return null;} 
+					} 
 				},{
 					header : '소모자재 LOT',
-					name : 'rscLot'
+					name : 'rscLot',
+					formatter:function(value){
+						  if(value.value !=null && value.value !=''){
+							  var st = value.value.split(',');
+							  var fin='';
+							 for (let i = 0 ;i< st.length;i++){
+								 fin+=st[i]+`<br>`;
+							 }
+							  return fin; }
+							else {return null;} 
+					} 
 				}
 
 				],

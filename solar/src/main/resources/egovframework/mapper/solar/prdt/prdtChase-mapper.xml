@@ -66,7 +66,8 @@
 	<select id="prdtLotChase" resultType="PrdtChase">
 		select (select indica_no from indica_d where indica_deta_no = (select indica_deta_no from prdt_stc where prdt_lot = #{prdtLot} and prdt_fg='C')) as indica_no,
 				 (select listagg(rsc_lot,',') within group(order by rsc_lot) from prdt_rsc where prdt_lot = #{prdtLot}) as rsc_lot,
-				  slip_no,order_no from oust_d where slip_deta_no = (select indica_deta_no from prdt_stc where prdt_lot = #{prdtLot} and prdt_fg='O')
+				 (select slip_no from oust_d where slip_deta_no = (select indica_deta_no from prdt_stc where prdt_lot = #{prdtLot} and prdt_fg='O')) as slip_no , 
+                 (select listagg(b.eqm_nm,',') within group(order by a.eqm_cd) from (select eqm_cd from prcs_d where prdt_lot = #{prdtLot}) a join eqm b on a.eqm_cd=b.eqm_cd ) as eqm_li from dual
 				   
 		
 			
