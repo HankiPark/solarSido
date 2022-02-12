@@ -140,8 +140,24 @@ progress {
 		<div id="grid" class="col-8" style="margin-left: 40px"></div>
 	</div>
 	<div id="dialog-form" title="미지시 공정"></div>
+	<div id="dialog-ing" title="공정 내역"></div>
 	<script type="text/javascript">
 var wkno=null;
+
+let dialog = $("#dialog-form").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 700,
+	height : 700
+});
+
+let dialog2 = $("#dialog-ing").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 900,
+	height : 700
+});
+
 const grid = new tui.Grid(
 		{
 			el : document.getElementById('grid'), // 컨테이너 엘리먼트
@@ -162,8 +178,8 @@ const grid = new tui.Grid(
 			},
 			
 			bodyHeight : 700,
-			rowHeight: 20,
-			minRowHeight: 10,
+			rowHeight: 30,
+			minRowHeight: 30,
 			columns : [ {
 				header : 'index',
 				name : 'prdtInx',
@@ -407,6 +423,17 @@ $(function(){
 	}, 2000);
 	
 })
+
+grid.on('click',function(ev) {
+		if (grid.getValue(ev["rowKey"], "prdtLot") !=null and grid.getValue(ev["rowKey"], "prdtLot") !='') {
+			dialog2.dialog("open");
+			$("#dialog-ing").load("${pageContext.request.contextPath}/modal/progIng",function() {
+				progIng(grid.getValue(ev["rowKey"], "prdtLot"));
+				
+
+				})
+				}
+			});
 </script>
 </body>
 </html>
