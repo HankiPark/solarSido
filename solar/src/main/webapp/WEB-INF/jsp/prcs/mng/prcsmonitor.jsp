@@ -10,9 +10,22 @@
 <style>
 	.contents{
 		text-align:center;
-	},
+	}
 	div{
-		border:10px solid black;	
+		border:1px solid black;
+		width:500px;
+		height:50px;
+		font-size:20pt;
+	}
+	.DashBoard{
+		width:100%;
+	}
+	.divTable{
+		width:100%;
+	}
+	.divTable > *{
+		border:1px solid black;
+		width:100%;	
 	}
 	
 </style>
@@ -21,18 +34,18 @@
 
 	<h1>공정 모니터링</h1>
 	
-	<div id="DashBoard">
+	<div class="DashBoard">
 		<div class="divTable" id="divTable">
 			<div class="row">
-				<div class="col-md-6 mb-6">공정 현황</div>
-				<div class="col-md-3 mb-6 present"></div>
+				<div class="col-md-8 mb-6">공정 현황</div>
+				<div class="col-md-4 mb-6 present"></div>
 			</div>
 			<div class="row">
 				<div class="col-md-2 mb-3">설비명</div>
 				<div class="col-md-2 mb-3">공정명</div>
 				<div class="col-md-2 mb-3">제품명</div>
 				<div class="col-md-2 mb-3">가동상태</div>
-				<div class="col-md-2 mb-3">생산추적</div>
+				<div class="col-md-4 mb-3">생산추적</div>
 			</div>
 		
 		</div>
@@ -66,7 +79,7 @@ $(function(){
 	 			const table = document.getElementById('divTable')
 	 			table.innerHTML += `
 	 								<div class="row">
-	 									<div class="col-md-1 mb-3 eqm">\${item.eqmCd}</div>
+	 									<div class="col-md-2 mb-3 eqm">\${item.eqmCd}</div>
 	 									<div class="col-md-10 mb-3 contents idx\${cnt} \${item.eqmCd}"></div>
 	 								</div>
 	 								`;
@@ -179,7 +192,7 @@ function rscursion(){
 						
 						let target = document.getElementsByClassName(item.eqmCd);
 						
-						target[0].innerHTML = `<pre>	\${prcsNm}	/	\${prdtNm}	/	\${state}		/	\${item.prdtLot}
+						target[0].innerHTML = `<pre>\${prcsNm}  /  \${prdtNm}  /  \${state}  /  \${item.prdtLot}
 											</pre>`
 						
 					}
