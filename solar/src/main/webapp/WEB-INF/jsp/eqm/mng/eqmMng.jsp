@@ -289,8 +289,9 @@
                         }
                     }, function (start, end, label) {
                     },
-
-            });
+                    )
+            }
+            );
 
 
             var Grid = tui.Grid;
@@ -328,11 +329,13 @@
                 bodyHeight: 500,
                 columns: [{
                         header: '설비코드',
-                        name: 'eqmCd'
+                        name: 'eqmCd',
+                        align: 'center',
                     },
                     {
                         header: '설비구분',
                         name: 'eqmFg',
+                        align: 'center',
                         editor:{
                         	type: 'select',
                         	options: {
@@ -349,10 +352,12 @@
                         header: '설비명',
                         name: 'eqmNm',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '모델',
                         name: 'eqmMdl',
+                        align: 'center',
                         editor:{
                         	type: 'select',
                         	options: {
@@ -368,6 +373,7 @@
                     {
                         header: '용량/규격',
                         name: 'eqmSpec',
+                        align: 'center',
                         editor:{
                         	type: 'select',
                         	options: {
@@ -384,56 +390,69 @@
                         header: '제작업체',
                         name: 'eqmCo',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '구매일자',
                         name: 'purcDt',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '구매금액',
                         name: 'purcAmt',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '라인번호',
                         name: 'liNo',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '작업자',
                         name: 'empId',
                         editor: 'text',
+                        align: 'center',
+                        hidden: true,
                     },
                     {
                         header: '사용에너지',
                         name: 'energy',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '부하율',
                         name: 'lf',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '기준온도',
                         name: 'temp',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: 'UPH',
                         name: 'uph',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '공정코드',
                         name: 'prcsCd',
                         editor: 'text',
+                        align: 'center',
+                        hidden: true,
                     },
         			{
         				header: '가동여부',
         				name: 'eqmYn',
         				align: 'center',
+        				hidden: true,
         				formatter({value}) {
         					if(value=='Y'){
         						return '가동';
@@ -453,67 +472,83 @@
                 rowHeaders: ['checkbox','rowNum'],
                 columns: [{
                         header: '설비코드',
-                        name: 'eqmCd'
+                        name: 'eqmCd',
+                        align: 'center',
                     },
                     {
                         header: '설비구분',
-                        name: 'eqmFg'
+                        name: 'eqmFg',
+                        align: 'center',
                     },
                     {
                         header: '설비명',
-                        name: 'eqmNm'
+                        name: 'eqmNm',
+                        align: 'center',
                     },
                     {
                         header: '라인번호',
-                        name: 'eqmMdl'
+                        name: 'eqmMdl',
+                        align: 'center',
                     },
                     {
                         header: '용량/규격',
-                        name: 'eqmSpec'
+                        name: 'eqmSpec',
+                        align: 'center',
                     },
                     {
                         header: '제작업체',
-                        name: 'eqmCo'
+                        name: 'eqmCo',
+                        align: 'center',
                     },
                     {
                         header: '구매일자',
-                        name: 'purcDt'
+                        name: 'purcDt',
+                        align: 'center',
                     },
                     {
                         header: '구매금액',
-                        name: 'purcAmt'
+                        name: 'purcAmt',
+                        align: 'center',
                     },
                     {
                         header: '라인번호',
-                        name: 'liNo'
+                        name: 'liNo',
+                        align: 'center',
                     },
                     {
                         header: '작업자',
-                        name: 'empId'
+                        name: 'empId',
+                        align: 'center',
                     },
                     {
                         header: '사용에너지',
-                        name: 'energy'
+                        name: 'energy',
+                        align: 'center',
                     },
                     {
                         header: '부하율',
                         name: 'lf',
+                        align: 'center',
                     },
                     {
                         header: '기준온도',
-                        name: 'temp'
+                        name: 'temp',
+                        align: 'center',
                     },
                     {
                         header: 'UPH',
                         name: 'uph',
+                        align: 'center',
                     },
                     {
                         header: '공정코드',
                         name: 'prcsCd',
+                        align: 'center',
                     },
                     {
                         header: '가동여부',
                         name: 'eqmYn',
+                        align: 'center',
                     },
                 ]
             });
@@ -588,18 +623,23 @@
             	result = result.queryResult;
             	if(result.length!=0){
 	            	if(result != 'true'){
-	            		toastr.success('설비코드가 중복된 데이터를 제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
+	            		toastr.success('설비코드가 중복된 데이터를 \n제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
 	            		
-	            		let duplRows = result.split(',');
-	            			if(duplRows.includes(inputGrid.getValue(i,'eqmCd'))){
-	            			} else{
-	            				inputGrid.removeRow(i);
-	            			}
-	            		}
+// 	            		let duplCds = result.split(',');
+// 	            		console.log(duplCds);
+// 	            		let rowCnt = inputGrid.getRowCount()-1;
+// 	            		inputGrid.uncheckAll();
+// 	            		for(let i = 0; i < rowCnt; i++){
+// 	            			console.log(inputGrid.getValue(i,'eqmCd'));
+// 	            			if(!duplCds.includes(inputGrid.getValue(i,'eqmCd'))){
+// 	            				inputGrid.check(i);
+// 	            			}
+// 	            		}
+// 	            		inputGrid.removeCheckedRows();
+            		}
 	            		
-	            	} else {
-	            		toastr.success('모두 저장되었습니다.');
-            	}
+            	} else {
+            		toastr.success('모두 저장되었습니다.');
             	}
             });
             

@@ -148,48 +148,57 @@
         header: '발주일',
         name: 'ordrDt',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주량',
         name: 'ordrQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '받은 수량',
         name: 'rscIstQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '불량량',
         name: 'rscInferQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주번호',
         name: 'ordrCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '업체',
         name: 'coNm',
         sortable: true,
+        align: 'center',
       },
       {
         header: '검수여부',
         name: 'inspCls',
         formatter: 'listItemText',
         sortable: true,
+        align: 'center',
         editor: {
             type: 'select',
             options: {
