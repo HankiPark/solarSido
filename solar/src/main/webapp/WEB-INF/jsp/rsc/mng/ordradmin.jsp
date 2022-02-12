@@ -369,9 +369,9 @@ $(function() {
     	  rscDialog.dialog("open");
 	   	  $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
       }
-      /* if(ev.columnName == 'inspCls'){
+      if(ev.columnName == 'inspCls'){
     	  return false;
-      } */
+      }
     });
 	grid.on('onGridMounted',function(){
 		grid.readData(1,{
@@ -404,12 +404,12 @@ $(function() {
   let saveBtn = document.getElementById("saveBtn");
   saveBtn.addEventListener("click",function(){
 	  let newRows = grid.getModifiedRows().createdRows;
-	 /*  for(let newRow of newRows){
+	 for(let newRow of newRows){
 		  if(newRow.rscCd == '' || newRow.ordrQty == '' || parseInt(newRow.ordrQty)+'' == 'NaN'){
 			  toastr.error('유효한 값을 입력하세요.');
 			  return false;
 		  }
-	  } */
+	 }
 	  grid.request('modifyData');
   });
   let deleteBtn = document.getElementById("deleteBtn");
