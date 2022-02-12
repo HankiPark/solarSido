@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.cmmndata.service.impl.CmmndataMapper;
+import solar.cmm.rscinfer.dao.RscinferVO;
 import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.cmm.rscinfo.service.RscinfoService;
 import solar.cmm.rscinfo.service.impl.RscinfoMapper;
+import solar.rsc.stc.service.RscStc;
 import solar.sales.order.dao.ModifyVO;
 
 @Controller
@@ -84,7 +86,7 @@ public class RscinfoController {
 		CmmndataVO cmmndataVO = new CmmndataVO();
 		cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
 		cmmndataVO.setCmmnCdId("rsc");
-		cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+		cmmndataVO.setCmmnCdNm(rscinfoVO.getRscNm());
 		cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 		return "common/mng/rscinfo";
 	}
@@ -97,8 +99,18 @@ public class RscinfoController {
 		CmmndataVO cmmndataVO = new CmmndataVO();
 		cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
 		cmmndataVO.setCmmnCdId("rsc");
-		cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+		cmmndataVO.setCmmnCdNm(rscinfoVO.getRscNm());
 		cmmndataMapper.cmmnDetailInsert(cmmndataVO);
+		return "common/mng/rscinfo";
+	}
+	@PostMapping("/rscinfoDelete.do")
+	public String rscDelete(RscinfoVO rscinfoVO) {
+		rscinfoService.rscinfoDelete(rscinfoVO);
+		rscinfoService.rscstcDelete(rscinfoVO);
+		CmmndataVO cmmndataVO = new CmmndataVO();
+		cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+		cmmndataMapper.cmmnDetailDelete(cmmndataVO);
+		
 		return "common/mng/rscinfo";
 	}
 	

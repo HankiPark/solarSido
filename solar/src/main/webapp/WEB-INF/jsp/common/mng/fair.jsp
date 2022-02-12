@@ -96,13 +96,13 @@
 						editor : 'text',
 						formatter:function(value){
 							if(value.value=="1"){
-								return "제조_공정";
+								return "제조 공정";
 							}else if(value.value=="2"){
-								return "전극_공정";
+								return "전극 공정";
 							}else if(value.value=="3"){
-								return "용접_공정";
+								return "용접 공정";
 							}else if(value.value=="4"){
-								return "접합_공정";
+								return "접합 공정";
 							}else{
 								return "";
 							}

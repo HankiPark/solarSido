@@ -34,6 +34,9 @@
 		<div class="col-8">
 
 			<div class="float-right" >
+				<button type="button" id="btnAdd" style="margin-bottom:10px">추가</button>
+				<button type="button" id="btnDel" style="margin-bottom:10px">삭제</button>
+				<button type="button" id="btnSave" style="margin-bottom:10px">저장</button>
 				<button type="button" id="btnReset" style="margin-bottom:10px">초기화</button>
 			</div>
 			<div id="detailgrid"></div>
@@ -131,7 +134,7 @@
 				},
 				modifyData : {
 					url : '${pageContext.request.contextPath}/grid/modifyData',
-					method : 'PUT'
+					method : 'POST'
 				}
 			},
 			initialRequest : false, // 조회버튼 누르면 값을 불러오겠다
@@ -147,16 +150,20 @@
 			minBodyHeight : 600,
 			columns : [ {
 				header : '공통코드상세ID',
-				name : 'cmmnCdDetaId'
+				name : 'cmmnCdDetaId',
+				editor : 'text'
 			}, {
 				header : '공통코드ID',
-				name : 'cmmnCdId'
+				name : 'cmmnCdId',
+				editor : 'text'
 			}, {
 				header : '코드명',
-				name : 'cmmnCdNm'
+				name : 'cmmnCdNm',
+				editor : 'text'
 			}, {
 				header : '설명',
-				name : 'cmmnCdDesct'
+				name : 'cmmnCdDesct',
+				editor : 'text'
 			} ]
 		});
 
