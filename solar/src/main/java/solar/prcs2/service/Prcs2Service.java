@@ -16,4 +16,8 @@ public interface Prcs2Service {
 	List<PrcsIng> prIng(Prcs2 vo);
 	List<Prcs2> repeat(Prcs2 vo);
 	List<EqmAble> allYEqm();
+	List<Prcs2> prdtInferList(Prcs2 vo);
+	List<Prcs2> inspaEqmChart();
+	List<Prcs2> EqmKindChart(Prcs2 vo);
+	List<Prcs2> findInspaPrdt(Prcs2 vo);
 }
