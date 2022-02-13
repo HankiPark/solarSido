@@ -32,22 +32,33 @@
 					{
 					header : '제품코드',
 					name : 'prdtCd',
+					width : 130,
+					align : 'center'
 				}, {
 					header : '제품명',
-					name : 'prdtNm'
+					name : 'prdtNm',
+					align : 'center'
 				}, {
 					header : '주문량',
 					name : 'orderQty',
+					width : 100,
+					align : 'center'
 					
 				}, {
 					header : '지시량',
-					name : 'indicaQty'
+					name : 'indicaQty',
+					width : 100,
+					align : 'center'
 				}, {
 					header : '출고량',
-					name : 'oustQty'
+					name : 'oustQty',
+					width : 100,
+					align : 'center'
 				}, {
 					header : '현재고',
-					name : 'prdtStc'
+					name : 'prdtStc',
+					width : 100,
+					align : 'center'
 				},
 
 				],

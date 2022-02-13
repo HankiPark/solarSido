@@ -112,22 +112,28 @@
 			bodyHeight : 500,
 			columns : [ {
 				header : '주문번호',
-				name : 'orderNo'
+				name : 'orderNo',
+				align : 'center'
 			}, {
 				header : '접수일자',
 				name : 'recvDt',
+				align : 'center'
 			}, {
 				header : '업체명',
-				name : 'coNm'
+				name : 'coNm',
+				align : 'center'
 			}, {
 				header : '납기일자',
 				name : 'paprdDt',
+				align : 'center'
 			}, {
 				header : '주문제품명',
-				name : 'deNum'
+				name : 'deNum',
+				align : 'center'
 			}, {
 				header : '진행상황',
-				name : 'progInfo'
+				name : 'progInfo',
+				align : 'center'
 			},
 
 			],
