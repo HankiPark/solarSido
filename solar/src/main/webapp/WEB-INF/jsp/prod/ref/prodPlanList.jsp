@@ -145,8 +145,7 @@ position: absolute;
 	let prdtCd;
 
 	$(function() {
-		$('input[name="startT"]').daterangepicker(
-				{
+		$('input[name="startT"]').daterangepicker({
 					showDropdowns : true,
 					opens : 'right',
 					startDate : moment().startOf('hour').add(-7, 'day'),
@@ -170,8 +169,9 @@ position: absolute;
 				},
 				function(start, end, label) {
 							+ start.format('YYYY-MM-DD') + ' to '
-							+ end.format('YYYY-MM-DD'));
-				});
+							+ end.format('YYYY-MM-DD');
+				}
+			);
 	});
 
 	//업체검색 모달
