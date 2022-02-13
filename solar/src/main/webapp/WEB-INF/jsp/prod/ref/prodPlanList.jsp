@@ -169,8 +169,6 @@ position: absolute;
 					}
 				},
 				function(start, end, label) {
-							+ start.format('YYYY-MM-DD') + ' to '
-							+ end.format('YYYY-MM-DD'));
 				});
 	});
 

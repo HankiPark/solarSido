@@ -60,6 +60,27 @@ position: absolute;
         color:#fff;
          margin-bottom:0px;
       }
+input#alling+label{
+display: inline-block;
+        width: 15px;
+        height: 15px;
+        border:3px solid #e37c6b;
+        margin-bottom:0px;
+               position: relative;
+      
+}
+input#alling:checked + label::after{
+        content:'✔';
+        font-size: 12px;
+        width: 12px;
+        height: 12px;
+position: absolute;
+		top:-3px;
+		left:0px;
+        background-color: #e37c6b;
+        color:#fff;
+         margin-bottom:0px;
+      }
 </style>
 </head>
 
