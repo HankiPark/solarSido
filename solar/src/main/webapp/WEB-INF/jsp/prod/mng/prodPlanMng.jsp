@@ -471,14 +471,17 @@ border-top:3px solid #FECEBB;
   			});
 	     } 
 		$("#rstcDiv").css("display", "block");	
+		 hdRstcGrid.refreshLayout(); 
 	 })
 	 
 	 //발주요청 자재 목록 이벤트
 	 hdRstcGrid.on('response',function(){
+		 console.log("res")
 		 hdRstcGrid.refreshLayout(); 
    	});
 	
 	 hdRstcGrid.on('onGridUpdated',function(){
+		 console.log("onG")
 		 hdRstcGrid.refreshLayout(); 
    	});
 	//------------------------------버튼------------------------------------------------

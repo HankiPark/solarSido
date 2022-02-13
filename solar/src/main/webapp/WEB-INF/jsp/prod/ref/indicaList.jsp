@@ -9,15 +9,12 @@
 input#noing {
 display : none;
 }
-
 input#inding {
 display : none;
 }
-
 input#alling {
 display : none;
 }
-
 input#noing+label{
 display: inline-block;
         width: 15px;
@@ -80,7 +77,7 @@ position: absolute;
         background-color: #e37c6b;
         color:#fff;
          margin-bottom:0px;
-      }
+
 </style>
 </head>
 
@@ -166,6 +163,8 @@ position: absolute;
 				}
 			}, 
 		function(start, end, label) {
+				+ start.format('YYYY-MM-DD') + ' to '
+				+ end.format('YYYY-MM-DD');
 			}
 		);
 	});

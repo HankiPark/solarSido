@@ -564,10 +564,32 @@
 		height : 600,
 		buttons : {
 			"확인" : function(){
-				planDetailDialog.dialog("close");
+
 			}
 		}
 	});
+	
+	$("#planModal").next().find("button:contains('확인')").on('click',function(ev){
+        indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
+        indicaDgrid.refreshLayout();
+        $.ajax({
+           url:'${pageContext.request.contextPath}/ajax/makeDno.do',
+           dataType: 'json',
+           contentType: 'application/json; charset=utf-8',
+           async: false,
+        }).done((res)=>{
+           let idx = 0;
+           for(i=0; i<indicaDgrid.getRowCount(); i++){
+              if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
+              } else {
+                 indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
+                 idx = Number(idx) +1
+              }
+           }
+           planDetailDialog.dialog("close");
+        })
+     });
+	
 	
 	//생산지시서 모달
 	let indicaDialog = $("#indicaModal").dialog({
@@ -598,10 +620,10 @@
 			idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
 			idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
 			orderNo = indicaDgrid.getValue(ev.rowKey, "orderNo")
-			if (planQty != null  || planQty != "" ) {
-				if(planQty != idcQty) {
-					toastr.warning("계획량과 지시량이 다릅니다.");
-					indicaDgrid.setValue(ev.rowKey, "indicaQty", indicaDgrid.getValue(ev.rowKey, "planQty"));
+			if (planQty != null  && planQty != "") {
+				if(planQty < idcQty) {
+					toastr.warning("계획량을 초과했습니다.");
+					indicaDgrid.setValue(ev.rowKey, "indicaQty", indicaDgrid.getValue(ev.rowKey, ""));
 				} 
 			} else {
 				let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
@@ -649,14 +671,19 @@
 			};
 			rscGrid.readData(1, rscGridParams, true);
 		}
+		for ( i=0; i< rscGrid.getRowCount(); i++){
+    		rscGrid.setValue(i, 'totalUseQty', indicaDgrid.getValue(ev.rowKey, "indicaQty") * rscGrid.getValue(i, 'rscUseQty'));
+		}
 	});
 	
 	indicaDgrid.on('onGridUpdated', function() {
 		indicaDgrid.refreshLayout();
+		setTimeout(function(){
 		 for(let i = 0; i < indicaDgrid.getRowCount(); i++){
 			 indicaDgrid.setValue(i, "indicaQty", indicaDgrid.getValue(i, "planQty"));
 				calProdDay( i, "indicaQty", "dayOutput" )	;	
 			}
+		}, 1500)
 	});
 	 
 	indicaDgrid.on('response', function(ev) { 
@@ -919,10 +946,13 @@
 	rowAdd.addEventListener("click", function(idx){
 		indicaDgrid.clear();
 		indicaDgrid.refreshLayout();
-		indicaDgrid.appendRow({},{
-			extendPrevRowSpan : false,
-			focus : true,
-			at : 0
+		/* indicaDgrid.appendRow({},{
+		extendPrevRowSpan : false,
+		focus : true,
+		at : 0
+		}); */
+		indicaDgrid.prependRow({
+			  "prodFg":"정상"
 		});
 		//지시상세번호 부여
 		$.ajax({
@@ -964,7 +994,7 @@
 	}
 	
 	//생산일수 계산 함수
-	function calProdDay( rowKey, a, b ) { // 생산일수계산
+	function calProdDay( rowKey, a, b ) { 
 		a = Number(indicaDgrid.getValue( rowKey, a ));
 		b = Number(indicaDgrid.getValue( rowKey, b ));
 		result = (Number(a) / Number(b)).toFixed(1);
