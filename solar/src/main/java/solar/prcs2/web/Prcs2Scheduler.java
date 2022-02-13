@@ -48,8 +48,8 @@ public class Prcs2Scheduler  {
 			ilist4.addAll(pmapper.inferList(eqmNo));
 			for (int i = 0; i < plist.size(); i++) {
 				double error = pmapper.random();
-				int ran = (int)(error*2-1);
-				if(ran==-1) {ran=0;}
+				int ran = (int)(error*7);
+				if(ran==7) {ran=6;}
 				
 				if (plist.get(i).getPrdtFg().equals("P") && plist.get(i).getPrcsFrTm() == null && elist.size() != 0) {
 					EqmAble eq = new EqmAble();

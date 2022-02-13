@@ -13,6 +13,11 @@ public interface Prcs2Mapper {
 	int insertDetailO(Prcs2 vo);
 	List<Prcs2> findTemp();
 	List<Prcs2> listPrcs(Prcs2 vo);
+	List<Prcs2> prdtInferList(Prcs2 vo);
+	List<Prcs2> inspaEqmChart();
+	List<Prcs2> EqmKindChart(Prcs2 vo);
+	List<Prcs2> findInspaPrdt(Prcs2 vo);
+	
 	List<PrcsIng> prIng(Prcs2 vo);
 	List<EqmAble> inferList(EqmAble vo);
 	List<EqmAble> ableEqm(EqmAble vo);

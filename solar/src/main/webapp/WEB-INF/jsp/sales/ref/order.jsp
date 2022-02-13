@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<h1>주문서 참조</h1>
+	<h1>주문서 조회</h1>
 	<div class="row" id="senseOrder">
 		<div id="senseOrderBody" class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px;">
 		<div class="card-body"  >

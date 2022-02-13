@@ -90,6 +90,28 @@ public class Prcs2ServiceImpl implements Prcs2Service {
 		return pmapper.allYEqm();
 	}
 
+	@Override
+	public List<Prcs2> prdtInferList(Prcs2 vo) {
+		return pmapper.prdtInferList(vo);
+	}
+
+	@Override
+	public List<Prcs2> inspaEqmChart() {
+		return pmapper.inspaEqmChart();
+	}
+
+	@Override
+	public List<Prcs2> EqmKindChart(Prcs2 vo) {
+		// TODO Auto-generated method stub
+		return pmapper.EqmKindChart(vo);
+	}
+
+	@Override
+	public List<Prcs2> findInspaPrdt(Prcs2 vo) {
+		// TODO Auto-generated method stub
+		return pmapper.findInspaPrdt(vo);
+	}
+
 	
 	
 }
