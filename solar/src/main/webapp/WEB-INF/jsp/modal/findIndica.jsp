@@ -75,13 +75,16 @@ function indicaList(){
 				bodyHeight : 300,
 				columns : [ {
 					header : '생산지시번호',
-					name : 'indicaNo'
+					name : 'indicaNo',
+					align : 'center'
 				}, {
 					header : '지시일자',
-					name : 'indicaDt'
+					name : 'indicaDt',
+					align : 'center'
 				}, {
 					header : '생산지시명',
-					name : 'indicaNm'
+					name : 'indicaNm',
+					align : 'center'
 				}]
 			});
 

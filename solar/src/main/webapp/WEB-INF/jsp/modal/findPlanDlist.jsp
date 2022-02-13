@@ -35,68 +35,82 @@ function planDList(){
 			 {
 			    header: '계획번호',
 			    name: 'planNo',
+				align : 'center'
 			  },
 		 	 {
 			    header: '계획명',
 			    name: 'planNm',
-			    //hidden: true
+			    //hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '계획일자',
 			    name: 'planDt',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			 
 			  { 
 			    header: '주문번호',
 			    name: 'orderNo',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  { header: '접수일자',
 			    name: 'recvDt',
-			   	hidden: true
+			   	hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '제품코드',
 			    name: 'prdtCd',
 			    sortingType: 'desc',
-		        sortable: true
+		        sortable: true,
+				align : 'center'
 			  },		  
 			  {
 			    header: '제품명',
-			    name: 'prdtNm'
+			    name: 'prdtNm',
+				align : 'center'
 			  },
 			  {
 			    header: '납기일자',
 			    name: 'paprdDt',
+				align : 'center'
 			  },
 			  {
 			    header: '주문량',
 			    name: 'orderQty',
+				align : 'center'
 			  },
 			 {
 			    header: '작업량',
 			    name: 'planQty',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '생산일수',
 			    name: 'prodDay',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '작업일자',
 			    name: 'wkDt',
+				align : 'center'
 			  },
 			  {
 			    header: '작업순서',
 			    name: 'wkOrd',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  }
 	 		 ]
 	});	

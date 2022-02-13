@@ -191,37 +191,44 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-				        //hidden: true
+				        //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획번호',
 					    name: 'planNo',
-					   	//hidden: true
+					   	//hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시번호',
 					    name: 'indicaNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시명',
 					    name: 'indicaNm',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시일자',
 					    name: 'indicaDt',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '업체코드',
 					    name: 'coCd',
-				    	hidden: true
+				    	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '제품코드',
@@ -237,38 +244,45 @@
 				        sortable: true,
 				        validation: {
 			    	        required: true
-		    	      }
+		    	      },
+						align : 'center'
 					  },		  
 					  {
 					    header: '제품명',
-					    name: 'prdtNm'
+					    name: 'prdtNm',
+						align : 'center'
 					  },
 					  {
 					    header: '납기일자',
 					    name: 'paprdDt',
 					    sortingType: 'desc',
-				        sortable: true
+				        sortable: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문량',
 					    name: 'orderQty',
-					  	hidden: true
+					  	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획상세번호',
 					    name: 'planDetaNo',
-					   	hidden: true
+					   	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획일자',
 					    name: 'planDt',
-					   	hidden: true
+					   	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획량',
 					    name: 'planQty',
 					    sortingType: 'desc',
-				        sortable: true
+				        sortable: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시량',
@@ -283,19 +297,23 @@
 				    	    		rscGrid.setValue(i, 'totalUseQty',
 				    	    				e.value * rscGrid.getValue(i, 'rscUseQty'));
 				    	    	}
-				    	    }    	
+				    	    },
+							align : 'center'    	
 					  },
 					  {
 					    header: '일생산량',
 					    name: 'dayOutput',
+						align : 'center'
 					  },
 					  {
 					    header: '생산일수',
 					    name: 'prodDay',
+						align : 'center'
 					  },
 					  {
 					    header: '생산구분',
 					    name: 'prodFg',
+						align : 'center'
 					    formatter: 'listItemText',
 				    	editor: {
 				    		type:'select',
@@ -310,6 +328,7 @@
 					  {
 					    header: '작업시작일',
 					    name: 'wkDt',
+						align : 'center'
 					    editor :'datePicker',
 					    sortingType: 'desc',
 				        sortable: true,
@@ -321,7 +340,8 @@
 					    header: '작업순서',
 					    name: 'wkOrd',
 					    editor: 'text',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  }
 			 		 ]
 			});
@@ -349,28 +369,34 @@
 					 {
 					    header: '제품코드',
 					    name: 'prdtCd',
-					    //hidden: true
+					    //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
-					    name: 'rscCd'
+					    name: 'rscCd',
+						align : 'center'
 					  },
 					  {
 					    header: '자재명',
-					    name: 'rscNm'
+					    name: 'rscNm',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+						align : 'center'
 					  },
 					  {
 					    header: '총 소요량',
-					    name: 'totalUseQty'
+					    name: 'totalUseQty',
+						align : 'center'
 					  }
 				],
 		summary: {
@@ -414,34 +440,41 @@
 					 {
 					    header: '자재코드',
 					    name: 'rscCd',
-					    //hidden: true
+					    //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
 					    name: 'rscUseQty',
-					  	hidden: true
+					  	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '생산지시상세번호',
 					    name: 'indicaDetaNo',
+						align : 'center'
 					  },
 					  {
 					    header: '자재LOT_NO',
-					    name: 'rscLot'
+					    name: 'rscLot',
+						align : 'center'
 					  },
 					  {
 					    header: '재고량',
-					    name: 'rscStc'
+					    name: 'rscStc',
+						align : 'center'
 					  },
 					  {
 					    header: '투입량',
 					    name: 'rscQty',
 					    editor: 'text',
+						align : 'center'
 		    	    }    
 				],
 		summary: {
@@ -476,23 +509,28 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-					    //hidden: true
+					    //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
-					    name: 'rscCd'
+					    name: 'rscCd',
+						align : 'center'
 					  },
 					  {
 					    header: '자재LOT_NO',
-					    name: 'rscLot'
+					    name: 'rscLot',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+						align : 'center'
 					  },
 					  {
 					    header: '투입량',
-					    name: 'rscQty'
+					    name: 'rscQty',
+						align : 'center'
 					    
 					    
 					  }
@@ -528,29 +566,35 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-					 	//hidden: true
+					 	//hidden: true,
+						align : 'center'
 					  },
 					  {
 					 	header: '제품코드',
 					    name: 'prdtCd',
-						//hidden: true
+						//hidden: true,
+						align : 'center'
 					  },
 					  {
 					 	header: '제품LOT_NO',
 					    name: 'prdtLot',
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
 					    name: 'rscCd',
-						//hidden: true
+						//hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '자재LOT_NO',
-					    name: 'rscLot'
+					    name: 'rscLot',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+						align : 'center'
 					  }
 				]
 	});

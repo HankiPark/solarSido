@@ -132,44 +132,52 @@ border-top:3px solid #FECEBB;
 			 {
 			    header: '계획번호',
 			    name: 'planNo',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 		 	 {
 			    header: '계획명',
 			    name: 'planNm',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '계획일자',
 			    name: 'planDt',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  { //주문없는 계획 불가
 			    header: '주문번호',
 			    name: 'orderNo',
 			    validation: {
 	    	        required: true
-	    	      }
+	    	      },
+					align : 'center'
 			  },
 			  { header: '접수일자',
 			    name: 'recvDt',
-			   	hidden: true
+			   	hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '제품코드',
 			    name: 'prdtCd',
 			    validation: {
 	    	        required: true
-	    	      }
+	    	      },
+					align : 'center'
 			  },		  
 			  {
 			    header: '제품명',
-			    name: 'prdtNm'
+			    name: 'prdtNm',
+				align : 'center'
 			  },
 			  {
 			    header: '납기일자',
@@ -177,7 +185,8 @@ border-top:3px solid #FECEBB;
 			    filter: {
 		            type: 'date',
 		            format: 'YYYY-MM-DD'
-		          }
+		          },
+					align : 'center'
 			  },
 			  {
 			    header: '주문량',
@@ -256,18 +265,22 @@ border-top:3px solid #FECEBB;
 					 {
 					    header: '제품코드',
 					    name: 'prdtCd',
+						align : 'center'
 					  },
 					  {
 					    header: '제품명',
 					    name: 'prdtNm',
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
-					    name: 'rscCd'
+					    name: 'rscCd',
+						align : 'center'
 					  },
 					  {
 					    header: '자재명',
-					    name: 'rscNm'
+					    name: 'rscNm',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량(개당)',
@@ -304,18 +317,22 @@ border-top:3px solid #FECEBB;
 					 {
 					    header: '제품코드',
 					    name: 'prdtCd',
+						align : 'center'
 					  },
 					  {
 					    header: '제품명',
 					    name: 'prdtNm',
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
-					    name: 'rscCd'
+					    name: 'rscCd',
+						align : 'center'
 					  },
 					  {
 					    header: '자재명',
-					    name: 'rscNm'
+					    name: 'rscNm',
+						align : 'center'
 					  },
 					  {
 					    header: '발주요청량',

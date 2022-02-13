@@ -78,13 +78,16 @@ function planList(){
 				bodyHeight : 300,
 				columns : [ {
 					header : '생산계획번호',
-					name : 'planNo'
+					name : 'planNo',
+					align : 'center'
 				}, {
 					header : '계획일자',
-					name : 'planDt'
+					name : 'planDt',
+					align : 'center'
 				}, {
 					header : '생산계획명',
-					name : 'planNm'
+					name : 'planNm',
+					align : 'center'
 				}]
 			});
 	

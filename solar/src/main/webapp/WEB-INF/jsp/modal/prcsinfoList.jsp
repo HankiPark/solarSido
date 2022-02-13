@@ -36,31 +36,37 @@ var dataSource = {
 		  columns : [
 				{
 					header : '공정코드',
-					name : 'prcsCd'
+					name : 'prcsCd',
+					align : 'center'
 				},
 				{
 					header : '공정구분',
 					name : 'prcsFg',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				},
 				{
 					header : '공정명',
-					name : 'prcsNm'
+					name : 'prcsNm',
+					align : 'center'
 				},
 				{
 					header : '작업설명',
 					name : 'prcsDesct',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				},
 				{
 					header : '관리단위',
 					name : 'prcsUnit',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				},
 				{
 					header : '생산일수',
 					name : 'prodPd',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}
 			]  
 		  });

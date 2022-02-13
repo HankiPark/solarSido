@@ -39,40 +39,48 @@ function rscinfoList(key){
 						header : '자재코드',
 						name : 'rscCd',
 					    sortable: true,
+						align : 'center'
 					},
 					{
 						header : '자재명',
-						name : 'rscNm'
+						name : 'rscNm',
+						align : 'center'
 					},
 					{
 						header : '안전재고',
 						name : 'safStc',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					},
 					{
 						header : '업체코드',
 						name : 'coCd',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					},
 					{
 						header : '규격',
 						name : 'rscSpec',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					},
 					{
 						header : '관리단위',
 						name : 'rscUnit',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					},
 					{
 						header : '이미지',
 						name : 'rscImg',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					},
 					{
 						header : '규격',
 						name : 'rscUntprc',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					}
 				]
 			  });

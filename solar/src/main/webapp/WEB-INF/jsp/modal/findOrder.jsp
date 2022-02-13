@@ -29,22 +29,27 @@ function orderList(){
 					{
 					header : '주문번호',
 					name : 'orderNo',
+					align : 'center'
 					}, 
 					{
 					header : '접수일자',
 					name : 'recvDt',
+					align : 'center'
 					}, 
 					{
 					header : '업체코드',
-					name : 'coCd'
+					name : 'coCd',
+					align : 'center'
 					}, 
 					{
 					header : '진행정보',
 					name : 'progInfo',
+					align : 'center'
 					}, 
 					{
 					header : '납기일자',
-					name : 'paprdDt'
+					name : 'paprdDt',
+					align : 'center'
 					}
 				]
 			});

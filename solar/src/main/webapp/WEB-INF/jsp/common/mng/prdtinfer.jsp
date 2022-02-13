@@ -117,26 +117,31 @@
 							header : '불량코드',
 							name : 'prdtInferCd',
 							editor : 'text',
-							sortable : true
+							sortable : true,
+							align : 'center'
 						}, 
 						{
 							header : '불량명',
 							name : 'prdtInferNm',
-							editor : 'text'
+							editor : 'text',
+							align : 'center'
 						},
 						{
 							header : '불량내역',
 							name : 'prdtInferDesct',
 							editor : 'text',
-							width: 'auto'
+							width: 'auto',
+							align : 'center'
 						},
 						{
 							header : '공정코드',
-							name : 'prcsCd'
+							name : 'prcsCd',
+							align : 'center'
 						}, 
 						{
 							header : '공정명',
-							name : 'prcsNm'
+							name : 'prcsNm',
+							align : 'center'
 						} 
 						
 					]

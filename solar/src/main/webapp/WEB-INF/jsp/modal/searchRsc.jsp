@@ -26,31 +26,38 @@ var rscGrid = new Grid({
     columns: [{
         header: '자재코드',
         name: 'rscCd',
+		align : 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
-        width: 200
+        width: 200,
+		align : 'center'
       },
       {
         header: '업체명',
-        name: 'coNm'
+        name: 'coNm',
+		align : 'center'
       },
       {
         header: '업체코드',
         name: 'coCd',
+		align : 'center',
       },
       {
 		header: '규격',
-		name: 'rscSpec'
+		name: 'rscSpec',
+		align : 'center'
       },
       {
 		header: '관리단위',
 		name: 'rscUnit',
+		align : 'center',
       },
       {
   		header: '단가',
-  		name: 'rscUntprc'
+  		name: 'rscUntprc',
+		align : 'center'
       }
     ]
   });

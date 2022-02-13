@@ -41,35 +41,43 @@
 	    scrollY: true,
 	    columns: [{
 	        header: '생산지시번호',
-	        name: 'indicaNo'
+	        name: 'indicaNo',
+			align : 'center'
 	      },
 	      {
 	        header: '생산지시상세번호',
-	        name: 'indicaDetaNo'
+	        name: 'indicaDetaNo',
+			align : 'center'
 	      },
 	      {
 	        header: '생산지시명',
-	        name: 'indicaNm', 
+	        name: 'indicaNm',
+			align : 'center', 
 	      },
 	      {
 	        header: '제품코드',
-	        name: 'prdtCd', 
+	        name: 'prdtCd',
+			align : 'center', 
 	      },
 	      {
 	        header: '생산구분',
-	        name: 'prodFg', 
+	        name: 'prodFg',
+			align : 'center', 
 	      },
 	      {
 	        header: '지시량',
 	        name: 'indicaQty',
+			align : 'center',
 	      },
 	      {
 	        header: '작업순서',
-	        name: 'wkOrd', 
+	        name: 'wkOrd',
+			align : 'center', 
 	      },
 	      {
 	        header: '작업일자',
-	        name: 'wkDt', 
+	        name: 'wkDt',
+			align : 'center', 
 	      },    
 	    ]
 	  });

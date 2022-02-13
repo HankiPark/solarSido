@@ -32,19 +32,24 @@
 					{
 					header : '제품코드',
 					name : 'prdtCd',
+					align : 'center'
 				}, {
 					header : '제품명',
-					name : 'prdtNm'
+					name : 'prdtNm',
+					align : 'center'
 				}, {
 					header : '규격',
 					name : 'prdtSpec',
+					align : 'center'
 					
 				}, {
 					header : '단위',
-					name : 'prdtUnit'
+					name : 'prdtUnit',
+					align : 'center'
 				}, {
 					header : '금액',
-					name : 'prdtAmt'
+					name : 'prdtAmt',
+					align : 'center'
 				},
 
 				],

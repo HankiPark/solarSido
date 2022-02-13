@@ -31,20 +31,25 @@ function ordList(ordNo){
 			{
 			header : '주문번호',
 			name : 'orderNo',
+			align : 'center'
 		}, {
 			header : '접수일자',
-			name : 'recvDt'
+			name : 'recvDt',
+			align : 'center'
 		}, {
 			header : '회사코드',
 			name : 'coCd',
+			align : 'center'
 			
 		}, {
 			header : '회사명',
 			name : 'coNm',
+			align : 'center'
 			
 		}, {
 			header : '납기일자',
-			name : 'paprdDt'
+			name : 'paprdDt',
+			align : 'center'
 		}
 		],
 

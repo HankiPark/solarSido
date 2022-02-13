@@ -71,10 +71,12 @@
 			columns : [ {
 				header : '공통코드ID',
 				name : 'cmmnCdId',
-				sortable : true
+				sortable : true,
+				align : 'center'
 			}, {
 				header : '공통코드ID명',
 				name : 'cmmnCdNm',
+				align : 'center',
 			} ]
 		});
 
@@ -146,16 +148,20 @@
 			minBodyHeight : 600,
 			columns : [ {
 				header : '공통코드상세ID',
-				name : 'cmmnCdDetaId'
+				name : 'cmmnCdDetaId',
+				align : 'center'
 			}, {
 				header : '공통코드ID',
-				name : 'cmmnCdId'
+				name : 'cmmnCdId',
+				align : 'center'
 			}, {
 				header : '코드명',
-				name : 'cmmnCdNm'
+				name : 'cmmnCdNm',
+				align : 'center'
 			}, {
 				header : '설명',
-				name : 'cmmnCdDesct'
+				name : 'cmmnCdDesct',
+				align : 'center'
 			} ]
 		});
 

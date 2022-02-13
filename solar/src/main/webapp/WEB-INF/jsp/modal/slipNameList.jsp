@@ -63,16 +63,20 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 					{
 					header : '전표번호',
 					name : 'slipNo',
+					align : 'center',
 				}, {
 					header : '출고일자',
-					name : 'prdtDt'
+					name : 'prdtDt',
+					align : 'center'
 				}, {
 					header : '업체명',
 					name : 'coNm',
+					align : 'center',
 					
 				}, {
 					header : '상세전표수',
 					name : 'slNm',
+					align : 'center',
 					
 				}
 				],

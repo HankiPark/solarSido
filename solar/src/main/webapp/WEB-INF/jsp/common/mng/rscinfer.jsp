@@ -111,15 +111,18 @@
 				header : '자재불량코드',
 				name : 'rtngdResnCd',
 				editor : 'text',
-				sortable : true
+				sortable : true,
+				align : 'center'
 			}, {
 				header : '불량명',
 				name : 'rscInferNm',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			}, {
 				header : '불량내역',
 				name : 'rscInferDesct',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			} ]
 		});
 

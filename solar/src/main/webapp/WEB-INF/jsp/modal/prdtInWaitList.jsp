@@ -64,24 +64,30 @@ $(function() {
 			columns : [ {
 				header : '완료일자',
 				name : 'prdtDt',
+				align : 'center'
 				
 			}, {
 				header : '제품LOT',
 				name : 'prdtLot',
+				align : 'center'
 				
 			}, {
 				header : '제품코드',
-				name : 'prdtCd'
+				name : 'prdtCd',
+				align : 'center'
 			}, {
 				header : '제품명',
 				name : 'prdtNm',
+				align : 'center'
 			}, {
 				header : '규격',
 				name : 'prdtSpec',
-				hidden: true
+				hidden: true,
+				align : 'center'
 			}, {
 				header : '생산지시번호',
-				name : 'indicaNo'
+				name : 'indicaNo',
+				align : 'center'
 			}
 
 			],

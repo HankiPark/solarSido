@@ -186,22 +186,27 @@ const grid = new tui.Grid(
 			columns : [ {
 				header : 'index',
 				name : 'prdtInx',
-				hidden : true
+				hidden : true,
+				align : 'center'
 			},{
 				header : '제품LOT',
 				name : 'prdtLot',
+				align : 'center'
 				
 			}, {
 				header : '제품코드',
 				name : 'prdtCd',
+				align : 'center'
 				
 			}, {
 				header : '제품명',
 				name : 'prdtNm',
+				align : 'center'
 				
 			}, {
 				header : '공정진행',
 				name : 'prdtFg',
+				align : 'center'
 			 	formatter:function(value){
 			 		if(value.value=="P"){
 			 			return "1공정";
@@ -225,9 +230,11 @@ const grid = new tui.Grid(
 				header : '생산지시상세번호',
 				name : 'indicaDetaNo',
 				hidden : true,
+				align : 'center'
 			}, {
 				header : '시작시간',
 				name : 'prcsFrTm',
+				align : 'center'
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -241,6 +248,7 @@ const grid = new tui.Grid(
 			}, {
 				header : '종료시간',
 				name : 'prcsToTm',
+				align : 'center'
 				formatter:function(value){
 					 if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -255,20 +263,24 @@ const grid = new tui.Grid(
 			},{
 				header : '설비코드',
 				name : 'eqmCd',
+				align : 'center'
 				
 			}, {
 				header : '설비명',
 				name : 'eqmNm',
+				align : 'center'
 				
 			}, {
 				header : '작업번호',
 				name : 'wkNo',
 				hidden : true,
+				align : 'center'
 				
 			}, {
 				header : '작업일자',
 				name : 'wkDt',
 				hidden : true,
+				align : 'center'
 				
 			},
 

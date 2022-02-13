@@ -94,6 +94,7 @@
 						header : '공정구분',
 						name : 'prcsFg',
 						editor : 'text',
+						align : 'center',
 						formatter:function(value){
 							if(value.value=="1"){
 								return "제조_공정";
@@ -111,22 +112,26 @@
 			}, {
 				header : '공정명',
 				name : 'prcsNm',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 				
 			}, {
 				header : '작업설명',
 				name : 'prcsDesct',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			}, {
 				header : '관리단위',
 				name : 'prcsUnit',
 				editor : 'text',
-				hidden : true
+				hidden : true,
+				align : 'center'
 			}, {
 				header : '작업일수',
 				name : 'prodPd',
 				editor : 'text',
-				hidden : true
+				hidden : true,
+				align : 'center'
 			} ]
 		});
 

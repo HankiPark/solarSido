@@ -59,39 +59,48 @@
 						header : '아이디',
 						name : 'empId',
 						editor : 'text',
-						sortable : true
+						sortable : true,
+						align : 'center'
 					}, {
 						header : '비밀번호',
 						name : 'empPw',
-						hidden : true
+						hidden : true,
+						align : 'center'
 					}, {
 						header : '사원명',
 						name : 'empNm',
-						editor : 'text'
+						editor : 'text',
+						align : 'center'
 					}, {
 						header : '사원번호',
 						name : 'empNo',
-						editor : 'text'
+						editor : 'text',
+						align : 'center'
 					}, {
 						header : '부서',
 						name : 'dept',
-						editor : 'text'
+						editor : 'text',
+						align : 'center'
 					}, {
 						header : '직책',
 						name : 'wkdty',
-						editor : 'text'
+						editor : 'text',
+						align : 'center'
 					}, {
 						header : '전화',
 						name : 'phone',
-						editor : 'text'
+						editor : 'text',
+						align : 'center'
 					}, {
 						header : '이메일',
 						name : 'email',
-						editor : 'text'
+						editor : 'text',
+						align : 'center'
 					}, {
 						header : '입사일',
 						name : 'hireDate',
-						editor : 'datePicker'
+						editor : 'datePicker',
+						align : 'center'
 					} ]
 				});
 

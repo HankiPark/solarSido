@@ -40,7 +40,8 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				},
+				align : 'center' 
 				}, {
 				header : '제조공정E',
 				name : 'oneTo',
@@ -53,10 +54,12 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				},
+				align : 'center' 
 			}, {
 				header : '제조공정EQ',
 				name : 'oneEqm',
+				align : 'center'
 				
 			},
 				{
@@ -71,7 +74,8 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				},
+				align : 'center' 
 				}, {
 				header : '전극공정E',
 				name : 'twoTo',
@@ -84,10 +88,12 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				},
+				align : 'center' 
 			}, {
 				header : '전극공정EQ',
 				name : 'twoEqm',
+				align : 'center'
 				
 			},
 				{
@@ -102,7 +108,8 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				},
+				align : 'center' 
 				}, {
 				header : '용접공정E',
 				name : 'threeTo',
@@ -115,10 +122,12 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				} ,
+				align : 'center'
 			}, {
 				header : '용접공정EQ',
 				name : 'threeEqm',
+				align : 'center'
 				
 			},
 				{
@@ -133,7 +142,8 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				} ,
+				align : 'center'
 				}, {
 				header : '접합공정E',
 				name : 'fourTo',
@@ -146,15 +156,18 @@
 						 if(t.getSeconds().toString().length==1){s="0"+t.getSeconds()}else{s=t.getSeconds()}
 						return h+":"+m+":"+s; }
 						else {return null;} 
-				} 
+				} ,
+				align : 'center'
 			}, {
 				header : '접합공정EQ',
 				name : 'fourEqm',
+				align : 'center'
 				
 			},
 				{
 				header : '불량발생S',
 				name : 'errFr',
+				align : 'center'
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -168,6 +181,7 @@
 				}, {
 				header : '불량발생E',
 				name : 'errTo',
+				align : 'center'
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -181,16 +195,19 @@
 			}, {
 				header : '불량발생EQ',
 				name : 'errEqm',
+				align : 'center'
 				
 			},
 			 {
 				header : '에러코드',
 				name : 'errCd',
+				align : 'center'
 				
 			},
 			 {
 				header : '에러명',
 				name : 'errNm',
+				align : 'center'
 				
 			},
 

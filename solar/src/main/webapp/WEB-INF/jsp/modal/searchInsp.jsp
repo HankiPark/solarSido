@@ -19,16 +19,19 @@ var inferGrid = new Grid({
     data: inferDataSource,
     columns: [{
         header: '불량코드',
-        name: 'cmmnCdDetaId'
+        name: 'cmmnCdDetaId',
+		align : 'center'
       },
       {
         header: '불량명',
-        name: 'cmmnCdNm'
+        name: 'cmmnCdNm',
+		align : 'center'
       },
       {
         header: '불량량',
         name: 'rscInferQty',
-        editor: 'text'
+        editor: 'text',
+		align : 'center'
       }
     ],
     summary: {
