@@ -111,12 +111,14 @@
 		<div class="card-body">
 			<div style="margin-top:-10px">
 				<button type="button" id="rscReset" style="margin-bottom:10px">초기화</button>
+				<button type="button" id="lotSave" style="margin-top: 5px">lot</button>
 			</div>
 
 			<!-- 소요자재 히든그리드 -->
 			<div id="hdRscConGrid"></div>
 			<!-- 제품lot별 자재lot 부여 히든그리드 -->
-			<div id="hdPrdtRscGrid" style="display:none" ></div>
+			<div id="hdPrdtRscGrid" ></div>
+		<!-- 	<div id="hdPrdtRscGrid" style="display:none" ></div> -->
 		</div>
 	</div>
 </body>
@@ -313,7 +315,7 @@
 					  {
 					    header: '생산구분',
 					    name: 'prodFg',
-						align : 'center'
+						align : 'center',
 					    formatter: 'listItemText',
 				    	editor: {
 				    		type:'select',
@@ -328,7 +330,7 @@
 					  {
 					    header: '작업시작일',
 					    name: 'wkDt',
-						align : 'center'
+						align : 'center',
 					    editor :'datePicker',
 					    sortingType: 'desc',
 				        sortable: true,
@@ -850,12 +852,104 @@
 		hdRscConGrid.resetData([]);
 		hdPrdtRscGrid.resetData([]);
 	})
+	
+	$('#lotSave').click(function() {
+			
+		 let list=[];
+	      let pt=0;
+	      let prdtLotNum;
+	      
+	    	//제품lot생성
+			$.ajax({
+				url:'${pageContext.request.contextPath}/ajax/makePrdtNo.do',
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+				async: false,
+			}).done((res)=>{
+				prdtLotNum = res.num
+			})
+			
+	      for(let i of arr){ //자재 수
+	            for(let k=0;k<hdRscConGrid.getRowCount();k++){ //소요 자재lot수
+	               if(hdRscConGrid.getValue(k,'rscCd') == i){
+	                  arrt.push({'indicaDetaNo':hdRscConGrid.getValue(k,'indicaDetaNo'),
+	                     'rscCd':hdRscConGrid.getValue(k,'rscCd'),
+	                     'rscLot':hdRscConGrid.getValue(k,'rscLot'),
+	                     'rscQty':hdRscConGrid.getValue(k,'rscQty'),
+	                     'rscUseQty':hdRscConGrid.getValue(k,'rscUseQty')})
+	               }
+	            }
+	            list.push(arrt);
+	            arrt=[];
+	            pt++;
+	         }
+	      
+	      for(let li of list){
+		      if(li != null){
+		         //var q = 0;
+		         var q = 1*prdtLotNum -1;
+		         lotData =  {'indicaDetaNo': idcNo,
+				            'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
+				            'prdtLot':'',
+				            'rscCd':'',
+				            'rscLot':'' ,
+				            'rscUseQty':''
+				            } 
+	
+			      for(let i =0 ; i< li.length ; i++){
+			         lotData.rscCd = li[i].rscCd;
+			         var useQty = li[i].rscUseQty;
+			         var rscLot = li[i].rscLot;
+			         var rscQty = li[i].rscQty;
+			         var t =0;
+			
+			         if(lotData.rscUseQty !=li[i].rscUseQty && lotData.rscUseQty!=''){
+			            //lotData push
+			            lotData.rscLot= rscLot;
+			            rscQty = rscQty-useQty+lotData.rscUseQty;
+			            lotData.rscUseQty = useQty-lotData.rscUseQty;
+			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			            q++;
+			         }
+			
+			         
+			         for(let k =1; k*useQty<rscQty ; k++){
+			            lotData.prdtLot = 'PRD'+ '20210202' + lpad((q+1).toString(), 3,'0')
+			            //lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
+			            lotData.rscLot = rscLot;
+			            lotData.rscUseQty = useQty;
+			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			            q++;
+			            t++; 
+			         }
+			         
+			         if(t*useQty==rscQty){
+			        	 lotData.rscUseQty=''
+			         } else {   
+			        	lotData.prdtLot = 'PRD'+ '20210202' + lpad((q+1).toString(), 3,'0');
+			        	//lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0');
+			            lotData.rscLot = rscLot;   
+			            lotData.rscUseQty = rscQty%(t*useQty);
+			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			         }
+		      		}
+		      }   
+		     }
+		    
+		//hdPrdtRscGrid.resetData(lotArr);
+		hdPrdtRscGrid.appendRows(lotArr);
+		console.log(lotArr)
+		//초기화
+		arr.length = 0; 
+	});
+	
+	
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
 		indicaNm = $('#indicaNm').val();
 		indicaDt = $('#indicaDt').val();
 		
-		 let list=[];
+		/*  let list=[];
 	      let pt=0;
 	      let prdtLotNum;
 	      
@@ -938,7 +1032,7 @@
 		hdPrdtRscGrid.appendRows(lotArr);
 		//초기화
 		arr.length = 0; 
-		
+		 */
 		//validataion
 		if (indicaNm == null || indicaNm == ""){
 			toastr.error("생산지시명을 입력해주세요.");
