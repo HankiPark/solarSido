@@ -61,7 +61,7 @@
 
 <insert id="cmmnDetailInsert">
 	INSERT INTO CMMN_DATA_D(CMMN_CD_DETA_ID, CMMN_CD_ID, CMMN_CD_NM, CMMN_CD_DESCT) 
-	VALUES (#{cmmnCdDetaId}, #{cmmnCdId}, #{cmmnDtCdNm}, #{cmmnCdDesct})
+	VALUES (#{cmmnCdDetaId}, #{cmmnCdId}, #{cmmnCdNm}, #{cmmnCdDesct})
 </insert>
 
 <update id="cmmnDetailUpdate">

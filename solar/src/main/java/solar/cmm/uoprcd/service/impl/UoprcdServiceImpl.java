@@ -55,7 +55,7 @@ public class UoprcdServiceImpl implements UoprcdService{
 			CmmndataVO cmmndataVO = new CmmndataVO();
 			cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
 			cmmndataVO.setCmmnCdId("uopr");
-			cmmndataVO.setCmmnDtCdNm(uoprcdVO.getUoprNm());
+			cmmndataVO.setCmmnCdNm(uoprcdVO.getUoprNm());
 			cmmndataVO.setCmmnCdDesct(uoprcdVO.getUoprDesct());
 			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
@@ -73,7 +73,7 @@ public class UoprcdServiceImpl implements UoprcdService{
 					CmmndataVO cmmndataVO = new CmmndataVO();
 					cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
 					cmmndataVO.setCmmnCdId("uopr");
-					cmmndataVO.setCmmnDtCdNm(uoprcdVO.getUoprNm());
+					cmmndataVO.setCmmnCdNm(uoprcdVO.getUoprNm());
 					cmmndataVO.setCmmnCdDesct(uoprcdVO.getUoprDesct());
 					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}

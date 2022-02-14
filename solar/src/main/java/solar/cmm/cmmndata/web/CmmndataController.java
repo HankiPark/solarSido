@@ -63,7 +63,6 @@ public class CmmndataController {
 		map2.put("page", 1);
 		map2.put("totalCount", cmmnList.size());
 		model.addAttribute("data", map);
-		
 		return "jsonView";
 	}
 	

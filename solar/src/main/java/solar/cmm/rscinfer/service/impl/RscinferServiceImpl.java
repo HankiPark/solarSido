@@ -55,7 +55,7 @@ public class RscinferServiceImpl implements RscinferService{
 			CmmndataVO cmmndataVO = new CmmndataVO();
 			cmmndataVO.setCmmnCdDetaId(rscinferVO.getRtngdResnCd());
 			cmmndataVO.setCmmnCdId("rscinfer");
-			cmmndataVO.setCmmnDtCdNm(rscinferVO.getRscInferNm());
+			cmmndataVO.setCmmnCdNm(rscinferVO.getRscInferNm());
 			cmmndataVO.setCmmnCdDesct(rscinferVO.getRscInferDesct());
 			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
@@ -73,7 +73,7 @@ public class RscinferServiceImpl implements RscinferService{
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(rscinferVO.getRtngdResnCd());
 				cmmndataVO.setCmmnCdId("rscinfer");
-				cmmndataVO.setCmmnDtCdNm(rscinferVO.getRscInferNm());
+				cmmndataVO.setCmmnCdNm(rscinferVO.getRscInferNm());
 				cmmndataVO.setCmmnCdDesct(rscinferVO.getRscInferDesct());
 				cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}

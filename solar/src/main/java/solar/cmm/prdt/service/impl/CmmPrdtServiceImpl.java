@@ -54,7 +54,7 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 			CmmndataVO cmmndataVO = new CmmndataVO();
 			cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
 			cmmndataVO.setCmmnCdId("prdtinfer");
-			cmmndataVO.setCmmnDtCdNm(prdtInferVo.getPrdtInferNm());
+			cmmndataVO.setCmmnCdNm(prdtInferVo.getPrdtInferNm());
 			cmmndataVO.setCmmnCdDesct(prdtInferVo.getPrdtInferDesct());
 			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
@@ -72,7 +72,7 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
 				cmmndataVO.setCmmnCdId("prdtinfer");
-				cmmndataVO.setCmmnDtCdNm(prdtInferVo.getPrdtInferNm());
+				cmmndataVO.setCmmnCdNm(prdtInferVo.getPrdtInferNm());
 				cmmndataVO.setCmmnCdDesct(prdtInferVo.getPrdtInferDesct());
 				cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}

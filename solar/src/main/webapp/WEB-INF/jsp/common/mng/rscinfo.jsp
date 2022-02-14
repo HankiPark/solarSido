@@ -75,7 +75,7 @@
 				<div>
 					<button type="button" id="btnInsert">등록</button>
 					<button type="button" id="btnUpdate">수정</button>
-					<button type="button" id="btnDelete">수정</button>
+					<button type="button" id="btnDelete">삭제</button>
 					<button type="button" id="btnReset">초기화</button>
 				</div>
 			</div>
@@ -120,7 +120,7 @@
 		toastr.success('삭제완료');
 	}
 	function DeleteFail(){
-		toastr.error('삭제실패');
+		toastr.error('삭제실패, 데이터를 선택 후 삭제해주세요.');
 	}
 	function ResetComplete(){
 		toastr.info('상세 데이터 리셋 완료 데이터를 입력해주세요');
@@ -156,7 +156,7 @@
 			data : dataSource,
 			scrollX : true,
 			scrollY : true,
-			rowHeaders : ['rowNum', 'checkbox'],
+			rowHeaders : ['rowNum'],
 			bodyHeight : 450,
 			columns : 
 			[ 
@@ -320,28 +320,43 @@
 			$("#rscCd").removeAttr("readonly");
 			ResetComplete();
 		});
-/*
+
 		 $('#btnDelete').on('click', function(){
 			 $.ajax({
-				 url : "${pageContext.request.contextPath}/rscinfoDelete.do"
-				 type : "POST",
-				 data: $("rscfrm").serialize();
-				 cache: false,
+				 url : "${pageContext.request.contextPath}/rscinfoDelete.do",
+				 method : "POST",
+				 data: $("#rscfrm").serialize(),
 				 datatype : "json",
 				 success : function(data){
-					 
-				 }
+				 grid.readData(1,{},true)
+					$('#rscCd').val('');
+					$('#rscNm').val('');
+					$('#rscSpec').val('');
+					$('#rscUnit').val('');
+					$('#coCd').val('');
+					$('#coNm').val('');
+					$('#rscUntprc').val('');
+					$('#safStc').val('');
+					DeleteComplete();
+				 },
+				error : function(){
+					DeleteFail();
+				}
 			 })
 		 });
-*/		
-
+		 		
+		
 $('#senseOrder').resize(function() {
-	if ($('#senseOrder').width() < 1780) {
-		$('#senseOrderBody').css('paddingLeft', '20px');
-	} else {
-		$('#senseOrderBody').css('paddingLeft', '40px');
-	}
-})
+		if ($('#senseOrder').width() < 1780) {
+			$('#senseOrderBody').css('paddingLeft', '20px');
+		} else {
+			$('#senseOrderBody').css('paddingLeft', '40px');
+		}	
+	});
+
+		$(document).on('click','.tui-page-btn',function(){
+			$('td').css('backgroundColor','');
+		});
 </script>
 </body>
 </html>

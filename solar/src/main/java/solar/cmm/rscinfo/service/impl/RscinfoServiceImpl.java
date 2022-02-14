@@ -9,6 +9,8 @@ import solar.cmm.cmmndata.dao.CmmndataVO;
 import solar.cmm.cmmndata.service.impl.CmmndataMapper;
 import solar.cmm.rscinfo.dao.RscinfoVO;
 import solar.cmm.rscinfo.service.RscinfoService;
+import solar.rsc.stc.service.RscStc;
+import solar.rsc.stc.service.impl.RscStcMapper;
 import solar.sales.order.dao.ModifyVO;
 
 @Service
@@ -16,6 +18,7 @@ public class RscinfoServiceImpl implements RscinfoService{
 
 	@Autowired RscinfoMapper rscinfoMapper;
 	@Autowired CmmndataMapper cmmndataMapper;
+	@Autowired RscStcMapper rscstcMapper;
 	
 	@Override
 	public List<RscinfoVO> rscinfoList(RscinfoVO rscinfoVO) {
@@ -65,6 +68,7 @@ public class RscinfoServiceImpl implements RscinfoService{
 				rscinfoMapper.rscinfoDelete(rscinfoVO);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
+				rscinfoMapper.rscstcDelete(rscinfoVO);
 				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 				
 			}
@@ -97,6 +101,12 @@ public class RscinfoServiceImpl implements RscinfoService{
 	@Override
 	public int rscinfoStc(RscinfoVO rscinfoVO) {
 		return rscinfoMapper.rscinfoStc(rscinfoVO);
+	}
+
+	@Override
+	public int rscstcDelete(RscinfoVO rscinfoVO) {
+		// TODO Auto-generated method stub
+		return rscinfoMapper.rscstcDelete(rscinfoVO);
 	}
 
 }

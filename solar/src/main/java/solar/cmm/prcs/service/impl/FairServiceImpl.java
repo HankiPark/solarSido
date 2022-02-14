@@ -50,7 +50,7 @@ public class FairServiceImpl implements FairService {
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
 				cmmndataVO.setCmmnCdId("prcs");
-				cmmndataVO.setCmmnDtCdNm(fairVO.getPrcsNm());
+				cmmndataVO.setCmmnCdNm(fairVO.getPrcsNm());
 				cmmndataVO.setCmmnCdDesct(fairVO.getPrcsDesct());
 				cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
@@ -68,7 +68,7 @@ public class FairServiceImpl implements FairService {
 					CmmndataVO cmmndataVO = new CmmndataVO();
 					cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
 					cmmndataVO.setCmmnCdId("prcs");
-					cmmndataVO.setCmmnDtCdNm(fairVO.getPrcsNm());
+					cmmndataVO.setCmmnCdNm(fairVO.getPrcsNm());
 					cmmndataVO.setCmmnCdDesct(fairVO.getPrcsDesct());
 					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);	
 				}

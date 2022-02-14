@@ -99,4 +99,10 @@
 	WHERE RSC_CD = #{rscCd}
 </delete>
 
+<delete id="rscstcDelete">
+	DELETE FROM RSC_STC
+	WHERE RSC_CD = #{rscCd}
+</delete>
+
+
 </mapper>

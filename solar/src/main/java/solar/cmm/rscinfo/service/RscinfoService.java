@@ -14,5 +14,6 @@ public interface RscinfoService {
 	public int rscinfoStc(RscinfoVO rscinfoVO);
 	public int rscinfoUpdate(RscinfoVO rscinfoVO);
 	public int rscinfoDelete(RscinfoVO rscinfoVO);
+	public int rscstcDelete(RscinfoVO rscinfoVO);
 	public int modifyData(ModifyVO<RscinfoVO> modifyVO);
 }
