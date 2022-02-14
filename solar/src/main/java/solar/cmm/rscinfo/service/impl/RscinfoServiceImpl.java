@@ -60,6 +60,7 @@ public class RscinfoServiceImpl implements RscinfoService{
 				cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
 				cmmndataVO.setCmmnCdId("rsc");
 				cmmndataVO.setCmmnDtCdNm(rscinfoVO.getRscNm());
+				rscinfoMapper.rscinfoStc(rscinfoVO);
 				cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
 		}
@@ -68,7 +69,6 @@ public class RscinfoServiceImpl implements RscinfoService{
 				rscinfoMapper.rscinfoDelete(rscinfoVO);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(rscinfoVO.getRscCd());
-				rscinfoMapper.rscstcDelete(rscinfoVO);
 				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 				
 			}

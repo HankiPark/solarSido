@@ -88,7 +88,8 @@
 			bodyHeight : 700,
 			columns : [ {
 				header : '공정코드',
-				name : 'prcsCd'
+				name : 'prcsCd',
+				width: '105'
 						}, 
 						{
 						header : '공정구분',
@@ -107,19 +108,22 @@
 							}else{
 								return "";
 							}
-						}
+						},
+						width: '85'
 						
 			}, {
 				header : '공정명',
 				name : 'prcsNm',
 				editor : 'text',
-				align : 'center'
+				align : 'center',
+				width: '215'
 				
 			}, {
 				header : '작업설명',
 				name : 'prcsDesct',
 				editor : 'text',
-				align : 'center'
+				align : 'center',
+				width: 'auto'
 			}, {
 				header : '관리단위',
 				name : 'prcsUnit',

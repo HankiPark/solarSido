@@ -89,8 +89,7 @@
 		CO_CD = #{coCd},
 		RSC_SPEC = #{rscSpec},
 		RSC_IMG = #{rscImg},
-		RSC_UNTPRC = #{rscUntprc},
-		RSC_STC = #{rscStc}
+		RSC_UNTPRC = #{rscUntprc}
 	WHERE RSC_CD = #{rscCd}
 </update>
 

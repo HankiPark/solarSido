@@ -61,9 +61,9 @@ public class RscinferServiceImpl implements RscinferService{
 			}
 		if(modifyVO.getDeletedRows()!=null) {
 			for(RscinferVO rscinferVO : modifyVO.getDeletedRows()) {
-				rscinferMapper.rscinferDelete(rscinferVO);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(rscinferVO.getRtngdResnCd());
+				rscinferMapper.rscinferDelete(rscinferVO);
 				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 				}
 			}

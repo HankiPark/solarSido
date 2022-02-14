@@ -80,7 +80,6 @@ public class CmmndataServiceImpl implements CmmndataService {
 		for(CmmndataVO cmmndataVO : modifyVO.getCreatedRows()) {
 			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			if(cmmndataVO.getCmmnCdId().equals("rscinfer")) {
-				
 				RscinferVO rscinferVO = new RscinferVO();
 				rscinferVO.setRtngdResnCd(cmmndataVO.getCmmnCdDetaId());
 				rscinferVO.setRscInferNm(cmmndataVO.getCmmnCdNm());
@@ -116,7 +115,6 @@ public class CmmndataServiceImpl implements CmmndataService {
 		if(modifyVO.getDeletedRows()!=null) {
 			for(CmmndataVO cmmndataVO : modifyVO.getDeletedRows()) {
 				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
-				
 				if(cmmndataVO.getCmmnCdId().equals("rscinfer")) {
 					RscinferVO rscinferVO = new RscinferVO();
 					rscinferVO.setRtngdResnCd(cmmndataVO.getCmmnCdDetaId());

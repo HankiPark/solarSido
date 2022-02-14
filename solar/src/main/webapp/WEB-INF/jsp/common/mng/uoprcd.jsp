@@ -115,29 +115,34 @@
 								header : '비가동코드',
 								name : 'uoprCd',
 								sortable : true,
-								align : 'center'
+								align : 'center',
+								width: '90'
 							},
 							{
 								header : '비가동명',
 								name : 'uoprNm',
 								editor : 'text',
-								align : 'center'
+								align : 'center',
+								width: '130'
 							}, 
 							{
 								header : '비가동내역',
 								name : 'uoprDesct',
 								editor : 'text',
-								align : 'center'
+								align : 'center',
+								width: '300'
 							},
 							{
 								header : '발생공정코드',
 								name : 'prcsCd',
-								align : 'center'
+								align : 'center',
+								width: '130'
 							}, 
 							{
 								header : '발생공정명',
 								name : 'prcsNm',
-								align : 'center'
+								align : 'center',
+								width: '150'
 							} 
 						]
 					});

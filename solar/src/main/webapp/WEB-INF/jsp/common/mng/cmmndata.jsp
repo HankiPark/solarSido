@@ -152,19 +152,25 @@
 			columns : [ {
 				header : '공통코드상세ID',
 				name : 'cmmnCdDetaId',
-
-				align : 'center'
+				editor : 'text',
+				align : 'center',
+				width: '105'
 			}, {
 				header : '공통코드ID',
 				name : 'cmmnCdId',
-				align : 'center'
+				editor : 'text',
+				align : 'center',
+				width: '85'
 			}, {
 				header : '코드명',
 				name : 'cmmnCdNm',
-				align : 'center'
+				editor : 'text',
+				align : 'center',
+				width: '215'
 			}, {
 				header : '설명',
 				name : 'cmmnCdDesct',
+				editor : 'text',
 				align : 'center'
 
 			} ]

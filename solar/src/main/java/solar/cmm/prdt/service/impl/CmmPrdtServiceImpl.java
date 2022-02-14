@@ -50,30 +50,30 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 	public int modifyData(ModifyVO<PrdtInferVO> modifyVO) {
 		if(modifyVO.getCreatedRows()!=null) {
 		for(PrdtInferVO prdtInferVo : modifyVO.getCreatedRows()) {
-			prdtMapper.prdtInsert(prdtInferVo);
 			CmmndataVO cmmndataVO = new CmmndataVO();
 			cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
 			cmmndataVO.setCmmnCdId("prdtinfer");
 			cmmndataVO.setCmmnCdNm(prdtInferVo.getPrdtInferNm());
 			cmmndataVO.setCmmnCdDesct(prdtInferVo.getPrdtInferDesct());
+			prdtMapper.prdtInsert(prdtInferVo);
 			cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
 		if(modifyVO.getDeletedRows()!=null) {
 			for(PrdtInferVO prdtInferVo : modifyVO.getDeletedRows()) {
-				prdtMapper.prdtDelete(prdtInferVo);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
+				prdtMapper.prdtDelete(prdtInferVo);
 				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 				}
 			}	
 		if(modifyVO.getUpdatedRows()!=null) {
 			for(PrdtInferVO prdtInferVo : modifyVO.getUpdatedRows()) {
-				prdtMapper.prdtUpdate(prdtInferVo);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
 				cmmndataVO.setCmmnCdId("prdtinfer");
 				cmmndataVO.setCmmnCdNm(prdtInferVo.getPrdtInferNm());
 				cmmndataVO.setCmmnCdDesct(prdtInferVo.getPrdtInferDesct());
+				prdtMapper.prdtUpdate(prdtInferVo);
 				cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}
 			}
