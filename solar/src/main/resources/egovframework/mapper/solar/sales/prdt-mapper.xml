@@ -36,7 +36,7 @@
 			</otherwise>
 		</choose>
 
-		order by p.prdt_dt asc
+		order by p.prdt_dt,p.prdt_cd,p.prdt_lot asc
 
 	</select>
 

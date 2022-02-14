@@ -5,6 +5,7 @@ import java.util.List;
 import solar.prcs2.dao.EqmAble;
 import solar.prcs2.dao.Prcs2;
 import solar.prcs2.dao.PrcsIng;
+import solar.prod.indica.service.IndicaVO;
 
 public interface Prcs2Mapper {
 	List<Prcs2> searchPlanList(Prcs2 vo);
@@ -17,7 +18,7 @@ public interface Prcs2Mapper {
 	List<Prcs2> inspaEqmChart();
 	List<Prcs2> EqmKindChart(Prcs2 vo);
 	List<Prcs2> findInspaPrdt(Prcs2 vo);
-	
+	List<IndicaVO> selectIdc2(IndicaVO vo);
 	List<PrcsIng> prIng(Prcs2 vo);
 	List<EqmAble> inferList(EqmAble vo);
 	List<EqmAble> ableEqm(EqmAble vo);

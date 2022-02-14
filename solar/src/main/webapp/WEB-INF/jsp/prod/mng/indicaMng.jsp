@@ -905,19 +905,22 @@
 			
 			         if(lotData.rscUseQty !=li[i].rscUseQty && lotData.rscUseQty!=''){
 			            //lotData push
+			            
 			            lotData.rscLot= rscLot;
 			            rscQty = rscQty-useQty+lotData.rscUseQty;
 			            lotData.rscUseQty = useQty-lotData.rscUseQty;
+			            
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            q++;
 			         }
 			
 			         
 			         for(let k =1; k*useQty<rscQty ; k++){
+			        	 
 			            lotData.prdtLot = 'PRD'+ '20210202' + lpad((q+1).toString(), 3,'0')
 			            //lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
+			           // console.log(JSON.parse(JSON.stringify(lotData)))
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
 			            q++;
 			            t++; 
@@ -925,12 +928,24 @@
 			         
 			         if(t*useQty==rscQty){
 			        	 lotData.rscUseQty=''
-			         } else {   
+			         } else{   
 			        	lotData.prdtLot = 'PRD'+ '20210202' + lpad((q+1).toString(), 3,'0');
 			        	//lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0');
 			            lotData.rscLot = rscLot;   
+			            if(Number(rscQty)==Number(useQty)){
+			            	console.log(JSON.parse(JSON.stringify(lotData.prdtLot)))
+			            	console.log(JSON.parse(JSON.stringify(rscQty)));
+			            	console.log(JSON.parse(JSON.stringify(useQty)));
+			            	  lotData.rscUseQty = rscQty;
+			            } else if(t==0 ){
+				            lotData.rscUseQty = rscQty%(useQty);
+				            }
+			            else{
+			            
 			            lotData.rscUseQty = rscQty%(t*useQty);
+			            }
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
+			            q++;
 			         }
 		      		}
 		      }   

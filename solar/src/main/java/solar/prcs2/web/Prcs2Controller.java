@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import solar.prcs2.dao.Prcs2;
 import solar.prcs2.service.Prcs2Service;
 import solar.prcs2.service.SchedulerService;
+import solar.prod.indica.service.IndicaVO;
 import solar.sales.order.dao.ModifyVO;
 
 @Controller
@@ -97,9 +98,22 @@ public class Prcs2Controller {
 	public String indicaEndList(Model model, Prcs2 vo) {
 		return "modal/indicaEndList";
 	}
+	@RequestMapping("/modal/unprcs")
+	public String unprcs(Model model, Prcs2 vo) {
+		return "modal/unprcs";
+	}
 	@RequestMapping("/grid/prdtIng.do")
 	public String progIngGrid(Model model, Prcs2 vo) {
 		List<?> list =pservice.prIng(vo);
+		Map<String, Object> map = new HashMap();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		return "jsonView";
+	}
+	@RequestMapping("/grid/indicaGrid2")
+	public String indicaGrid2(Model model, IndicaVO vo) {
+		List<?> list =pservice.selectIdc2(vo);
 		Map<String, Object> map = new HashMap();
 		map.put("contents", list);
 		model.addAttribute("result", true);

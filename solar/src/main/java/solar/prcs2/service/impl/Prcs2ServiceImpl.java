@@ -9,6 +9,7 @@ import solar.prcs2.dao.EqmAble;
 import solar.prcs2.dao.Prcs2;
 import solar.prcs2.dao.PrcsIng;
 import solar.prcs2.service.Prcs2Service;
+import solar.prod.indica.service.IndicaVO;
 import solar.sales.order.dao.ModifyVO;
 
 @Service
@@ -110,6 +111,12 @@ public class Prcs2ServiceImpl implements Prcs2Service {
 	public List<Prcs2> findInspaPrdt(Prcs2 vo) {
 		// TODO Auto-generated method stub
 		return pmapper.findInspaPrdt(vo);
+	}
+
+	@Override
+	public List<IndicaVO> selectIdc2(IndicaVO vo) {
+		// TODO Auto-generated method stub
+		return pmapper.selectIdc2(vo);
 	}
 
 	
