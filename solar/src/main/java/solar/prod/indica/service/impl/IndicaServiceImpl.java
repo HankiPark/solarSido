@@ -83,15 +83,27 @@ public class IndicaServiceImpl implements IndicaService {
 	      }
 	      
 	      if(map.get("prdtRsc") !=null) {
+	    	 int k=0;
 	         int cnt =idcMapper.bomRscCnt(map.get("prdtRsc").get(0).getPrdtCd());
 	         int prdtCnt =map.get("prdtRsc").size();
 	         for(IndicaVO idcVo : map.get("prdtRsc")) {
 	            idcMapper.insertPdRc(idcVo);
 	         }
-	         for(int i=0;i<prdtCnt/cnt;i++) {
-	            IndicaVO idcVo = map.get("prdtRsc").get(i);
-	            idcMapper.insertPdSc(idcVo);   
+	         for(int i=0;i<prdtCnt/cnt+k;i++) {
+	        	 if(i!=0) {
+	        		 IndicaVO idcVo2 =map.get("prdtRsc").get(i-1);
+	 	            IndicaVO idcVo = map.get("prdtRsc").get(i);
+	 	            if(idcVo2.getPrdtLot().equals(idcVo.getPrdtLot())) {
+	 	            	k++;
+	 	            }else {
+		            idcMapper.insertPdSc(idcVo); 
+	 	            }
+	        	 }else {
+	 	            IndicaVO idcVo = map.get("prdtRsc").get(i);
+		            idcMapper.insertPdSc(idcVo);   
+	        	 } 
 	         }
+	         System.out.println("데이터insert끝");
 	      }
 	      return 1;
 	   }

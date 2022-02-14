@@ -294,6 +294,7 @@ position: absolute;
 					header : '진행상태',
 					name : 'nowSt',
 					align : 'center',
+					hidden: true
 				}],
 				summary : {
 					position : 'bottom',
