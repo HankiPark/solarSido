@@ -88,7 +88,8 @@
 			bodyHeight : 700,
 			columns : [ {
 				header : '공정코드',
-				name : 'prcsCd'
+				name : 'prcsCd',
+				width: '105'
 						}, 
 						{
 						header : '공정구분',
@@ -97,29 +98,32 @@
 						align : 'center',
 						formatter:function(value){
 							if(value.value=="1"){
-								return "제조_공정";
+								return "제조 공정";
 							}else if(value.value=="2"){
-								return "전극_공정";
+								return "전극 공정";
 							}else if(value.value=="3"){
-								return "용접_공정";
+								return "용접 공정";
 							}else if(value.value=="4"){
-								return "접합_공정";
+								return "접합 공정";
 							}else{
 								return "";
 							}
-						}
+						},
+						width: '85'
 						
 			}, {
 				header : '공정명',
 				name : 'prcsNm',
 				editor : 'text',
-				align : 'center'
+				align : 'center',
+				width: '215'
 				
 			}, {
 				header : '작업설명',
 				name : 'prcsDesct',
 				editor : 'text',
-				align : 'center'
+				align : 'center',
+				width: 'auto'
 			}, {
 				header : '관리단위',
 				name : 'prcsUnit',

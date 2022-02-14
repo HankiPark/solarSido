@@ -41,6 +41,13 @@ public class PrdtServiceImpl implements PrdtService {
 			pmapper.inStcUpdate(vo);
 			}
 		}
+		if(mvo.getRows()!=null) {
+			for(Prdt vo : mvo.getRows()) {
+				
+				pmapper.insertInPrdt(vo);
+				pmapper.inStcUpdate(vo);
+			}
+		}
 		if(mvo.getDeletedRows()!=null) {
 			for(Prdt vo : mvo.getDeletedRows()) {
 				pmapper.inStcUpdate(vo);
@@ -54,6 +61,7 @@ public class PrdtServiceImpl implements PrdtService {
 				pmapper.insertInPrdt(vo);
 			}
 		}
+		
 		return 1;
 	}
 

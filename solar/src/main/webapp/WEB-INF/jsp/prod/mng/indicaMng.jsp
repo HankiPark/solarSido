@@ -867,7 +867,7 @@
 		hdRscConGrid.resetData([]);
 		hdPrdtRscGrid.resetData([]);
 	})
-	
+
 	 $('#lotSave').click(function() {
          
        let list=[];
@@ -972,6 +972,7 @@
       //초기화
       arr.length = 0; 
    });
+
 	
 	
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)

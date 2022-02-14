@@ -167,7 +167,7 @@
 				{
 				header : '불량발생S',
 				name : 'errFr',
-				align : 'center'
+				align : 'center',
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -181,7 +181,7 @@
 				}, {
 				header : '불량발생E',
 				name : 'errTo',
-				align : 'center'
+				align : 'center',
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);

@@ -282,6 +282,8 @@
 									.load(
 											"${pageContext.request.contextPath}/modal/prdtlistbom");
 						});
+		
+		$('prdtCd').css('color', 'green');
 	</script>
 </body>
 </html>

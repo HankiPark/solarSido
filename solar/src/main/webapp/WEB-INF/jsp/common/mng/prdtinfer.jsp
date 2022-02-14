@@ -110,7 +110,7 @@
 				scrollX : true,
 				scrollY : true,
 				rowHeaders : [ 'rowNum', 'checkbox' ],
-				bodyHeight : 700
+				bodyHeight : 700,
 				columns : 
 					[ 
 						{
@@ -118,29 +118,34 @@
 							name : 'prdtInferCd',
 							editor : 'text',
 							sortable : true,
+							width: '90',
 							align : 'center'
+
 						}, 
 						{
 							header : '불량명',
 							name : 'prdtInferNm',
 							editor : 'text',
+							width: '130',
 							align : 'center'
 						},
 						{
 							header : '불량내역',
 							name : 'prdtInferDesct',
 							editor : 'text',
-							width: 'auto',
+							width: '350',
 							align : 'center'
 						},
 						{
 							header : '공정코드',
 							name : 'prcsCd',
+							width: '90',
 							align : 'center'
 						}, 
 						{
 							header : '공정명',
 							name : 'prcsNm',
+							width: '100',
 							align : 'center'
 						} 
 						
@@ -225,6 +230,8 @@
 					$('#senseOrderBody').css('paddingLeft', '40px');
 				}
 			})
-		</script>
+			
+		
+			</script>
 </body>
 </html>

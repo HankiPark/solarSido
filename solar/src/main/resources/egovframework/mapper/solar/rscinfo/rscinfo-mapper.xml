@@ -89,8 +89,7 @@
 		CO_CD = #{coCd},
 		RSC_SPEC = #{rscSpec},
 		RSC_IMG = #{rscImg},
-		RSC_UNTPRC = #{rscUntprc},
-		RSC_STC = #{rscStc}
+		RSC_UNTPRC = #{rscUntprc}
 	WHERE RSC_CD = #{rscCd}
 </update>
 
@@ -98,5 +97,11 @@
 	DELETE FROM RSC
 	WHERE RSC_CD = #{rscCd}
 </delete>
+
+<delete id="rscstcDelete">
+	DELETE FROM RSC_STC
+	WHERE RSC_CD = #{rscCd}
+</delete>
+
 
 </mapper>

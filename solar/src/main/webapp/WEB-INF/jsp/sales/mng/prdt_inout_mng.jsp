@@ -364,16 +364,19 @@ $(function() {
 					header : 'index',
 					name : 'prdtInx',
 					hidden : true,
-					align : 'center'
+					align : 'center',
+					width: 100,
 				}, {
 					header : '입고일자',
 					name : 'prdtDt',
 					rowSpan: true,
-					align : 'center'
+					align : 'center',
+					width: 100,
 				}, {
 					header : '제품LOT',
 					name : 'prdtLot',
 					editor : 'text',
+					width: 130,
 					validation: {
 				        required: true,
 				        unique : true
@@ -382,7 +385,8 @@ $(function() {
 				}, {
 					header : '제품코드',
 					name : 'prdtCd',
-					align : 'center'
+					align : 'center',
+					width: 70,
 					
 				}, {
 					header : '제품명',

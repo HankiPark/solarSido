@@ -49,7 +49,7 @@ progress {
 }
 </style>
 <body>
-	<h1>공정지시</h1>
+	<h1>공정 진행 관리</h1>
 	<div class="row">
 		<div class="col-3">
 			<div class="card card-pricing card-primary card-white card-outline"
@@ -191,12 +191,14 @@ const grid = new tui.Grid(
 			},{
 				header : '제품LOT',
 				name : 'prdtLot',
-				align : 'center'
+				align : 'center',
+			    width : 120,
 				
 			}, {
 				header : '제품코드',
 				name : 'prdtCd',
-				align : 'center'
+				align : 'center',
+			    width : 70
 				
 			}, {
 				header : '제품명',
@@ -206,7 +208,8 @@ const grid = new tui.Grid(
 			}, {
 				header : '공정진행',
 				name : 'prdtFg',
-				align : 'center'
+				align : 'center',
+			    width : 100,
 			 	formatter:function(value){
 			 		if(value.value=="P"){
 			 			return "1공정";
@@ -234,7 +237,8 @@ const grid = new tui.Grid(
 			}, {
 				header : '시작시간',
 				name : 'prcsFrTm',
-				align : 'center'
+				align : 'center',
+			    width : 70,
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -248,7 +252,8 @@ const grid = new tui.Grid(
 			}, {
 				header : '종료시간',
 				name : 'prcsToTm',
-				align : 'center'
+				align : 'center',
+			    width : 70,
 				formatter:function(value){
 					 if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -263,7 +268,8 @@ const grid = new tui.Grid(
 			},{
 				header : '설비코드',
 				name : 'eqmCd',
-				align : 'center'
+				align : 'center',
+			    width : 70,
 				
 			}, {
 				header : '설비명',
@@ -274,13 +280,15 @@ const grid = new tui.Grid(
 				header : '작업번호',
 				name : 'wkNo',
 				hidden : true,
-				align : 'center'
+				align : 'center',
+			    width : 170,
 				
 			}, {
 				header : '작업일자',
 				name : 'wkDt',
 				hidden : true,
-				align : 'center'
+				align : 'center',
+			    width : 170,
 				
 			},
 
@@ -302,7 +310,10 @@ grid.on('onGridUpdated', function() {
 	}
 }); */
 $("#indicaSearch").on('click',function(){
-	grid.readData(1,{'indicaNo' : $("#indica").val()},true);
+	dialog.dialog("open");
+	$("#dialog-form").load("${pageContext.request.contextPath}/modal/unprcs",function() {
+		endList2();});
+	
 	
 });
 $("#start").on('click',function(){
