@@ -109,11 +109,12 @@
   
   function rowColor(){
 	  let rowCnt = grid.getRowCount();
-	  for(let i = 0; i<rowCnt; i++){
+	  for(let i = 0; i<rowCnt-1; i++){
 		  let rscStc = grid.getValue(i, 'rscStc');
 		  let safStc = grid.getValue(i, 'safStc');
 		  if(parseInt(rscStc)<parseInt(safStc)){
-			  $('td[data-row-key$="'+i+'"][data-column-name$="rscStc"]').css('backgroundColor','#f7dad5');
+			  console.log(i, parseInt(rscStc), parseInt(safStc));
+			  $('td[data-row-key="'+i+'"][data-column-name="rscStc"]').css('backgroundColor','#f7dad5');
 		  }
 	  }
   }

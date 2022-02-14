@@ -123,17 +123,20 @@
 				name: 'rscCd',
 				sortable: true,
 		        align: 'center',
+		        width: 90,
 			},
 			{
 				header: '반품량',
 				name: 'rscInferQty',
 				sortable: true,
 		        align: 'center',
+		        width: 50,
 			},
 			{
 				header: '반품사유',
 				name: 'rtngdResnCd',
 		        align: 'center',
+		        width: 300,
 			},
 			{
 				header: '발주일',

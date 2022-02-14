@@ -366,7 +366,7 @@
                 const options = {
                     chart: {
                         title: '분기별 자재 불량률',
-                        width: 1100,
+                        width: 700,
                         height: 400,
                     },
                     series: {
