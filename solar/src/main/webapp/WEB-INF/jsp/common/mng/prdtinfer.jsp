@@ -118,9 +118,7 @@
 							name : 'prdtInferCd',
 							editor : 'text',
 							sortable : true,
-
-							width: 'auto'
-
+							width: '90',
 							align : 'center'
 
 						}, 
@@ -128,26 +126,26 @@
 							header : '불량명',
 							name : 'prdtInferNm',
 							editor : 'text',
-							width: 'auto'
+							width: '130',
 							align : 'center'
 						},
 						{
 							header : '불량내역',
 							name : 'prdtInferDesct',
 							editor : 'text',
-							width: 'auto',
+							width: '350',
 							align : 'center'
 						},
 						{
 							header : '공정코드',
 							name : 'prcsCd',
-							width: 'auto'
+							width: '90',
 							align : 'center'
 						}, 
 						{
 							header : '공정명',
 							name : 'prcsNm',
-							width: 'auto'
+							width: '100',
 							align : 'center'
 						} 
 						

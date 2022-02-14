@@ -46,30 +46,30 @@ public class FairServiceImpl implements FairService {
 		
 		if(mvo.getCreatedRows()!=null) {
 			for(FairVO fairVO : mvo.getCreatedRows()) {
-				fairMapper.fairInsert(fairVO);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
 				cmmndataVO.setCmmnCdId("prcs");
 				cmmndataVO.setCmmnCdNm(fairVO.getPrcsNm());
 				cmmndataVO.setCmmnCdDesct(fairVO.getPrcsDesct());
+				fairMapper.fairInsert(fairVO);
 				cmmndataMapper.cmmnDetailInsert(cmmndataVO);
 			}
 		}
 		if(mvo.getDeletedRows()!=null) {
 			for(FairVO fairVO : mvo.getDeletedRows()) {
-				fairMapper.fairDelete(fairVO);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
+				fairMapper.fairDelete(fairVO);
 				cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 			}
 			if(mvo.getUpdatedRows()!=null) {
 				for(FairVO fairVO : mvo.getUpdatedRows()) {
-					fairMapper.fairUpdate(fairVO);
 					CmmndataVO cmmndataVO = new CmmndataVO();
 					cmmndataVO.setCmmnCdDetaId(fairVO.getPrcsCd());
 					cmmndataVO.setCmmnCdId("prcs");
 					cmmndataVO.setCmmnCdNm(fairVO.getPrcsNm());
 					cmmndataVO.setCmmnCdDesct(fairVO.getPrcsDesct());
+					fairMapper.fairUpdate(fairVO);
 					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);	
 				}
 			}	

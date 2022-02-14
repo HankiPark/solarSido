@@ -4,7 +4,7 @@
 	
 	<select id="prdtbomList" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">
 		SELECT * FROM PRDT_BOM
-		ORDER BY PRDT_CD
+		ORDER BY PRDT_CD, RSC_CD
 	</select>
 	
 	<select id="prdtbomSearch" resultType="solar.cmm.prdtbom.dao.PrdtbomVO">

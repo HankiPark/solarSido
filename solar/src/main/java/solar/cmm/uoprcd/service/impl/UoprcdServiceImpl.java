@@ -61,20 +61,20 @@ public class UoprcdServiceImpl implements UoprcdService{
 			}
 		if(mvo.getDeletedRows()!=null) {
 			for(UoprcdVO uoprcdVO : mvo.getDeletedRows()) {
-					uoprcdMapper.uoprcdDelete(uoprcdVO);
 					CmmndataVO cmmndataVO = new CmmndataVO();
 					cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
+					uoprcdMapper.uoprcdDelete(uoprcdVO);
 					cmmndataMapper.cmmnDetailDelete(cmmndataVO);
 				}
 			}
 		if(mvo.getUpdatedRows()!=null) {
 			for(UoprcdVO uoprcdVO : mvo.getUpdatedRows()) {
-					uoprcdMapper.uoprcdUpdate(uoprcdVO);
 					CmmndataVO cmmndataVO = new CmmndataVO();
 					cmmndataVO.setCmmnCdDetaId(uoprcdVO.getUoprCd());
 					cmmndataVO.setCmmnCdId("uopr");
 					cmmndataVO.setCmmnCdNm(uoprcdVO.getUoprNm());
 					cmmndataVO.setCmmnCdDesct(uoprcdVO.getUoprDesct());
+					uoprcdMapper.uoprcdUpdate(uoprcdVO);
 					cmmndataMapper.cmmnDetailUpdate(cmmndataVO);
 				}
 			}

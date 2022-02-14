@@ -73,8 +73,8 @@
 					</div>
 				</div>
 				<div>
-					<button type="button" id="btnInsert">등록</button>
-					<button type="button" id="btnUpdate">수정</button>
+					<button type="button" id="btnInsert">추가</button>
+					<button type="button" id="btnUpdate">저장</button>
 					<button type="button" id="btnDelete">삭제</button>
 					<button type="button" id="btnReset">초기화</button>
 				</div>
