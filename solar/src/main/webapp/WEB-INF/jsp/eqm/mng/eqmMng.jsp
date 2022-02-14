@@ -623,7 +623,7 @@
             	result = result.queryResult;
             	if(result.length!=0){
 	            	if(result != 'true'){
-	            		toastr.success('설비코드가 중복된 데이터를 \n제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
+	            		toastr.success('설비코드가 중복된 데이터를 <br>제외하고 저장되었습니다.<br>중복된 설비코드: <br>[ '+result+' ]');
 	            		
 // 	            		let duplCds = result.split(',');
 // 	            		console.log(duplCds);

@@ -352,6 +352,7 @@ input#isNotInspected:checked + label::after{
 		for(let i of grid.getCheckedRowKeys()){
 			console.log(i);
 			grid.setValue(i, 'inspCls', 'rs002');
+			grid.setValue(i, 'rscInferQty', 0);
 		}
 	});
 </script>
