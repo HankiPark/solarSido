@@ -85,10 +85,11 @@ public class PrdtServiceImpl implements PrdtService {
 			for(Prdt vo : mvo.getCreatedRows()) {
 				
 				pmapper.insertOutD(vo);
-				
+				pmapper.updateStatePrdt(vo);
 				pmapper.resetOw(vo);
 				pmapper.updOrd(vo);
-				
+				pmapper.endOrder(vo);
+				pmapper.inStcUpdate(vo);
 				}
 			
 			}
@@ -102,6 +103,12 @@ public class PrdtServiceImpl implements PrdtService {
 				
 				}
 			}
+			if(mvo.getRows()!=null) {
+				for(Prdt vo : mvo.getRows()) {
+					
+				}
+			}
+
 		return 1;
 	}
 

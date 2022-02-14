@@ -33,6 +33,22 @@
 		 from prcs_d_o o 
 	
 	</select>
+		<select id="findTempNof"  resultType="Prcs2">
+		select o.prdt_idx,
+		o.prdt_lot,
+		o.prdt_fg,
+		o.prdt_cd,
+		o.indica_deta_no,
+		o.prcs_fr_tm,
+		o.prcs_to_tm,
+		o.eqm_cd,
+		o.wk_no,
+		o.wk_dt,
+		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as eqm_nm
+		 from prcs_d_o o where o.prdt_fg != 'F'
+	
+	</select>
 	
 	<select id="ableEqm" resultType="EqmAble">
 		select * from eqm where eqm_yn ='Y' and li_no = #{liNo} order by li_no
@@ -178,10 +194,15 @@ select i.prdt_infer_cd||'('||(select p.prdt_infer_nm from prdt_infer_cd p where 
 	
 	<select id="findInspaPrdt" resultType="Prcs2">
 		select (select substr(prdt_infer_desct,1,4) from prdt_infer_cd where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot} and to_number(substr(prdt_infer_cd,3))>16 )) as rsc_cd,
-		(select rsc_lot from prdt_rsc p join rsc r on r.rsc_cd=(select substr(prdt_infer_desct,1,4) from prdt_infer_cd where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot}))
-		 where prdt_lot =#{prdtLot} and to_number(substr(prdt_infer_cd,3))>16) as rsc_lot,
-		 (select listagg(prdt_lot,',') within group(order by prdt_lot) from prdt_rsc where rsc_lot = (select rsc_lot from prdt_rsc p join rsc r on r.rsc_cd=(select substr(prdt_infer_desct,1,4) from prdt_infer_cd where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot}))
-		 where prdt_lot =#{prdtLot} and to_number(substr(prdt_infer_cd,3))>16) ) as prdt_lot from dual
+		(select distinct p.rsc_lot from prdt_rsc p join rsc_inout r on p.rsc_lot = r.rsc_lot
+		 where p.prdt_lot =#{prdtLot} and r.rsc_cd=
+(select substr(prdt_infer_desct,1,4) from prdt_infer_cd 
+where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot} ) and to_number(substr(prdt_infer_cd,3))>16)) as rsc_lot,
+		 (select listagg(prdt_lot,',') within group(order by prdt_lot) from prdt_rsc 
+         where rsc_lot = (select distinct p.rsc_lot from prdt_rsc p join rsc_inout r on p.rsc_lot = r.rsc_lot
+		 where p.prdt_lot =#{prdtLot} and r.rsc_cd=
+(select substr(prdt_infer_desct,1,4) from prdt_infer_cd 
+where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot} ) and to_number(substr(prdt_infer_cd,3))>16 ))) as prdt_lot from dual
 	</select>
 	
 	<select id="selectIdc2" resultType="IndicaVO">

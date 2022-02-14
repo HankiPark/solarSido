@@ -350,7 +350,10 @@ $(function() {
 					initialRequest : false,
 					contentType : 'application/json'
 				},
-				
+				pageOptions : {
+					useClient : true,
+					perPage : 9
+				},
 				bodyHeight : 400,
 				rowHeaders : [ {
 					type : 'rowNum',
@@ -369,7 +372,7 @@ $(function() {
 				}, {
 					header : '입고일자',
 					name : 'prdtDt',
-					rowSpan: true,
+					//rowSpan: true,
 					align : 'center',
 					width: 100,
 				}, {
@@ -572,7 +575,8 @@ $(function() {
 				}, {
 					header : '출고일자',
 					name : 'prdtDt',
-					align : 'center'
+					align : 'center',
+					width: 100,
 				}, {
 					header : '주문번호',
 					name : 'orderNo',
@@ -584,24 +588,28 @@ $(function() {
 				}, {
 					header : '회사명',
 					name : 'coNm',
-					align : 'center'
+					align : 'center',
+					width: 80,
 				}, {
 					header : '제품코드',
 					name : 'prdtCd',
-					hidden : true,
+					width: 80,
 					align : 'center'
 				}, {
 					header : '제품명',
 					name : 'prdtNm',
-					align : 'center'
+					align : 'center',
+					width: 170,
 				},{
 					header : '주문량',
 					name : 'orderQty',
-					align : 'center'
+					align : 'center',
+					width: 70,
 				},{
 					header : '남은주문량',
 					name : 'restQty',
-					align : 'center'
+					align : 'center',
+					width: 90,
 				}, {
 					header : '출고량',
 					name : 'oustQty',
@@ -610,11 +618,13 @@ $(function() {
 				}, {
 					header : '제품 재고',
 					name : 'prdtStc',
-					align : 'center'
+					align : 'center',
+					width: 70,
 				}, {
 					header : '금액',
 					name : 'prdtUntprc',
-					align : 'center'
+					align : 'center',
+					width: 130,
 				}, {
 					header : '단가',
 					name : 'prdtAmt',
@@ -661,6 +671,19 @@ $(function() {
 				//버튼누르면 전표번호 값 업데이트
 				outGrid.blur();
 				outGrid.request('modifyData');
+				setTimeout(() => {
+					$.ajax({
+						url:'${pageContext.request.contextPath}/ajax/resetOw.do',
+						dataType: 'json',
+						contentType: 'application/json; charset=utf-8',
+						}).done((res)=>{
+							a=res["num2"];	
+							
+							//전표번호 부여(기본)
+							$("#slipNm").val("SLI" + (d.toISOString().slice(0, 10)).replaceAll("-", "")+ a);
+						})
+				}, 2000);
+			
 				sendMsgToParent('출고전표발행','/sales/mng/prdt_inout_mng');
 			});
 	
@@ -802,6 +825,7 @@ $(function() {
 		$('td[data-column-name$="oustQty"]').css('backgroundColor','#ffeeee');
 		outGrid2.refreshLayout();
 		setTimeout(()=>{$('td[data-column-name$="oustQty"]').css('backgroundColor','#ffeeee')},1000);
+
 		});
 	
 	outGrid2.refreshLayout();

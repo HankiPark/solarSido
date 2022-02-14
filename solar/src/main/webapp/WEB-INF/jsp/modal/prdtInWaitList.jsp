@@ -152,7 +152,7 @@ $(function() {
 		
 		
 		$('#btnFAll').on('click',function(){
-			inWaitGrid.request('modifyData',{'modifiedOnly':false});
+			inWaitGrid.request('modifyData',{'modifiedOnly':false,'showConfirm':false});
 			inGrid.clear();
 			dialog2.dialog("close");
 		})

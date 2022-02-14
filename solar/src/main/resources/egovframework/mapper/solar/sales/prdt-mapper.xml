@@ -134,7 +134,7 @@
 	                            (select prdt_lot from prdt_stc where prdt_fg='O' or prdt_fg='OW')
 	                        and prdt_fg='I'
 	        or (prdt_fg ='OW' and indica_deta_no=#{indicaDetaNo} and prdt_cd=#{prdtCd})
-	            
+	            order by prdt_lot
 	</select>
 
 
@@ -346,4 +346,8 @@
 		order by twit asc
 	</select>
 	
+	<update id="endOrder">
+		update order_tb set prog_info='종료' where (select sum(order_qty) from order_d d join order_tb t on d.order_no=t.order_no where t.order_no=#{orderNo})=
+		(select sum(oust_qty) from order_d d join order_tb t on d.order_no=t.order_no where t.order_no=#{orderNo}) and order_no=#{orderNo}
+	</update>
 </mapper>

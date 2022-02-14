@@ -19,7 +19,7 @@ public class Prcs2Scheduler  {
 	Prcs2Mapper pmapper; // 무한루프 그려서 화면에 표기
 
 	public void sch2() throws Exception {
-		List<Prcs2> plist = pmapper.findTemp();
+		List<Prcs2> plist = pmapper.findTempNof();
 		List<EqmAble> elist = new ArrayList<EqmAble>();
 		List<EqmAble> elist2 = new ArrayList<EqmAble>();
 		List<EqmAble> elist3 = new ArrayList<EqmAble>();
@@ -71,7 +71,7 @@ public class Prcs2Scheduler  {
 					elist.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
 
-					if (error >= 0.92) {
+					if (error >= 0.98) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						count++;
@@ -108,7 +108,7 @@ public class Prcs2Scheduler  {
 					pmapper.updateYEqm(eq);
 					elist2.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
-					if (error >= 0.92) {
+					if (error >= 0.98) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						count++;
@@ -143,7 +143,7 @@ public class Prcs2Scheduler  {
 					pmapper.updateYEqm(eq);
 					elist3.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
-					if (error >= 0.92) {
+					if (error >= 0.98) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						count++;
@@ -178,7 +178,7 @@ public class Prcs2Scheduler  {
 					pmapper.updateYEqm(eq);
 					elist4.add(eq);
 					plist.get(i).setPrcsToTm(java.sql.Timestamp.valueOf(LocalDateTime.now()));
-					if (error >= 0.92) {
+					if (error >= 0.98) {
 						plist.get(i).setPrdtFg("F");
 						pmapper.insertMid(plist.get(i));
 						plist.get(i).setPrdtInferCd(ilist4.get(ran).getPrdtInferCd());

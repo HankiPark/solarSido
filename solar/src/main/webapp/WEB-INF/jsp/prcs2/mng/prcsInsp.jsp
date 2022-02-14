@@ -48,8 +48,8 @@
 		<canvas id="gra1" class="col-8" style="height:300px"></canvas>
 		<canvas id="gra2" class="col-4" style="height:300px">불량 수량</canvas>
 	</div>
-		<div id="senseOrderBody"
-			class="card card-pricing card-primary card-white card-outline col-3"
+		<div id="senseOrderBody2"
+			class="card card-pricing card-primary card-white card-outline"
 			style="margin-left: 50px; margin-right: 30px; margin-top: 20px; padding-left: 40px; margin-bottom: 20px; display: none">
 			<div class="card-body">
 	<div id="b"></div>
@@ -147,7 +147,7 @@
 		if(nowSt=='설비'){
 			$("#gra1").css("display","block");
 			$("#gra2").css("display","block");
-			$("#b").css("display","none");
+			$("#senseOrderBody2").css("display","none");
 			chk='설비';
 		let labels = [];
 			  let data = {
@@ -193,13 +193,12 @@
 		} else if(nowSt=='자재'){
 			$("#gra1").css("display","none");
 			$("#gra2").css("display","none");
-			$("#b").css("display","block");
 			chk='자재';
 			
 		} else{
 			$("#gra1").css("display","none");
 			$("#gra2").css("display","none");
-			$("#b").css("display","none");
+			$("#senseOrderBody2").css("display","none");
 			chk='모두';
 		}
 		})
@@ -255,17 +254,25 @@ function chart2(e){
 	
 	
 	
-	grid.on("click",function(ev){
-		if(chk=='자재'){
+	grid.on("dblclick",function(ev){
+		if(chk=='자재' && ev["rowKey"]!=null){
 			$.ajax({
 				url:'${pageContext.request.contextPath}/ajax/findInspaPrdt',
 				dataType: 'json',
 				data : {
 					'prdtLot' :  grid.getValue(ev["rowKey"],'prdtLot')
 				},
+				async: false,
 				contentType: 'application/json; charset=utf-8',
 			}).done((res)=>{
-				$("#b").html("이 불량은 자재 코드 "+res.data.rscCd+"중에서 "+res.data.rscLot+"을 사용했으며 이에 사용된 제품들의 LOT은 "+res.data.prdtLot+" 입니다.");
+				console.log(res.data);
+				console.log(res.data[0].rscCd);
+				a=res.data[0].rscCd;
+				b=res.data[0].rscLot;
+				c=res.data[0].prdtLot;
+				console.log(a);
+				$("#senseOrderBody2").css("display","block");
+				$("#b").html(`이 불량은 자재 코드`+a+`중에서 자재LOT `+b+`을 사용했으며 이에 사용된 제품들의 LOT은 `+c+` 입니다.`);
 				
 			})
 		}

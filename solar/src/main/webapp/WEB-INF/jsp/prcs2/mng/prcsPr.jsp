@@ -50,11 +50,11 @@ progress {
 </style>
 <body>
 	<h1>공정 진행 관리</h1>
-	<div class="row">
+	<div class="row" id="senseOrder">
 		<div class="col-3">
-			<div class="card card-pricing card-primary card-white card-outline"
-				style="margin-left: 30px; padding-left: 10px; padding-top: 20px; margin-bottom: 10px; height: 300px">
-				<div class="card-body">
+			<div class="card card-pricing card-primary card-white card-outline " id="senseOrderBody"
+				style="margin-left: 30px; padding-left: 10px; padding-top: 20px; margin-bottom: 10px;margin-right:-20px; height: 300px">
+				<div class="card-body ">
 
 					<div data-role="fieldcontain" style="margin-left: -20px;">
 						<label for="defandroid">지시번호</label> <input name="indica"
@@ -143,7 +143,7 @@ progress {
 	<div id="dialog-ing" title="공정 내역"></div>
 	<script type="text/javascript">
 var wkno=null;
-
+var stop=null;
 let dialog = $("#dialog-form").dialog({
 	autoOpen : false,
 	modal : true,
@@ -341,7 +341,7 @@ $("#start").on('click',function(){
 				grid.setValue(i,'wkDt',today);
 				
 			}
-			
+			stop='N';
 			wkno=res.No;
 			repeat();
 		});
@@ -413,7 +413,11 @@ $("#start").on('click',function(){
 			}
 			}
 			setTimeout(() => {
-				repeat();
+				if(stop=='Y'){
+				return;
+				}else {
+				repeat();	
+				}
 			}, 2000);
 			
 		})
@@ -430,6 +434,7 @@ $("#end").on('click',function(){
 	gifToPng(2);
 	gifToPng(3);
 	gifToPng(4);
+	stop='Y';
 });
 
 function pngToGif(i){
@@ -463,6 +468,13 @@ grid.on('click',function(ev) {
 				})
 				}
 			});
+$('#senseOrder').resize(function(){
+	if($('#senseOrder').width()<1780){
+		$('#senseOrderBody').css('paddingLeft','20px');
+	}else{
+		$('#senseOrderBody').css('paddingLeft','40px');
+	}
+})
 </script>
 </body>
 </html>

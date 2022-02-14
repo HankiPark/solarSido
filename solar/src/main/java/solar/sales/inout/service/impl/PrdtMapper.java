@@ -27,6 +27,7 @@ public interface PrdtMapper {
 	int updateInPrdt(Prdt vo);
 	int deleteInPrdt(Prdt vo);
 	int insertOutPrdt(Prdt vo);
+	int endOrder(Prdt vo);
 
 	int deleteOutPrdt(Prdt vo);
 	int updateStatePrdt(Prdt vo);

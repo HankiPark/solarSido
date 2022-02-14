@@ -17,6 +17,8 @@ public class Prcs2 {
 	String indicaDetaNo;
 	String indicaNo;
 	String index;
+	String rscLot;
+	String rscCd;
 	String wkNo;
 	String empId;
 	String nowSt;
