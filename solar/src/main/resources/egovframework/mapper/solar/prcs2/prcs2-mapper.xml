@@ -13,9 +13,6 @@
 		insert into prcs_m values(CREATENO('WK',wkseq.nextval),sysdate,#{indicaNo},#{empId})
 	</insert>
 	
-<!-- 	<insert id="insertDetail">
-		insert into prcs_d values(prcsseq.nextval,#{prdtLot},#{prdtFg},#{prdtCd},#{indicaDetaNo},null,null,null,#{wkNo},#{wkDt})
-	</insert> -->
 		<insert id="insertDetailO">
 		insert into prcs_d_o values(prcsseqtwo.nextval,#{prdtLot},#{prdtFg},#{prdtCd},#{indicaDetaNo},null,null,null,#{wkNo},#{wkDt})
 	</insert>
@@ -32,13 +29,16 @@
 		o.wk_no,
 		o.wk_dt,
 		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
-		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as co_nm
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as eqm_nm
 		 from prcs_d_o o 
 	
 	</select>
 	
 	<select id="ableEqm" resultType="EqmAble">
 		select * from eqm where eqm_yn ='Y' and li_no = #{liNo} order by li_no
+	</select>
+	<select id="allYEqm" resultType="EqmAble">
+		select * from eqm where eqm_yn ='Y' order by li_no
 	</select>
 	
 	<update id="updatePEqm">
@@ -65,7 +65,7 @@
 			
 			</when>
 			<otherwise>
-			prdt_fg = #{prdtFg},prcs_fr_tm=null,prcs_to_tm=null where prdt_idx= #{prdtIdx}
+			prdt_fg = #{prdtFg},prcs_fr_tm=null,prcs_to_tm=null,eqm_cd=null where prdt_idx= #{prdtIdx}
 			</otherwise>
 		</choose>
 		
@@ -90,7 +90,7 @@
 		o.wk_no,
 		o.wk_dt,
 		(select p.prdt_nm from prdt p where p.prdt_cd = o.prdt_cd) as prdt_nm,
-		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as co_nm
+		(select q.eqm_nm from eqm q where q.eqm_cd = o.eqm_cd) as eqm_nm
 		from prcs_d o
 		where o.wk_no=#{wkNo} and o.prdt_fg in ('C','F') order by o.prdt_lot
 	</select>
@@ -99,11 +99,92 @@
 		select DBMS_RANDOM.VALUE(0,1) as "error" from dual
 	</select>
 	
-	<insert id="insertInfer">
-		insert into prdt_infer values(#{prdtLot},sysdate,#{prdtInferCd},#{eqmCd})
-	</insert>
 	
 	<select id="inferList" resultType="EqmAble">
 		select * from prdt_infer_cd where prcs_cd = (select distinct prcs_cd from eqm where li_no=#{liNo})	
 	</select>
+	
+	<select id="prIng" resultType="PrcsIng">
+		select (select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P') as one_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P') as one_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P') as one_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P1') as two_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P1') as two_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P1') as two_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P2') as three_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P2') as three_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P2') as three_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P3') as four_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P3') as four_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='P3') as four_eqm,
+		(select prcs_fr_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='F') as err_fr,
+		(select prcs_to_tm from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='F') as err_to,
+		(select eqm_cd from prcs_d where prdt_lot=#{prdtLot} and prdt_fg='F') as err_eqm,
+		(select prdt_infer_cd from prdt_infer where prdt_lot=#{prdtLot}) as err_cd,
+		(select prdt_infer_nm from prdt_infer_cd where prdt_infer_cd =(select prdt_infer_cd from prdt_infer where prdt_lot=#{prdtLot})) as err_nm
+		
+		
+		
+		
+		 from dual
+	
+	</select>
+	
+	
+	<insert id="insertInfer">
+		insert into prdt_infer values(#{prdtLot},sysdate,#{prdtInferCd},#{eqmCd},#{indicaDetaNo})
+	</insert>
+	
+	
+	<select id="prdtInferList" resultType="Prcs2">
+		select i.prdt_lot,i.infer_dt,i.prdt_infer_cd,i.eqm_cd,c.prdt_infer_nm,c.prdt_infer_desct,(select eqm_nm from eqm where eqm_cd=i.eqm_cd) as eqm_nm from prdt_infer i join prdt_infer_cd c on i.prdt_infer_cd=c.prdt_infer_cd 
+		<where>
+		<if test="indicaNo !=null and indicaNo != ''">
+		and i.indica_deta_no in (select indica_deta_no from indica_d where indica_no=#{indicaNo})
+		</if>
+		<if test = "startT!=null or endT!=null">
+	<![CDATA[		and TO_CHAR(i.infer_dt,'yyyyMMdd')>= TO_CHAR(#{startT},'yyyyMMdd') and TO_CHAR(i.infer_dt,'yyyyMMdd')<= TO_CHAR( #{endT},'yyyyMMdd')]]>
+		</if>
+		<choose>
+			<when test="nowSt !=null and nowSt != ''">
+				<choose>
+					<when test='nowSt == "자재"'>
+						and i.prdt_infer_cd in (select prdt_infer_cd from prdt_infer_cd where to_number(substr(prdt_infer_cd,3))>16)
+					</when>
+					<when test='nowSt == "설비"'>
+						and i.prdt_infer_cd not in (select prdt_infer_cd from prdt_infer_cd where to_number(substr(prdt_infer_cd,3))>16)
+					</when>
+					<when test='nowSt == "모두"'>
+
+					</when>
+				</choose>
+			</when>
+		</choose>
+		</where>
+	</select>
+	
+	
+	
+	<select id="inspaEqmChart" resultType="Prcs2">
+		select p.eqm_cd||'('||(select e.eqm_nm from eqm e where 
+e.eqm_cd=p.eqm_cd)||')' as eqm_nm,p.eqm_cd,count(*) as cnt from prdt_infer p group by p.eqm_cd order by eqm_cd
+	</select>
+	
+	
+	<select id="EqmKindChart" resultType="Prcs2">
+select i.prdt_infer_cd||'('||(select p.prdt_infer_nm from prdt_infer_cd p where p.prdt_infer_cd =i.prdt_infer_cd)||')' as prdt_infer_cd,i.prdt_infer_cd,count(*) as cnt from prdt_infer i where eqm_cd = #{eqmCd} group by i.prdt_infer_cd order by eqm_cd
+	</select>
+	
+	
+	<select id="findInspaPrdt" resultType="Prcs2">
+		select (select substr(prdt_infer_desct,1,4) from prdt_infer_cd where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot} and to_number(substr(prdt_infer_cd,3))>16 )) as rsc_cd,
+		(select rsc_lot from prdt_rsc p join rsc r on r.rsc_cd=(select substr(prdt_infer_desct,1,4) from prdt_infer_cd where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot}))
+		 where prdt_lot =#{prdtLot} and to_number(substr(prdt_infer_cd,3))>16) as rsc_lot,
+		 (select listagg(prdt_lot,',') within group(order by prdt_lot) from prdt_rsc where rsc_lot = (select rsc_lot from prdt_rsc p join rsc r on r.rsc_cd=(select substr(prdt_infer_desct,1,4) from prdt_infer_cd where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdtLot}))
+		 where prdt_lot =#{prdtLot} and to_number(substr(prdt_infer_cd,3))>16) ) as prdt_lot from dual
+	</select>
+	
+	
+	
+	
 </mapper>

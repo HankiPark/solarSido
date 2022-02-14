@@ -50,7 +50,6 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 	public int modifyData(ModifyVO<PrdtInferVO> modifyVO) {
 		if(modifyVO.getCreatedRows()!=null) {
 		for(PrdtInferVO prdtInferVo : modifyVO.getCreatedRows()) {
-			System.out.println(prdtInferVo);
 			prdtMapper.prdtInsert(prdtInferVo);
 			CmmndataVO cmmndataVO = new CmmndataVO();
 			cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
@@ -61,7 +60,6 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 			}
 		if(modifyVO.getDeletedRows()!=null) {
 			for(PrdtInferVO prdtInferVo : modifyVO.getDeletedRows()) {
-				System.out.println(prdtInferVo);
 				prdtMapper.prdtDelete(prdtInferVo);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());
@@ -70,7 +68,6 @@ public class CmmPrdtServiceImpl implements CmmPrdtService {
 			}	
 		if(modifyVO.getUpdatedRows()!=null) {
 			for(PrdtInferVO prdtInferVo : modifyVO.getUpdatedRows()) {
-				System.out.println(prdtInferVo);
 				prdtMapper.prdtUpdate(prdtInferVo);
 				CmmndataVO cmmndataVO = new CmmndataVO();
 				cmmndataVO.setCmmnCdDetaId(prdtInferVo.getPrdtInferCd());

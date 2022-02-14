@@ -140,8 +140,24 @@ progress {
 		<div id="grid" class="col-8" style="margin-left: 40px"></div>
 	</div>
 	<div id="dialog-form" title="미지시 공정"></div>
+	<div id="dialog-ing" title="공정 내역"></div>
 	<script type="text/javascript">
 var wkno=null;
+
+let dialog = $("#dialog-form").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 700,
+	height : 700
+});
+
+let dialog2 = $("#dialog-ing").dialog({
+	autoOpen : false,
+	modal : true,
+	width : 1600,
+	height : 270
+});
+
 const grid = new tui.Grid(
 		{
 			el : document.getElementById('grid'), // 컨테이너 엘리먼트
@@ -162,27 +178,35 @@ const grid = new tui.Grid(
 			},
 			
 			bodyHeight : 700,
-			rowHeight: 20,
-			minRowHeight: 10,
+			rowHeight: 30,
+			minRowHeight: 30,
+			columnOptions: {
+				 width: 'auto'
+			  },
 			columns : [ {
 				header : 'index',
 				name : 'prdtInx',
-				hidden : true
+				hidden : true,
+				align : 'center'
 			},{
 				header : '제품LOT',
 				name : 'prdtLot',
+				align : 'center'
 				
 			}, {
 				header : '제품코드',
 				name : 'prdtCd',
+				align : 'center'
 				
 			}, {
 				header : '제품명',
 				name : 'prdtNm',
+				align : 'center'
 				
 			}, {
 				header : '공정진행',
 				name : 'prdtFg',
+				align : 'center'
 			 	formatter:function(value){
 			 		if(value.value=="P"){
 			 			return "1공정";
@@ -206,9 +230,11 @@ const grid = new tui.Grid(
 				header : '생산지시상세번호',
 				name : 'indicaDetaNo',
 				hidden : true,
+				align : 'center'
 			}, {
 				header : '시작시간',
 				name : 'prcsFrTm',
+				align : 'center'
 				 formatter:function(value){
 					  if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -222,6 +248,7 @@ const grid = new tui.Grid(
 			}, {
 				header : '종료시간',
 				name : 'prcsToTm',
+				align : 'center'
 				formatter:function(value){
 					 if(value.value !=null && value.value !=''){
 						 var t= new Date(value.value);
@@ -236,20 +263,24 @@ const grid = new tui.Grid(
 			},{
 				header : '설비코드',
 				name : 'eqmCd',
+				align : 'center'
 				
 			}, {
 				header : '설비명',
 				name : 'eqmNm',
+				align : 'center'
 				
 			}, {
 				header : '작업번호',
 				name : 'wkNo',
 				hidden : true,
+				align : 'center'
 				
 			}, {
 				header : '작업일자',
 				name : 'wkDt',
 				hidden : true,
+				align : 'center'
 				
 			},
 
@@ -276,7 +307,7 @@ $("#indicaSearch").on('click',function(){
 });
 $("#start").on('click',function(){
 	if($("#indica").val()!='' && $("#empId").val()!=''){
-		
+		$("#Ccnt").text(grid.getRowCount());	
 		$.ajax({
 			url:'${pageContext.request.contextPath}/ajax/insertWk.do',
 			dataType: 'json',
@@ -299,6 +330,7 @@ $("#start").on('click',function(){
 				grid.setValue(i,'wkDt',today);
 				
 			}
+			
 			wkno=res.No;
 			repeat();
 		});
@@ -306,8 +338,10 @@ $("#start").on('click',function(){
 
 		setTimeout(() => {
 			grid.request('modifyData',{showConfirm: false});	
-			$("#Ccnt").val(grid.getRowCount());
+			
 		}, 1000);
+		
+		
 		
 	}
 	
@@ -380,13 +414,11 @@ $("#end").on('click',function(){
 		url:'${pageContext.request.contextPath}/ajax/scheduleEnd',
 		dataType: 'json',
 		contentType: 'application/json; charset=utf-8',
-	}).done(()=>{
-		gifToPng(1);
-		gifToPng(2);
-		gifToPng(3);
-		gifToPng(4);
 	})
-	
+	gifToPng(1);
+	gifToPng(2);
+	gifToPng(3);
+	gifToPng(4);
 });
 
 function pngToGif(i){
@@ -409,6 +441,17 @@ $(function(){
 	}, 2000);
 	
 })
+
+grid.on('click',function(ev) {
+		if (grid.getValue(ev["rowKey"], "prdtLot") !=null && grid.getValue(ev["rowKey"], "prdtLot") !='') {
+			dialog2.dialog("open");
+			$("#dialog-ing").load("${pageContext.request.contextPath}/modal/progIng",function() {
+				progIng(grid.getValue(ev["rowKey"], "prdtLot"));
+				
+
+				})
+				}
+			});
 </script>
 </body>
 </html>

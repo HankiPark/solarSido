@@ -32,20 +32,25 @@
 					{
 					header : '업체코드',
 					name : 'coCd',
+					align : 'center'
 				}, {
 					header : '업체명',
-					name : 'coNm'
+					name : 'coNm',
+					align : 'center'
 				}, {
 					header : '사업자등록번호',
 					name : 'bizno',
+					align : 'center'
 					
 				}, {
 					header : '연락처',
-					name : 'coNumber'
+					name : 'coNumber',
+					align : 'center'
 				}, {
 					header : '업체구분',
 					name : 'coFg',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, 
 
 				],
@@ -71,12 +76,8 @@
 					
 				}).done(function(res){
 					var sres = JSON.parse(res);
-					console.log(sres)
 					gridCo.resetData(sres["data"]["contents"]);
 				})
-			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')
-				.then(res=>res.json())
-				.then(response=>{inGrid.resetData(response["data"]["contents"]);console.log(response);inGrid.refreshLayout();}) */
 				
 			 });
 			

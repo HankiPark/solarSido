@@ -36,17 +36,21 @@ function coCdList(){
 				bodyHeight : 500,
 				columns : [ {
 					header : '업체코드',
-					name : 'coCd'
+					name : 'coCd',
+					align : 'center'
 				}, {
 					header : '업체명',
-					name : 'coNm'
+					name : 'coNm',
+					align : 'center'
 				}, {
 					header : '사업자등록번호',
-					name : 'bizno'
+					name : 'bizno',
+					align : 'center'
 				}, {
 					header : '업체구분',
 					name : 'coFg',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				} ]
 			});
 
@@ -54,8 +58,6 @@ function coCdList(){
 	$('#btnfindCo').on('click', function() {
 		var coNm = $("#coNmFind").val();
 		var coCd = $("#coCdFind").val();
-		console.log(coCd);
-		console.log(coNm);
 		var Params = {
 			'coCd' : coCd,
 			'coNm' : coNm

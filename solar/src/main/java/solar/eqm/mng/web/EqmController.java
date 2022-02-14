@@ -90,7 +90,6 @@ public class EqmController {
 	// 비가동목록 data
 	@GetMapping("/grid/eqm/uoList")
 	public String uoList(@RequestParam Map map, Model model) {
-		System.out.println(map);
 		List<?> uoList = unopMapper.selectUnopList(map);
 
 		Map<String, Object> data = new HashMap<>();
@@ -122,7 +121,6 @@ public class EqmController {
 
 	@PostMapping("/ajax/eqm/uographdata")
 	public String uoGraphData(@RequestBody Map<String,String> map, Model model) {
-		System.out.println(map);
 		List<String> eqmCds = new ArrayList<String>();
 		for(String eqmCd: map.get("eqmCds").split(",")) {
 			eqmCds.add(eqmCd);

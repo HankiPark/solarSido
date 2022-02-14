@@ -12,7 +12,7 @@
 		TO_CHAR((SELECT recv_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY-MM-DD') recv_dt,
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		P.order_no,
-		TO_CHAR((SELECT paprd_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY/MM/DD') paprd_dt,
+		TO_CHAR((SELECT paprd_dt FROM order_tb WHERE order_no = P.order_no), 'YYYY-MM-DD') paprd_dt,
 		O.order_qty,
 		(SELECT plan_no FROM plan WHERE plan_no = p.plan_no) plan_no,
 		P.plan_deta_no,
@@ -20,7 +20,7 @@
 		P.plan_qty,
 		B.indica_qty,
 		B.prod_fg,
-		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
+		TO_CHAR(B.wk_dt, 'YYYY-MM-DD') wk_dt,
 		B.wk_ord,
 		(SELECT min(uph)*8 FROM EQM) as day_out_put,
 		ROUND((B.indica_qty/10),2) as prod_day
@@ -29,10 +29,10 @@
 	JOIN order_d O ON (P.order_no = O.order_no AND B.prdt_cd = O.prdt_cd)
 	WHERE 1=1
 		<if test="startT != null and startT != ''">
-		AND B.indica_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY/MM/DD')
+		AND B.indica_dt <![CDATA[>=]]> TO_DATE(#{startT}, 'YYYY-MM-DD')
 		</if>
 		<if test="endT != null and endT != ''">
-		AND B.indica_dt <![CDATA[<=]]> TO_DATE(#{endT}, 'YYYY/MM/DD')
+		AND B.indica_dt <![CDATA[<=]]> TO_DATE(#{endT}, 'YYYY-MM-DD')
 		</if>
 		<if test="coCd != null and coCd != ''">
 		AND (SELECT co_cd FROM order_tb WHERE order_no = P.order_no) = #{coCd}
@@ -61,7 +61,7 @@
 <select id="findIndica" resultType="IndicaVO">
 	SELECT DISTINCT
 		i.indica_no,
-		TO_CHAR(i.indica_dt, 'YYYY/MM/DD') indica_dt,
+		TO_CHAR(i.indica_dt, 'YYYY-MM-DD') indica_dt,
 		i.indica_nm
 	FROM indica i
 	LEFT JOIN prcs_m p
@@ -117,23 +117,23 @@
 	SELECT 
 		B.plan_deta_no,
 		A.plan_no,
-		TO_CHAR(B.plan_dt, 'YYYY/MM/DD') plan_dt,
+		TO_CHAR(B.plan_dt, 'YYYY-MM-DD') plan_dt,
 		(SELECT co_nm FROM co WHERE co_cd = O.co_cd) co_nm,
 		O.co_cd,
-		TO_CHAR((SELECT recv_dt FROM order_tb WHERE order_no = b.order_no), 'YYYY/MM/DD') recv_dt,
+		TO_CHAR((SELECT recv_dt FROM order_tb WHERE order_no = b.order_no), 'YYYY-MM-DD') recv_dt,
 		B.prdt_cd, 
 		(SELECT prdt_nm FROM prdt WHERE prdt_cd = B.prdt_cd) prdt_nm,
 		B.order_no,
-		TO_CHAR(O.paprd_dt, 'YYYY/MM/DD') paprd_dt,
+		TO_CHAR(O.paprd_dt, 'YYYY-MM-DD') paprd_dt,
 		(SELECT order_qty FROM order_d WHERE order_no = B.order_no AND prdt_cd =B.prdt_cd) order_qty,
 		(SELECT plan_no FROM plan WHERE plan_no =a.plan_no) plan_no,
 		B.plan_qty,
-		TO_CHAR(B.wk_dt, 'YYYY/MM/DD') wk_dt,
+		TO_CHAR(B.wk_dt, 'YYYY-MM-DD') wk_dt,
 		B.wk_ord,
 		A.plan_dt,
 		A.plan_nm,
 		(SELECT min(uph)*8 FROM EQM) as day_output,
-		(B.plan_qty/(SELECT min(uph)*8 FROM EQM)) as prod_day
+		nvl((B.plan_qty/(SELECT min(uph)*8 FROM EQM)), 0) as prod_day
 	FROM plan A, plan_d B, order_tb O
 	WHERE A.plan_no = B.plan_no
     AND B.order_no = O.order_no
@@ -165,7 +165,7 @@
 					  	indica_dt,
 					  	indica_nm)
 	VALUES( CREATENO('IND', INDICASEQ.nextval), 
-			TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+			TO_DATE(#{indicaDt}, 'YYYY-MM-DD'),
 			#{indicaNm} )
 </insert>
 
@@ -185,14 +185,14 @@
 							plan_dt)
 	VALUES( #{indicaDetaNo}, 
 			(SELECT nvl(max(indica_no),0) FROM indica), 
-			TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+			TO_DATE(#{indicaDt}, 'YYYY-MM-DD'),
 			#{planDetaNo},
 			#{prdtCd}, 
 			#{prodFg},
 			#{indicaQty}, 
 			#{wkOrd}, 
-			TO_DATE(#{wkDt}, 'YYYY/MM/DD'),
-			TO_DATE(#{planDt}, 'YYYY/MM/DD')  )
+			TO_DATE(#{wkDt}, 'YYYY-MM-DD'),
+			TO_DATE(#{planDt}, 'YYYY-MM-DD')  )
 </insert>
 
 <!-- indicaDgrid -> 주문상세T 지시량 변경 -->
@@ -275,14 +275,14 @@
 <!-- **************************** 지시수정 ********************************** -->
 <update id="updateIndica">
 	UPDATE indica
-	SET indica_dt = TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+	SET indica_dt = TO_DATE(#{indicaDt}, 'YYYY-MM-DD'),
 		indica_nm = #{indicaNm}
 	WHERE indica_no = #{indicaNo}
 </update>
 
 <update id="updateIndicaD">
 	UPDATE indica_d
-	SET	indica_dt = TO_DATE(#{indicaDt}, 'YYYY/MM/DD'),
+	SET	indica_dt = TO_DATE(#{indicaDt}, 'YYYY-MM-DD'),
 		prod_fg = #{prodFg}
 		indica_qty = #{indicaQty},
 		wk_ord = #{wkOrd},
@@ -301,4 +301,5 @@
 	WHERE indica_deta_no = #{indicaDetaNo}
 	AND indica_no = #{indicaNo}
 </delete>	
+
 </mapper>

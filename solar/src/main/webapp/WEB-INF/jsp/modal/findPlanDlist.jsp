@@ -11,33 +11,10 @@
 </body>
 
 <script type="text/javascript">
+var planDgrid;
 function planDList(){
-	$(function(){
-	      $("div:contains('planModal') button:contains('확인')").on('click',function(ev){
-	         indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
-	         indicaDgrid.refreshLayout();
-	         $.ajax({
-	            url:'${pageContext.request.contextPath}/ajax/makeDno.do',
-	            dataType: 'json',
-	            contentType: 'application/json; charset=utf-8',
-	            async: false,
-	         }).done((res)=>{
-	            console.log(res.num2)
-	            let idx = 0;
-	            for(i=0; i<indicaDgrid.getRowCount(); i++){
-	               if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
-	                  console.log(idx)
-	               } else {
-	                  indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
-	                  idx = Number(idx) +1
-	               }
-	            }
-	         })
-	      });
-	   })
-	   
 	//미지시 생산계획 상세 그리드
-	let planDgrid = new tui.Grid({
+	planDgrid = new tui.Grid({
 		el: document.getElementById('planDgrid'),
 		data: {
 			api: {
@@ -58,68 +35,82 @@ function planDList(){
 			 {
 			    header: '계획번호',
 			    name: 'planNo',
+				align : 'center'
 			  },
 		 	 {
 			    header: '계획명',
 			    name: 'planNm',
-			    //hidden: true
+			    //hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '계획일자',
 			    name: 'planDt',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '계획상세번호',
 			    name: 'planDetaNo',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			 
 			  { 
 			    header: '주문번호',
 			    name: 'orderNo',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  { header: '접수일자',
 			    name: 'recvDt',
-			   	hidden: true
+			   	hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '제품코드',
 			    name: 'prdtCd',
 			    sortingType: 'desc',
-		        sortable: true
+		        sortable: true,
+				align : 'center'
 			  },		  
 			  {
 			    header: '제품명',
-			    name: 'prdtNm'
+			    name: 'prdtNm',
+				align : 'center'
 			  },
 			  {
 			    header: '납기일자',
 			    name: 'paprdDt',
+				align : 'center'
 			  },
 			  {
 			    header: '주문량',
 			    name: 'orderQty',
+				align : 'center'
 			  },
 			 {
 			    header: '작업량',
 			    name: 'planQty',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '생산일수',
 			    name: 'prodDay',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  },
 			  {
 			    header: '작업일자',
 			    name: 'wkDt',
+				align : 'center'
 			  },
 			  {
 			    header: '작업순서',
 			    name: 'wkOrd',
-			    hidden: true
+			    hidden: true,
+				align : 'center'
 			  }
 	 		 ]
 	});	

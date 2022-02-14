@@ -147,7 +147,6 @@
 		dataType: 'JSON',
 		async: false,
 	}).done(function (data) {
-		//console.log(data)
 		cmmnCodes = data;
 	});
 	
@@ -158,12 +157,10 @@
 			dataType: 'JSON',
 			async: false,
 		}).done(function (data) {
-			//console.log(data)
 			data.num
 			for(let f of data.num){
 				arr.push(f)
 			}		
-			console.log(arr)
 		});
 	})
 	//------------------------------그리드생성------------------------------------------------
@@ -194,38 +191,44 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-				        //hidden: true
+				        //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획번호',
 					    name: 'planNo',
-					   	//hidden: true
+					   	//hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시번호',
 					    name: 'indicaNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시명',
 					    name: 'indicaNm',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시일자',
 					    name: 'indicaDt',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '업체코드',
 					    name: 'coCd',
-				    	sortingType: 'desc',
-				        sortable: true
+				    	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '제품코드',
@@ -241,38 +244,45 @@
 				        sortable: true,
 				        validation: {
 			    	        required: true
-		    	      }
+		    	      },
+						align : 'center'
 					  },		  
 					  {
 					    header: '제품명',
-					    name: 'prdtNm'
+					    name: 'prdtNm',
+						align : 'center'
 					  },
 					  {
 					    header: '납기일자',
 					    name: 'paprdDt',
 					    sortingType: 'desc',
-				        sortable: true
+				        sortable: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문량',
 					    name: 'orderQty',
-					  	hidden: true
+					  	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획상세번호',
 					    name: 'planDetaNo',
-					   	hidden: true
+					   	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획일자',
 					    name: 'planDt',
-					   	hidden: true
+					   	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '계획량',
 					    name: 'planQty',
 					    sortingType: 'desc',
-				        sortable: true
+				        sortable: true,
+						align : 'center'
 					  },
 					  {
 					    header: '지시량',
@@ -282,25 +292,28 @@
 			    	        required: true
 			    	      },
 			    	       onAfterChange(e) {
-				    			console.log("e.rowkey:"+e.rowKey+" & e.value:"+e.value);
 				    			calProdDay( e, "indicaQty", "dayOutput" ); 
 				    	    	for ( i=0; i< rscGrid.getRowCount(); i++){
 				    	    		rscGrid.setValue(i, 'totalUseQty',
 				    	    				e.value * rscGrid.getValue(i, 'rscUseQty'));
 				    	    	}
-				    	    }    	
+				    	    },
+							align : 'center'    	
 					  },
 					  {
 					    header: '일생산량',
 					    name: 'dayOutput',
+						align : 'center'
 					  },
 					  {
 					    header: '생산일수',
 					    name: 'prodDay',
+						align : 'center'
 					  },
 					  {
 					    header: '생산구분',
 					    name: 'prodFg',
+						align : 'center'
 					    formatter: 'listItemText',
 				    	editor: {
 				    		type:'select',
@@ -315,6 +328,7 @@
 					  {
 					    header: '작업시작일',
 					    name: 'wkDt',
+						align : 'center'
 					    editor :'datePicker',
 					    sortingType: 'desc',
 				        sortable: true,
@@ -326,7 +340,8 @@
 					    header: '작업순서',
 					    name: 'wkOrd',
 					    editor: 'text',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  }
 			 		 ]
 			});
@@ -354,28 +369,34 @@
 					 {
 					    header: '제품코드',
 					    name: 'prdtCd',
-					    //hidden: true
+					    //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
-					    name: 'rscCd'
+					    name: 'rscCd',
+						align : 'center'
 					  },
 					  {
 					    header: '자재명',
-					    name: 'rscNm'
+					    name: 'rscNm',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+						align : 'center'
 					  },
 					  {
 					    header: '총 소요량',
-					    name: 'totalUseQty'
+					    name: 'totalUseQty',
+						align : 'center'
 					  }
 				],
 		summary: {
@@ -419,34 +440,41 @@
 					 {
 					    header: '자재코드',
 					    name: 'rscCd',
-					    //hidden: true
+					    //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
 					    name: 'rscUseQty',
-					  	hidden: true
+					  	hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '주문번호',
 					    name: 'orderNo',
-					    hidden: true
+					    hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '생산지시상세번호',
 					    name: 'indicaDetaNo',
+						align : 'center'
 					  },
 					  {
 					    header: '자재LOT_NO',
-					    name: 'rscLot'
+					    name: 'rscLot',
+						align : 'center'
 					  },
 					  {
 					    header: '재고량',
-					    name: 'rscStc'
+					    name: 'rscStc',
+						align : 'center'
 					  },
 					  {
 					    header: '투입량',
 					    name: 'rscQty',
 					    editor: 'text',
+						align : 'center'
 		    	    }    
 				],
 		summary: {
@@ -481,23 +509,28 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-					    //hidden: true
+					    //hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
-					    name: 'rscCd'
+					    name: 'rscCd',
+						align : 'center'
 					  },
 					  {
 					    header: '자재LOT_NO',
-					    name: 'rscLot'
+					    name: 'rscLot',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+						align : 'center'
 					  },
 					  {
 					    header: '투입량',
-					    name: 'rscQty'
+					    name: 'rscQty',
+						align : 'center'
 					    
 					    
 					  }
@@ -533,29 +566,35 @@
 					 {
 					    header: '지시상세번호',
 					    name: 'indicaDetaNo',
-					 	//hidden: true
+					 	//hidden: true,
+						align : 'center'
 					  },
 					  {
 					 	header: '제품코드',
 					    name: 'prdtCd',
-						//hidden: true
+						//hidden: true,
+						align : 'center'
 					  },
 					  {
 					 	header: '제품LOT_NO',
 					    name: 'prdtLot',
+						align : 'center'
 					  },
 					  {
 					    header: '자재코드',
 					    name: 'rscCd',
-						//hidden: true
+						//hidden: true,
+						align : 'center'
 					  },
 					  {
 					    header: '자재LOT_NO',
-					    name: 'rscLot'
+					    name: 'rscLot',
+						align : 'center'
 					  },
 					  {
 					    header: '소요량',
-					    name: 'rscUseQty'
+					    name: 'rscUseQty',
+						align : 'center'
 					  }
 				]
 	});
@@ -569,10 +608,32 @@
 		height : 600,
 		buttons : {
 			"확인" : function(){
-				planDetailDialog.dialog("close");
+
 			}
 		}
 	});
+	
+	$("#planModal").next().find("button:contains('확인')").on('click',function(ev){
+        indicaDgrid.appendRows(planDgrid.getCheckedRows(ev));
+        indicaDgrid.refreshLayout();
+        $.ajax({
+           url:'${pageContext.request.contextPath}/ajax/makeDno.do',
+           dataType: 'json',
+           contentType: 'application/json; charset=utf-8',
+           async: false,
+        }).done((res)=>{
+           let idx = 0;
+           for(i=0; i<indicaDgrid.getRowCount(); i++){
+              if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
+              } else {
+                 indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
+                 idx = Number(idx) +1
+              }
+           }
+           planDetailDialog.dialog("close");
+        })
+     });
+	
 	
 	//생산지시서 모달
 	let indicaDialog = $("#indicaModal").dialog({
@@ -591,28 +652,24 @@
 	//지시상세 그리드 이벤트
 	indicaDgrid.on('click', function(ev){
 		if( ev.columnName == "planNo" ){
-			console.log("미지시 계획 검색")
 			planDetailDialog.dialog("open");
 			$("#planModal").load("${pageContext.request.contextPath}/modal/findPlanDlist", 
 										function() { planDList() })
 			}
 	});
 	
-	indicaDgrid.on('onGridUpdated', function() {
-		indicaDgrid.refreshLayout();
-		rscGrid.clear();
-		rscLotGrid.clear();
-		hdRscConGrid.clear();
-		hdPrdtRscGrid.clear();
-	});
-	 
 	indicaDgrid.on('editingFinish', function(ev) {
 		if(ev.columnName == "indicaQty") {
 			let planQty = indicaDgrid.getValue(ev.rowKey, "planQty");
 			idcQty = indicaDgrid.getValue(ev.rowKey, "indicaQty")
 			idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
 			orderNo = indicaDgrid.getValue(ev.rowKey, "orderNo")
-			if (planQty == null || planQty == ""  ) {
+			if (planQty != null  && planQty != "") {
+				if(planQty < idcQty) {
+					toastr.warning("계획량을 초과했습니다.");
+					indicaDgrid.setValue(ev.rowKey, "indicaQty", indicaDgrid.getValue(ev.rowKey, ""));
+				} 
+			} else {
 				let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
 				let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
 				
@@ -625,24 +682,6 @@
 						'prdtNm' : prdtNm
 				};
 				rscGrid.readData(1, rscGridParams, true);
-			} else {
-				if(planQty != idcQty) {
-					toastr.warning("계획량과 지시량이 다릅니다.");
-					indicaDgrid.setValue(ev.rowKey, "indicaQty", "");
-				} else {
-					let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
-					let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
-					
-					$('#prdtCd').val(prdtCd);
-					$('#prdtNm').val(prdtNm);
-					$('#idcDno').val(idcNo);
-					
-					var rscGridParams = {
-							'prdtCd' : prdtCd,
-							'prdtNm' : prdtNm
-					};
-					rscGrid.readData(1, rscGridParams, true);
-				}
 			}
 		}
 		if(ev.columnName == "wkDt") {
@@ -659,25 +698,52 @@
 		}
 	});
 	
+	indicaDgrid.on('dblclick', function(ev){
+		if(ev.columnName != "prdtCd" && ev.columnName != "indicaQty"
+			&& ev.columnName != "prodFg" && ev.columnName != "wkDt") {
+			let idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
+			let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
+			let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
+			
+			$('#prdtCd').val(prdtCd);
+			$('#prdtNm').val(prdtNm);
+			$('#idcDno').val(idcNo);
+			
+			var rscGridParams = {
+					'prdtCd' : prdtCd,
+					'prdtNm' : prdtNm
+			};
+			rscGrid.readData(1, rscGridParams, true);
+		}
+		for ( i=0; i< rscGrid.getRowCount(); i++){
+    		rscGrid.setValue(i, 'totalUseQty', indicaDgrid.getValue(ev.rowKey, "indicaQty") * rscGrid.getValue(i, 'rscUseQty'));
+		}
+	});
+	
+	indicaDgrid.on('onGridUpdated', function() {
+		indicaDgrid.refreshLayout();
+		setTimeout(function(){
+		 for(let i = 0; i < indicaDgrid.getRowCount(); i++){
+			 indicaDgrid.setValue(i, "indicaQty", indicaDgrid.getValue(i, "planQty"));
+				calProdDay( i, "indicaQty", "dayOutput" )	;	
+			}
+		}, 1500)
+	});
+	 
 	indicaDgrid.on('response', function(ev) { 
 		let res = JSON.parse(ev.xhr.response);
-		//console.log(res);
 		if (res.mod =='upd'){
 			indicaDgrid.clear();
 		}
 	})
 	
-	let rscSum = 0;
-	
 	//자재목록 그리드 이벤트
 	rscGrid.on('onGridUpdated', function() {
 		rscGrid.refreshLayout(); 
-		rscSum += 1*rscLotGrid.getSummaryValues('totalUseQty').sum;
-		console.log(rscSum);
 		for ( i=0; i< rscGrid.getRowCount(); i++){
 			rscGrid.setValue(i, 'totalUseQty',  1* idcQty * rscGrid.getValue(i, 'rscUseQty'));
 		}
-		rscLotGrid.refreshLayout(); 
+		rscLotGrid.refreshLayout();
 	});
 	
 	rscGrid.on('dblclick', function(ev){
@@ -697,7 +763,7 @@
 				'totalUseQty' : totalUseQty
 		};
 		rscLotGrid.readData(1, lotGridParams, true);
-		rscLotGrid.disableRow(ev, true);		
+		//rscLotGrid.disableRow(ev, true);		
 	});
 	
 	//소요 자재 Lot 그리드 -> 소요 자재 목록 히든그리드
@@ -708,7 +774,6 @@
 	})
 	
 	rscLotGrid.on("editingFinish", (rscEv) => {
-		console.log(rscEv)
 		totalQty = $('#totalUseQty').val();
 		let rscQty = rscLotGrid.getValue(rscEv.rowKey, 'rscQty');
 		let rscStc = rscLotGrid.getValue(rscEv.rowKey, 'rscStc');
@@ -776,13 +841,14 @@
 	//------------------------------버튼------------------------------------------------
 	//초기화 버튼: 지시폼, 지시상세 그리드 초기화
 	$('#btnReset').click(function() {
-		indicaMngFrm.reset();
+		$('#indicaNm').val('');
 		rscFrm.reset();
 		rscLotFrm.reset();
 		indicaDgrid.resetData([]);
 		rscGrid.resetData([]);
 		rscLotGrid.resetData([]);
 		hdRscConGrid.resetData([]);
+		hdPrdtRscGrid.resetData([]);
 	})
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
@@ -800,7 +866,6 @@
 				contentType: 'application/json; charset=utf-8',
 				async: false,
 			}).done((res)=>{
-				console.log(res)
 				prdtLotNum = res.num
 			})
 			
@@ -853,7 +918,6 @@
 			            lotData.rscLot = rscLot;
 			            lotData.rscUseQty = useQty;
 			            lotArr.push(JSON.parse(JSON.stringify(lotData)));
-			            //console.log(lotData);
 			            q++;
 			            t++; 
 			         }
@@ -869,7 +933,6 @@
 		      		}
 		      }   
 		     }
-	      console.log(lotArr);
 		    
 		//hdPrdtRscGrid.resetData(lotArr);
 		hdPrdtRscGrid.appendRows(lotArr);
@@ -918,7 +981,6 @@
 	
 	//생산지시서 조회버튼
  	$('#btnFind').on('click', function(){
- 		console.log("생산지시서 조회")
 		indicaDialog.dialog("open");
 		$("#indicaModal").load("${pageContext.request.contextPath}/modal/findIndica", 
 									function() { indicaList() })
@@ -926,10 +988,15 @@
 	
  	//그리드 추가 버튼: 계획 없는 지시 등록
 	rowAdd.addEventListener("click", function(idx){
-		indicaDgrid.appendRow({},{
-			extendPrevRowSpan : true,
-			focus : true,
-			at : 0
+		indicaDgrid.clear();
+		indicaDgrid.refreshLayout();
+		/* indicaDgrid.appendRow({},{
+		extendPrevRowSpan : false,
+		focus : true,
+		at : 0
+		}); */
+		indicaDgrid.prependRow({
+			  "prodFg":"정상"
 		});
 		//지시상세번호 부여
 		$.ajax({
@@ -938,11 +1005,9 @@
 				contentType: 'application/json; charset=utf-8',
 				async: false,
 			}).done((res)=>{
-				console.log(res.num2)
 				let idx = 0;
 				for(i=0; i<indicaDgrid.getRowCount(); i++){
 					if ( indicaDgrid.getValue (i, 'indicaNo') !=null ){
-						console.log(idx)
 					} else {
 						indicaDgrid.setValue(i, 'indicaDetaNo', Number(res.num2)+1*idx)
 						idx = Number(idx) +1
@@ -973,7 +1038,7 @@
 	}
 	
 	//생산일수 계산 함수
-	function calProdDay( rowKey, a, b ) { // 생산일수계산
+	function calProdDay( rowKey, a, b ) { 
 		a = Number(indicaDgrid.getValue( rowKey, a ));
 		b = Number(indicaDgrid.getValue( rowKey, b ));
 		result = (Number(a) / Number(b)).toFixed(1);
@@ -1006,7 +1071,6 @@
 				toastr.warning("작업시작일이 지정되지 않았습니다.");
 				return false;
 			} else {
-				console.log(i)
 			}
 		}
 		return true;

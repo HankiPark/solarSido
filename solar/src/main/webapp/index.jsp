@@ -565,7 +565,6 @@ window.addEventListener( 'message', receiveMsgFromChild );
 
 // 자식으로부터 메시지 수신
 function receiveMsgFromChild( e ) {
-    console.log( '자식으로부터 받은 메시지 ', e.data );
     $(".navbar-badge").html(e.data);
 }
 
@@ -611,7 +610,6 @@ $("#logoutWd").on("click",function(){
 
 $("#noticeNav").on("click",function(){
 	
-	console.log(idK);
 	$.ajax({
 		url : '${pageContext.request.contextPath}/ajax/webcontent',
 		dataType: 'json',
@@ -681,7 +679,6 @@ function findHref(link){
 }
 
 function removeMessage(id){
-	console.log(id);
 	$.ajax({
 		url : '${pageContext.request.contextPath}/ajax/webdelete',
 		dataType: 'json',

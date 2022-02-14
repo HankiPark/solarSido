@@ -25,15 +25,18 @@ var coGrid = new Grid({
     columns: [
       {
         header: '설비명',
-        name: 'eqmNm'
+        name: 'eqmNm',
+		align : 'center'
       },
 	  {
         header: '설비코드',
-        name: 'coCd'
+        name: 'coCd',
+		align : 'center'
       },
       {
         header: '사업자등록번호',
-        name: 'bizno'
+        name: 'bizno',
+		align : 'center'
       }
     ]
   });

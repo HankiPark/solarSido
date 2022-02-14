@@ -48,42 +48,52 @@
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
-    minBodyHeight : 500,
-	bodyHeight : 500,
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     columns: [
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '재고',
         name: 'rscStc',
         sortable: true,
+        align: 'center',
       },
       {
         header: '안전재고',
         name: 'safStc',
         sortable: true,
+        align: 'center',
       },
       {
         header: '규격',
-        name: 'rscSpec'
+        name: 'rscSpec',
+        align: 'center',
       },
       {
         header: '관리단위',
-        name: 'rscUnit'
+        name: 'rscUnit',
+        align: 'center',
       },
       {
         header: '단가',
         name: 'rscUntprc',
         sortable: true,
+        align: 'center',
       }
     ]
   });
@@ -93,18 +103,20 @@
     });
   
   grid.on('onGridUpdated',function(){
+	  rowColor();
+  });
+
+  
+  function rowColor(){
 	  let rowCnt = grid.getRowCount();
-	  
 	  for(let i = 0; i<rowCnt; i++){
 		  let rscStc = grid.getValue(i, 'rscStc');
 		  let safStc = grid.getValue(i, 'safStc');
 		  if(parseInt(rscStc)<parseInt(safStc)){
-// 			  grid.setValue(i,'rscStc',"<font color='red' size='4'>"+rscStc+"</font>");
 			  $('td[data-row-key$="'+i+'"][data-column-name$="rscStc"]').css('backgroundColor','#f7dad5');
 		  }
 	  }
-  });
-
+  }
 //
 
   let ordrQueryBtn = document.getElementById("ordrQueryBtn");
@@ -134,7 +146,7 @@
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 
@@ -149,6 +161,12 @@
 			$('#senseStcBody').css('paddingLeft','40px');
 		}
 	})
+	
+	document.addEventListener('click',function(ev){
+		if(ev.target.className.includes('tui-page-btn'))
+			rowColor();
+	});
+	
 </script>
 
 </html>

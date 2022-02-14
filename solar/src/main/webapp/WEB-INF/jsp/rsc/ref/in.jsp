@@ -82,46 +82,56 @@ $(function() {
 	Grid.setLanguage('ko');
   var grid = new Grid({
     el: document.getElementById('grid'),
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     scrollX: false,
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-    sortable: true,
-    minBodyHeight : 500,
     columns: [{
         header: '입고일',
         name: 'rscDt',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '입고량',
         name: 'rscQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '전표번호',
         name: 'rscSlipNo',
         sortable: true,
+        align: 'center',
       },
       {
         header: 'LOT번호',
         name: 'rscLot',
         sortable: true,
+        align: 'center',
       },
       {
         header: '금액',
         name: 'rscAmt',
         sortable: true,
+        align: 'center',
       }
     ]
   });
@@ -173,7 +183,7 @@ $(function() {
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 

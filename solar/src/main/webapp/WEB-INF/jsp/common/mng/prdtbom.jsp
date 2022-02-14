@@ -162,24 +162,29 @@
 			{
 				header : '자재코드',
 				name : 'rscCd',
+				align : 'center',
 			}, 
 			{
 				header : '자재명',
 				name : 'rscNm',
+				align : 'center',
 			}, 
 			{
 				header : '사용량',
 				name : 'rscUseQty',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			}, 
 			{
 				header : '사용공정명',
-				name : 'prcsNm'
+				name : 'prcsNm',
+				align : 'center'
 			}, 
 			{
 				header : '규격',
 				name : 'prdtSpec',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			} 
 			],
 			draggable: true
@@ -190,7 +195,6 @@
 		});
 
 		grid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				grid.resetOriginData();

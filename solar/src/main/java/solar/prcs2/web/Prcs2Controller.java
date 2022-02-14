@@ -28,6 +28,10 @@ public class Prcs2Controller {
 	public String prdtLotChasePage() {
 		return "prcs2/mng/prcsPr";
 	}
+	@RequestMapping("/prcs2/mng/prcsInsp")
+	public String prcsInsp() {
+		return "prcs2/mng/prcsInsp";
+	}
 
 	@RequestMapping("/grid/scheduler.do")
 	public String schedulerGrid(Model model, Prcs2 vo) {
@@ -70,7 +74,52 @@ public class Prcs2Controller {
 		sservice.remove();
 		return "jsonView";
 	}
+	@RequestMapping("/ajax/inspaEqmChart")
+	public String inspaEqmChart(Model model, Prcs2 vo) {
+		model.addAttribute("data", pservice.inspaEqmChart()) ;
+		return "jsonView";
+	}
+	@RequestMapping("/ajax/EqmKindChart")
+	public String EqmKindChart(Model model, Prcs2 vo) {
+		model.addAttribute("data", pservice.EqmKindChart(vo)) ;
+		return "jsonView";
+	}
+	@RequestMapping("/ajax/findInspaPrdt")
+	public String findInspaPrdt(Model model, Prcs2 vo) {
+		model.addAttribute("data", pservice.findInspaPrdt(vo)) ;
+		return "jsonView";
+	}
+	@RequestMapping("/modal/progIng")
+	public String progIng(Model model, Prcs2 vo) {
+		return "modal/progIng";
+	}
+	@RequestMapping("/modal/indicaEndList")
+	public String indicaEndList(Model model, Prcs2 vo) {
+		return "modal/indicaEndList";
+	}
+	@RequestMapping("/grid/prdtIng.do")
+	public String progIngGrid(Model model, Prcs2 vo) {
+		List<?> list =pservice.prIng(vo);
+		Map<String, Object> map = new HashMap();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		return "jsonView";
+	}
+	@RequestMapping("/grid/prdtInferList")
+	public String prdtInferList(Model model, Prcs2 vo) {
+		List<?> list =pservice.prdtInferList(vo);
+		Map<String, Object> map = new HashMap();
+		map.put("contents", list);
+		model.addAttribute("result", true);
+		model.addAttribute("data", map);
+		return "jsonView";
+	}
 
+	
+	
+	
+	
 	@RequestMapping("/ajax/repeat")
 	public String repeat(Model model, Prcs2 vo) {
 		int a = 0, b = 0, c = 0, d = 0, e = 0,f=0;

@@ -33,15 +33,18 @@
 	    columns: [
 	      {
 		    header: '공정코드',
-		    name: 'prcsCd'
+		    name: 'prcsCd',
+			align : 'center'
 		  },
 	      {
 	        header: '공정명',
-	        name: 'prcsNm'
+	        name: 'prcsNm',
+			align : 'center'
 	      },
 	      {
 	        header: '공정설명',
-	        name: 'prcsDesct', 
+	        name: 'prcsDesct',
+			align : 'center', 
 	      },
 	    ]
 	  });

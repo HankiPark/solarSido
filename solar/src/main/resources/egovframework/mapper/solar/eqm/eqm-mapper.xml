@@ -24,14 +24,14 @@
 			e.eqm_yn
 		from
 			eqm e
-		<if test='eqmParam2 == null or eqmParam2 == ""'>
+		<!-- <if test='eqmParam2 == null or eqmParam2 == ""'>
 			join prcs pc
 			    on e.prcs_cd = pc.prcs_cd
 			join prcs_pr pp
 			    on pc.prcs_cd = pp.prcs_cd
 			join prdt pd
 			    on pp.prdt_cd = pd.prdt_cd
-		</if>
+		</if> -->
 		where 1=1
 			<if test="eqmParam != null and eqmParam != ''">
 				and(

@@ -129,7 +129,6 @@
                    		try{
                    			fields.focus();
                    	    }catch(e){
-                    	    console.log(e);
                         }
                    alert(fields.join('\n'));
                 }

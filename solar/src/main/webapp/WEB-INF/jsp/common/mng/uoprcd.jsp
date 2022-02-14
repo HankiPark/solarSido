@@ -114,25 +114,30 @@
 							{
 								header : '비가동코드',
 								name : 'uoprCd',
-								sortable : true
+								sortable : true,
+								align : 'center'
 							},
 							{
 								header : '비가동명',
 								name : 'uoprNm',
-								editor : 'text'
+								editor : 'text',
+								align : 'center'
 							}, 
 							{
 								header : '비가동내역',
 								name : 'uoprDesct',
-								editor : 'text'
+								editor : 'text',
+								align : 'center'
 							},
 							{
 								header : '발생공정코드',
-								name : 'prcsCd'
+								name : 'prcsCd',
+								align : 'center'
 							}, 
 							{
 								header : '발생공정명',
-								name : 'prcsNm'
+								name : 'prcsNm',
+								align : 'center'
 							} 
 						]
 					});
@@ -144,7 +149,6 @@
 					});
 
 					grid.on('response', function(ev) { // 성공/실패와 관계 없이 응답을 받았을 경우
-						console.log(ev);
 						let res = JSON.parse(ev.xhr.response);
 						if (res.mode == 'upd') {
 							grid.resetOriginData();

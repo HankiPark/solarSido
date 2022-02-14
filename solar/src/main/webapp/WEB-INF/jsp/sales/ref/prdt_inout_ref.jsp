@@ -187,7 +187,6 @@ position: absolute;
 			          yearSuffix: '년'
 			    }
 		  }, function(start, end, label) {
-		    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		  },
 		  
 		  );
@@ -267,30 +266,38 @@ position: absolute;
 				columns : [ {
 					header : 'index',
 					name : 'prdtInx',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				},
 				{
 					header : '입출고구분',
-					name : 'prdtFg'
+					name : 'prdtFg',
+					align : 'center'
 
 				}, {
 					header : '생산지시번호/출고전표번호',
-					name : 'indicaNo'
+					name : 'indicaNo',
+					align : 'center'
 				}, {
 					header : '제품LOT',
-					name : 'prdtLot'
+					name : 'prdtLot',
+					align : 'center'
 				}, {
 					header : '입출고일자',
-					name : 'prdtDt'
+					name : 'prdtDt',
+					align : 'center'
 				}, {
 					header : '제품코드',
-					name : 'prdtCd'
+					name : 'prdtCd',
+					align : 'center'
 				}, {
 					header : '제품명',
 					name : 'prdtNm',
+					align : 'center'
 				}, {
 					header : '규격',
-					name : 'prdtSpec'
+					name : 'prdtSpec',
+					align : 'center'
 				}
 
 				],
@@ -323,8 +330,6 @@ position: absolute;
 		var endT = $("#startT").val().substring(13,23);
 		var prdNm = $("#prdNm").val();
 		if($("input:checkbox[name=ref]:checked").length==2){
-			console.log(startT);
-			console.log(endT);
 			var chk = null;
 			var co =  $("#coNm").val();
 		}else if($('input:checkbox[name=ref]:checked').val()=='O'){

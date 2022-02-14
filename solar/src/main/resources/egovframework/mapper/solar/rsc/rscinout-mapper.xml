@@ -9,7 +9,7 @@
 		on i.rsc_cd = r.rsc_cd
 	</select>
 	
-	<insert id="insert" parameterType="solar.rsc.inout.service.RscInOut">
+	<insert id="insert" parameterType="map">
 		<selectKey keyProperty="rscAmt" order="BEFORE" resultType="string">
 			select rsc_untprc
 			from rsc

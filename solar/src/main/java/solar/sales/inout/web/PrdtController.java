@@ -128,10 +128,6 @@ public class PrdtController {
 	// 전표번호 조회 modal
 	@GetMapping("/modal/slipOutput")
 	public String SlipOutputListGrid(Model model, Prdt prdt) throws Exception {	
-		/*
-		 * model.addAttribute("coList", pservice.findCo());
-		 * System.out.println(pservice.findCo());
-		 */
 		return "modal/slipNameList";
 	}
 	//전표번호 검색

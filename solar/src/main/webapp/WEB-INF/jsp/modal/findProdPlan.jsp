@@ -54,7 +54,6 @@ function planList(){
 			}
 		}, 
 	function(start, end, label) {
-		console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		}
 	)
 	
@@ -79,13 +78,16 @@ function planList(){
 				bodyHeight : 300,
 				columns : [ {
 					header : '생산계획번호',
-					name : 'planNo'
+					name : 'planNo',
+					align : 'center'
 				}, {
 					header : '계획일자',
-					name : 'planDt'
+					name : 'planDt',
+					align : 'center'
 				}, {
 					header : '생산계획명',
-					name : 'planNm'
+					name : 'planNm',
+					align : 'center'
 				}]
 			});
 	
@@ -107,10 +109,8 @@ function planList(){
 				dataType:"json",
 				contentType : 'application/json; charset=utf-8',
 			}).done(function(pln) {
-				//console.log(pln.data)
 				planDgrid.resetData(pln.data);
 			}).fail(function(reject){
-				console.log(reject);
 			})
 		prodPlanDialog.dialog("close");
 		}

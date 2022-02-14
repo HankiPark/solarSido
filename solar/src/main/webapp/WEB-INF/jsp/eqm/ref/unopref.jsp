@@ -73,10 +73,10 @@
 		</div>
 		<br>
 		<div class="flex row" align="center">
-			<div id="grid" class="col-4">
+			<div id="grid" class="col-5">
 				<h3>설비 목록</h3>
 			</div>
-			<div id="rightDiv" class="col-8">
+			<div id="rightDiv" class="col-7">
 				<div id="chart-area"></div>
 				<div id="grid2">
 					<h3 id="eh2">비가동 내역( 설비명, 코드 )</h3>
@@ -152,11 +152,22 @@
 				header: '공정코드',
 				name: 'prcsCd',
 				align: 'center',
+				width: 80,
 			},
 			{
 				header: '가동여부',
 				name: 'eqmYn',
 				align: 'center',
+				width: 80,
+				formatter({value}) {
+					if(value=='Y'){
+						return '가동';
+					} else if(value=='P'){
+						return '운용중';
+					} else {
+						return '비가동';
+					}
+			    }
 			},
 		]
 	});
@@ -280,7 +291,7 @@
 	};
 	const options = {
 			lang: { noData: "데이터를 나타낼 설비를 체크해주십시오."},
-			chart: { title: '실시간 설비 누적 비가동시간', width: 1050, height: 400 },
+			chart: { title: '실시간 설비 누적 비가동시간', width: 850, height: 400 },
 			xAxis: { pointOnColumn: false, title: { text: '현재' } },
 			yAxis: { title: '누적 비가동시간' },
 			series: {

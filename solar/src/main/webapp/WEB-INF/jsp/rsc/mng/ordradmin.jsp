@@ -124,19 +124,23 @@ const inGrid = new tui.Grid(
 			columns : [ {
 				header : '자재코드',
 				name : 'rscCd',
+		        align: 'center',
 				
 			}, {
 				header : '자재명',
 				name : 'rscNm',
+		        align: 'center',
 				//hidden: true
 				
 			}, {
 				header : '업체',
 				name : 'coNm',
-				hidden: true
+				hidden: true,
+		        align: 'center',
 			}, {
 				header : '발주요청량',
 				name : 'ordrQty',
+		        align: 'center',
 				
 			}]
 		});
@@ -168,9 +172,7 @@ inGrid.on('response', function(ev) {
 let oGPng = document.getElementById("oGPng");
 oGPng.addEventListener("click",function(){
 	var rowCnt =inGrid.getRowCount();
-	//	console.log(rowCnt)
 	for (i=0; i<rowCnt; i++) {
-		console.log(i)
 		grid.prependRow({
 			  "ordrDt":d.toISOString().slice(0, 4)+"/"+d.toISOString().slice(5, 7)+"/"+d.toISOString().slice(8, 10),
 			  "rscNm":inGrid.getRowAt(i).rscNm,
@@ -285,45 +287,55 @@ $(function() {
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-    sortable: true,
-    minBodyHeight : 500,
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     columns: [{
         header: '발주일',
         name: 'ordrDt',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주번호',
         name: 'ordrCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주량',
         name: 'ordrQty',
         editor: 'text',
         sortable: true,
+        align: 'center',
       },
       {
         header: '업체',
         name: 'coNm',
         sortable: true,
+        align: 'center',
       },
       {
           header: '상태',
           name: 'inspCls',
           formatter: 'listItemText',
           sortable: true,
+          align: 'center',
           editor: {
               type: 'select',
               options: {
@@ -357,9 +369,9 @@ $(function() {
     	  rscDialog.dialog("open");
 	   	  $("#rscModal").load("${pageContext.request.contextPath}/modal/rsc");
       }
-      /* if(ev.columnName == 'inspCls'){
+      if(ev.columnName == 'inspCls'){
     	  return false;
-      } */
+      }
     });
 	grid.on('onGridMounted',function(){
 		grid.readData(1,{
@@ -392,12 +404,12 @@ $(function() {
   let saveBtn = document.getElementById("saveBtn");
   saveBtn.addEventListener("click",function(){
 	  let newRows = grid.getModifiedRows().createdRows;
-	 /*  for(let newRow of newRows){
+	 for(let newRow of newRows){
 		  if(newRow.rscCd == '' || newRow.ordrQty == '' || parseInt(newRow.ordrQty)+'' == 'NaN'){
 			  toastr.error('유효한 값을 입력하세요.');
 			  return false;
 		  }
-	  } */
+	 }
 	  grid.request('modifyData');
   });
   let deleteBtn = document.getElementById("deleteBtn");
@@ -427,7 +439,7 @@ $(function() {
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 

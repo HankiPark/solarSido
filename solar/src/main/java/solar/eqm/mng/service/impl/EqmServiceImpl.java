@@ -44,13 +44,11 @@ public class EqmServiceImpl implements EqmService {
 				try {
 					mapper.insert(eqmVo);
 				} catch (DuplicateKeyException e) {
-					System.out.println("중복됨");
 					duplicatedEqmCds += "," + eqmVo.getEqmCd();
 				}
 			}
 		}
 
-		System.out.println(duplicatedEqmCds);
 		if (duplicatedEqmCds.length() == 0) {
 			return "true";
 		} else {

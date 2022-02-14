@@ -24,27 +24,22 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	public int modifyData(ModifyVO<ProdPlanVO> mvo) {
 		if(mvo.getCreatedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getCreatedRows()) {
-				System.out.println("등록:" + mvo);
 				ppMapper.insertPlanD(ppVo);
 				}
 			}
 		if(mvo.getDeletedRows()!=null) {
 			for(ProdPlanVO ppVo : mvo.getDeletedRows()) {
-				System.out.println("삭제:" + mvo);
 				ppMapper.deletePlanD(ppVo);
 				}
 			}
 		if(mvo.getUpdatedRows()!=null) {
-				System.out.println(mvo.getUpdatedRows().get(0).getPlanNo());
 				if (mvo.getUpdatedRows().get(0).getPlanNo() != null) {
 					for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
-					System.out.println("수정:" + mvo);
 						ppMapper.updatePlan(ppVo);
 						ppMapper.updatePlanD(ppVo);
 					}
 				} else {
 					for(ProdPlanVO ppVo : mvo.getUpdatedRows()) {
-						System.out.println("등록:" + mvo);
 						if (ppVo == mvo.getUpdatedRows().get(0)) {
 							ppMapper.insertPlan(ppVo);
 						}
@@ -94,7 +89,6 @@ public class ProdPlanServiceImpl implements ProdPlanService {
 	public int planDmndData(Map<String, List<ProdPlanVO>> map) {
 		if(map.get("dmnd") !=null) {
 			for(ProdPlanVO ppVo : map.get("dmnd")) {
-				System.out.println("발주요청 자재등록:" + ppVo);
 				ppMapper.insertDmnd(ppVo);
 			}
 		}

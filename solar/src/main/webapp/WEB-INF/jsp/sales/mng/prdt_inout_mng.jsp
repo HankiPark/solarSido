@@ -217,7 +217,6 @@ $(function() {
 		          yearSuffix: '년'
 		    }
 	  }, function(start, end, label) {
-	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 	  },
 	  
 	  );
@@ -260,7 +259,6 @@ $(function() {
 							contentType: 'application/json; charset=utf-8',
 							async: false,
 							}).done((res)=>{
-								console.log(res)
 								a=res["num2"];	
 								
 								//전표번호 부여(기본)
@@ -365,11 +363,13 @@ $(function() {
 				columns : [ {
 					header : 'index',
 					name : 'prdtInx',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '입고일자',
 					name : 'prdtDt',
-					rowSpan: true
+					rowSpan: true,
+					align : 'center'
 				}, {
 					header : '제품LOT',
 					name : 'prdtLot',
@@ -377,21 +377,26 @@ $(function() {
 					validation: {
 				        required: true,
 				        unique : true
-				      }
+				      },
+						align : 'center'
 				}, {
 					header : '제품코드',
 					name : 'prdtCd',
+					align : 'center'
 					
 				}, {
 					header : '제품명',
 					name : 'prdtNm',
+					align : 'center'
 					
 				}, {
 					header : '규격',
-					name : 'prdtSpec'
+					name : 'prdtSpec',
+					align : 'center'
 				}, {
 					header : '생산지시번호',
-					name : 'indicaNo'
+					name : 'indicaNo',
+					align : 'center'
 				}
 
 				],
@@ -553,51 +558,64 @@ $(function() {
 				columns : [ {
 					header : '전표번호',
 					name : 'slipNo',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '전표상세번호',
 					name : 'slipDetaNo',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '출고일자',
-					name : 'prdtDt'
+					name : 'prdtDt',
+					align : 'center'
 				}, {
 					header : '주문번호',
 					name : 'orderNo',
 					editor : 'text',
 					validation: {
 					        required: true
-					      }
+					      },
+							align : 'center'
 				}, {
 					header : '회사명',
-					name : 'coNm'
+					name : 'coNm',
+					align : 'center'
 				}, {
 					header : '제품코드',
 					name : 'prdtCd',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '제품명',
-					name : 'prdtNm'
+					name : 'prdtNm',
+					align : 'center'
 				},{
 					header : '주문량',
 					name : 'orderQty',
+					align : 'center'
 				},{
 					header : '남은주문량',
 					name : 'restQty',
+					align : 'center'
 				}, {
 					header : '출고량',
 					name : 'oustQty',
-					editor : 'text'
+					editor : 'text',
+					align : 'center'
 				}, {
 					header : '제품 재고',
-					name : 'prdtStc'
+					name : 'prdtStc',
+					align : 'center'
 				}, {
 					header : '금액',
-					name : 'prdtUntprc'
+					name : 'prdtUntprc',
+					align : 'center'
 				}, {
 					header : '단가',
 					name : 'prdtAmt',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}
 
 				],
@@ -620,7 +638,6 @@ $(function() {
 				
 			}).done(function(res){
 				a=res["num2"];
-				console.log("a는"+a)
 				$("#slipNm").val(
 						"SLI" + (d.toISOString().slice(0, 10)).replaceAll("-", "")
 								+ a);
@@ -715,36 +732,46 @@ $(function() {
 				columns : [  {
 					header : '전표번호',
 					name : 'slipNo',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '전표상세번호',
 					name : 'slipDetaNo',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '출고일자',
-					name : 'prdtDt'
+					name : 'prdtDt',
+					align : 'center'
 				}, {
 					header : '주문번호',
-					name : 'orderNo'
+					name : 'orderNo',
+					align : 'center'
 				}, {
 					header : '회사명',
-					name : 'coNm'
+					name : 'coNm',
+					align : 'center'
 				}, {
 					header : '제품코드',
 					name : 'prdtCd',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '제품명',
-					name : 'prdtNm'
+					name : 'prdtNm',
+					align : 'center'
 				},{
 					header : '주문량',
 					name : 'orderQty',
+					align : 'center'
 				}, {
 					header : '출고량',
-					name : 'oustQty'
+					name : 'oustQty',
+					align : 'center'
 				}, {
 					header : '금액',
-					name : 'prdtUntprc'
+					name : 'prdtUntprc',
+					align : 'center'
 				}
 
 				]
@@ -760,7 +787,6 @@ $(function() {
 			dialog6.dialog("open");
 			$("#dialog-outEndList").load("${pageContext.request.contextPath}/modal/outEndList.do",function() {
 				rowKeyNm=ev["rowKey"];
-				console.log(rowKeyNm)
 				outEndList()
 				})
 		}else{

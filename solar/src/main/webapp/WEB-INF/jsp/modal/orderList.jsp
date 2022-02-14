@@ -31,20 +31,25 @@ function ordList(ordNo){
 			{
 			header : '주문번호',
 			name : 'orderNo',
+			align : 'center'
 		}, {
 			header : '접수일자',
-			name : 'recvDt'
+			name : 'recvDt',
+			align : 'center'
 		}, {
 			header : '회사코드',
 			name : 'coCd',
+			align : 'center'
 			
 		}, {
 			header : '회사명',
 			name : 'coNm',
+			align : 'center'
 			
 		}, {
 			header : '납기일자',
-			name : 'paprdDt'
+			name : 'paprdDt',
+			align : 'center'
 		}
 		],
 
@@ -59,7 +64,6 @@ function ordList(ordNo){
 				for(let i = outGrid.getRowCount()-1 ; i>0;i--){
 					if(outGrid.getValue(i,"orderNo")==ordNo && ordNo!=""){
 						outGrid.removeRow(i);
-						console.log(i);
 					}
 				}
 				
@@ -70,7 +74,6 @@ function ordList(ordNo){
 					dataType : "json",
 					contentType : 'application/json; charset=utf-8',
 				}).done((li)=>{
-					/* console.log(li["data"]["contents"][0].prdtCd); */
 					for(let i =0 ; i<li["data"]["contents"].length;i++){
 						if(i==0){
 							

@@ -198,9 +198,9 @@
         <script>
             //탭 설정
             let date = new Date();
-            let dtEnd = date.toISOString().substr(0, 10);
+            let dtEnd;// = date.toISOString().substr(0, 10);
             date.setDate(date.getDate() - 7);
-            let dtStt = date.toISOString().substr(0, 10);
+            let dtStt;// = date.toISOString().substr(0, 10);
 
             const tabList = document.querySelectorAll('.tab_menu .list li');
 
@@ -288,12 +288,10 @@
                             yearSuffix: '년'
                         }
                     }, function (start, end, label) {
-                        console.log(start, end, label);
-                        console.log(start.format('YYYY-MM-DD'));
                     },
-
-                );
-            });
+                    )
+            }
+            );
 
 
             var Grid = tui.Grid;
@@ -331,11 +329,13 @@
                 bodyHeight: 500,
                 columns: [{
                         header: '설비코드',
-                        name: 'eqmCd'
+                        name: 'eqmCd',
+                        align: 'center',
                     },
                     {
                         header: '설비구분',
                         name: 'eqmFg',
+                        align: 'center',
                         editor:{
                         	type: 'select',
                         	options: {
@@ -352,10 +352,12 @@
                         header: '설비명',
                         name: 'eqmNm',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '모델',
                         name: 'eqmMdl',
+                        align: 'center',
                         editor:{
                         	type: 'select',
                         	options: {
@@ -371,6 +373,7 @@
                     {
                         header: '용량/규격',
                         name: 'eqmSpec',
+                        align: 'center',
                         editor:{
                         	type: 'select',
                         	options: {
@@ -387,56 +390,79 @@
                         header: '제작업체',
                         name: 'eqmCo',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '구매일자',
                         name: 'purcDt',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '구매금액',
                         name: 'purcAmt',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '라인번호',
                         name: 'liNo',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '작업자',
                         name: 'empId',
                         editor: 'text',
+                        align: 'center',
+                        hidden: true,
                     },
                     {
                         header: '사용에너지',
                         name: 'energy',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '부하율',
                         name: 'lf',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '기준온도',
                         name: 'temp',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: 'UPH',
                         name: 'uph',
                         editor: 'text',
+                        align: 'center',
                     },
                     {
                         header: '공정코드',
                         name: 'prcsCd',
                         editor: 'text',
+                        align: 'center',
+                        hidden: true,
                     },
-                    {
-                        header: '가동여부',
-                        name: 'eqmYn',
-                    },
+        			{
+        				header: '가동여부',
+        				name: 'eqmYn',
+        				align: 'center',
+        				hidden: true,
+        				formatter({value}) {
+        					if(value=='Y'){
+        						return '가동';
+        					} else if(value=='P'){
+        						return '운용중';
+        					} else {
+        						return '비가동';
+        					}
+        			    }
+        			},
                 ]
             });
 
@@ -447,67 +473,82 @@
                 columns: [{
                         header: '설비코드',
                         name: 'eqmCd',
-                        width: 40,
+                        align: 'center',
                     },
                     {
                         header: '설비구분',
-                        name: 'eqmFg'
+                        name: 'eqmFg',
+                        align: 'center',
                     },
                     {
                         header: '설비명',
-                        name: 'eqmNm'
+                        name: 'eqmNm',
+                        align: 'center',
                     },
                     {
                         header: '라인번호',
-                        name: 'eqmMdl'
+                        name: 'eqmMdl',
+                        align: 'center',
                     },
                     {
                         header: '용량/규격',
-                        name: 'eqmSpec'
+                        name: 'eqmSpec',
+                        align: 'center',
                     },
                     {
                         header: '제작업체',
-                        name: 'eqmCo'
+                        name: 'eqmCo',
+                        align: 'center',
                     },
                     {
                         header: '구매일자',
-                        name: 'purcDt'
+                        name: 'purcDt',
+                        align: 'center',
                     },
                     {
                         header: '구매금액',
-                        name: 'purcAmt'
+                        name: 'purcAmt',
+                        align: 'center',
                     },
                     {
                         header: '라인번호',
-                        name: 'liNo'
+                        name: 'liNo',
+                        align: 'center',
                     },
                     {
                         header: '작업자',
-                        name: 'empId'
+                        name: 'empId',
+                        align: 'center',
                     },
                     {
                         header: '사용에너지',
-                        name: 'energy'
+                        name: 'energy',
+                        align: 'center',
                     },
                     {
                         header: '부하율',
                         name: 'lf',
+                        align: 'center',
                     },
                     {
                         header: '기준온도',
-                        name: 'temp'
+                        name: 'temp',
+                        align: 'center',
                     },
                     {
                         header: 'UPH',
                         name: 'uph',
+                        align: 'center',
                     },
                     {
                         header: '공정코드',
                         name: 'prcsCd',
+                        align: 'center',
                     },
                     {
                         header: '가동여부',
                         name: 'eqmYn',
+                        align: 'center',
                     },
                 ]
             });
@@ -523,7 +564,6 @@
                 height: 600
             });
             $('#btnPrdtCdFind').on('click', function () {
-                console.log("제품검색")
                 prdtCdDialog.dialog("open");
                 $("#prdtCdModal").load("${pageContext.request.contextPath}/modal/findPrdtCd", function () {
                     prdtCdList();
@@ -581,27 +621,25 @@
             inputGrid.on('response',function(ev){
             	let result = JSON.parse(ev.xhr.response);
             	result = result.queryResult;
-            	//console.log(result);
             	if(result.length!=0){
 	            	if(result != 'true'){
-	            		toastr.success('설비코드가 중복된 데이터를 제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
+	            		toastr.success('설비코드가 중복된 데이터를 \n제외하고 저장되었습니다.\n중복된 설비코드: [ '+result+' ]');
 	            		
-	            		let duplRows = result.split(',');
-	            		console.log(duplRows);
+// 	            		let duplCds = result.split(',');
+// 	            		console.log(duplCds);
+// 	            		let rowCnt = inputGrid.getRowCount()-1;
+// 	            		inputGrid.uncheckAll();
+// 	            		for(let i = 0; i < rowCnt; i++){
+// 	            			console.log(inputGrid.getValue(i,'eqmCd'));
+// 	            			if(!duplCds.includes(inputGrid.getValue(i,'eqmCd'))){
+// 	            				inputGrid.check(i);
+// 	            			}
+// 	            		}
+// 	            		inputGrid.removeCheckedRows();
+            		}
 	            		
-	            		for(let i = 0; i<inputGrid.getRowCount(); i++) {
-	            			if(duplRows.includes(inputGrid.getValue(i,'eqmCd'))){
-	            				console.log('include', i)
-	            			} else{
-	            				console.log('not include', i)
-	            				console.log(i, inputGrid.getValue(i,'eqmCd'));
-	            				inputGrid.removeRow(i);
-	            			}
-	            		}
-	            		
-	            	} else {
-	            		toastr.success('모두 저장되었습니다.');
-            	}
+            	} else {
+            		toastr.success('모두 저장되었습니다.');
             	}
             });
             
@@ -618,7 +656,6 @@
             }
             
             grid.on('click',function(ev){
-            	console.log(ev);
             	$('#insertBtn').daterangepicker({
                     singleDatePicker: true,
                     showDropdowns: true,
@@ -643,8 +680,6 @@
                         yearSuffix: '년'
                     }
                 }, function (start, end, label) {
-                    console.log(start, end, label);
-                    console.log(start.format('YYYY-MM-DD'));
                 },
 
             );

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<h1>주문서 참조</h1>
+	<h1>주문서 조회</h1>
 	<div class="row" id="senseOrder">
 		<div id="senseOrderBody" class="card card-pricing card-primary card-white card-outline col-3" style="margin-left: 50px;margin-right: 30px;margin-top: 150px;padding-left: 40px;margin-bottom: 300px;">
 		<div class="card-body"  >
@@ -79,7 +79,6 @@
 			          yearSuffix: '년'
 			    }
 		  }, function(start, end, label) {
-		    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 		  },
 		  
 		  );
@@ -113,22 +112,28 @@
 			bodyHeight : 500,
 			columns : [ {
 				header : '주문번호',
-				name : 'orderNo'
+				name : 'orderNo',
+				align : 'center'
 			}, {
 				header : '접수일자',
 				name : 'recvDt',
+				align : 'center'
 			}, {
 				header : '업체명',
-				name : 'coNm'
+				name : 'coNm',
+				align : 'center'
 			}, {
 				header : '납기일자',
 				name : 'paprdDt',
+				align : 'center'
 			}, {
 				header : '주문제품명',
-				name : 'deNum'
+				name : 'deNum',
+				align : 'center'
 			}, {
 				header : '진행상황',
-				name : 'progInfo'
+				name : 'progInfo',
+				align : 'center'
 			},
 
 			],
@@ -143,9 +148,6 @@
 				.on(
 						'click',
 						function(ev) {
-							console.log(ev);
-							console.log(ev["rowKey"]);
-							console.log(grid.getValue(ev["rowKey"], "orderNo"));
 							 if (ev["columnName"] == "deNum"
 									&& grid.getValue(ev["rowKey"], "deNum") != 0) {
 								dialog.dialog("open");
@@ -168,7 +170,6 @@
 			var endT = $("#startT").val().substring(13,23);
 			var dateTy = $("input[name=dateTy]:checked").val();
 			var nowSt = $("[name=nowSt] option:selected").val();
-			console.log(dateTy);
 			
 			var readParams ={
 					'startT':startT,

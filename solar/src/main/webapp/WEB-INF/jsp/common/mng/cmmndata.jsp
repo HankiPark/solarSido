@@ -74,10 +74,12 @@
 			columns : [ {
 				header : '공통코드ID',
 				name : 'cmmnCdId',
-				sortable : true
+				sortable : true,
+				align : 'center'
 			}, {
 				header : '공통코드ID명',
 				name : 'cmmnCdNm',
+				align : 'center',
 			} ]
 		});
 
@@ -86,7 +88,6 @@
 		});
 
 		grid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				grid.resetOriginData();
@@ -151,19 +152,21 @@
 			columns : [ {
 				header : '공통코드상세ID',
 				name : 'cmmnCdDetaId',
-				editor : 'text'
+
+				align : 'center'
 			}, {
 				header : '공통코드ID',
 				name : 'cmmnCdId',
-				editor : 'text'
+				align : 'center'
 			}, {
 				header : '코드명',
 				name : 'cmmnCdNm',
-				editor : 'text'
+				align : 'center'
 			}, {
 				header : '설명',
 				name : 'cmmnCdDesct',
-				editor : 'text'
+				align : 'center'
+
 			} ]
 		});
 
@@ -173,7 +176,6 @@
 		});
 
 		detailgrid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				detailgrid.resetOriginData();

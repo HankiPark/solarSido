@@ -45,7 +45,6 @@ $(function() {
 		          yearSuffix: '년'
 		    }
 	  }, function(start, end, label) {
-	    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 	  },
 	  
 	  );
@@ -65,24 +64,30 @@ $(function() {
 			columns : [ {
 				header : '완료일자',
 				name : 'prdtDt',
+				align : 'center'
 				
 			}, {
 				header : '제품LOT',
 				name : 'prdtLot',
+				align : 'center'
 				
 			}, {
 				header : '제품코드',
-				name : 'prdtCd'
+				name : 'prdtCd',
+				align : 'center'
 			}, {
 				header : '제품명',
 				name : 'prdtNm',
+				align : 'center'
 			}, {
 				header : '규격',
 				name : 'prdtSpec',
-				hidden: true
+				hidden: true,
+				align : 'center'
 			}, {
 				header : '생산지시번호',
-				name : 'indicaNo'
+				name : 'indicaNo',
+				align : 'center'
 			}
 
 			],
@@ -111,7 +116,6 @@ $(function() {
 				
 				
 			}).done(function(res){
-				console.log(res);
 				var sres = JSON.parse(res);
 				inWaitGrid.resetData(sres["data"]["contents"]);
 			})
@@ -122,7 +126,6 @@ $(function() {
 				'dblclick',
 				function(ev) {
 					if(ev["rowKey"]!=null){
-					console.log(inWaitGrid.getValue(ev["rowKey"],"prdtLot"));
 					inGrid.setValue(key,'prdtLot',inWaitGrid.getValue(ev["rowKey"],"prdtLot"));
 					inGrid.setValue(key,'prdtCd',inWaitGrid.getValue(ev["rowKey"],"prdtCd"));
 					inGrid.setValue(key,'prdtNm',inWaitGrid.getValue(ev["rowKey"],"prdtNm"));

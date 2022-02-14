@@ -46,14 +46,12 @@
 						let dat = [];
 						for(let i=0;i<13;i++){
 							dat.push(b[i].valid);
-							console.log(b[i].valid)
 						}
 						dataset.borderColor = 'rgb('+(Math.floor(Math.random() * 250) + 1)+','+(Math.floor(Math.random() * 250) + 1)+','+(Math.floor(Math.random() * 250) + 1)+')';
 						dataset.data=dat;
 						let kk= JSON.parse(JSON.stringify(dataset));
 						dd.push(kk);
 						
-						console.log(dd);
 						
 					})
 					data.datasets=dd;

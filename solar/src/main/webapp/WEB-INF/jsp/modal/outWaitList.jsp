@@ -48,18 +48,22 @@
 				columns : [ 
 					{
 						header : '제품LOT',
-						name : 'prdtLot'
+						name : 'prdtLot',
+						align : 'center'
 				}, {
 					header : '제품코드',
 					name : 'prdtCd',
+					align : 'center'
 				},{
 					header : '제품상태',
 					name : 'prdtFg',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				},{
 					header : '전표임시상세',
 					name : 'indicaDetaNo',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				},
 				
 				],

@@ -62,7 +62,9 @@ input#isNotInspected:checked + label::after{
 			<button type="button" id="inspSaveBtn" >저장</button>
 			</div>
 		</div>
-	<div id="grid"  class="col-8" style=" margin-top:100px;"></div>
+	<div id="grid"  class="col-8" style=" margin-top:100px;">
+		<button type="button" id="noInfer" >불량없음</button>
+	</div>
 </body>
 
 <script>
@@ -138,54 +140,66 @@ input#isNotInspected:checked + label::after{
     scrollY: false,
     data: ordrDataSource,
     rowHeaders: ['checkbox'],
-    minBodyHeight : 500,
-	bodyHeight : 500,
+    pageOptions : {
+		useClient : true,
+		perPage : 12
+	},
+	bodyHeight: 480,
     columns: [{
         header: '발주일',
         name: 'ordrDt',
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재명',
         name: 'rscNm',
         width: 220,
         sortable: true,
+        align: 'center',
       },
       {
         header: '자재코드',
         name: 'rscCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주량',
         name: 'ordrQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '받은 수량',
         name: 'rscIstQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '불량량',
         name: 'rscInferQty',
         sortable: true,
+        align: 'center',
       },
       {
         header: '발주번호',
         name: 'ordrCd',
         sortable: true,
+        align: 'center',
       },
       {
         header: '업체',
         name: 'coNm',
         sortable: true,
+        align: 'center',
       },
       {
         header: '검수여부',
         name: 'inspCls',
         formatter: 'listItemText',
         sortable: true,
+        align: 'center',
         editor: {
             type: 'select',
             options: {
@@ -312,7 +326,7 @@ input#isNotInspected:checked + label::after{
   let rscDialog = $("#rscModal").dialog({
     modal: true,
     autoOpen: false,
-	width : 600,
+	width : 1000,
 	height : 600
   });
 
@@ -332,6 +346,14 @@ input#isNotInspected:checked + label::after{
 			$('#senseInspaBody').css('paddingLeft','40px');
 		}
 	})
+	
+	let noInfer	= document.getElementById('noInfer');
+	noInfer.addEventListener('click',function(){
+		for(let i of grid.getCheckedRowKeys()){
+			console.log(i);
+			grid.setValue(i, 'inspCls', 'rs002');
+		}
+	});
 </script>
 
 </html>

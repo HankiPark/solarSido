@@ -25,15 +25,18 @@ var coGrid = new Grid({
     columns: [
       {
         header: '업체명',
-        name: 'coNm'
+        name: 'coNm',
+		align : 'center'
       },
 	  {
         header: '업체코드',
-        name: 'coCd'
+        name: 'coCd',
+		align : 'center'
       },
       {
         header: '사업자등록번호',
-        name: 'bizno'
+        name: 'bizno',
+		align : 'center'
       }
     ]
   });
@@ -52,7 +55,6 @@ var coGrid = new Grid({
 		    method: "GET",
 		    dataType: "JSON"
 		  }).done(function (result) {
-			  console.log(result.co);
 		    coGrid.resetData(result.co);
 		    coGrid.refreshLayout();
 		  });

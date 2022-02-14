@@ -20,11 +20,13 @@ import solar.prcs.prcs.service.PrcsService;
 import solar.prcs.prcs.service.PrdtStcVO;
 import solar.prcs.prcs.service.RscConVO;
 import solar.prcs.prcs.service.RsltVO;
+import solar.prcs2.service.Prcs2Service;
 
 @Controller
 public class PrcsController {
 
 	@Autowired PrcsService prcsservice;
+	@Autowired Prcs2Service p2service;
 	
 	
 	@RequestMapping("/prcs/mng/prcsprog")						// 공정관리 페이지 이동
@@ -49,7 +51,6 @@ public class PrcsController {
 	public String insIndicaModal(IndicaVO vo, Model model) {
 			
 		Map<String, Object> map = new HashMap();
-		System.out.println(vo.getSDate());
 		map.put("contents", prcsservice.selectPDay(vo));
 		model.addAttribute("result", true);
 		model.addAttribute("data", map);
@@ -208,7 +209,7 @@ public class PrcsController {
 		  map.put("contents", prcsservice.selectPrcsDO(vo));
 		  model.addAttribute("result", true);
 		  model.addAttribute("data", map);
-		  
+		  model.addAttribute("eqmList",p2service.allYEqm() );
 		  return "jsonView";
 	  }
 	  

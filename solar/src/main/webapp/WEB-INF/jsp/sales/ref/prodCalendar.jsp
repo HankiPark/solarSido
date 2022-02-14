@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
     			$("span[title$='Close']").trigger("click");
     			
     			 if(ev.event.url =='ind'){
-    				 console.log(ev.event.title.length)
     				 dialog.dialog("open");
     						$("#dialog-order")
     								.load(

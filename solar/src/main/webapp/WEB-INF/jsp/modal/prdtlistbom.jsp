@@ -37,25 +37,31 @@
 				bodyHeight : 500,
 				columns : [ {
 					header : '제품코드',
-					name : 'prdtCd'
+					name : 'prdtCd',
+					align : 'center'
 				}, {
 					header : '제품명',
-					name : 'prdtNm'
+					name : 'prdtNm',
+					align : 'center'
 				}, {
 					header : '규격',
-					name : 'prdtSpec'
+					name : 'prdtSpec',
+					align : 'center'
 				}, {
 					header : '단위',
 					name : 'prdtUnit',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '금액',
 					name : 'prdtAmt',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}, {
 					header : '이미지',
 					name : 'prdtImg',
-					hidden : true
+					hidden : true,
+					align : 'center'
 				}]
 			});
 

@@ -20,6 +20,7 @@ public class PrdtChase {
 	String orderNo;
 	String rscLot;
 	String det;
+	String eqmLi;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(pattern = "yyyy-MM-dd",timezone="Asia/Seoul")
 	Date startTOut;

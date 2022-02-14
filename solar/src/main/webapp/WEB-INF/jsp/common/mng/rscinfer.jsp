@@ -111,15 +111,18 @@
 				header : '자재불량코드',
 				name : 'rtngdResnCd',
 				editor : 'text',
-				sortable : true
+				sortable : true,
+				align : 'center'
 			}, {
 				header : '불량명',
 				name : 'rscInferNm',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			}, {
 				header : '불량내역',
 				name : 'rscInferDesct',
-				editor : 'text'
+				editor : 'text',
+				align : 'center'
 			} ]
 		});
 
@@ -128,7 +131,6 @@
 		});
 
 		grid.on('response', function(ev) {
-			console.log(ev);
 			let res = JSON.parse(ev.xhr.response);
 			if (res.mode == 'upd') {
 				grid.resetOriginData();

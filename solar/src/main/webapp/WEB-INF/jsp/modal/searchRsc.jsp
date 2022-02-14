@@ -25,31 +25,39 @@ var rscGrid = new Grid({
     data: [],
     columns: [{
         header: '자재코드',
-        name: 'rscCd'
+        name: 'rscCd',
+		align : 'center',
       },
       {
         header: '자재명',
-        name: 'rscNm'
+        name: 'rscNm',
+        width: 200,
+		align : 'center'
       },
       {
         header: '업체명',
-        name: 'coNm'
+        name: 'coNm',
+		align : 'center'
       },
       {
         header: '업체코드',
-        name: 'coCd'
+        name: 'coCd',
+		align : 'center',
       },
       {
 		header: '규격',
-		name: 'rscSpec'
+		name: 'rscSpec',
+		align : 'center'
       },
       {
 		header: '관리단위',
-		name: 'rscUnit'
+		name: 'rscUnit',
+		align : 'center',
       },
       {
   		header: '단가',
-  		name: 'rscUntprc'
+  		name: 'rscUntprc',
+		align : 'center'
       }
     ]
   });
@@ -67,7 +75,6 @@ var rscGrid = new Grid({
 			    method: "GET",
 			    dataType: "JSON"
 			  }).done(function (result) {
-				  console.log(result.rsc);
 			    rscGrid.resetData(result.rsc);
 			    rscGrid.refreshLayout();
 			  });

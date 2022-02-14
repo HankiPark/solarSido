@@ -32,19 +32,24 @@
 					{
 					header : '제품코드',
 					name : 'prdtCd',
+					align : 'center'
 				}, {
 					header : '제품명',
-					name : 'prdtNm'
+					name : 'prdtNm',
+					align : 'center'
 				}, {
 					header : '규격',
 					name : 'prdtSpec',
+					align : 'center'
 					
 				}, {
 					header : '단위',
-					name : 'prdtUnit'
+					name : 'prdtUnit',
+					align : 'center'
 				}, {
 					header : '금액',
-					name : 'prdtAmt'
+					name : 'prdtAmt',
+					align : 'center'
 				},
 
 				],
@@ -71,9 +76,6 @@
 					var sres = JSON.parse(res);
 					gridD.resetData(sres["data"]["contents"]);
 				})
-			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')
-				.then(res=>res.json())
-				.then(response=>{inGrid.resetData(response["data"]["contents"]);console.log(response);inGrid.refreshLayout();}) */
 				
 			 });
 			

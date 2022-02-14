@@ -63,16 +63,20 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 					{
 					header : '전표번호',
 					name : 'slipNo',
+					align : 'center',
 				}, {
 					header : '출고일자',
-					name : 'prdtDt'
+					name : 'prdtDt',
+					align : 'center'
 				}, {
 					header : '업체명',
 					name : 'coNm',
+					align : 'center',
 					
 				}, {
 					header : '상세전표수',
 					name : 'slNm',
+					align : 'center',
 					
 				}
 				],
@@ -100,13 +104,8 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 				}).done(function(res){
 					
 					var sres = JSON.parse(res);
-					console.log(sres.data)
-					console.log(sres.data.contents[0])
 					gridSl.resetData(sres["data"]["contents"]);
 				})
-			/* 	fetch('${pageContext.request.contextPath}/grid/prdtInput.do?perPage=&startT='+startT+'&endT='+endT+'&prdNm='+prdNm+'&page=1')
-				.then(res=>res.json())
-				.then(response=>{inGrid.resetData(response["data"]["contents"]);console.log(response);inGrid.refreshLayout();}) */
 				
 			 });
 			
@@ -163,7 +162,6 @@ document.getElementById('endT2').value = d2.toISOString().slice(0, 10); */
 					          yearSuffix: '년'
 					    }
 				  }, function(start, end, label) {
-				    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
 				  },
 				  
 				  );

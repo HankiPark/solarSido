@@ -36,23 +36,28 @@ function eqmUoList(){
 			 {
 			    header: '제품번호',
 			    name: 'prdt_cd',
+				align : 'center'
 			  },
 		 	 {
 			    header: '공정순서',
 			    name: 'prcs_ord',
+				align : 'center'
 			  },
 			  {
 			    header: '공정코드',
 			    name: 'prcs_cd',
+				align : 'center'
 			  },
 			  {
 			    header: '설비코드',
 			    name: 'eqm_cd',
+				align : 'center'
 			  },
 			 
 			  { 
 			    header: '비가동코드',
 			    name: 'uopr_cd',
+				align : 'center'
 			  }
 	 		 ]
 	});	
