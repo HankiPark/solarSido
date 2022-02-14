@@ -110,7 +110,7 @@
 				scrollX : true,
 				scrollY : true,
 				rowHeaders : [ 'rowNum', 'checkbox' ],
-				bodyHeight : 700
+				bodyHeight : 700,
 				columns : 
 					[ 
 						{
