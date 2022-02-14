@@ -110,6 +110,7 @@
 	LEFT JOIN order_d od ON od.order_no = o.order_no
 	WHERE o.prog_info != '종료'
 	AND p.plan_no is null
+	ORDER BY 1, 2
 </select>
 
 <select id="searchOrder" resultType="ProdPlanVO">

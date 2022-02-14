@@ -437,7 +437,7 @@ border-top:3px solid #FECEBB;
 	    		rStcGrid.setValue(i, 'ndStc',
 	    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
 				rStcGrid.setValue(i, 'lackStc',
-						rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))}
+						rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))} //안전재고 남겨두기
 			}, 1600); //실행시킬 함수, 딜레이시간;
 		}
 	});
@@ -473,7 +473,7 @@ border-top:3px solid #FECEBB;
 		if(hdRstcGrid.getColumnValues('rscCd').includes(rStcGrid.getValue(rscEv.rowKey,'rscCd'))){
 			var key = hdRstcGrid.findRows({'rscCd':rStcGrid.getValue(rscEv.rowKey,'rscCd')})[0].rowKey;
 			hdRstcGrid.setValue(key,'prdtCd', hdRstcGrid.getValue(key, 'prdtCd')+", "+rStcGrid.getValue(rscEv.rowKey,'prdtCd'));
-			hdRstcGrid.setValue(key,'lackStc', hdRstcGrid.getValue(key, 'lackStc')+rStcGrid.getValue(rscEv.rowKey,'lackStc'));
+			hdRstcGrid.setValue(key,'lackStc', hdRstcGrid.getValue(key, 'lackStc') +rStcGrid.getValue(rscEv.rowKey,'lackStc'));
 		}else{
 			hdRstcGrid.appendRow({
 				'prdtCd':rStcGrid.getValue(rscEv.rowKey,'prdtCd'),
@@ -493,12 +493,10 @@ border-top:3px solid #FECEBB;
 	 
 	 //발주요청 자재 목록 이벤트
 	 hdRstcGrid.on('response',function(){
-		 console.log("res")
 		 hdRstcGrid.refreshLayout(); 
    	});
 	
 	 hdRstcGrid.on('onGridUpdated',function(){
-		 console.log("onG")
 		 hdRstcGrid.refreshLayout(); 
    	});
 	//------------------------------버튼------------------------------------------------

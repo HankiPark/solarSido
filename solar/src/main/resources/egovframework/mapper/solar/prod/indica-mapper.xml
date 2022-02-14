@@ -111,6 +111,8 @@
 				GROUP BY rsc_lot, rsc_cd ) b
 	ON a.rsc_lot = b.rsc_lot
 	WHERE a.rsc_cd = #{rscCd}
+	AND nvl(a.rsc_qty,0)-nvl(b.rsc_qty,0) != 0
+	ORDER BY rsc_lot
 </select>
 
 <select id="noIndicaPlan" resultType="ProdPlanVO">
@@ -146,13 +148,13 @@
 	SELECT nvl(max(indica_deta_no), 0)+1 
 	FROM indica_d
 </select>
-
+<!-- 
 <select id ="makePrdtNo" resultType="String">
 	SELECT nvl(count(prdt_lot), 0)+1 
 	FROM prdt_stc 
 	WHERE prdt_dt = sysdate
 </select>
-
+ -->
 <select id="rscCnt" resultType="String">
 	SELECT cmmn_cd_deta_id 
 	FROM cmmn_data_d
@@ -218,6 +220,13 @@
 				#{rscQty}	)
 </insert>
 
+
+<select id ="makePrdtNo" resultType="String">
+	SELECT nvl(count(prdt_lot), 0)+1 
+	FROM prdt_stc 
+	WHERE prdt_dt = '210202'
+</select>
+
 <!-- hdRscConGrid -> 자재입고출고T 등록 -->
 <insert id="insertRscOut">
 	INSERT INTO rsc_inout ( rsc_slip_no,
@@ -225,7 +234,7 @@
 							rsc_lot,
 							rsc_qty,
 							rsc_fg	)
-	VALUES (	'rout'|| to_char(sysdate,'yyMMdd') || trim(to_char(RSCJEONPYOSEQ.nextval, '000')),
+	VALUES (	'rout'|| '210202' || trim(to_char(RSCJEONPYOSEQ.nextval, '000')),
 				#{rscCd},
 				#{rscLot},
 				#{rscQty},
