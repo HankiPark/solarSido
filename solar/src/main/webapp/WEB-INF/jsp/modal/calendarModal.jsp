@@ -50,7 +50,6 @@ function saleIn(start,lot){
 	$("#calCont").append(`</div>
 			<div>총 `+lotList.length+`개 입고처리됨</div>	
 			`)
-	
 };
 function saleOut(start,slip,coNm){
 	var slipList = slip.split(',');

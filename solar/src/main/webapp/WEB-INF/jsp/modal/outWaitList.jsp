@@ -98,7 +98,7 @@
 						outGrid.setValue(rowKeyNm,"prdtUntprc",outGrid.getValue(rowKeyNm,"prdtAmt")*outGrid.getValue(rowKeyNm,"oustQty"))
 						dialog5.dialog("close");
 						}else{
-							alert("주문량보다 출고량이 "+(outGrid.getValue(rowKeyNm,"orderQty")-gridOu.getCheckedRows().length)+"개 많습니다.")
+							alert("주문량보다 출고량이 "+(gridOu.getCheckedRows().length-outGrid.getValue(rowKeyNm,"orderQty"))+"개 많습니다.")
 						}
 					
 /* 				for(let i of gridOu.getCheckedRowKeys()){

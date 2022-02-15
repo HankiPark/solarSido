@@ -670,7 +670,7 @@ $(function() {
 	$('#updateBtn2').on('click',function appendRow(index) {
 				//버튼누르면 전표번호 값 업데이트
 				outGrid.blur();
-				outGrid.request('modifyData');
+				outGrid.request('modifyData',{'showConfirm' : false});
 				setTimeout(() => {
 					$.ajax({
 						url:'${pageContext.request.contextPath}/ajax/resetOw.do',

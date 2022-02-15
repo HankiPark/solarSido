@@ -55,7 +55,7 @@ function endList(){
 		el: document.getElementById('indicaListGrid'),
 		data: {
 			  api: {
-			    	readData: { url: '${pageContext.request.contextPath}/grid/indicaGrid.do', 
+			    	readData: { url: '${pageContext.request.contextPath}/grid/indicaGrid2', 
 						    	method: 'GET'
 			    				},
 					}, 
@@ -110,7 +110,7 @@ function endList(){
 					'endT': endT
 			}
 			$.ajax({
-				url : '${pageContext.request.contextPath}/grid/indicaGrid.do',
+				url : '${pageContext.request.contextPath}/grid/indicaGrid2',
 				data : params,
 				dataType:"json",
 				contentType : 'application/json; charset=utf-8',

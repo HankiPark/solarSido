@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									"${pageContext.request.contextPath}/modal/calendarModal",
 									function() {
 										saleOrder(ev.event.extendedProps.etc,ev.event.start,ev.event.end,ev.event.extendedProps.etc2,ev.event.extendedProps.etc3,ev.event.extendedProps.etc4);
+										
 									})
     			}
     			else if(ev.event.url =='in'){
@@ -120,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									"${pageContext.request.contextPath}/modal/calendarModal",
 									function() {
 										saleIn(ev.event.start,ev.event.extendedProps.etc);
+										
 									})
     			}
     			else if(ev.event.url =='out'){
@@ -129,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 									"${pageContext.request.contextPath}/modal/calendarModal",
 									function() {
 										saleOut(ev.event.start,ev.event.extendedProps.etc,ev.event.extendedProps.etc2);
+										
 									})
     			}
 				

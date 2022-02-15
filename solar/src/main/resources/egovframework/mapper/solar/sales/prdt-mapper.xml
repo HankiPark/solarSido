@@ -226,7 +226,7 @@
 	<insert id="insertOutD">
 
 		insert into oust_d values(
-		SLIPSEQ.nextval,#{slipNo},#{orderNo},#{orderQty},#{prdtStc},nvl(#{oustQty},0),#{prdtCd},#{prdtUntprc})
+		SLIPSEQ.nextval,#{slipNo},#{orderNo},#{orderQty},#{prdtStc}-nvl(#{oustQty},0),nvl(#{oustQty},0),#{prdtCd},#{prdtUntprc})
 
 	</insert>
 	<insert id="updateStatePrdt">
@@ -235,6 +235,12 @@
 		where
 		prdt_lot in (select prdt_lot from prdt_stc where prdt_fg ='OW') and prdt_fg='OW'
 	</insert>
+	<update id="slipNoAdd">
+		update prdt_stc set indica_deta_no = (select o.slip_deta_no from oust_d o where o.order_no = #{orderNo} and o.prdt_cd=#{prdtCd} and o.slip_no=#{slipNo}) 
+		where indica_deta_no is null and prdt_fg = 'O'
+	</update>
+	
+	
 	<update id="updOrd">
 		update order_d set oust_qty =oust_qty+nvl(#{oustQty},0) where order_no=#{orderNo} and prdt_cd=#{prdtCd}
 	</update>
@@ -316,7 +322,7 @@
 	</select>
 	
 	<select id="co" resultType="Prdt">
-		select * from co where co_fg ='R'
+		select * from co where co_fg ='P'
 	</select>
 	
 	
@@ -339,7 +345,7 @@
 		(select  TO_DATE(TO_CHAR(sysdate-365,'yyyyMMdd')) +LEVEL -1 as dt 
 			from dual 
 			<![CDATA[
-			connect by LEVEL <= (TO_DATE(TO_CHAR(sysdate,'yyyyMMdd')) -TO_DATE(TO_CHAR(sysdate-365,'yyyyMMdd')) +1)) b
+			connect by LEVEL <= (TO_DATE(TO_CHAR(sysdate,'yyyyMMdd'),'yyyyMMdd') -TO_DATE(TO_CHAR(sysdate-365,'yyyyMMdd'),'yyyyMMdd') +1)) b
 			]]>
 			where b.dt = a.ddt(+)
 		group by  TO_CHAR(b.dt, 'YYYYMM'),#{prdtCd}

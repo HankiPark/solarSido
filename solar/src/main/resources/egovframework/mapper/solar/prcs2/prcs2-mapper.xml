@@ -213,9 +213,9 @@ where prdt_infer_cd=(select prdt_infer_cd from prdt_infer where prdt_lot =#{prdt
 		sum(B.indica_qty) as indica_qty,
 		TO_CHAR(B.wk_dt, 'YYYY-MM-DD') wk_dt
 	FROM indica_d B
-	JOIN plan_d P ON B.plan_deta_no = P.plan_deta_no
-	JOIN order_d O ON (P.order_no = O.order_no AND B.prdt_cd = O.prdt_cd)
-	WHERE 1=1 AND b.wk_dt is not null and  b.indica_no not in (select  indica_no from prcs_m) group by B.indica_no, B.prdt_cd, TO_CHAR(B.wk_dt, 'YYYY-MM-DD') 
+	
+	WHERE 1=1 AND b.wk_dt is not null 
+	and  b.indica_no not in (select  indica_no from prcs_m) group by B.indica_no, B.prdt_cd, TO_CHAR(B.wk_dt, 'YYYY-MM-DD') 
 			
 </select>
 	

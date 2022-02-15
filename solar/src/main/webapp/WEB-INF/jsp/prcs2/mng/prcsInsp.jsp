@@ -272,7 +272,7 @@ function chart2(e){
 				c=res.data[0].prdtLot;
 				console.log(a);
 				$("#senseOrderBody2").css("display","block");
-				$("#b").html(`이 불량은 자재 코드`+a+`중에서 자재LOT `+b+`을 사용했으며 이에 사용된 제품들의 LOT은 `+c+` 입니다.`);
+				$("#b").html(`이 불량은 자재 코드 `+a+`중에서<br> 자재LOT `+b+`을 사용했으며 <br> 이에 사용된 제품들의 LOT은 `+c+` 입니다.`);
 				
 			})
 		}
