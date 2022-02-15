@@ -213,11 +213,13 @@ border-top:3px solid #FECEBB;
 			    header: '일생산량',
 			    name: 'dayOutput',
 			    align: 'right',
+			    hidden: true
 			  },
 			  {
 			    header: '생산일수',
 			    name: 'prodDay',
-			    align: 'right'
+			    align: 'right',
+			    hidden: true
 			  },
 			  {
 			    header: '작업시작일',
@@ -437,7 +439,7 @@ border-top:3px solid #FECEBB;
 	    		rStcGrid.setValue(i, 'ndStc',
 	    				planDgrid.getValue(ev.rowKey, "planQty") * rStcGrid.getValue(i, 'rscUseQty'));
 				rStcGrid.setValue(i, 'lackStc',
-						rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc'))} //안전재고 남겨두기
+						rStcGrid.getValue(i, 'ndStc')-rStcGrid.getValue(i, 'rscStc') + 1*50)} //안전재고 남겨두기
 			}, 1600); //실행시킬 함수, 딜레이시간;
 		}
 	});

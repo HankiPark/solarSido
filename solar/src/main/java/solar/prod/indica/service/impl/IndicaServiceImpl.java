@@ -64,14 +64,25 @@ public class IndicaServiceImpl implements IndicaService {
 
 	@Override
 	   public int hiddenData(Map<String, List<IndicaVO>> map) {
-	      if(map.get("idcD") !=null) {
-	         //IndicaVO idcVo = new IndicaVO();
+	    if(map.get("idcDadd") != null ) {
+	    	 for(IndicaVO idcVo : map.get("idcDadd")) {
+		            if (idcVo == map.get("idcDadd").get(0)) {
+		               idcMapper.insertIndica(idcVo);
+		            	System.out.println("IDCadd");
+		               }
+		           idcMapper.insertIndicaD(idcVo);
+		    	 }
+		    }
+		if(map.get("idcD") !=null) {
+	       //  IndicaVO idcVo = new IndicaVO();
 	         for(IndicaVO idcVo : map.get("idcD")) {
 	            if (idcVo == map.get("idcD").get(0)) {
 	               idcMapper.insertIndica(idcVo);
+	            	System.out.println("IDC");
 	               }
 	            idcMapper.insertIndicaD(idcVo);
 	            idcMapper.updateOdIdQty(idcVo);
+	            System.out.println("IDCOR");
 	         }
 	      }
 	      if(map.get("rscCon") !=null) {
@@ -79,6 +90,7 @@ public class IndicaServiceImpl implements IndicaService {
 	            idcMapper.insertRscCon(idcVo);
 	            idcMapper.insertRscOut(idcVo);
 	            idcMapper.updateUseRscStc(idcVo);
+	        	 System.out.println("RSC");
 	         }      
 	      }
 	      
