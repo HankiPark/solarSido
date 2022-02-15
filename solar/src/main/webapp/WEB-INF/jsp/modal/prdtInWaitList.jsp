@@ -15,7 +15,7 @@
 					data-options='{"mode": "calbox"}'> 
 <label>제품명</label> <input type="text" id="prdNm2">
 <button type="button" id="btnF">조회</button>
-<button type="button" id="btnFAll" style="width:80px;height:33px;border-radius:5px;padding:6px 1px 6px 3px;box-shadow:2px 2px 2px #74a3b0">전량입고</button>
+<button type="button" id="btnFAll" style="width:120px;height:33px;border-radius:5px;padding:6px 1px 6px 3px;box-shadow:2px 2px 2px #74a3b0"><i class="fas fa-save"></i>&nbsp;전량입고</button>
 <div id="inWaitGrid"></div>
 <script type="text/javascript">
 	//날짜설정
