@@ -109,14 +109,12 @@
 		<div class="card-body">
 			<div style="margin-top:-10px">
 				<button type="button" id="rscReset" style="margin-bottom:10px">초기화</button>
-				<button type="button" id="lotSave" style="margin-top: 5px">lot</button>
 			</div>
 
 			<!-- 소요자재 히든그리드 -->
 			<div id="hdRscConGrid"></div>
 			<!-- 제품lot별 자재lot 부여 히든그리드 -->
-			<div id="hdPrdtRscGrid" ></div>
-		<!-- 	<div id="hdPrdtRscGrid" style="display:none" ></div> -->
+			<div id="hdPrdtRscGrid" style="display:none" ></div>
 		</div>
 	</div>
 </body>
@@ -303,12 +301,14 @@
 					  {
 					    header: '일생산량',
 					    name: 'dayOutput',
-						align : 'center'
+						align : 'center',
+						hidden: true
 					  },
 					  {
 					    header: '생산일수',
 					    name: 'prodDay',
-						align : 'center'
+						align : 'center',
+						hidden: true
 					  },
 					  {
 					    header: '생산구분',
@@ -711,7 +711,7 @@
 	indicaDgrid.on('dblclick', function(ev){
 		if(ev.columnName != "prdtCd" && ev.columnName != "indicaQty"
 			&& ev.columnName != "prodFg" && ev.columnName != "wkDt") {
-			let idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
+			idcNo =  indicaDgrid.getValue(ev.rowKey, "indicaDetaNo")
 			let prdtCd = indicaDgrid.getValue(ev.rowKey, "prdtCd")
 			let prdtNm = indicaDgrid.getValue(ev.rowKey, "prdtNm")
 			
@@ -778,6 +778,7 @@
 	})
 	
 	rscLotGrid.on("editingFinish", (rscEv) => {
+	
 		totalQty = $('#totalUseQty').val();
 		let rscQty = rscLotGrid.getValue(rscEv.rowKey, 'rscQty');
 		let rscStc = rscLotGrid.getValue(rscEv.rowKey, 'rscStc');
@@ -867,120 +868,13 @@
 		hdRscConGrid.resetData([]);
 		hdPrdtRscGrid.resetData([]);
 	})
-
-	 $('#lotSave').click(function() {
-         
-       let list=[];
-         let pt=0;
-         let prdtLotNum;
-         
-          //제품lot생성
-         $.ajax({
-            url:'${pageContext.request.contextPath}/ajax/makePrdtNo.do',
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8',
-            async: false,
-         }).done((res)=>{
-            prdtLotNum = res.num
-         })
-         
-         for(let i of arr){ //자재 수
-               for(let k=0;k<hdRscConGrid.getRowCount();k++){ //소요 자재lot수
-                  if(hdRscConGrid.getValue(k,'rscCd') == i){
-                     arrt.push({'indicaDetaNo':hdRscConGrid.getValue(k,'indicaDetaNo'),
-                        'rscCd':hdRscConGrid.getValue(k,'rscCd'),
-                        'rscLot':hdRscConGrid.getValue(k,'rscLot'),
-                        'rscQty':hdRscConGrid.getValue(k,'rscQty'),
-                        'rscUseQty':hdRscConGrid.getValue(k,'rscUseQty')})
-                  }
-               }
-               list.push(arrt);
-               arrt=[];
-               pt++;
-            }
-         
-         for(let li of list){
-            if(li != null){
-               //var q = 0;
-               var q = 1*prdtLotNum -1;
-               lotData =  {'indicaDetaNo': idcNo,
-                        'prdtCd': indicaDgrid.getValue(0, 'prdtCd'),
-                        'prdtLot':'',
-                        'rscCd':'',
-                        'rscLot':'' ,
-                        'rscUseQty':''
-                        } 
-   
-               for(let i =0 ; i< li.length ; i++){
-                  lotData.rscCd = li[i].rscCd;
-                  var useQty = li[i].rscUseQty;
-                  var rscLot = li[i].rscLot;
-                  var rscQty = li[i].rscQty;
-                  var t =0;
-         
-                  if(lotData.rscUseQty !=li[i].rscUseQty && lotData.rscUseQty!=''){
-                     //lotData push
-                     
-                     lotData.rscLot= rscLot;
-                     rscQty = rscQty-useQty+lotData.rscUseQty;
-                     lotData.rscUseQty = useQty-lotData.rscUseQty;
-                     
-                     lotArr.push(JSON.parse(JSON.stringify(lotData)));
-                  }
-         
-                  
-                  for(let k =1; k*useQty<rscQty ; k++){
-                     
-                     lotData.prdtLot = 'PRD'+ '20210202' + lpad((q+1).toString(), 3,'0')
-                     //lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0')
-                     lotData.rscLot = rscLot;
-                     lotData.rscUseQty = useQty;
-                    // console.log(JSON.parse(JSON.stringify(lotData)))
-                     lotArr.push(JSON.parse(JSON.stringify(lotData)));
-                     q++;
-                     t++; 
-                  }
-                  
-                  if(t*useQty==rscQty){
-                     lotData.rscUseQty=''
-                  } else{   
-                    lotData.prdtLot = 'PRD'+ '20210202' + lpad((q+1).toString(), 3,'0');
-                    //lotData.prdtLot = 'PRD'+ idt + lpad((q+1).toString(), 3,'0');
-                     lotData.rscLot = rscLot;   
-                     if(Number(rscQty)==Number(useQty)){
-                        console.log(JSON.parse(JSON.stringify(lotData.prdtLot)))
-                        console.log(JSON.parse(JSON.stringify(rscQty)));
-                        console.log(JSON.parse(JSON.stringify(useQty)));
-                          lotData.rscUseQty = rscQty;
-                     } else if(t==0 ){
-                        lotData.rscUseQty = rscQty%(useQty);
-                        }
-                     else{
-                     
-                     lotData.rscUseQty = rscQty%(t*useQty);
-                     }
-                     lotArr.push(JSON.parse(JSON.stringify(lotData)));
-                     q++;
-                  }
-                  }
-            }   
-           }
-          
-      //hdPrdtRscGrid.resetData(lotArr);
-      hdPrdtRscGrid.appendRows(lotArr);
-      console.log(lotArr)
-      //초기화
-      arr.length = 0; 
-   });
-
-	
-	
+		
 	//저장 버튼: 계획 + 계획상세 그리드 저장(수정, 입력, 삭제)
 	$('#btnSave').on("click", function(){
 		indicaNm = $('#indicaNm').val();
 		indicaDt = $('#indicaDt').val();
 		
-		/*  let list=[];
+		let list=[];
 	      let pt=0;
 	      let prdtLotNum;
 	      
@@ -1063,7 +957,7 @@
 		hdPrdtRscGrid.appendRows(lotArr);
 		//초기화
 		arr.length = 0; 
-		 */
+		
 		 
 		//validataion
 		if (indicaNm == null || indicaNm == ""){
@@ -1088,6 +982,7 @@
 					let obj={};
 					//등록
 					obj.idcD = indicaDgrid.getModifiedRows().updatedRows;
+					obj.idcDadd = indicaDgrid.getModifiedRows().createdRows;
 					obj.rscCon = hdRscConGrid.getModifiedRows().createdRows;
 					obj.prdtRsc = hdPrdtRscGrid.getData();
 					//삭제
