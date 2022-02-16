@@ -660,6 +660,7 @@
 	
 	indicaDgrid.on('onGridUpdated', function() {
 		indicaDgrid.refreshLayout();
+		$("div#indicaDgrid").find('td[data-column-name$="planNo"]').css('backgroundColor','#ffeeee');
 		setTimeout(function(){
 		 for(let i = 0; i < indicaDgrid.getRowCount(); i++){
 			 indicaDgrid.setValue(i, "indicaQty", indicaDgrid.getValue(i, "planQty"));
@@ -1019,6 +1020,7 @@
 		indicaDgrid.prependRow({
 			  "prodFg":"정상"
 		});
+
 		//지시상세번호 부여
 		$.ajax({
 				url:'${pageContext.request.contextPath}/ajax/makeDno.do',
@@ -1035,6 +1037,11 @@
 					}
 				}
 			})
+			
+			setTimeout(() => {
+
+				$("div#indicaDgrid").find('td[data-column-name$="planNo"]').css('backgroundColor','#ffeeee');
+			}, 1000);
 	});
 	
 	//그리드 삭제 버튼
