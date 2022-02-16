@@ -114,7 +114,7 @@
 			<!-- 소요자재 히든그리드 -->
 			<div id="hdRscConGrid"></div>
 			<!-- 제품lot별 자재lot 부여 히든그리드 -->
-			<div id="hdPrdtRscGrid" style="display:none" ></div>
+			<div id="hdPrdtRscGrid" style="display:none" ></div> 
 		</div>
 	</div>
 </body>
@@ -994,7 +994,7 @@
 		                },
 	                body:JSON.stringify(obj)
 		             }) 
-		            toastr.success("생산지시가 저장되었습니다.") 
+		            toastr.success("생산지시가 저장되었습니다.")
 				}
 			}
 		}
