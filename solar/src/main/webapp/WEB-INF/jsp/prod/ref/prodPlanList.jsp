@@ -178,7 +178,7 @@ position: absolute;
 		autoOpen : false,
 		modal : true,
 		height : 600,
-		width : 600
+		width : 900
 	});
 
 	$("#btnCoCdFind").on(
@@ -196,7 +196,7 @@ position: absolute;
 	let prdtCdDialog = $("#prdtCdModal").dialog({
 		autoOpen : false,
 		modal : true,
-		width : 600,
+		width : 900,
 		height : 600
 	});
 

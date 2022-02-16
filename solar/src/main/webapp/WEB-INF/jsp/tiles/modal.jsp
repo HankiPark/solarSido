@@ -55,7 +55,7 @@ $(function(){
 	$("div:contains('dialog-') button:contains('저장')").css("boxShadow","2px 2px 2px #74a3b0"); 
 	$("div:contains('dialog-') button:contains('초기화')").prepend("<i class='far fa-sticky-note'> </i>&nbsp; ");
 	$("div:contains('dialog-') button:contains('초기화')").css("height","33");
-	$("div:contains('dialog-') button:contains('초기화')").css("width","80");	
+	$("div:contains('dialog-') button:contains('초기화')").css("width","100");	
 	$("div:contains('dialog-') button:contains('초기화')").css("borderRadius",5);
 	$("div:contains('dialog-') button:contains('초기화')").css("padding","6 1 6 3"); 
 	$("div:contains('dialog-') button:contains('초기화')").css("boxShadow","2px 2px 2px #74a3b0"); 
