@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<h2>공통자료관리</h2>
+	<h2>공통정보관리</h2>
 	<div class="row" id="senseOrder">
 		<div class=" col-3">
 			<div id="senseOrderBody"

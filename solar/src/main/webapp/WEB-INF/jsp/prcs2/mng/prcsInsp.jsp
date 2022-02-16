@@ -179,7 +179,7 @@
 			 		  const config = {
 			 				    type: 'bar',
 			 				    data: data,
-			 				    options: {plugins:{legend:{display:false}, title:{display:true, text:'회사별 불량제품 수'}},responsive:false,
+			 				    options: {plugins:{legend:{display:false}, title:{display:true, text:'설비별 불량제품 수'}},responsive:false,
 			 				    	onClick: function(c,i) {
 			 				    	    chart2(c.chart.data.labels[i[0].index]);
 			 				    	}
