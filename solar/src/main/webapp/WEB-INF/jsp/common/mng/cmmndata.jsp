@@ -162,7 +162,7 @@
 				align : 'center',
 				width: '85'
 			}, {
-				header : '코드명',
+				header : '이름',
 				name : 'cmmnCdNm',
 				editor : 'text',
 				align : 'center',
