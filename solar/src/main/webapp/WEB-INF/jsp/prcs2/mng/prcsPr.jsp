@@ -139,7 +139,7 @@ progress {
 
 		<div id="grid" class="col-8" style="margin-left: 40px"></div>
 	</div>
-	<div id="dialog-form" title="미지시 공정"></div>
+	<div id="dialog-form" title="지시 미공정"></div>
 	<div id="dialog-ing" title="공정 내역"></div>
 	<script type="text/javascript">
 var wkno=null;
