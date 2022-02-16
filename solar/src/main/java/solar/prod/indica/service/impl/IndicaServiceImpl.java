@@ -99,7 +99,7 @@ public class IndicaServiceImpl implements IndicaService {
 	         int cnt =idcMapper.bomRscCnt(map.get("prdtRsc").get(0).getPrdtCd());
 	         int prdtCnt =map.get("prdtRsc").size();
 	         for(IndicaVO idcVo : map.get("prdtRsc")) {
-	            idcMapper.insertPdRc(idcVo);
+	           //idcMapper.insertPdRc(idcVo);
 	         }
 	         for(int i=0;i<prdtCnt/cnt+k;i++) {
 	        	 if(i!=0) {
