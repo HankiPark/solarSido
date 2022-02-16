@@ -984,7 +984,7 @@
 					obj.idcD = indicaDgrid.getModifiedRows().updatedRows;
 					obj.idcDadd = indicaDgrid.getModifiedRows().createdRows;
 					obj.rscCon = hdRscConGrid.getModifiedRows().createdRows;
-					obj.prdtRsc = hdPrdtRscGrid.getData();
+					//obj.prdtRsc = hdPrdtRscGrid.getData();
 					//삭제
 					obj.idcDel = indicaDgrid.getModifiedRows().deletedRows;
 					fetch('${pageContext.request.contextPath}/ajax/modified.do',{
