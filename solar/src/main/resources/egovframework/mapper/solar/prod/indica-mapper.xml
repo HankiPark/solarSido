@@ -151,7 +151,7 @@
 
 <select id ="makePrdtNo" resultType="String">
 	select nvl(count(prdt_lot),0)+1 
-	from prdt_stc where to_char(prdt_dt,'yyyy-MM-dd') = to_char(sysdate,'yyyy-MM-dd')
+	from prdt_stc where to_char(prdt_dt,'yyyy-MM-dd') = to_char(sysdate,'yyyy-MM-dd') and prdt_fg='P'
 </select>
 
 
